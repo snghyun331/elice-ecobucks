@@ -1,0 +1,6 @@
+{
+  "printWidth": 80, //  줄 바꿈 할 폭 길이
+  "tabWidth": 2, // 탭 너비
+  "singleQuote": true, // 작은 따옴표
+  "useTabs": false // 탭으로 들여쓰기
+}
