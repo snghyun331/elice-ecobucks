@@ -5,7 +5,6 @@ function App() {
   return (
     <>
       <Layout />
-      {/* <div>메인</div> */}
     </>
   );
 }
