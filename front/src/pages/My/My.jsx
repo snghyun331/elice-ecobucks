@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Col, Row, Modal, Button } from "react-bootstrap";
-
+import UserEditForm from "../../components/My/UserEditForm";
 function My() {
   const [showModal, setShowModal] = useState(false);
 
@@ -68,21 +68,27 @@ function My() {
           </Col>
         </Row>
       </Container>
-      <Modal show={showModal} onHide={handleCloseModal}>
-      <Modal.Header closeButton>
+
+      <Modal show={showModal} onHide={handleCloseModal} centered>
+        <Modal.Header closeButton>
           <Modal.Title>내 정보 수정</Modal.Title>
-          <Modal.Body>
-          UserEditForm 컴포넌트 가져오기
+        </Modal.Header>
+        <Modal.Body className="text-center">
+          <UserEditForm />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
+          <Button
+            className="mt-4 mb-4"
+            variant="secondary"
+            onClick={handleCloseModal}
+            style={{
+              width: "100%",
+              borderRadius: "0px",
+            }}
+          >
             닫기
           </Button>
-          <Button variant="primary" onClick={handleCloseModal}>
-            저장
-          </Button>
         </Modal.Footer>
-        </Modal.Header>
       </Modal>
     </div>
   );

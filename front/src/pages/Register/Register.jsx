@@ -18,7 +18,8 @@ function RegisterForm() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
-  const [selectedDistrict, setSelectedDistrict] = useState(null);
+  const [district, setDistrict] = useState(null);
+
   const districts = [
     '강남구',
     '강동구',
@@ -46,7 +47,6 @@ function RegisterForm() {
     '중구',
     '중랑구',
   ];
-  console.log(selectedDistrict);
 
   const validateEmail = (email) => {
     return email
@@ -72,7 +72,7 @@ function RegisterForm() {
         email,
         password,
         name,
-        district: selectedDistrict,
+        district: district,
       });
 
       // 로그인 페이지로 이동함.
@@ -185,7 +185,7 @@ function RegisterForm() {
             <Form.Label className="d-block" style={{ fontWeight: 'bold' }}>
               거주하시는 구
               <Row className="text-secondary ms-1" style={{ fontSize: '13px' }}>
-                　현재 서울시만 서비스하고 있습니다.
+                현재 서울시만 서비스하고 있습니다.
               </Row>
             </Form.Label>
 
@@ -200,13 +200,13 @@ function RegisterForm() {
                   borderRadius: '0px',
                 }}
               >
-                {selectedDistrict || '구를 선택해주세요. '}
+                {district || '구를 선택해주세요. '}
               </Dropdown.Toggle>
               <Dropdown.Menu style={{ maxHeight: '200px', overflowY: 'auto' }}>
                 {districts.map((district) => (
                   <Dropdown.Item
                     key={district}
-                    onClick={() => setSelectedDistrict(district)}
+                    onClick={() => setDistrict(district)}
                   >
                     {district}
                   </Dropdown.Item>
