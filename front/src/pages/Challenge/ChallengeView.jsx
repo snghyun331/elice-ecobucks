@@ -1,4 +1,6 @@
-import { Card, Container, Row } from "react-bootstrap";
+import { Card, Container, Row, Button } from "react-bootstrap";
+import ChallengeRead from "./ChallengeRead";
+import { useState } from "react";
 
 const ChallengeView = () => {
   const challenges = [
@@ -9,7 +11,7 @@ const ChallengeView = () => {
       duration: "1주",
       completed: false,
       author: "John Doe",
-      icon:"💧",
+      icon: "💧",
       participantNumber: 13,
     },
     {
@@ -19,7 +21,7 @@ const ChallengeView = () => {
       duration: "2주",
       completed: true,
       author: "Michael Johnson",
-      icon:"🌿",
+      icon: "🌿",
       participantNumber: 2048,
     },
     {
@@ -30,7 +32,7 @@ const ChallengeView = () => {
       duration: "4주",
       completed: false,
       author: "Jane Smith",
-      icon:"🌍",
+      icon: "🌍",
       participantNumber: 571,
     },
     // 더 많은 챌린지 데이터...
@@ -41,51 +43,105 @@ const ChallengeView = () => {
     return new Date(b.createDate) - new Date(a.createDate);
   });
 
+  const [selectedChallenge, setSelectedChallenge] = useState(null);
+
+  const handleReadMoreClick = (challenge) => {
+    setSelectedChallenge(challenge);
+  };
+
+  const handleBackToListClick = () => {
+    setSelectedChallenge(null);
+  };
+
   return (
-    <Container className="d-flex flex-wrap justify-content-center">
-      <Row style={{ width: "100%", border: '1px solid blue', height: '17rem' }}>
-        개발자가 제공하는 챌린지 영역(메가 챌린지)
-      </Row>
-      {sortedChallenges.map((challenge, index) => (
-        <Card
-          key={index}
-          className={`m-2 ${challenge.completed ? "text-muted" : ""}`}
-          style={{ width: "16rem" }}
-        >
-          <div
-            style={{
-              border: "solid 1px #878787",
-              borderRadius: '15px',
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "7rem",
-              paddingBottom: '7px',
-              margin: '20px',
-              background: 'linear-gradient(to right, beige, lightblue)',
-            }}
+    <>
+      {selectedChallenge ? (
+        <ChallengeRead
+          challenge={selectedChallenge}
+          onBackToListClick={handleBackToListClick}
+        />
+      ) : (
+        <Container className="d-flex flex-wrap justify-content-center">
+          <Row
+            style={{ width: "100%", border: "1px solid blue", height: "17rem" }}
           >
-            {challenge.icon}
-          </div>
-          <Card.Body>
-            <Card.Title>{challenge.title}</Card.Title>
-            <Card.Text>{challenge.description}</Card.Text>
-            <Card.Text>
-              작성일자: {challenge.createDate}
-              <br />
-              진행 기간: {challenge.duration}
-              <br />
-              작성자: {challenge.author}
-              <br />
-              참여인원: {challenge.participantNumber.toLocaleString()} 명
-            </Card.Text>
-            더보기
-          </Card.Body>
-        </Card>
-      ))}
-    </Container>
+            개발자가 제공하는 챌린지 영역(메가 챌린지)
+          </Row>
+          {sortedChallenges.map((challenge, index) => (
+            <Card
+              key={index}
+              className={`m-2 ${challenge.completed ? "text-muted" : ""}`}
+              style={{ width: "16rem", position: "relative" }}
+              onClick={
+                challenge.completed
+                  ? null
+                  : () => handleReadMoreClick(challenge)
+              }
+            >
+              {challenge.completed && (
+                <div
+                  className="position-absolute w-100 h-100 d-flex align-items-center justify-content-center"
+                  style={{
+                    background: "rgba(0, 0, 0, 0.5)",
+                    top: 0,
+                    left: 0,
+                    zIndex: 2,
+                  }}
+                >
+                  <span
+                    style={{
+                      color: "white",
+                      fontWeight: "bold",
+                      fontSize: "1.5rem",
+                      textAlign: "center",
+                      position: "relative",
+                      top: "-28%",
+                    }}
+                  >
+                    종료된 챌린지입니다.
+                  </span>
+                </div>
+              )}
+              <div
+                style={{
+                  border: "solid 1px #878787",
+                  borderRadius: "15px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "7rem",
+                  paddingBottom: "7px",
+                  margin: "20px",
+                  background: "linear-gradient(to right, beige, lightblue)",
+                }}
+              >
+                {challenge.icon}
+              </div>
+              <Card.Body>
+                <Card.Title>{challenge.title}</Card.Title>
+                <Card.Text>{challenge.description}</Card.Text>
+                <Card.Text>
+                  작성일자: {challenge.createDate}
+                  <br />
+                  진행 기간: {challenge.duration}
+                  <br />
+                  작성자: {challenge.author}
+                  <br />
+                  참여인원: {challenge.participantNumber.toLocaleString()} 명
+                </Card.Text>
+                <div
+                  className="position-absolute bottom-0 end-0 m-3"
+                  style={{ zIndex: 1 }}
+                >
+                  더 보려면 클릭
+                </div>
+              </Card.Body>
+            </Card>
+          ))}
+        </Container>
+      )}
+    </>
   );
-  
 };
 
 export default ChallengeView;
