@@ -71,7 +71,7 @@ const UserOrderHistory = () => {
 
   return (
     <>
-      <Table striped bordered>
+      <Table striped>
         <thead>
           <tr style={{fontSize:'0.9rem'}}>
             <th>주문 날짜</th>
