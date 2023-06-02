@@ -1,7 +1,12 @@
-import React from "react";
-import { Container, Col, Row } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Col, Row, Modal, Button } from "react-bootstrap";
 
 function My() {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleCloseModal = () => setShowModal(false);
+  const handleOpenModal = () => setShowModal(true);
+
   return (
     <div
       style={{
@@ -24,8 +29,8 @@ function My() {
                 className="pt-5"
                 style={{
                   borderRadius: "50%",
-                  width: "130px",
-                  height: "130px",
+                  width: "7rem",
+                  height: "7rem",
                   objectFit: "cover",
                   border: "1px solid grey",
                 }}
@@ -35,7 +40,12 @@ function My() {
               <Container className="mt-3">
                 <a style={{ fontWeight: "bold" }}>몽구</a> 님
                 <br />
-                <a style={{ fontSize: "0.8rem" }}>나의 정보 수정</a>
+                <a
+                  style={{ fontSize: "0.8rem", cursor: "pointer" }}
+                  onClick={handleOpenModal}
+                >
+                  나의 정보 수정
+                </a>
               </Container>
             </Container>
           </Col>
@@ -58,6 +68,22 @@ function My() {
           </Col>
         </Row>
       </Container>
+      <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal.Header closeButton>
+          <Modal.Title>내 정보 수정</Modal.Title>
+          <Modal.Body>
+          UserEditForm 컴포넌트 가져오기
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            닫기
+          </Button>
+          <Button variant="primary" onClick={handleCloseModal}>
+            저장
+          </Button>
+        </Modal.Footer>
+        </Modal.Header>
+      </Modal>
     </div>
   );
 }
