@@ -1,21 +1,53 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Col, Row, Form, Button, Image } from 'react-bootstrap';
+import {
+  Container,
+  Col,
+  Row,
+  Form,
+  Button,
+  Image,
+  Dropdown,
+} from 'react-bootstrap';
 import Logo from '../../assets/logo.png';
 
 function RegisterForm() {
   const navigate = useNavigate();
 
-  //useState로 email 상태를 생성함.
   const [email, setEmail] = useState('');
-  //useState로 password 상태를 생성함.
   const [password, setPassword] = useState('');
-  //useState로 confirmPassword 상태를 생성함.
   const [confirmPassword, setConfirmPassword] = useState('');
-  //useState로 name 상태를 생성함.
   const [name, setName] = useState('');
+  const [selectedDistrict, setSelectedDistrict] = useState(null);
+  const districts = [
+    '강남구',
+    '강동구',
+    '강북구',
+    '강서구',
+    '관악구',
+    '광진구',
+    '구로구',
+    '금천구',
+    '노원구',
+    '도봉구',
+    '동대문구',
+    '동작구',
+    '마포구',
+    '서대문구',
+    '서초구',
+    '성동구',
+    '성북구',
+    '송파구',
+    '양천구',
+    '영등포구',
+    '용산구',
+    '은평구',
+    '종로구',
+    '중구',
+    '중랑구',
+  ];
+  console.log(selectedDistrict);
 
-  //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email) => {
     return email
       .toLowerCase()
@@ -24,126 +56,176 @@ function RegisterForm() {
       );
   };
 
-  //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
   const isEmailValid = validateEmail(email);
-  // 비밀번호가 4글자 이상인지 여부를 확인함.
   const isPasswordValid = password.length >= 4;
-  // 비밀번호와 확인용 비밀번호가 일치하는지 여부를 확인함.
   const isPasswordSame = password === confirmPassword;
-  // 이름이 2글자 이상인지 여부를 확인함.
   const isNameValid = name.length >= 2;
-
-  // 위 4개 조건이 모두 동시에 만족되는지 여부를 확인함.
   const isFormValid =
     isEmailValid && isPasswordValid && isPasswordSame && isNameValid;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // try {
-    //   // "user/register" 엔드포인트로 post요청함.
-    //   await Api.post('user/register', {
-    //     email,
-    //     password,
-    //     name,
-    //   });
+    try {
+      // "user/register" 엔드포인트로 post요청함.
+      await Api.post('user/register', {
+        email,
+        password,
+        name,
+        district: selectedDistrict,
+      });
 
-    //   // 로그인 페이지로 이동함.
-    //   navigate('/login');
-    // } catch (err) {
-    //   console.log('회원가입에 실패하였습니다.', err);
-    // }
+      // 로그인 페이지로 이동함.
+      navigate('/login');
+    } catch (err) {
+      console.log('회원가입에 실패하였습니다.', err);
+    }
   };
 
   return (
-    <Container>
-      <Image src={Logo} className="w-25" />
-      <Row className="mt-5">
-        <Col>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="registerEmail">
-              <Form.Label>이메일 주소</Form.Label>
-              <Form.Control
-                type="email"
-                autoComplete="off"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              {!isEmailValid && (
-                <Form.Text className="text-success">
-                  이메일 형식이 올바르지 않습니다.
-                </Form.Text>
-              )}
-            </Form.Group>
+    <Container
+      className="position-absolute top-50 start-50 translate-middle pt-3 pb-3"
+      style={{
+        width: '40%',
+        backgroundColor: '#F3F3F3',
+        transform: 'translate(-50%, -50%)',
+        borderRadius: '5px',
+      }}
+    >
+      <Container className="text-center">
+        <img src={Logo} className="w-50 mt-5 mb-5" alt="Logo" />
+      </Container>
+      <Container style={{ width: '80%' }}>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="registerEmail">
+            <Form.Label
+              className="text-right d-block"
+              style={{ fontWeight: 'bold' }}
+            >
+              이메일 주소
+            </Form.Label>
+            <Form.Control
+              type="email"
+              autoComplete="off"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={{borderRadius: '0px'}}
+            />
+            {!isEmailValid && (
+              <Form.Text className="text-success">
+                이메일 형식이 올바르지 않습니다.
+              </Form.Text>
+            )}
+          </Form.Group>
 
-            <Form.Group controlId="registerPassword" className="mt-3">
-              <Form.Label>비밀번호</Form.Label>
-              <Form.Control
-                type="password"
-                autoComplete="off"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {!isPasswordValid && (
-                <Form.Text className="text-success">
-                  비밀번호는 4글자 이상으로 설정해 주세요.
-                </Form.Text>
-              )}
-            </Form.Group>
+          <Form.Group controlId="registerPassword" className="mt-4">
+            <Form.Label
+              className="text-right d-block"
+              style={{ fontWeight: 'bold' }}
+            >
+              비밀번호
+            </Form.Label>
+            <Form.Control
+              type="password"
+              autoComplete="off"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={{borderRadius: '0px'}}
+            />
+            {!isPasswordValid && (
+              <Form.Text className="text-success">
+                비밀번호는 4글자 이상으로 설정해 주세요.
+              </Form.Text>
+            )}
+          </Form.Group>
 
-            <Form.Group controlId="registerConfirmPassword" className="mt-3">
-              <Form.Label>비밀번호 재확인</Form.Label>
-              <Form.Control
-                type="password"
-                autoComplete="off"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-              {!isPasswordSame && (
-                <Form.Text className="text-success">
-                  비밀번호가 일치하지 않습니다.
-                </Form.Text>
-              )}
-            </Form.Group>
+          <Form.Group controlId="registerConfirmPassword" className="mt-4">
+            <Form.Label
+              className="text-right d-block"
+              style={{ fontWeight: 'bold' }}
+            >
+              비밀번호 재확인
+            </Form.Label>
+            <Form.Control
+              type="password"
+              autoComplete="off"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              style={{borderRadius: '0px'}}
+            />
+            {!isPasswordSame && (
+              <Form.Text className="text-success">
+                비밀번호가 일치하지 않습니다.
+              </Form.Text>
+            )}
+          </Form.Group>
 
-            <Form.Group controlId="registerName" className="mt-3">
-              <Form.Label>이름</Form.Label>
-              <Form.Control
-                type="text"
-                autoComplete="off"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              {!isNameValid && (
-                <Form.Text className="text-success">
-                  이름은 2글자 이상으로 설정해 주세요.
-                </Form.Text>
-              )}
-            </Form.Group>
+          <Form.Group controlId="registerName" className="mt-4">
+            <Form.Label
+              className="text-right d-block"
+              style={{ fontWeight: 'bold' }}
+            >
+              이름
+            </Form.Label>
+            <Form.Control
+              type="text"
+              autoComplete="off"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              style={{borderRadius: '0px'}}
+            />
+            {!isNameValid && (
+              <Form.Text className="text-success">
+                이름은 2글자 이상으로 설정해 주세요.
+              </Form.Text>
+            )}
+          </Form.Group>
 
-            <Form.Group as={Row} className="mt-3 text-center">
-              <Col sm={{ span: 20 }}>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  disabled={!isFormValid}
-                  onClick={handleSubmit}
-                >
-                  회원가입
-                </Button>
-              </Col>
-            </Form.Group>
+          <Form.Group controlId="registerDistrict" className="mt-4">
+            <Form.Label className="d-block" style={{ fontWeight: 'bold' }}>
+              거주하시는 구
+              <Row className="text-secondary ms-1" style={{ fontSize: '13px' }}>
+                　현재 서울시만 서비스하고 있습니다.
+              </Row>
+            </Form.Label>
 
-            <Form.Group as={Row} className="mt-3 text-center">
-              <Col sm={{ span: 20 }}>
-                <Button variant="light" onClick={() => navigate('/login')}>
-                  로그인하기
-                </Button>
-              </Col>
-            </Form.Group>
-          </Form>
-        </Col>
-      </Row>
+            <Dropdown>
+              <Dropdown.Toggle
+                variant="light"
+                className="text-start d-block"
+                id="dropdown-district"
+                style={{ backgroundColor: 'white', width: '100%', borderRadius: '0px' }}
+              >
+                {selectedDistrict || '구를 선택해주세요. '}
+              </Dropdown.Toggle>
+              <Dropdown.Menu style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                {districts.map((district) => (
+                  <Dropdown.Item
+                    key={district}
+                    onClick={() => setSelectedDistrict(district)}
+                  >
+                    {district}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          </Form.Group>
+
+          <Form.Group as={Row} className="mt-5 justify-content-center mb-5">
+            <Col sm={12}>
+              <Button
+                variant="success"
+                type="submit"
+                disabled={!isFormValid}
+                style={{ width: '100%', borderRadius: '0px' }}
+                onClick={handleSubmit}
+              >
+                회원가입
+              </Button>
+            </Col>
+          </Form.Group>
+        </Form>
+      </Container>
     </Container>
   );
 }
