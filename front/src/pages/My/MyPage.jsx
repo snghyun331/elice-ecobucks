@@ -6,7 +6,7 @@ import UserMileageHistory from "./UserMileageHistory";
 import UserSummary from "./UserSummary";
 
 
-function My() {
+function MyPage() {
   const [showModal, setShowModal] = useState(false);
 
   const handleCloseModal = () => setShowModal(false);
@@ -99,4 +99,4 @@ function My() {
   );
 }
 
-export default My;
+export default MyPage;
