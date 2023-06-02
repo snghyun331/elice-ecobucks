@@ -1,8 +1,10 @@
-import { Card, Container, Row, Button } from "react-bootstrap";
+import { Card, Container, Row, Image } from "react-bootstrap";
 import ChallengeRead from "./ChallengeRead";
 import { useState } from "react";
+import MegaChallengeCarousel from "./MegaChallengeCarousel";
 
 const ChallengeView = () => {
+  //더미데이터
   const challenges = [
     {
       title: "돌고래 밥주기",
@@ -63,73 +65,87 @@ const ChallengeView = () => {
       ) : (
         <Container className="d-flex flex-wrap justify-content-center">
           <Row
-            style={{ width: "100%", border: "1px solid blue", height: "17rem" }}
+            style={{
+              width: "90%",
+              border: "solid 1px #878787",
+              borderRadius: "15px",
+              height: "17rem",
+              overflow: "hidden",
+            }}
           >
-            개발자가 제공하는 챌린지 영역(메가 챌린지)
-          </Row>
-          {sortedChallenges.map((challenge, index) => (
-  <Card
-    key={index}
-    className={`m-2 ${challenge.completed ? "text-muted" : ""}`}
-    style={{ width: "16rem", position: "relative",       cursor: challenge.completed ? "default" : "pointer", // Set cursor style
-  }}
-    onClick={challenge.completed ? null : () => handleReadMoreClick(challenge)}
-  >
-    {challenge.completed && (
-      <div
-        className="position-absolute w-100 h-100 d-flex align-items-center justify-content-center"
-        style={{
-          background: "rgba(0, 0, 0, 0.5)",
-          top: 0,
-          left: 0,
-          zIndex: 2,
-        }}
-      >
-        <span
-          style={{
-            color: "white",
-            fontWeight: "bold",
-            fontSize: "1.5rem",
-            textAlign: "center",
-            position: "relative",
-            top: "-28%",
-          }}
-        >
-          종료된 챌린지입니다
-        </span>
-      </div>
-    )}
-    <div
-      style={{
-        border: "solid 1px #878787",
-        borderRadius: "15px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: "7rem",
-        paddingBottom: "7px",
-        margin: "20px",
-        background: "linear-gradient(to right, beige, lightblue)",
-      }}
-    >
-      {challenge.icon}
-    </div>
-    <Card.Body>
-      <Card.Title>{challenge.title}</Card.Title>
-      <Card.Text>{challenge.description}</Card.Text>
-      <Card.Text>
-        작성일자: {challenge.createDate}
-        <br />
-        진행 기간: {challenge.duration}
-        <br />
-        작성자: {challenge.author}
-        <br />
-        참여인원: {challenge.participantNumber.toLocaleString()} 명
-      </Card.Text>
-    </Card.Body>
-  </Card>
-))}
+            <MegaChallengeCarousel />
 
+          </Row>
+
+          {sortedChallenges.map((challenge, index) => (
+            <Card
+              key={index}
+              className={`m-2 ${challenge.completed ? "text-muted" : ""}`}
+              style={{
+                width: "16rem",
+                position: "relative",
+                cursor: challenge.completed ? "default" : "pointer", // Set cursor style
+              }}
+              onClick={
+                challenge.completed
+                  ? null
+                  : () => handleReadMoreClick(challenge)
+              }
+            >
+              {challenge.completed && (
+                <div
+                  className="position-absolute w-100 h-100 d-flex align-items-center justify-content-center"
+                  style={{
+                    background: "rgba(0, 0, 0, 0.5)",
+                    top: 0,
+                    left: 0,
+                    zIndex: 2,
+                  }}
+                >
+                  <span
+                    style={{
+                      color: "white",
+                      fontWeight: "bold",
+                      fontSize: "1.5rem",
+                      textAlign: "center",
+                      position: "relative",
+                      top: "-28%",
+                    }}
+                  >
+                    종료된 챌린지입니다
+                  </span>
+                </div>
+              )}
+              <div
+                style={{
+                  border: "solid 1px #878787",
+                  borderRadius: "15px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "7rem",
+                  paddingBottom: "7px",
+                  margin: "20px",
+                  background: "linear-gradient(to right, beige, lightblue)",
+                }}
+              >
+                {challenge.icon}
+              </div>
+              <Card.Body>
+                <Card.Title>{challenge.title}</Card.Title>
+                <Card.Text>{challenge.description}</Card.Text>
+                <Card.Text>
+                  작성일자: {challenge.createDate}
+                  <br />
+                  진행 기간: {challenge.duration}
+                  <br />
+                  작성자: {challenge.author}
+                  <br />
+                  참여인원: {challenge.participantNumber.toLocaleString()} 명
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          ))}
         </Container>
       )}
     </>
