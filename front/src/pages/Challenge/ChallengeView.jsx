@@ -1,4 +1,4 @@
-import { Card, Container, Button } from "react-bootstrap";
+import { Card, Container, Row } from "react-bootstrap";
 
 const ChallengeView = () => {
   const challenges = [
@@ -9,6 +9,7 @@ const ChallengeView = () => {
       duration: "1주",
       completed: false,
       author: "John Doe",
+      icon:"💧"
     },
     {
       title: "코드 뽑고 예비전력 아끼기",
@@ -17,6 +18,7 @@ const ChallengeView = () => {
       duration: "2주",
       completed: true,
       author: "Michael Johnson",
+      icon:"🌿"
     },
     {
       title: "텀블러에 음료 테이크아웃",
@@ -26,6 +28,7 @@ const ChallengeView = () => {
       duration: "4주",
       completed: false,
       author: "Jane Smith",
+      icon:"🌍"
     },
     // 더 많은 챌린지 데이터...
   ];
@@ -37,6 +40,9 @@ const ChallengeView = () => {
 
   return (
     <Container className="d-flex flex-wrap">
+            <Row  style={{ width: "100%", border: '1px solid blue', height: '17rem' }}>
+        개발자가 제공하는 챌린지 영역(메가 챌린지)
+      </Row>
       {sortedChallenges.map((challenge, index) => (
         <Card
           key={index}
@@ -45,15 +51,18 @@ const ChallengeView = () => {
         >
           <div
             style={{
-              borderBottom: "solid 1px #878787",
+              border: "solid 1px #878787",
+              borderRadius: '15px',
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              height: "10rem",
               fontSize: "7rem",
+              paddingBottom: '7px',
+              margin: '20px',
+              background: 'linear-gradient(to right, beige, lightblue)',
             }}
           >
-            🪙
+            {challenge.icon}
           </div>
           <Card.Body>
             <Card.Title>{challenge.title}</Card.Title>
