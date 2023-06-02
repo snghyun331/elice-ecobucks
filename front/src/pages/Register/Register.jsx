@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Col, Row, Form, Button } from 'react-bootstrap';
+import { Container, Col, Row, Form, Button, Image } from 'react-bootstrap';
+import Logo from '../../assets/logo.png';
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -56,8 +57,9 @@ function RegisterForm() {
 
   return (
     <Container>
-      <Row className="justify-content-md-center mt-5">
-        <Col lg={8}>
+      <Image src={Logo} className="w-25" />
+      <Row className="mt-5">
+        <Col>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="registerEmail">
               <Form.Label>이메일 주소</Form.Label>
