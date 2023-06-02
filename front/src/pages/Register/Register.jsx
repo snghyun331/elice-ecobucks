@@ -95,7 +95,7 @@ function RegisterForm() {
       <Container className="text-center">
         <img src={Logo} className="w-50 mt-5 mb-5" alt="Logo" />
       </Container>
-      <Container style={{ width: '80%' }}>
+      <Container style={{ width: '95%' }}>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="registerEmail">
             <Form.Label
@@ -109,7 +109,7 @@ function RegisterForm() {
               autoComplete="off"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              style={{borderRadius: '0px'}}
+              style={{ borderRadius: '0px' }}
             />
             {!isEmailValid && (
               <Form.Text className="text-success">
@@ -130,7 +130,7 @@ function RegisterForm() {
               autoComplete="off"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={{borderRadius: '0px'}}
+              style={{ borderRadius: '0px' }}
             />
             {!isPasswordValid && (
               <Form.Text className="text-success">
@@ -151,7 +151,7 @@ function RegisterForm() {
               autoComplete="off"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              style={{borderRadius: '0px'}}
+              style={{ borderRadius: '0px' }}
             />
             {!isPasswordSame && (
               <Form.Text className="text-success">
@@ -172,7 +172,7 @@ function RegisterForm() {
               autoComplete="off"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              style={{borderRadius: '0px'}}
+              style={{ borderRadius: '0px' }}
             />
             {!isNameValid && (
               <Form.Text className="text-success">
@@ -194,7 +194,11 @@ function RegisterForm() {
                 variant="light"
                 className="text-start d-block"
                 id="dropdown-district"
-                style={{ backgroundColor: 'white', width: '100%', borderRadius: '0px' }}
+                style={{
+                  backgroundColor: 'white',
+                  width: '100%',
+                  borderRadius: '0px',
+                }}
               >
                 {selectedDistrict || '구를 선택해주세요. '}
               </Dropdown.Toggle>
