@@ -9,7 +9,8 @@ const ChallengeView = () => {
       duration: "1주",
       completed: false,
       author: "John Doe",
-      icon:"💧"
+      icon:"💧",
+      participantNumber: 13,
     },
     {
       title: "코드 뽑고 예비전력 아끼기",
@@ -18,7 +19,8 @@ const ChallengeView = () => {
       duration: "2주",
       completed: true,
       author: "Michael Johnson",
-      icon:"🌿"
+      icon:"🌿",
+      participantNumber: 2048,
     },
     {
       title: "텀블러에 음료 테이크아웃",
@@ -28,7 +30,8 @@ const ChallengeView = () => {
       duration: "4주",
       completed: false,
       author: "Jane Smith",
-      icon:"🌍"
+      icon:"🌍",
+      participantNumber: 571,
     },
     // 더 많은 챌린지 데이터...
   ];
@@ -73,6 +76,8 @@ const ChallengeView = () => {
               진행 기간: {challenge.duration}
               <br />
               작성자: {challenge.author}
+              <br />
+              참여인원: {challenge.participantNumber.toLocaleString()} 명
             </Card.Text>
               더보기
           </Card.Body>
