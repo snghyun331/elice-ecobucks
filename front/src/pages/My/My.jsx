@@ -58,15 +58,15 @@ function My() {
             {/* 오른쪽 컬럼 */}
             <Container className='p-5' style={{ height: "100%", background: "white" }}>
             <Row>
-                <h5>나의 활동</h5>
+                <h5 style={{fontWeight: 'bold'}}>나의 활동</h5>
                 <UserSummary />
               </Row>
               <Row>
-                <h5>주문 이력</h5>
+                <h5 style={{fontWeight: 'bold'}}>주문 이력</h5>
                 <UserOrderHistory />
               </Row>
               <Row>
-                <h5>마일리지 적립 이력</h5>
+                <h5 style={{fontWeight: 'bold'}}>마일리지 적립 이력</h5>
                 <UserMileageHistory />
               </Row>
             </Container>
