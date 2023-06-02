@@ -12,7 +12,7 @@ userAuthRouter.post("/user/login", PostUser_login);
 
 userAuthRouter.get(
         "/userlist",
-        // login_required,
+        login_required,
         GetUser_userlist
 );
 
