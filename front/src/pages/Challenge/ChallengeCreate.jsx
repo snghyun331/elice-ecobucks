@@ -127,7 +127,8 @@ const ChallengeCreate = () => {
             </Button>
           </ButtonGroup>
         </Form.Group>
-        <Button type="submit">Create</Button>
+        <Button type="submit">챌린지 게시</Button>
+        <Button>목록으로</Button>
       </Form>
     </div>
   );
