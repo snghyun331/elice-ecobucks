@@ -71,7 +71,8 @@ const ChallengeView = () => {
   <Card
     key={index}
     className={`m-2 ${challenge.completed ? "text-muted" : ""}`}
-    style={{ width: "16rem", position: "relative" }}
+    style={{ width: "16rem", position: "relative",       cursor: challenge.completed ? "default" : "pointer", // Set cursor style
+  }}
     onClick={challenge.completed ? null : () => handleReadMoreClick(challenge)}
   >
     {challenge.completed && (
@@ -94,7 +95,7 @@ const ChallengeView = () => {
             top: "-28%",
           }}
         >
-          종료된 챌린지입니다.
+          종료된 챌린지입니다
         </span>
       </div>
     )}
@@ -125,14 +126,6 @@ const ChallengeView = () => {
         <br />
         참여인원: {challenge.participantNumber.toLocaleString()} 명
       </Card.Text>
-      {!challenge.completed && (
-        <div
-          className="position-absolute bottom-0 end-0 m-3"
-          style={{ zIndex: 1 }}
-        >
-          더 보려면 클릭
-        </div>
-      )}
     </Card.Body>
   </Card>
 ))}
