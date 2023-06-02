@@ -3,6 +3,8 @@ import { Container, Col, Row, Modal, Button } from "react-bootstrap";
 import UserEditForm from "../../components/My/UserEditForm";
 import UserOrderHistory from "../../components/My/UserOrderHistory";
 import UserMileageHistory from "../../components/My/UserMileageHistory";
+import UserSummary from "../../components/My/UserSummary";
+
 
 function My() {
   const [showModal, setShowModal] = useState(false);
@@ -55,17 +57,17 @@ function My() {
           <Col className="ps-0" xs={9}>
             {/* 오른쪽 컬럼 */}
             <Container className='p-5' style={{ height: "100%", background: "white" }}>
+            <Row>
+                <h5>나의 활동</h5>
+                <UserSummary />
+              </Row>
               <Row>
-                <h5>내 주문 이력</h5>
+                <h5>주문 이력</h5>
                 <UserOrderHistory />
               </Row>
               <Row>
                 <h5>마일리지 적립 이력</h5>
                 <UserMileageHistory />
-              </Row>
-              <Row>
-                <h5>내 챌린지 이력</h5>
-                {/* 내용 추가 */}
               </Row>
             </Container>
           </Col>

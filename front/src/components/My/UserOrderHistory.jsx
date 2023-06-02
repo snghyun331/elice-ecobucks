@@ -70,7 +70,7 @@ const UserOrderHistory = () => {
   };
 
   return (
-    <>
+    <Container className="mb-5">
       <Table striped>
         <thead>
           <tr style={{fontSize:'0.9rem'}}>
@@ -94,7 +94,7 @@ const UserOrderHistory = () => {
 
       {orderHistory.length > ordersPerPage && (
         <Container className="d-flex justify-content-center">
-  <Pagination>
+  <Pagination size='sm'>
     {Array.from({ length: Math.ceil(orderHistory.length / ordersPerPage) }).map((_, index) => (
       <Pagination.Item
         key={index + 1}
@@ -108,7 +108,7 @@ const UserOrderHistory = () => {
 </Container>
 )}
 
-    </>
+    </Container>
   );
 };
 

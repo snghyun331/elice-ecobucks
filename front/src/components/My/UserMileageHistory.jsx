@@ -62,13 +62,13 @@ const UserMileageHistory = () => {
   };
 
   return (
-    <>
+    <Container className="mb-5">
       <Table striped>
         <thead>
           <tr style={{fontSize:'0.9rem'}}>
             <th>적립 날짜</th>
             <th>적립 금액</th>
-            <th>참여 이벤트</th>
+            <th>챌린지/활동</th>
           </tr>
         </thead>
         <tbody>
@@ -84,7 +84,7 @@ const UserMileageHistory = () => {
 
       {orderHistory.length > ordersPerPage && (
         <Container className="d-flex justify-content-center">
-  <Pagination>
+  <Pagination size='sm'>
     {Array.from({ length: Math.ceil(orderHistory.length / ordersPerPage) }).map((_, index) => (
       <Pagination.Item
         key={index + 1}
@@ -98,7 +98,7 @@ const UserMileageHistory = () => {
 </Container>
 )}
 
-    </>
+    </Container>
   );
 };
 
