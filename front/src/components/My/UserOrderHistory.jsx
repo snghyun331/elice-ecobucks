@@ -55,30 +55,6 @@ const UserOrderHistory = () => {
       price: 200,
       location: "Location E",
     },
-    {
-      date: "2023-05-16",
-      product: "Product E",
-      price: 200,
-      location: "Location E",
-    },    {
-      date: "2023-05-16",
-      product: "Product E",
-      price: 200,
-      location: "Location E",
-    },
-    {
-      date: "2023-05-16",
-      product: "Product E",
-      price: 200,
-      location: "Location E",
-    },
-    {
-      date: "2023-05-16",
-      product: "Product E",
-      price: 200,
-      location: "Location E",
-    },
-    
 
     // 더 많은 주문 내역 데이터...
   ];
@@ -92,24 +68,25 @@ const UserOrderHistory = () => {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
   return (
     <>
       <Table striped bordered>
         <thead>
-          <tr>
+          <tr style={{fontSize:'0.9rem'}}>
             <th>주문 날짜</th>
             <th>상품명</th>
             <th>가격</th>
-            <th>수령(예정) 위치</th>
+            <th>수령위치</th>
           </tr>
         </thead>
         <tbody>
           {currentOrders.map((order, index) => (
-            <tr key={index}>
-              <td>{order.date}</td>
-              <td>{order.product}</td>
-              <td>{order.price}</td>
-              <td>{order.location}</td>
+            <tr key={index}  style={{fontSize:'0.8rem'}}>
+              <td style={{ width: '25%' }}>{order.date}</td>
+              <td style={{ width: '25%' }}>{order.product}</td>
+              <td style={{ width: '25%' }}>{order.price}</td>
+              <td style={{ width: '25%' }}>{order.location}</td>
             </tr>
           ))}
         </tbody>
@@ -117,21 +94,20 @@ const UserOrderHistory = () => {
 
       {orderHistory.length > ordersPerPage && (
         <Container className="d-flex justify-content-center">
-          <Pagination>
-            {Array.from({
-              length: Math.ceil(orderHistory.length / ordersPerPage),
-            }).map((_, index) => (
-              <Pagination.Item
-                key={index + 1}
-                active={index + 1 === currentPage}
-                onClick={() => handlePageChange(index + 1)}
-              >
-                {index + 1}
-              </Pagination.Item>
-            ))}
-          </Pagination>
-        </Container>
-      )}
+  <Pagination>
+    {Array.from({ length: Math.ceil(orderHistory.length / ordersPerPage) }).map((_, index) => (
+      <Pagination.Item
+        key={index + 1}
+        active={index + 1 === currentPage}
+        onClick={() => handlePageChange(index + 1)}
+      >
+        {index + 1}
+      </Pagination.Item>
+    ))}
+  </Pagination>
+</Container>
+)}
+
     </>
   );
 };

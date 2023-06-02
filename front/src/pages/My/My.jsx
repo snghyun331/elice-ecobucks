@@ -53,18 +53,17 @@ function My() {
           </Col>
           <Col className="ps-0" xs={9}>
             {/* 오른쪽 컬럼 */}
-            <Container style={{ height: "100%", background: "white" }}>
-              <Row style={{ height: "300px" }}>
-                <h4>내 주문 이력</h4>
-                {/* 내용 추가 */}
+            <Container className='p-5' style={{ height: "100%", background: "white" }}>
+              <Row>
+                <h5>내 주문 이력</h5>
                 <UserOrderHistory />
               </Row>
               <Row style={{ height: "300px" }}>
-                <h4>내 마일리지 이력</h4>
+                <h5>내 마일리지 이력</h5>
                 {/* 내용 추가 */}
               </Row>
               <Row style={{ height: "300px" }}>
-                <h4>내 챌린지 이력</h4>
+                <h5>내 챌린지 이력</h5>
                 {/* 내용 추가 */}
               </Row>
             </Container>
