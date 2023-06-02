@@ -67,7 +67,7 @@ const ChallengeCreate = () => {
         <Form.Group controlId="icon">
           <Form.Label>아이콘</Form.Label>
           <Container className="text-muted" style={{fontSize:'0.85rem'}}>
-            챌린지에 어울리는 테마 아이콘을 설정해주세요.
+            챌린지에 어울리는 테마 아이콘을 설정해주세요. 대표 이미지로 나타납니다.
           </Container>
           <ButtonGroup>
             <Button
