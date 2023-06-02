@@ -57,6 +57,7 @@ function LoginForm() {
   };
 
   return (
+    <>
     <Container
       className="position-absolute top-50 start-50 translate-middle pt-3 pb-3"
       style={{
@@ -87,7 +88,7 @@ function LoginForm() {
             )}
           </Form.Group>
 
-          <Form.Group controlId="loginPassword" className="mt-3">
+          <Form.Group controlId="loginPassword" className="mt-4">
             <Form.Label style={{ fontWeight: 'bold' }}>비밀번호</Form.Label>
             <Form.Control
               type="password"
@@ -103,7 +104,7 @@ function LoginForm() {
             )}
           </Form.Group>
 
-          <Form.Group as={Row} className="mt-3 text-center">
+          <Form.Group as={Row} className="mt-5 text-center">
             <Col sm={{ span: 20 }}>
               <Button
                 variant="light"
@@ -120,7 +121,7 @@ function LoginForm() {
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} className="mt-3 text-center">
+          <Form.Group as={Row} className="mt-4 mb-4 text-center">
             <Col sm={{ span: 20 }}>
               <Button
                 variant="light"
@@ -134,6 +135,7 @@ function LoginForm() {
         </Form>
       </Container>
     </Container>
+    </>
   );
 }
 
