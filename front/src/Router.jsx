@@ -4,7 +4,7 @@ import Mall from "./pages/Mall/Mall";
 import Blog from "./pages/Blog/Blog";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
-import My from "./pages/My/My";
+import My from "./pages/My/MyPage";
 
 const Router = () => {
   return (

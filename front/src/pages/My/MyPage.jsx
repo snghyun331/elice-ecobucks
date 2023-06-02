@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Container, Col, Row, Modal, Button } from "react-bootstrap";
-import UserEditForm from "../../components/My/UserEditForm";
-import UserOrderHistory from "../../components/My/UserOrderHistory";
-import UserMileageHistory from "../../components/My/UserMileageHistory";
-import UserSummary from "../../components/My/UserSummary";
+import UserEditForm from "./UserEditForm";
+import UserOrderHistory from "./UserOrderHistory";
+import UserMileageHistory from "./UserMileageHistory";
+import UserSummary from "./UserSummary";
 
 
 function My() {
