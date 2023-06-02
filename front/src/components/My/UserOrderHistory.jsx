@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Table, Pagination } from "react-bootstrap";
+import React, { useState } from "react";
+import { Table, Pagination, Container } from "react-bootstrap";
 
 const UserOrderHistory = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -60,7 +60,25 @@ const UserOrderHistory = () => {
       product: "Product E",
       price: 200,
       location: "Location E",
+    },    {
+      date: "2023-05-16",
+      product: "Product E",
+      price: 200,
+      location: "Location E",
     },
+    {
+      date: "2023-05-16",
+      product: "Product E",
+      price: 200,
+      location: "Location E",
+    },
+    {
+      date: "2023-05-16",
+      product: "Product E",
+      price: 200,
+      location: "Location E",
+    },
+    
 
     // 더 많은 주문 내역 데이터...
   ];
@@ -98,17 +116,21 @@ const UserOrderHistory = () => {
       </Table>
 
       {orderHistory.length > ordersPerPage && (
-        <Pagination>
-          {Array.from({ length: Math.ceil(orderHistory.length / ordersPerPage) }).map((_, index) => (
-            <Pagination.Item
-              key={index + 1}
-              active={index + 1 === currentPage}
-              onClick={() => handlePageChange(index + 1)}
-            >
-              {index + 1}
-            </Pagination.Item>
-          ))}
-        </Pagination>
+        <Container className="d-flex justify-content-center">
+          <Pagination>
+            {Array.from({
+              length: Math.ceil(orderHistory.length / ordersPerPage),
+            }).map((_, index) => (
+              <Pagination.Item
+                key={index + 1}
+                active={index + 1 === currentPage}
+                onClick={() => handlePageChange(index + 1)}
+              >
+                {index + 1}
+              </Pagination.Item>
+            ))}
+          </Pagination>
+        </Container>
       )}
     </>
   );
