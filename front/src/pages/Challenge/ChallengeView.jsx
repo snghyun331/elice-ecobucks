@@ -42,8 +42,8 @@ const ChallengeView = () => {
   });
 
   return (
-    <Container className="d-flex flex-wrap">
-            <Row  style={{ width: "100%", border: '1px solid blue', height: '17rem' }}>
+    <Container className="d-flex flex-wrap justify-content-center">
+      <Row style={{ width: "100%", border: '1px solid blue', height: '17rem' }}>
         개발자가 제공하는 챌린지 영역(메가 챌린지)
       </Row>
       {sortedChallenges.map((challenge, index) => (
@@ -79,12 +79,13 @@ const ChallengeView = () => {
               <br />
               참여인원: {challenge.participantNumber.toLocaleString()} 명
             </Card.Text>
-              더보기
+            더보기
           </Card.Body>
         </Card>
       ))}
     </Container>
   );
+  
 };
 
 export default ChallengeView;

@@ -13,7 +13,13 @@ function ChallengePage() {
   };
 
   return (
-    <Container className="pt-5 ps-0 pb-5" style={{ width: "80%" }}>
+    
+    <Container
+      className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
+      style={{ width: "80%", border: '1px solid #c2c2c2'}}
+    >
+      
+    챌린지를 확인하고 참가해보세요!
       {showCreateForm ? <ChallengeCreate /> : <ChallengeView />}
       {buttonClicked ? null : (
         <Button onClick={handleCreateButtonClick}>
@@ -22,6 +28,7 @@ function ChallengePage() {
       )}
     </Container>
   );
+  
 }
 
 export default ChallengePage;
