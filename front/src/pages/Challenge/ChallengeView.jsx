@@ -36,7 +36,7 @@ const ChallengeView = () => {
   });
 
   return (
-    <Container className="">
+    <Container className="d-flex flex-wrap">
       {sortedChallenges.map((challenge, index) => (
         <Card
           key={index}
@@ -65,9 +65,7 @@ const ChallengeView = () => {
               <br />
               작성자: {challenge.author}
             </Card.Text>
-            <Button variant="primary" size="sm">
               더보기
-            </Button>
           </Card.Body>
         </Card>
       ))}

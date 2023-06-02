@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Col, Row, Modal, Button } from "react-bootstrap";
 import ChallengeView from "./ChallengeView";
-
+import ChallengeCreate from "./ChallengeCreate"
 
 function ChallengePage() {
 
@@ -12,6 +12,7 @@ function ChallengePage() {
           챌린지 모집하기
         </Button>
         <ChallengeView />
+        <ChallengeCreate />
       </Container>
   );
 }
