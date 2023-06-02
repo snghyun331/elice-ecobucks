@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Container, Col, Row, Modal, Button } from "react-bootstrap";
 import UserEditForm from "../../components/My/UserEditForm";
+import UserOrderHistory from "../../components/My/UserOrderHistory";
+
 function My() {
   const [showModal, setShowModal] = useState(false);
 
@@ -53,15 +55,16 @@ function My() {
             {/* 오른쪽 컬럼 */}
             <Container style={{ height: "100%", background: "white" }}>
               <Row style={{ height: "300px" }}>
-                <h2>내 주문 이력</h2>
+                <h4>내 주문 이력</h4>
+                {/* 내용 추가 */}
+                <UserOrderHistory />
+              </Row>
+              <Row style={{ height: "300px" }}>
+                <h4>내 마일리지 이력</h4>
                 {/* 내용 추가 */}
               </Row>
               <Row style={{ height: "300px" }}>
-                <h2>내 마일리지 이력</h2>
-                {/* 내용 추가 */}
-              </Row>
-              <Row style={{ height: "300px" }}>
-                <h2>내 챌린지 이력</h2>
+                <h4>내 챌린지 이력</h4>
                 {/* 내용 추가 */}
               </Row>
             </Container>
