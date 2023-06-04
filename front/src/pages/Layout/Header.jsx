@@ -4,20 +4,14 @@
  * rightNav 로그인 여부에 따라 다르게 구현하기
  */
 import LeftNav from "./LeftNav";
+import RightNav from "./RightNav";
 import { Navbar } from "react-bootstrap";
 const Header = () => {
   return (
-    <Navbar
-      className="bg-light"
-      style={{
-        position: "fixed",
-        top: "0",
-        left: "0",
-        width: "100%",
-      }}
-    >
+    <>
       <LeftNav />
-    </Navbar>
+      <RightNav />
+    </>
   );
 };
 export default Header;

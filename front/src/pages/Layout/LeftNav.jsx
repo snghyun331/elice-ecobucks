@@ -10,23 +10,22 @@ const LeftNav = () => {
         top: "0",
         left: "0",
         width: "100%",
+        backgroundColor: "dark",
       }}
     >
-      <img
-        src={Logo}
-        alt="logo"
-        style={{
-          width: "10%",
-        }}
-      />
-
-      <Navbar.Toggle
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapsibleNavbar"
-      >
-        <Navbar.Toggle icon></Navbar.Toggle>
-      </Navbar.Toggle>
+      <div className="container-fluid">
+        <a className="navbar-brand" href="/">
+          LOGO
+        </a>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapsibleNavbar"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+      </div>
     </Navbar>
   );
 };
