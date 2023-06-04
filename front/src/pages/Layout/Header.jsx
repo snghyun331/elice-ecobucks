@@ -9,6 +9,7 @@ const Header = () => {
           height: "60px",
           backgroundColor: "rgba(0, 0, 0, 0.5)",
           top: "0",
+          position: "fixed",
         }}
       >
         얍!
