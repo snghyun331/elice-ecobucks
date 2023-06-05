@@ -7,7 +7,18 @@ import SeoulMap from "../../../../data/seoul_map/seoulMap.png"; // 나중에 삭
 
 const Mall = () => {
   return (
-    <>
+    <div style={{zIndex: "-1", padding:"60px"}}>
+      <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: "70%",
+            background: "#4d9e81",
+            zIndex: -1,
+          }}
+        ></div>
       <Container className="text-center">
         <img src={Logo} className="w-50 mt-5 mb-5" alt="Logo" />
       </Container>
@@ -87,7 +98,7 @@ const Mall = () => {
           </Col>
         </Row>
       </Container>
-    </>
+    </div>
   );
 };
 

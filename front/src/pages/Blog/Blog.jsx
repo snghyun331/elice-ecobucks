@@ -2,7 +2,18 @@ import { Button, Card, Container } from "react-bootstrap";
 
 const Blog = () => {
   return (
-    <>
+    <div style={{ padding: "60px"}}>
+      <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: "70%",
+              background: "#4d9e81",
+              zIndex: -1,
+            }}
+          ></div>
       <h3 style={{ display: "flex", justifyContent: "center" }}>
         블로그페이지.
       </h3>
@@ -41,7 +52,7 @@ const Blog = () => {
           </Card.Body>
         </Card>
       </Container>
-    </>
+    </div>
   );
 };
 

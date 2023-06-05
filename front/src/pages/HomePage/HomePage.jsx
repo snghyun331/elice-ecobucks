@@ -1,14 +1,12 @@
 import { Link } from "react-router-dom";
 import { Container, Button} from "react-bootstrap";
-import Logo from "../../assets/logo.png";
 import mall from "../../assets/mall.png";
 import tip from "../../assets/tip.png";
 import challenge from "../../assets/challenge.png";
 import TipCarousel from "./TipCarousel";
 const HomePage = () => {
   return (
-    
-    <div style={{ justifyContent: "center" }}>
+    <div style={{ justifyContent: "center", padding: "60px" }}>
       <div
           style={{
             position: "absolute",
@@ -17,7 +15,7 @@ const HomePage = () => {
             right: 0,
             bottom: "70%",
             background: "#4d9e81",
-            zIndex: -1,
+            zIndex: -1
           }}
         ></div>
       <h3
