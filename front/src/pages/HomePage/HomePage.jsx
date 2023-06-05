@@ -2,14 +2,27 @@ import { Link } from "react-router-dom";
 import { Container, Button } from "react-bootstrap";
 const HomePage = () => {
   return (
-    <>
-      <h3>
+    <div>
+      <h3 style={{ display: "flex", justifyContent: "center" }}>
         <span style={{ color: "#00D387", fontSize: "48px" }}>ECOBUCKS</span>
       </h3>
-      <span style={{ color: "#FF6B00", fontSize: "24px" }}>
+      <span
+        style={{
+          color: "#FF6B00",
+          fontSize: "24px",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         Make Tomorrow Bright
       </span>
-      <Container style={{ marginBottom: "20px" }}>
+      <Container
+        style={{
+          marginBottom: "20px",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         <Link to="/mall">
           <Button
             type="button"
@@ -63,7 +76,7 @@ const HomePage = () => {
       >
         <span>HOT</span>
       </Container>
-    </>
+    </div>
   );
 };
 export default HomePage;
