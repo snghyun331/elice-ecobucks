@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import { Container, Button} from "react-bootstrap";
 import Logo from "../../assets/logo.png";
+import mall from "../../assets/mall.png";
+import tip from "../../assets/tip.png";
+import challenge from "../../assets/challenge.png";
 import TipCarousel from "./TipCarousel";
 const HomePage = () => {
   return (
@@ -46,28 +49,31 @@ const HomePage = () => {
         <Link to="/mall">
           <Button
             type="button"
-            style={{ marginRight: "20px", backgroundColor: "#07F39E" }}
+            style={{display:"grid", marginRight: "20px", backgroundColor: "#fff", placeItems: "center",}}
           >
-            쇼핑몰로 이동
+            <img src={mall}></img>
+            <span style={{color: "black"}}>떠리몰</span>
           </Button>
         </Link>
         <Link to="/blog">
           <Button
             type="button"
-            style={{ marginRight: "20px", backgroundColor: "#07F39E" }}
+            style={{ display:"grid", marginRight: "20px", backgroundColor: "#fff", placeItems: "center", }}
           >
-            블로그로 이동
+            <img src={tip}></img>
+            <span style={{color: "black"}}>블로그</span>
           </Button>
         </Link>
         <button
           type="button"
-          style={{ marginRight: "20px", backgroundColor: "#07F39E" }}
+          style={{ marginRight: "20px", backgroundColor: "#fff" }}
         >
-          전력 통계
+          <span style={{color:"black"}}>전력 통계</span>
         </button>
         <Link to="/challenge">
-          <Button type="button" style={{ backgroundColor: "#07F39E" }}>
-            챌린지
+          <Button type="button" style={{ display:"grid", backgroundColor: "#fff", placeItems:"center" }}>
+          <img src={challenge}></img>
+          <span style={{color: "black"}}>챌린지</span>
           </Button>
         </Link>
       </Container>
