@@ -152,12 +152,15 @@ const UserEditForm = () => {
           onChange={(e) => setPassword(e.target.value)}
           style={{ borderRadius: "0px" }}
         />
-          {!isPasswordValid && password.length > 0 && (
-            <Form.Text className="text-success d-block" style={{ textAlign: "left" }}>
-              비밀번호는 알파벳, 숫자, 특수문자를 모두 포함하는 6-18자리어야
-              합니다.
-            </Form.Text>
-          )}
+        {!isPasswordValid && password.length > 0 && (
+          <Form.Text
+            className="text-success d-block"
+            style={{ textAlign: "left" }}
+          >
+            비밀번호는 알파벳, 숫자, 특수문자를 모두 포함하는 6-18자리어야
+            합니다.
+          </Form.Text>
+        )}
       </Form.Group>
 
       <Form.Group controlId="registerConfirmPassword" className="mt-4">
@@ -175,7 +178,10 @@ const UserEditForm = () => {
           style={{ borderRadius: "0px" }}
         />
         {!isPasswordSame && (
-            <Form.Text className="text-success d-block" style={{ textAlign: "left" }}>
+          <Form.Text
+            className="text-success d-block"
+            style={{ textAlign: "left" }}
+          >
             비밀번호가 일치하지 않습니다.
           </Form.Text>
         )}
@@ -217,6 +223,10 @@ const UserEditForm = () => {
           </Dropdown.Menu>
         </Dropdown>
       </Form.Group>
+
+      <Row className="text-secondary ms-1 " style={{ fontSize: "15px" }}>
+        회원 탈퇴
+      </Row>
 
       <Button
         variant="light"
