@@ -1,7 +1,7 @@
 import cors from "cors";
 import express from "express";
 import { userAuthRouter } from "./routers/userRouter.js";
-import { blogpostRouter } from "./routers/blogpostRouter.js";
+//import { blogpostRouter } from "./routers/blogpostRouter.js";
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 
 const app = express();
@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
 app.use(userAuthRouter);
-app.use(blogpostRouter);
+//app.use(blogpostRouter);
 
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
