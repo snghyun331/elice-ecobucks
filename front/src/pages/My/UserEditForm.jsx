@@ -1,12 +1,19 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Row, Form, Button, Dropdown, Container } from "react-bootstrap";
+import { Row, Form, Button, Dropdown, Alert } from "react-bootstrap";
+
+import { UserStateContext } from "../../context/user/UserProvider";
 
 const UserEditForm = () => {
-  const [name, setName] = useState("");
-  const [district, setDistrict] = useState(null);
+  const navigate = useNavigate();
+  const userState = useContext(UserStateContext);
 
+  const [name, setName] = useState(userState.user.username);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [district, setDistrict] = useState(userState.user.gu_code);
   const [greeting, setGreeting] = useState("");
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const districts = [
     "강남구",
@@ -36,14 +43,6 @@ const UserEditForm = () => {
     "중랑구",
   ];
 
-  const validateEmail = (email) => {
-    return email
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
-
   const validatePassword = (password) => {
     return password.match(
       /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,18}$/
@@ -54,28 +53,32 @@ const UserEditForm = () => {
     return name.match(/^[a-zA-Z가-힣\s]{2,20}$/);
   };
 
-  const isEmailValid = validateEmail(email);
   const isPasswordValid = validatePassword(password);
   const isPasswordSame = password === confirmPassword;
   const isNameValid = validateName(name);
   const isDistrictValid = district != null;
 
   const isFormValid =
-    isEmailValid &&
-    isPasswordValid &&
-    isPasswordSame &&
-    isNameValid &&
-    isDistrictValid;
+    isPasswordValid && isPasswordSame && isNameValid && isDistrictValid;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // 여기에서 변경된 정보를 처리하는 로직을 구현합니다.
     // 예를 들어, 서버로 변경된 정보를 전송하거나 상태를 업데이트하는 등의 작업을 수행할 수 있습니다.
     console.log("Name:", name);
-    console.log("Email:", email);
     console.log("Password:", password);
     console.log("Greeting:", greeting);
     console.log("District:", district);
+  };
+
+  const handleWithdraw = () => {
+    setShowConfirm(true);
+  };
+
+  const confirmWithdraw = () => {
+    // 탈퇴 요청을 보내는 로직을 구현 (예: Api.del("/mypage/withdraw",""))
+    console.log("탈퇴 요청을 보냈습니다.");
+    // 탈퇴 후 리디렉션 등의 작업 수행
   };
 
   return (
@@ -89,7 +92,6 @@ const UserEditForm = () => {
         </Form.Label>
         <Form.Control type="file" style={{ borderRadius: "0px" }} />
       </Form.Group>
-
       <Form.Group controlId="registerName" className="mt-4">
         <Form.Label
           className="text-right d-block"
@@ -110,7 +112,6 @@ const UserEditForm = () => {
           </Form.Text>
         )}
       </Form.Group>
-
       <Form.Group controlId="formGreeting">
         <Form.Label
           className="d-block mt-4"
@@ -127,7 +128,6 @@ const UserEditForm = () => {
           style={{ borderRadius: "0px" }}
         />
       </Form.Group>
-
       <Form.Group controlId="registerPassword" className="mt-4">
         <Form.Label
           className="text-right d-block"
@@ -152,7 +152,6 @@ const UserEditForm = () => {
           </Form.Text>
         )}
       </Form.Group>
-
       <Form.Group controlId="registerConfirmPassword" className="mt-4">
         <Form.Label
           className="text-right d-block"
@@ -176,7 +175,6 @@ const UserEditForm = () => {
           </Form.Text>
         )}
       </Form.Group>
-
       <Form.Group controlId="registerDistrict" className="mt-4">
         <Form.Label
           className="d-block mt-4"
@@ -213,11 +211,6 @@ const UserEditForm = () => {
           </Dropdown.Menu>
         </Dropdown>
       </Form.Group>
-
-      <Row className="text-secondary ms-1 " style={{ fontSize: "15px" }}>
-        회원 탈퇴
-      </Row>
-
       <Button
         variant="light"
         type="submit"
@@ -230,7 +223,34 @@ const UserEditForm = () => {
         }}
       >
         저장
+      </Button>{" "}
+      <Button
+        className="mt-3"
+        size="sm"
+        variant="dark"
+        style={{ width: "100%", fontSize: "15px", borderRadius: "0px" }}
+        onClick={handleWithdraw}
+      >
+        {" "}
+        회원 탈퇴
       </Button>
+      {/* Confirm 창 */}
+      <Alert show={showConfirm} variant="danger" className="mt-3">
+        <Alert.Heading>정말로 탈퇴하시겠습니까?</Alert.Heading>
+        <p>계속하려면 탈퇴 버튼을 눌러주세요.</p>
+        <hr />
+        <div className="d-flex justify-content-end">
+          <Button
+            variant="outline-danger"
+            onClick={() => setShowConfirm(false)}
+          >
+            취소
+          </Button>
+          <Button variant="danger" onClick={confirmWithdraw} className="ms-2">
+            탈퇴
+          </Button>
+        </div>
+      </Alert>
     </Form>
   );
 };
