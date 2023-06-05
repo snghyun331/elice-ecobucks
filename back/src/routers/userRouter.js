@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required.js";
 import {PostUser_register, PostUser_login, GetUser_userlist, GetUser_myPage,
-        GetUser_err_yellow} from "../controllers/userController.js"
+        GetUser_err_yellow,
+        userPutMypage} from "../controllers/userController.js"
 
 
 const userAuthRouter = Router();
@@ -22,6 +23,11 @@ userAuthRouter.get(
         GetUser_err_yellow
 );
 
+userAuthRouter.put(
+        "/mypage/useredit/:_id",
+        login_required,
+        userPutMypage
+)
 
 
 export { userAuthRouter };
