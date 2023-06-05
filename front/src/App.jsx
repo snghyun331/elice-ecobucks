@@ -15,11 +15,9 @@ function App() {
 
   return (
     <>
-      <DispatchContext.Provider value={dispatch}>
-        <UserStateContext.Provider value={userState}>
-          <Layout />
-        </UserStateContext.Provider>
-      </DispatchContext.Provider>
+    <UserProvider>
+      <div className="app"><Layout /></div>
+    </UserProvider>
     </>
   );
 }
