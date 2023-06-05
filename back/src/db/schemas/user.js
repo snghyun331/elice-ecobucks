@@ -21,7 +21,7 @@ const UserSchema = new Schema(
       default: 0
     },
     gu_code: {
-        type: Number,
+        type: String,
         required: true
     }
     
