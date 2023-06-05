@@ -12,7 +12,7 @@ class User {
   }
 
   static async findById({ user_id }) {
-    const user = await UserModel.findOne({ id: user_id });
+    const user = await UserModel.findOne({ _id: user_id });
     return user;
   }
 
@@ -21,7 +21,12 @@ class User {
     return users;
   }
 
-  
+  // 탈퇴한 회원 찾는 함수
+  static async findWithdraw({ email }) {
+    const user = await UserModel.findOne({ is_withdrawed: true, email: email})
+    return user
+  }
+
 }
 
 export { User };

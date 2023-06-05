@@ -1,7 +1,6 @@
 import { userAuthService } from "../services/userService.js";
 import is from '@sindresorhus/is';
 
-
 const PostUser_register = async function (req, res, next) {
     try {
       if (is.emptyObject(req.body)) {
@@ -9,18 +8,15 @@ const PostUser_register = async function (req, res, next) {
           "headers의 Content-Type을 application/json으로 설정해주세요"
         );
       }
-    //   const { error } = userValidation.postRegisterUserSchema.validate(req.body);
-    //   if (error) {
-    //     throw new Error(error.details[0].message);
-    //   }
       
-      const { username, email, password, gu_code } = req.body;
+      const { username, email, password, guName } = req.body;
+
   
       const newUser = await userAuthService.addUser({
         username,
         email,
         password,
-        gu_code
+        guName,
       });
   
       if (newUser.errorMessage) {
@@ -36,10 +32,6 @@ const PostUser_register = async function (req, res, next) {
 
 const PostUser_login = async function (req, res, next) {
     try {
-    //   const { error } = userValidation.postLoginUserSchema.validate(req.body);
-    //   if (error) {
-    //     throw new Error(error.details[0].message);
-    //   }
 
       const { email, password } = req.body;
   
@@ -69,7 +61,42 @@ const GetUser_userlist = async function (req, res, next) {
   }
 
 
-const GetUser_current = async function (req, res, next) {
+const GetUser_myPage = async function (req, res, next) {
+    try {
+      // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
+      const user_id = req.currentUserId;
+      
+      const currentUserInfo = await userAuthService.getUserInfo({
+        user_id,
+      });
+
+      if (currentUserInfo.errorMessage) {
+        throw new Error(currentUserInfo.errorMessage);
+      }
+
+    return res.status(200).send(currentUserInfo);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+
+const GetUser_err_yellow =  async function (req, res, next) {
+    try {
+      const user_id = req.params._id;
+      const currentUserInfo = await userAuthService.getUserInfo({ user_id });
+
+      if (currentUserInfo.errorMessage) {
+        throw new Error(currentUserInfo.errorMessage);
+      }
+
+    return res.status(200).send(currentUserInfo);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  const userGetcurrent = async function (req, res, next) {
     try {
       // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
       const user_id = req.currentUserId;
@@ -88,23 +115,27 @@ const GetUser_current = async function (req, res, next) {
   }
 
 
-const GetUser_err_yellow =  async function (req, res, next) {
-    try {
-      const user_id = req.params.id;
-      const currentUserInfo = await userAuthService.getUserInfo({ user_id });
+const userDeleteWithdraw = async function (req, res, next) {
+  const user_id = req.currentUserId;
+  try {
+    const user = await userAuthService.getUserInfo({ user_id })
 
-      if (currentUserInfo.errorMessage) {
-        throw new Error(currentUserInfo.errorMessage);
-      }
-
-    return res.status(200).send(currentUserInfo);
-    } catch (error) {
-      next(error);
+    if(!user) {
+      const errorMessage = "회원이 존재하지 않습니다."
+      const result = {result: errorMessage}
     }
-  }
 
+    user.is_withdrawed = true
+    await user.save()
+
+    const result = { result : "Successfully withdraw"}
+    return res.status(200).send(result)
+  } catch (error) {
+    next(error)
+  } 
+}
 
 
 
 export {PostUser_register, PostUser_login, GetUser_userlist, 
-    GetUser_current, GetUser_err_yellow};
+    GetUser_myPage, GetUser_err_yellow, userDeleteWithdraw, userGetcurrent};
