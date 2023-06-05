@@ -27,6 +27,11 @@ const RightNav = ({ isLogin }) => {
       return (
         <ul className="navbar-nav">
           <li className="nav-item">
+            <a className="nav-link" href="/">
+              홈
+            </a>
+          </li>
+          <li className="nav-item">
             <a className="nav-link" href="/blog">
               블로그
             </a>
@@ -52,16 +57,17 @@ const RightNav = ({ isLogin }) => {
   };
 
   return (
-    <Navbar
-      className="bg-light"
-      style={{
-        position: "fixed",
-        top: "0",
-        right: "0",
-        width: "100%",
-        backgroundColor: "dark",
-      }}
-    >
+    // <Navbar
+    //   className="bg-light"
+    //   style={{
+    //     position: "absolute",
+    //     top: "0",
+    //     right: "0",
+    //     width: "100%",
+    //     backgroundColor: "dark",
+    //     backdropFilter: "blur(10px)",
+    //   }}
+    // >
       <div className="container-fluid">
         <div
           className="collapse navbar-collapse justify-content-end"
@@ -70,7 +76,7 @@ const RightNav = ({ isLogin }) => {
           {renderNavContent()}
         </div>
       </div>
-    </Navbar>
+    // </Navbar>
   );
 };
 export default RightNav;

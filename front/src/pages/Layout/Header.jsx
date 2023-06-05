@@ -25,7 +25,9 @@ const Header = () => {
         top: "0",
         left: "0",
         width: "100%",
+        zIndex: "100",
         backgroundColor: "dark",
+        backdropFilter: "blur(10px)",
       }}
     >
       <div className="container-fluid">
