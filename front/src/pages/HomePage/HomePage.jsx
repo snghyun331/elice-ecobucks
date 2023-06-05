@@ -1,10 +1,22 @@
 import { Link } from "react-router-dom";
-import { Container, Button, Carousel } from "react-bootstrap";
+import { Container, Button} from "react-bootstrap";
 import Logo from "../../assets/logo.png";
-// import tipCarousel from "./tipCarousel";
+import TipCarousel from "./TipCarousel";
 const HomePage = () => {
   return (
+    
     <div style={{ justifyContent: "center" }}>
+      <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: "70%",
+            background: "#4d9e81",
+            zIndex: -1,
+          }}
+        ></div>
       <h3
         style={{
           display: "flex",
@@ -108,39 +120,31 @@ const HomePage = () => {
           marginTop: "10px",
         }}
       >
-        <span>TIP</span>
-        <Carousel>
-          <Carousel.Item>
-            <img src={Logo} className="d-block w-100" alt="logo" />
-            <Carousel.Caption style={{ color: "black" }}>
-              <h5>First slide label</h5>
-              <p>
-                Some representative placeholder content for the first slide.
-              </p>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img src={Logo} className="d-block w-100" alt="logo" />
-            <Carousel.Caption style={{ color: "black" }}>
-              <h5>Second slide label</h5>
-              <p>
-                Some representative placeholder content for the second slide.
-              </p>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img src={Logo} className="d-block w-100" alt="logo" />
-            <Carousel.Caption style={{ color: "black" }}>
-              <h5>Third slide label</h5>
-              <p>
-                Some representative placeholder content for the third slide.
-              </p>
-            </Carousel.Caption>
-          </Carousel.Item>
-          {/* <Carousel.Prev className="carousel-control-prev" /> */}
-          {/* <Carousel.Next className="carousel-control-next" /> */}
-        </Carousel>
+        <TipCarousel />
       </Container>
+      
+      <Container
+        style={{
+          width: "100%",
+          height: "30vh",
+          backgroundColor: "#fff",
+          border: "1px solid #000",
+          borderRadius: "10px",
+          padding: "10px",
+          marginTop: "10px",
+        }}
+      ></Container>
+      <Container
+        style={{
+          width: "100%",
+          height: "30vh",
+          backgroundColor: "#fff",
+          border: "1px solid #000",
+          borderRadius: "10px",
+          padding: "10px",
+          marginTop: "10px",
+        }}
+      ></Container>
     </div>
   );
 };
