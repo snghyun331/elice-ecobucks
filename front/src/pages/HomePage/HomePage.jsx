@@ -3,6 +3,7 @@ import { Container, Button, Carousel } from "react-bootstrap";
 import Logo from "../../assets/logo.png";
 // import tipCarousel from "./tipCarousel";
 const HomePage = () => {
+
   return (
     <div style={{ justifyContent: "center" }}>
       <h3

@@ -6,6 +6,7 @@ const serverUrl =
 
 async function get(endpoint, params = "") {
   console.log(
+    "겟요청",
     `%cGET 요청 ${serverUrl + endpoint + "/" + params}`,
     "color: #a25cd1;"
   );

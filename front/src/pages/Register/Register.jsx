@@ -12,7 +12,7 @@ import {
 import Logo from "../../assets/logo.png";
 
 import * as Api from "../../api";
-import { DispatchContext, UserStateContext } from '../../App'
+import { DispatchContext, UserStateContext } from '../../context/user/UserProvider'
 
 
 function RegisterForm() {
