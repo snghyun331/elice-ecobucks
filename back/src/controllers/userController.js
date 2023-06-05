@@ -1,7 +1,6 @@
 import { userAuthService } from "../services/userService.js";
 import is from '@sindresorhus/is';
 
-
 const PostUser_register = async function (req, res, next) {
     try {
       if (is.emptyObject(req.body)) {
@@ -10,13 +9,14 @@ const PostUser_register = async function (req, res, next) {
         );
       }
       
-      const { username, email, password, gu_code } = req.body;
+      const { username, email, password, guName } = req.body;
+
   
       const newUser = await userAuthService.addUser({
         username,
         email,
         password,
-        gu_code
+        guName,
       });
   
       if (newUser.errorMessage) {

@@ -1,10 +1,10 @@
-import { User } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import { UserModel } from "../db/schemas/user.js";
+import { User, Gu } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 class userAuthService {
-  static async addUser({ username, email, password, gu_code }) {
+  static async addUser({ username, email, password, guName }) {
     // 이메일 중복 확인
     const user = await User.findByEmail({ email });
     if ((user)&(user.is_withdrawed === false)) {
@@ -29,7 +29,10 @@ class userAuthService {
     // 비밀번호 해쉬화
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = { username, email, password: hashedPassword, gu_code };
+    // 구 코드 변환
+    const guCode = await Gu.getGuCodeByName(guName)
+
+    const newUser = { username, email, password: hashedPassword, guCode };
 
     // db에 저장
     const createdNewUser = await User.create({ newUser });
