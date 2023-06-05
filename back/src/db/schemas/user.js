@@ -20,8 +20,8 @@ const UserSchema = new Schema(
       required: false,
       default: 0
     },
-    gu_code: {
-        type: String,
+    guCode: {
+        type: Number,
         required: true
     }
     
