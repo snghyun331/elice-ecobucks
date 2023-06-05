@@ -6,9 +6,18 @@
 import LeftNav from "./LeftNav";
 import RightNav from "./RightNav";
 import { Navbar } from "react-bootstrap";
+import { useEffect, useState } from "react";
 const Header = () => {
+  const [isLogin, setIsLogin] = useState(false);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, []);
   return (
-    // <header className="w-full h-[60px] sm:h-[70px] backdrop-blur fixed top-0 z-10">
     <Navbar
       className="bg-light"
       style={{
@@ -19,10 +28,11 @@ const Header = () => {
         backgroundColor: "dark",
       }}
     >
-      <LeftNav />
-      <RightNav />
+      <div className="container-fluid">
+        <LeftNav />
+        <RightNav isLogin={isLogin} />
+      </div>
     </Navbar>
-    // </header>
   );
 };
 export default Header;

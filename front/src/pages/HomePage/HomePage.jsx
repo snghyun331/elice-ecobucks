@@ -53,9 +53,11 @@ const HomePage = () => {
         >
           전력 통계
         </button>
-        <button type="button" style={{ backgroundColor: "#07F39E" }}>
-          챌린지
-        </button>
+        <Link to="/challenge">
+          <Button type="button" style={{ backgroundColor: "#07F39E" }}>
+            챌린지
+          </Button>
+        </Link>
       </Container>
 
       <Container
