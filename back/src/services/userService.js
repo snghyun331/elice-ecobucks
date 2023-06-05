@@ -51,6 +51,11 @@ class userAuthService {
       return { errorMessage };
     }
 
+    if (user.is_withdrawed === true) {
+      const errorMessage = "이미 탈퇴한 회원입니다. 다시 가입해주세요"
+      return {errorMessage}
+    }
+
     // 비밀번호 일치 여부 확인
     const correctPasswordHash = user.password;
     const isPasswordCorrect = await bcrypt.compare(
