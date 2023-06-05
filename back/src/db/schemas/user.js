@@ -2,14 +2,10 @@ import { Schema, model } from "mongoose";
 
 const UserSchema = new Schema(
   {
-    id: {
-      type: String,
-      required: true,
-      unique: true,   // 기본키 설정
-    },
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     username: {
       type: String,
@@ -24,8 +20,8 @@ const UserSchema = new Schema(
       required: false,
       default: 0
     },
-    gu_code: {
-        type: String,
+    guCode: {
+        type: Number,
         required: true
     }
     
