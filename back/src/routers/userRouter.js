@@ -10,7 +10,7 @@ userAuthRouter.post("/register", PostUser_register);
 
 userAuthRouter.post("/login", PostUser_login);
 
-userAuthRouter.get("/user/current",login_required, userGetcurrent);
+userAuthRouter.get("/current",login_required, userGetcurrent);
 
 userAuthRouter.get("/mypage", login_required, GetUser_myPage);
 
