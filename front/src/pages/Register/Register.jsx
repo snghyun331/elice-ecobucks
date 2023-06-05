@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Col,
@@ -8,44 +8,50 @@ import {
   Button,
   Image,
   Dropdown,
-} from 'react-bootstrap';
-import Logo from '../../assets/logo.png';
+} from "react-bootstrap";
+import Logo from "../../assets/logo.png";
+
+import * as Api from "../../api";
+import { DispatchContext, UserStateContext } from '../../App'
+
 
 function RegisterForm() {
   const navigate = useNavigate();
+  const dispatch = useContext(DispatchContext)
+  const userState = useContext(UserStateContext)
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [name, setName] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState("");
   const [district, setDistrict] = useState(null);
 
   const districts = [
-    '강남구',
-    '강동구',
-    '강북구',
-    '강서구',
-    '관악구',
-    '광진구',
-    '구로구',
-    '금천구',
-    '노원구',
-    '도봉구',
-    '동대문구',
-    '동작구',
-    '마포구',
-    '서대문구',
-    '서초구',
-    '성동구',
-    '성북구',
-    '송파구',
-    '양천구',
-    '영등포구',
-    '용산구',
-    '은평구',
-    '종로구',
-    '중구',
-    '중랑구',
+    "강남구",
+    "강동구",
+    "강북구",
+    "강서구",
+    "관악구",
+    "광진구",
+    "구로구",
+    "금천구",
+    "노원구",
+    "도봉구",
+    "동대문구",
+    "동작구",
+    "마포구",
+    "서대문구",
+    "서초구",
+    "성동구",
+    "성북구",
+    "송파구",
+    "양천구",
+    "영등포구",
+    "용산구",
+    "은평구",
+    "종로구",
+    "중구",
+    "중랑구",
   ];
 
   const validateEmail = (email) => {
@@ -56,29 +62,63 @@ function RegisterForm() {
       );
   };
 
+  const validatePassword = (password) => {
+    return password.match(
+      /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,18}$/
+    );
+  };
+
+  const validateName = (name) => {
+    return name.match(/^[a-zA-Z가-힣\s]{2,20}$/);
+  };
+
   const isEmailValid = validateEmail(email);
-  const isPasswordValid = password.length >= 4;
+  const isPasswordValid = validatePassword(password);
   const isPasswordSame = password === confirmPassword;
-  const isNameValid = name.length >= 2;
+  const isNameValid = validateName(name);
+  const isDistrictValid = district != null;
+
   const isFormValid =
-    isEmailValid && isPasswordValid && isPasswordSame && isNameValid;
+    isEmailValid &&
+    isPasswordValid &&
+    isPasswordSame &&
+    isNameValid &&
+    isDistrictValid;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       // "user/register" 엔드포인트로 post요청함.
-      await Api.post('user/register', {
+      await Api.post("user/register", {
+        username: name,
         email,
         password,
-        name,
-        district: district,
+        gu_code: district,
       });
 
-      // 로그인 페이지로 이동함.
-      navigate('/login');
+      // 회원가입과 동시에 로그인 되도록 함.
+      const res = await Api.post("user/login", {
+        email,
+        password,
+      });
+      // 유저 정보는 response의 data임.
+      const user = res.data;
+      // JWT 토큰은 유저 정보의 token임.
+      const jwtToken = user.token;
+      // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
+      sessionStorage.setItem("userToken", jwtToken);
+      // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: user,
+      });
+
+      // 기본 페이지로 이동함.
+      navigate("/", { replace: true });
+      
     } catch (err) {
-      console.log('회원가입에 실패하였습니다.', err);
+      console.log("회원가입에 실패하였습니다.", err);
     }
   };
 
@@ -86,21 +126,21 @@ function RegisterForm() {
     <Container
       className="position-absolute top-50 start-50 translate-middle pt-3 pb-3"
       style={{
-        width: '40%',
-        backgroundColor: '#F3F3F3',
-        transform: 'translate(-50%, -50%)',
-        borderRadius: '5px',
+        width: "40%",
+        backgroundColor: "#F3F3F3",
+        transform: "translate(-50%, -50%)",
+        borderRadius: "5px",
       }}
     >
       <Container className="text-center">
         <img src={Logo} className="w-50 mt-5 mb-5" alt="Logo" />
       </Container>
-      <Container style={{ width: '95%' }}>
+      <Container style={{ width: "95%" }}>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="registerEmail">
             <Form.Label
               className="text-right d-block"
-              style={{ fontWeight: 'bold' }}
+              style={{ fontWeight: "bold" }}
             >
               이메일 주소
             </Form.Label>
@@ -109,9 +149,9 @@ function RegisterForm() {
               autoComplete="off"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              style={{ borderRadius: '0px' }}
+              style={{ borderRadius: "0px" }}
             />
-            {!isEmailValid && (
+            {!isEmailValid && email.length > 0 && (
               <Form.Text className="text-success">
                 이메일 형식이 올바르지 않습니다.
               </Form.Text>
@@ -121,7 +161,7 @@ function RegisterForm() {
           <Form.Group controlId="registerPassword" className="mt-4">
             <Form.Label
               className="text-right d-block"
-              style={{ fontWeight: 'bold' }}
+              style={{ fontWeight: "bold" }}
             >
               비밀번호
             </Form.Label>
@@ -130,11 +170,12 @@ function RegisterForm() {
               autoComplete="off"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={{ borderRadius: '0px' }}
+              style={{ borderRadius: "0px" }}
             />
-            {!isPasswordValid && (
+            {!isPasswordValid && password.length > 0 && (
               <Form.Text className="text-success">
-                비밀번호는 4글자 이상으로 설정해 주세요.
+                비밀번호는 알파벳, 숫자, 특수문자를 모두 포함하는 6-18자리어야
+                합니다.
               </Form.Text>
             )}
           </Form.Group>
@@ -142,7 +183,7 @@ function RegisterForm() {
           <Form.Group controlId="registerConfirmPassword" className="mt-4">
             <Form.Label
               className="text-right d-block"
-              style={{ fontWeight: 'bold' }}
+              style={{ fontWeight: "bold" }}
             >
               비밀번호 재확인
             </Form.Label>
@@ -151,7 +192,7 @@ function RegisterForm() {
               autoComplete="off"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              style={{ borderRadius: '0px' }}
+              style={{ borderRadius: "0px" }}
             />
             {!isPasswordSame && (
               <Form.Text className="text-success">
@@ -163,7 +204,7 @@ function RegisterForm() {
           <Form.Group controlId="registerName" className="mt-4">
             <Form.Label
               className="text-right d-block"
-              style={{ fontWeight: 'bold' }}
+              style={{ fontWeight: "bold" }}
             >
               이름
             </Form.Label>
@@ -172,19 +213,19 @@ function RegisterForm() {
               autoComplete="off"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              style={{ borderRadius: '0px' }}
+              style={{ borderRadius: "0px" }}
             />
-            {!isNameValid && (
+            {!isNameValid && name.length > 0 && (
               <Form.Text className="text-success">
-                이름은 2글자 이상으로 설정해 주세요.
+                이름은 한글과 알파벳만 사용 가능합니다.
               </Form.Text>
             )}
           </Form.Group>
 
           <Form.Group controlId="registerDistrict" className="mt-4">
-            <Form.Label className="d-block" style={{ fontWeight: 'bold' }}>
+            <Form.Label className="d-block" style={{ fontWeight: "bold" }}>
               거주하시는 구
-              <Row className="text-secondary ms-1" style={{ fontSize: '13px' }}>
+              <Row className="text-secondary ms-1" style={{ fontSize: "13px" }}>
                 현재 서울시만 서비스하고 있습니다.
               </Row>
             </Form.Label>
@@ -195,14 +236,14 @@ function RegisterForm() {
                 className="text-start d-block"
                 id="dropdown-district"
                 style={{
-                  backgroundColor: 'white',
-                  width: '100%',
-                  borderRadius: '0px',
+                  backgroundColor: "white",
+                  width: "100%",
+                  borderRadius: "0px",
                 }}
               >
-                {district || '구를 선택해주세요. '}
+                {district || "구를 선택해주세요. "}
               </Dropdown.Toggle>
-              <Dropdown.Menu style={{ maxHeight: '200px', overflowY: 'auto' }}>
+              <Dropdown.Menu style={{ maxHeight: "200px", overflowY: "auto" }}>
                 {districts.map((district) => (
                   <Dropdown.Item
                     key={district}
@@ -221,7 +262,7 @@ function RegisterForm() {
                 variant="success"
                 type="submit"
                 disabled={!isFormValid}
-                style={{ width: '100%', borderRadius: '0px' }}
+                style={{ width: "100%", borderRadius: "0px" }}
                 onClick={handleSubmit}
               >
                 회원가입
