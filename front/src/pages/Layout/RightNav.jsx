@@ -1,7 +1,6 @@
-import { Navbar } from "react-bootstrap";
-
 const RightNav = ({ isLogin }) => {
   // 로그인 여부에 따라 다른 내용을 렌더링
+  console.log(isLogin);
   const renderNavContent = () => {
     if (isLogin) {
       return (
@@ -57,17 +56,6 @@ const RightNav = ({ isLogin }) => {
   };
 
   return (
-    // <Navbar
-    //   className="bg-light"
-    //   style={{
-    //     position: "absolute",
-    //     top: "0",
-    //     right: "0",
-    //     width: "100%",
-    //     backgroundColor: "dark",
-    //     backdropFilter: "blur(10px)",
-    //   }}
-    // >
       <div className="container-fluid">
         <div
           className="collapse navbar-collapse justify-content-end"
@@ -76,7 +64,6 @@ const RightNav = ({ isLogin }) => {
           {renderNavContent()}
         </div>
       </div>
-    // </Navbar>
   );
 };
 export default RightNav;

@@ -6,17 +6,12 @@
 import LeftNav from "./LeftNav";
 import RightNav from "./RightNav";
 import { Navbar } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { UserStateContext } from "../../App";
 const Header = () => {
-  const [isLogin, setIsLogin] = useState(false);
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-  }, []);
+  const { user}  = useContext(UserStateContext)
+  console.log('user', user)
+
   return (
     <Navbar
       className="bg-light"
@@ -25,14 +20,12 @@ const Header = () => {
         top: "0",
         left: "0",
         width: "100%",
-        zIndex: "100",
         backgroundColor: "dark",
-        backdropFilter: "blur(10px)",
       }}
     >
       <div className="container-fluid">
         <LeftNav />
-        <RightNav isLogin={isLogin} />
+        <RightNav isLogin={user ? true : false } />
       </div>
     </Navbar>
   );
