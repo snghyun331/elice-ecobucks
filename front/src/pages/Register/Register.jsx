@@ -56,10 +56,24 @@ function RegisterForm() {
       );
   };
 
+  const validatePassword = (password) => {
+    return password
+      .match(
+        /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,18}$/
+      )
+  }
+
+  const validateName = (name) => {
+    return name 
+      .match(
+        /^[a-zA-Z가-힣\s]{2,20}$/
+      )
+  }
+
   const isEmailValid = validateEmail(email);
-  const isPasswordValid = password.length >= 4;
+  const isPasswordValid = validatePassword(password);
   const isPasswordSame = password === confirmPassword;
-  const isNameValid = name.length >= 2;
+  const isNameValid = validateName(name);
   const isFormValid =
     isEmailValid && isPasswordValid && isPasswordSame && isNameValid;
 
@@ -111,7 +125,7 @@ function RegisterForm() {
               onChange={(e) => setEmail(e.target.value)}
               style={{ borderRadius: '0px' }}
             />
-            {!isEmailValid && (
+            {!isEmailValid && email.length > 0 && (
               <Form.Text className="text-success">
                 이메일 형식이 올바르지 않습니다.
               </Form.Text>
@@ -132,9 +146,9 @@ function RegisterForm() {
               onChange={(e) => setPassword(e.target.value)}
               style={{ borderRadius: '0px' }}
             />
-            {!isPasswordValid && (
+            {!isPasswordValid && password.length > 0 && (
               <Form.Text className="text-success">
-                비밀번호는 4글자 이상으로 설정해 주세요.
+                비밀번호는 알파벳, 숫자, 특수문자를 모두 포함하는 6-18자리어야 합니다.
               </Form.Text>
             )}
           </Form.Group>
@@ -174,9 +188,9 @@ function RegisterForm() {
               onChange={(e) => setName(e.target.value)}
               style={{ borderRadius: '0px' }}
             />
-            {!isNameValid && (
+            {!isNameValid && name.length > 0 && (
               <Form.Text className="text-success">
-                이름은 2글자 이상으로 설정해 주세요.
+                이름은 한글과 알파벳만 사용 가능합니다.
               </Form.Text>
             )}
           </Form.Group>
