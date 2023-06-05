@@ -1,6 +1,5 @@
 import { User } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt from "bcrypt";
-import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
 
 class userAuthService {
@@ -16,9 +15,7 @@ class userAuthService {
     // 비밀번호 해쉬화
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // id 는 유니크 값 부여
-    const id = uuidv4();
-    const newUser = { id, username, email, password: hashedPassword, gu_code };
+    const newUser = { username, email, password: hashedPassword, gu_code };
 
     // db에 저장
     const createdNewUser = await User.create({ newUser });
@@ -50,11 +47,11 @@ class userAuthService {
 
     // 로그인 성공 -> JWT 웹 토큰 생성
     const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-    const token = jwt.sign({ user_id: user.id }, secretKey);
+    const token = jwt.sign({ user_id: user._id }, secretKey);
 
     // 반환할 loginuser 객체를 위한 변수 설정
-    const id = user.id;
-    const name = user.name;
+    const id = user._id;
+    const username = user.username;
     const gu_code = user.gu_code;
     const mileage = user.mileage;
 
@@ -62,7 +59,7 @@ class userAuthService {
       token,
       id,
       email,
-      name,
+      username,
       gu_code,
       mileage,
       errorMessage: null,
