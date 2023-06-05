@@ -96,8 +96,46 @@ const GetUser_err_yellow =  async function (req, res, next) {
     }
   }
 
+  const userGetcurrent = async function (req, res, next) {
+    try {
+      // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
+      const user_id = req.currentUserId;
+      const currentUserInfo = await userAuthService.getUserInfo({
+        user_id,
+      });
+
+      if (currentUserInfo.errorMessage) {
+        throw new Error(currentUserInfo.errorMessage);
+      }
+
+    return res.status(200).send(currentUserInfo);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+
+const userDeleteWithdraw = async function (req, res, next) {
+  const user_id = req.currentUserId;
+  try {
+    const user = await userAuthService.getUserInfo({ user_id })
+
+    if(!user) {
+      const errorMessage = "회원이 존재하지 않습니다."
+      const result = {result: errorMessage}
+    }
+
+    user.is_withdrawed = true
+    await user.save()
+
+    const result = { result : "Successfully withdraw"}
+    return res.status(200).send(result)
+  } catch (error) {
+    next(error)
+  } 
+}
 
 
 
 export {PostUser_register, PostUser_login, GetUser_userlist, 
-    GetUser_myPage, GetUser_err_yellow};
+    GetUser_myPage, GetUser_err_yellow, userDeleteWithdraw, userGetcurrent};

@@ -21,7 +21,12 @@ class User {
     return users;
   }
 
-  
+  // 탈퇴한 회원 찾는 함수
+  static async findWithdraw({ email }) {
+    const user = await UserModel.findOne({ is_withdrawed: true, email: email})
+    return user
+  }
+
 }
 
 export { User };

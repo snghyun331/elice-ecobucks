@@ -1,4 +1,5 @@
 import { User } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import { UserModel } from "../db/schemas/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -6,10 +7,23 @@ class userAuthService {
   static async addUser({ username, email, password, gu_code }) {
     // 이메일 중복 확인
     const user = await User.findByEmail({ email });
-    if (user) {
+    if ((user)&(user.is_withdrawed === false)) {
       const errorMessage =
         "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.";
       return { errorMessage };
+    }
+
+    // 해당 email을 가진 탈퇴한 회원이었다면,
+    const withdrawnUser = await User.findWithdraw({ email })
+    if (withdrawnUser) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      // 기존 정보에서 다시 가입할 때 등록한 정보로 업데이트
+      const updatedUser = await UserModel.findOneAndUpdate(   
+        {email: email, is_withdrawed: true},  // 필터링
+        {username: username, email: email, password: hashedPassword, gu_code: gu_code, is_withdrawed: false},  // 업데이트 항목들
+        { returnOriginal: false }   // 업데이트 된 상태로 저장
+      )
+      return updatedUser
     }
 
     // 비밀번호 해쉬화
@@ -23,6 +37,7 @@ class userAuthService {
 
     return createdNewUser;
   }
+
 
   static async getUser({ email, password }) {
     // 이메일 db에 존재 여부 확인

@@ -23,8 +23,11 @@ const UserSchema = new Schema(
     gu_code: {
         type: Number,
         required: true
+    },
+    is_withdrawed : {
+      type: Boolean,
+      default: false
     }
-    
   },
   {
     timestamps: true,
