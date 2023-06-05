@@ -7,7 +7,7 @@ class userAuthService {
   static async addUser({ username, email, password, guName }) {
     // 이메일 중복 확인
     const user = await User.findByEmail({ email });
-    if ((user)&(user.is_withdrawed === false)) {
+    if ((user)&&(user.is_withdrawed === false)) {
       const errorMessage =
         "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.";
       return { errorMessage };
