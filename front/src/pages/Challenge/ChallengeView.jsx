@@ -1,9 +1,17 @@
 import { Card, Container, Row, Image } from "react-bootstrap";
 import ChallengeRead from "./ChallengeRead";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import MegaChallengeCarousel from "./MegaChallengeCarousel";
+import { DispatchContext, UserStateContext } from '../../context/user/UserProvider'
+
 
 const ChallengeView = () => {
+
+  const dispatch = useContext(DispatchContext)
+  const userState = useContext(UserStateContext)
+  
+  console.log(userState)
+  
   //더미데이터
   const challenges = [
     {

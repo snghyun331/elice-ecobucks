@@ -5,6 +5,7 @@ import tip from "../../assets/tip.png";
 import challenge from "../../assets/challenge.png";
 import TipCarousel from "./TipCarousel";
 const HomePage = () => {
+
   return (
     <div style={{ justifyContent: "center", padding: "60px" }}>
       <div

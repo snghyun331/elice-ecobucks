@@ -40,7 +40,6 @@ const UserProvider = ({ children }) => {
   // useEffect함수를 통해 fetchCurrentUser 함수를 실행함.
   useEffect(() => {
     fetchCurrentUser();
-    
   }, []);
 
   if (!isFetchCompleted) {
