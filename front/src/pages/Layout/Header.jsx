@@ -8,10 +8,21 @@ import RightNav from "./RightNav";
 import { Navbar } from "react-bootstrap";
 const Header = () => {
   return (
-    <>
+    // <header className="w-full h-[60px] sm:h-[70px] backdrop-blur fixed top-0 z-10">
+    <Navbar
+      className="bg-light"
+      style={{
+        position: "fixed",
+        top: "0",
+        left: "0",
+        width: "100%",
+        backgroundColor: "dark",
+      }}
+    >
       <LeftNav />
       <RightNav />
-    </>
+    </Navbar>
+    // </header>
   );
 };
 export default Header;
