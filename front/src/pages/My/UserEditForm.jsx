@@ -2,17 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Form, Button, Dropdown, Container } from "react-bootstrap";
 
-import * as Api from "../../api";
-import { DispatchContext, UserStateContext } from '../../context/user/UserProvider'
-
-
 const UserEditForm = () => {
-  const navigate = useNavigate();
-  const dispatch = useContext(DispatchContext);
-  const userState = useContext(UserStateContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
   const [district, setDistrict] = useState(null);
 
