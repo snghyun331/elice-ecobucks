@@ -101,5 +101,15 @@ const blogpostPutDislikes = async function(req, res, next) {
     }
 }
 
+
+const blogpostGetAll = async function(req, res, next) {
+    try{
+        const posts = await blogPostService.getPosts();
+        res.status(200).send(posts);
+    } catch(error) {
+        next(error)
+    }
+}
+
 export {blogpostPostWrite, blogpostPutWrite, blogpostDeleteWrite,
-    blogpostPutLikes,blogpostPutDislikes};
+    blogpostPutLikes,blogpostPutDislikes, blogpostGetAll};

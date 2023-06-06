@@ -61,6 +61,18 @@ class BlogPost {
         return DeleteLike;
     }
 
+
+    // static async createComment( { post_id, newComment } ) {
+    //     const filter = { _id: post_id }
+    //     const update = {
+    //         $push: { comments: newComment }
+    //     }
+    //     const option = { returnOriginal: false };
+    //     const AddComment = await BlogPostModel.findOneAndUpdate(filter, update, option);
+    //     return AddComment;
+    // }
+    
+    
 }
 
 export { BlogPost };

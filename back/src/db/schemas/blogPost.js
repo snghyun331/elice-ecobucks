@@ -33,6 +33,11 @@ const BlogPostSchema = new Schema(
             required: true,
             default: [],
         },
+        // comments: {
+        //     type: Array,
+        //     required: true,
+        //     default: []
+        // }
     },
     {
         timestamps: true,

@@ -1,4 +1,5 @@
 import { User, BlogPost } from "../db/index.js";
+import { v4 as uuidv4 } from "uuid";
 
 
 class blogPostService {
@@ -14,6 +15,11 @@ class blogPostService {
         createdNewPost.errorMessage = null
 
         return createdNewPost
+    }
+
+    static async getPosts() {
+        const posts = await BlogPost.findAllPosts();
+        return posts
     }
 
 
@@ -84,6 +90,18 @@ class blogPostService {
         const DeleteLike = await BlogPost.deleteLike({ post_id, cancelLikeUserId });
         return DeleteLike;
     }
+
+
+    // static async addComment({ writer_id, comment }) {
+    //     const user = await User.findByWriterId({writer_id})
+    //     const id = uuidv4();
+    //     const writername = user.username
+    //     const newComment = { id, writer_id, writername, comment };
+    //     const createdNewComment = await BlogPost.createComment({writer_id, newComment})
+    //     createdNewComment.errorMessage = null
+
+    //     return createdNewComment
+    // }
 }
 
 export { blogPostService };
