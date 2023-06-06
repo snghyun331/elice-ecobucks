@@ -79,9 +79,27 @@ const blogpostPutLikes = async function(req, res, next) {
     } catch(error) {
         next(error);
     }
-    
-    
+}
+
+
+const blogpostPutDislikes = async function(req, res, next) {
+    try{
+        const post_id = req.params._id;
+        const { cancelLikeUserId } = req.body;
+        const DeleteLike = await blogPostService.deleteLike({
+            post_id,
+            cancelLikeUserId,
+        });
+
+        if (DeleteLike.errorMessage) {
+            throw new Error(DeleteLike.errorMessage);
+        }
+
+        return res.status(200).json(DeleteLike);
+    } catch(error) {
+
+    }
 }
 
 export {blogpostPostWrite, blogpostPutWrite, blogpostDeleteWrite,
-    blogpostPutLikes};
+    blogpostPutLikes,blogpostPutDislikes};

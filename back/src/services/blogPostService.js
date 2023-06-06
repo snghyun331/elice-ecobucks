@@ -63,7 +63,7 @@ class blogPostService {
         const likeInfo = await BlogPost.findOneById({ post_id });
         if (!likeInfo) {
             const errorMessage =
-                "해당 id의 사용자는 존재하지 않습니다. 다시 한 번 확인해 주세요.";
+                "해당 id의 게시글은 존재하지 않습니다. 다시 한 번 확인해 주세요.";
             return { errorMessage };
         }
 
@@ -72,6 +72,18 @@ class blogPostService {
         return AddLike;
     } 
 
+
+    static async deleteLike({ post_id, cancelLikeUserId }) {
+        const likeInfo = await BlogPost.findOneById({ post_id });
+        if (!likeInfo) {
+            const errorMessage =
+                "해당 id의 게시글은 존재하지 않습니다. 다시 한 번 확인해 주세요.";
+            return { errorMessage };
+        }
+    
+        const DeleteLike = await BlogPost.deleteLike({ post_id, cancelLikeUserId });
+        return DeleteLike;
+    }
 }
 
 export { blogPostService };

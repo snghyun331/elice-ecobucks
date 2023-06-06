@@ -44,9 +44,23 @@ class BlogPost {
         const AddLike = await BlogPostModel.findOneAndUpdate(
             filter, update, option
         );
-        
+
         return AddLike;
     }
+
+
+    static async deleteLike({ post_id, cancelLikeUserId }) {
+        const filter = { _id: post_id };
+        const update = {
+            $inc: { likeCount: -1 },
+            $pull: { likeUsers: cancelLikeUserId },
+        };
+        const option = { returnOriginal: false };
+    
+        const DeleteLike = await BlogPostModel.findOneAndUpdate(filter, update, option);
+        return DeleteLike;
+    }
+
 }
 
 export { BlogPost };
