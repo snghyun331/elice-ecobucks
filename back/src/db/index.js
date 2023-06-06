@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { User } from "./models/User.js";
 import { BlogPost } from "./models/BlogPost.js";
+import { BlogComment } from "./models/BlogComment.js";
 import { Gu } from "./models/Gu.js";
 
 const DB_URL =
@@ -17,4 +18,4 @@ db.on("error", (error) =>
   console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
 );
 
-export {User, Gu, BlogPost};
+export {User, Gu, BlogPost, BlogComment};
