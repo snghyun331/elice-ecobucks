@@ -45,13 +45,13 @@ class productService {
   }
 
   static async findAllProducts() {
-    try {
-      const products = await Product.findAll();
-      return products;
-    } catch (error) {
-      console.log(error)
-      throw new Error('Error while retrieving products');
-    }
+    const products = await Product.findAll();
+    return products;
+  }
+
+  static async findProduct( { productId }) {
+    const product = await Product.findById({ productId })
+    return product
   }
 }
 

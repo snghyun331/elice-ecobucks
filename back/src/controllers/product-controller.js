@@ -52,6 +52,20 @@ const productGetAll = async function(req, res, next) {
   }
 };
 
+const productGetById = async function(req, res, next) {
+  try {
+    const productId = req.params._id;
+    const product = await productService.findProduct({ productId });
 
-export { productPostCreate, productPutUpdate, productGetAll };
+    if (product.errorMessage) {
+      throw new Error(product.errorMessage);
+    }
+    return res.status(200).send(product);
+  } catch (error) {
+    next(error);
+  }
+}
+
+
+export { productPostCreate, productPutUpdate, productGetAll, productGetById };
 //트리쉐이킹 : 메모리최적화. 
