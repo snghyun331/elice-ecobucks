@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Container, Button} from "react-bootstrap";
+import { Container, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import map from "../../../../data/seoul_map/seoulMap.png";
 import DomesticAverage from "../../../../data/DomesticAverage.png";
 import DomesticDistrict from "../../../../data/DomesticDistrict.png";
@@ -14,6 +14,35 @@ const HomePage = () => {
   const handleButtonClick = (img) => {
     setCurrentImg(img);
   };
+
+  const districts = {
+    1: "강남구",
+    2: "강동구",
+    3: "강북구",
+    4: "강서구",
+    5: "관악구",
+    6: "광진구",
+    7: "구로구",
+    8: "금천구",
+    9: "노원구",
+    10: "도봉구",
+    11: "동대문구",
+    12: "동작구",
+    13: "마포구",
+    14: "서대문구",
+    15: "서초구",
+    16: "성동구",
+    17: "성북구",
+    18: "송파구",
+    19: "양천구",
+    20: "영등포구",
+    21: "용산구",
+    22: "은평구",
+    23: "종로구",
+    24: "중구",
+    25: "중랑구"
+  };
+
 
   return (
     <div style={{ justifyContent: "center", padding: "60px" }}>
@@ -107,9 +136,13 @@ const HomePage = () => {
           aria-label="Toolbar with button groups"
         >
           <div className="d-grid gap-2 mx-auto justify-content-md-end">
-            <button type="button" className="btn btn-primary" onClick={()=>handleButtonClick(map)}>
-              서울시 전체
-            </button>
+            <DropdownButton title="서울시 전체">
+            {Object.entries(districts).map(([key, district]) => (
+          <Dropdown.Item key={key} onClick={() => handleButtonClick(district)}>
+            {district}
+          </Dropdown.Item>
+        ))}
+            </DropdownButton>
             <button type="button" className="btn btn-primary" onClick={()=>handleButtonClick(Industry)}>
               산업용
             </button>
