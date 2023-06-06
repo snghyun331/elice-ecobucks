@@ -43,5 +43,15 @@ const productPutUpdate = async function(req, res, next) {
   }
 }
 
-export { productPostCreate, productPutUpdate };
+const productGetAll = async function(req, res, next) {
+  try {
+    const products = await productService.findAllProducts();
+    res.status(200).json(products);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+export { productPostCreate, productPutUpdate, productGetAll };
 //트리쉐이킹 : 메모리최적화. 

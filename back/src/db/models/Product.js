@@ -18,6 +18,11 @@ class Product {
     const updatedProduct = await productModel.findOneAndUpdate( filter, update, option );
     return updatedProduct;
   }
+
+  static async findAll() {
+    const products = await productModel.find();
+    return products
+  }
 }
 
 export { Product };

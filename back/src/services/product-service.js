@@ -42,7 +42,17 @@ class productService {
       }
     }
     return product;
-}
+  }
+
+  static async findAllProducts() {
+    try {
+      const products = await Product.findAll();
+      return products;
+    } catch (error) {
+      console.log(error)
+      throw new Error('Error while retrieving products');
+    }
+  }
 }
 
 export { productService };

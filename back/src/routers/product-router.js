@@ -1,12 +1,20 @@
 import { Router } from "express";
-import { productPostCreate, productPutUpdate } from "../controllers/product-controller.js";
+import { productPostCreate, productPutUpdate, productGetAll } from "../controllers/product-controller.js";
 import { productValidation } from "../middlewares/validation.js";
 import { login_required } from "../middlewares/login-required.js";
 
 const productRouter = Router();
+productRouter.use(login_required);
 
-productRouter.post( "/products", login_required, productValidation, productPostCreate );
+//상품 등록
+productRouter.post( "/products", productValidation, productPostCreate );
 
-productRouter.put( "/products/:_id", login_required, productPutUpdate )
+//전체 상품 조회
+productRouter.get( "/products", productGetAll );
+
+//상품 정보 수정
+productRouter.put( "/products/:_id", productPutUpdate )
+
+
 
 export { productRouter };
