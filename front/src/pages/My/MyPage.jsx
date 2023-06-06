@@ -57,11 +57,6 @@ function MyPage() {
     return "loading...";
   }
 
-  // if (!userState.user) {
-  //   navigate("/login", { replace: true });
-  //   return;
-  // }
-  console.log(userState.user);
   return (
     <div>
       <div

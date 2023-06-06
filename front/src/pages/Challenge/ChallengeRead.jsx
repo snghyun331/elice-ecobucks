@@ -19,15 +19,15 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
       <Card className="m-2">
         <Card.Body>
           <Card.Title>{challenge.title}</Card.Title>
-          <Card.Text>{challenge.description}</Card.Text>
+          <Card.Text>{challenge.content}</Card.Text>
           <Card.Text>
-            작성일자: {challenge.createDate}
+            작성일자: {challenge.createdAt}
             <br />
             진행 기간: {challenge.duration}
             <br />
-            작성자: {challenge.author}
+            작성자: {challenge.user_id}
             <br />
-            참여인원: {challenge.participantNumber.toLocaleString()} 명
+            참여인원: {challenge.participantsCount.toLocaleString()} 명
           </Card.Text>
         </Card.Body>
       </Card>
