@@ -90,15 +90,15 @@ function RegisterForm() {
 
     try {
       // "user/register" 엔드포인트로 post요청함.
-      await Api.post("user/register", {
+      await Api.post("register", {
         username: name,
         email,
         password,
-        gu_code: district,
+        guName: district,
       });
 
       // 회원가입과 동시에 로그인 되도록 함.
-      const res = await Api.post("user/login", {
+      const res = await Api.post("login", {
         email,
         password,
       });
