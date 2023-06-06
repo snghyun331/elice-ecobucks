@@ -1,9 +1,18 @@
-import React, { useState } from "react";
-import { Button, ButtonGroup, Container, Form, Card, Modal } from "react-bootstrap";
-import ChallengeParticipate from './ChallengeParticipate'
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Button,
+  Container,
+  Card,
+  Modal,
+} from "react-bootstrap";
+import ChallengeParticipate from "./ChallengeParticipate";
+import { UserStateContext } from "../../context/user/UserProvider";
 
 const ChallengeRead = ({ challenge, onBackToListClick }) => {
   const [showModal, setShowModal] = useState(false);
+  const userState = useContext(UserStateContext);
+  const navigate = useNavigate();
 
   const handleJoinClick = () => {
     setShowModal(true);
@@ -17,6 +26,8 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
     const date = new Date(dateString);
     return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
   };
+
+
 
   return (
     <Container>
