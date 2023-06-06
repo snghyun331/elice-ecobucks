@@ -40,4 +40,21 @@ const blogcommentPutWrite = async function(req, res, next) {
         next(error)
     }
 }
-export {blogcommentPostWrite, blogcommentPutWrite};
+
+
+const blogcommentDeleteWrite = async function(req, res, next) {
+    try{
+        const {comment_id} = req.body;
+        const result = await blogCommentService.deleteComment({comment_id})
+
+        if (result.errorMessage) {
+            throw new Error(result.errorMessage)
+        }
+
+        return res.status(200).send(result)
+
+    } catch(error) {
+        next(error)
+    }
+}
+export {blogcommentPostWrite, blogcommentPutWrite, blogcommentDeleteWrite};

@@ -21,6 +21,12 @@ class BlogComment {
         );
         return updatedcomment;
     }
+
+    static async deleteOneById({ comment_id }) {
+        const deletedComment = await BlogCommentModel.deleteOne({ _id: comment_id });
+        const isCompleteDeleted = deletedComment.deletedCount === 1;
+        return isCompleteDeleted;
+    }
 }
 
 export { BlogComment };

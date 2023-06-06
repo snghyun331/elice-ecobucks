@@ -36,7 +36,16 @@ class blogCommentService {
         comment.errorMessage = null;
         return comment;
     }
-} 
 
+
+    static async deleteComment({ comment_id }) {
+        let isDeleted = await BlogComment.deleteOneById({ comment_id });
+        if (!isDeleted) {
+            const errorMessage = "삭제할 댓글 정보가 없습니다.";
+            return { errorMessage };
+        }
+        return { result: "Success" };
+    }   
+}
 
 export { blogCommentService };
