@@ -1,6 +1,30 @@
+import { useState } from "react";
 import { Button, Card, Container } from "react-bootstrap";
-
+import * as Api from "../../api";
+import TipModal from "./TipModal";
 const Blog = () => {
+  const [tip, setTip] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+
+  const handleCloseModal = () => setShowModal(false);
+  const handleOpenModal = () => setShowModal(true);
+  
+  const handleTipChange = (e) => {
+    const newTip = e.target.value;
+    setTip(newTip);
+  };
+
+  const handleSaveTip = (tip) => {
+    // 팁을 저장하는 로직을 구현하거나 다른 작업을 수행합니다.
+    // 예: 서버에 팁을 전송하거나 로컬 상태에 저장합니다.
+    console.log("저장된 팁:", tip);
+
+    // 모달을 닫습니다.
+    handleCloseModal();
+  };
+
+    
   return (
     <div style={{ padding: "60px"}}>
       <div
@@ -26,9 +50,10 @@ const Blog = () => {
           alignItems: "Center",
         }}
       >
-        <Button variant="primary" style={{ marginBottom: "10px", top: "5" }}>
+        <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
           팁 작성하기
         </Button>
+        <TipModal show={showModal} handleCloseModal={handleCloseModal} handleSaveTip={handleSaveTip} handleTipChange={handleTipChange} />
         <Card>
           <Card.Header>전기 아끼기 팁</Card.Header>
           <Card.Body>
