@@ -1,18 +1,38 @@
 import React, { useState } from "react";
 import { Button, ButtonGroup, Container, Form } from "react-bootstrap";
+import * as Api from '../../api'
 
 const ChallengeCreate = () => {
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [content, setContent] = useState("");
   const [duration, setDuration] = useState("");
   const [icon, setIcon] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    console.log(title, content, icon, duration)
+    try {
+      // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
+      const res = await Api.post("challenges", {
+        title,
+        content,
+        icon,
+        weeks: duration
+      });
+      window.location.reload()
+    } catch (err) {
+      alert("챌린지 등록에 실패하였습니다.")
+      console.log("챌린지 등록에 실패하였습니다.", err);
+    }
+  };
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
 
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
+  const handleContentChange = (event) => {
+    setContent(event.target.value);
   };
 
   const handleDurationChange = (event) => {
@@ -26,7 +46,7 @@ const ChallengeCreate = () => {
   return (
     <div>
       <h2>챌린지 시작하기</h2>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Group controlId="title">
           <Form.Label>제목</Form.Label>
           <Container className="text-muted" style={{fontSize:'0.85rem'}}>
@@ -38,15 +58,15 @@ const ChallengeCreate = () => {
             onChange={handleTitleChange}
           />
         </Form.Group>
-        <Form.Group controlId="description">
+        <Form.Group controlId="content">
           <Form.Label>설명</Form.Label>
           <Container className="text-muted" style={{fontSize:'0.85rem'}}>
             이 행동을 하는 방법이나, 환경에 미치는 영향을 알려주세요.
           </Container>
           <Form.Control
             as="textarea"
-            value={description}
-            onChange={handleDescriptionChange}
+            value={content}
+            onChange={handleContentChange}
           />
         </Form.Group>
         <Form.Group controlId="duration">

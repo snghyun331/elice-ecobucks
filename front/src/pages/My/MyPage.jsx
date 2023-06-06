@@ -45,7 +45,7 @@ function MyPage() {
 
   useEffect(() => {
     // 만약 전역 상태의 user가 null이거나 탈퇴한 회원이라면, 로그인 페이지로 이동함.
-    if (!userState.user || !userState.user.is_withdrawd == false) {
+    if (!userState.user || !userState.user.is_withdrawed == false) {
       navigate("/login", { replace: true });
       return;
     } else {
