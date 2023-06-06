@@ -91,17 +91,6 @@ class blogPostService {
         return DeleteLike;
     }
 
-
-    // static async addComment({ writer_id, comment }) {
-    //     const user = await User.findByWriterId({writer_id})
-    //     const id = uuidv4();
-    //     const writername = user.username
-    //     const newComment = { id, writer_id, writername, comment };
-    //     const createdNewComment = await BlogPost.createComment({writer_id, newComment})
-    //     createdNewComment.errorMessage = null
-
-    //     return createdNewComment
-    // }
 }
 
 export { blogPostService };
