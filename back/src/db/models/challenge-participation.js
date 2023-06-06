@@ -1,21 +1,21 @@
-import { ChallengeParticipationModel } from "../schemas/challengeParticipation.js";
+import { ChallengeParticipationModel } from "../schemas/challenge-participation.js";
 
 class ChallengeParticipation {
   static async create(newChallenge) {
     const createdChallenge = await ChallengeParticipationModel.create(newChallenge);
     return createdChallenge;
-  }
+  }  
 
   static async findAll() {
     const Participations = await ChallengeParticipationModel.find({});
     return Participations;
-  }
+  } 
   
   static async findById({ chellenge_id }){
     const Participation = await ChallengeParticipationModel.findById({ chellenge_id });
     return Participation
   }
-
+  
   static async findAllByUserId({ user_id }){
     const UserChallenges = await ChallengeParticipationModel.find({ user_id });;
     return UserChallenges

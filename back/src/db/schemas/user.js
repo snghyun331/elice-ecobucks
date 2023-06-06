@@ -21,8 +21,12 @@ const UserSchema = new Schema(
       default: 0
     },
     guCode: {
-        type: Number,
-        required: true
+      type: Number,
+      required: true
+    },
+    guName: {
+      type: String,
+      required: true
     },
     is_withdrawed : {
       type: Boolean,
