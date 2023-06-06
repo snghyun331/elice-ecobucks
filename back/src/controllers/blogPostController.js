@@ -12,7 +12,6 @@ const blogpostPostWrite = async (req, res, next) => {
         const { title, topic, content } = req.body;
 
         const user_id = req.currentUserId;
-        
         const newPost = await blogPostService.addPost({
             user_id,title,topic, content
         });
@@ -24,4 +23,24 @@ const blogpostPostWrite = async (req, res, next) => {
 };  
 
 
-export {blogpostPostWrite};
+const blogpostPutWrite = async function(req, res, next) {
+    try{
+        const { post_id, title, topic, content } = req.body;
+        const toUpdate = { title, topic, content };
+        const updatedPost = await blogPostService.setPost({
+            post_id,
+            toUpdate,
+        });
+
+        if (updatedPost.errorMessage) {
+            throw new Error(updatedPost.errorMessage);
+        }
+
+        return res.status(200).json(updatedPost);
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+export {blogpostPostWrite, blogpostPutWrite};

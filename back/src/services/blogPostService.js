@@ -16,6 +16,40 @@ class blogPostService {
         return createdNewPost
     }
 
+
+    static async setPost({ post_id, toUpdate }) {
+        let post = await BlogPost.findOneById({ post_id });
+        
+        if (!post) {
+            const errorMessage =
+                "해당 게시글을 찾을 수 없습니다. 다시 한 번 확인해 주세요.";
+            return { errorMessage };
+        }
+        // 업데이트 대상에 title이 있다면, 즉 title 값이 null 이 아니라면 업데이트 진행
+        if (toUpdate.title) {
+            const fieldToUpdate = "title";
+            const newValue = toUpdate.title;
+            post = await BlogPost.update({ post_id, fieldToUpdate, newValue });
+        }
+    
+        if (toUpdate.topic) {
+            const fieldToUpdate = "topic";
+            const newValue = toUpdate.topic;
+            post = await BlogPost.update({ post_id, fieldToUpdate, newValue });
+        }
+        
+        if (toUpdate.content) {
+            const fieldToUpdate = "content";
+            const newValue = toUpdate.content;
+            post = await BlogPost.update({ post_id, fieldToUpdate, newValue });
+        }
+
+        post.errorMessage = null;
+        return post;
+    }
+
+
+
 } 
 
 
