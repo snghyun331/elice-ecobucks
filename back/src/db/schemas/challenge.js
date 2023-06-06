@@ -14,14 +14,17 @@ const ChallengeSchema = new Schema(
         type: String, 
         required: true 
     },
-    icon:{
+    icon: {
         type: String, 
         required: true
     },
-    DueDate:{
+    weeks: {
+        type: String,
+        required: true
+    },
+    dueDate: {
         type: Date, 
-        //required: true,
-        default: Date.now()
+        //default: Date.now()
     },
     participantsCount: { 
         type: Number, 

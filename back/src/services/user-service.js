@@ -33,7 +33,7 @@ class userAuthService {
     // 구 코드 변환
     const guCode = await Gu.getGuCodeByName(guName)
 
-    const newUser = { username, email, password: hashedPassword, guCode };
+    const newUser = { username, email, password: hashedPassword, guCode, guName };
 
     // db에 저장
     const createdNewUser = await User.create({ newUser });

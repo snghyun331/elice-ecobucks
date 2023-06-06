@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import { User } from "./models/User.js";
+import { User } from "./models/user.js";
 //import { BlogPost } from "./models/Blog_post.js";
-import { Gu } from "./models/Gu.js";
-import { Challenge } from "./models/Challenge.js";
+import { Gu } from "./models/gu.js";
+import { Challenge } from "./models/challenge.js";
 
 const DB_URL =
   process.env.MONGODB_URL ||

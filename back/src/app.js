@@ -1,11 +1,11 @@
 import cors from "cors";
 import express from "express";
-import { userAuthRouter } from "./routers/userRouter.js";
+import { userAuthRouter } from "./routers/user-router.js";
 //import { blogpostRouter } from "./routers/blogpostRouter.js";
-import { errorMiddleware } from "./middlewares/errorMiddleware.js";
+import { errorMiddleware } from "./middlewares/error-middleware.js";
 
-import { challengeRouter } from "./routers/challengeRouter.js";
-import { challengeParticipationRouter } from "./routers/challengeParticipationRouter.js";
+import { challengeRouter } from "./routers/challenge-router.js";
+import { challengeParticipationRouter } from "./routers/challenge-participation-router.js";
 
 const app = express();
 
