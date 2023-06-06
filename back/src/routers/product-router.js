@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { productController } from "../controllers/product-controller.js";
+import { productPostCreate } from "../controllers/product-controller.js";
 import { productValidation } from "../middlewares/validation.js";
 import { login_required } from "../middlewares/login-required.js";
 
@@ -9,7 +9,7 @@ productRouter.post(
   "/products",
   login_required,
   productValidation,
-  productController.productPost_create
+  productPostCreate
 );
 
 export { productRouter };

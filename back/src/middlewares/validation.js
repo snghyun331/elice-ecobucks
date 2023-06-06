@@ -10,6 +10,7 @@ const productValidation = (req, res, next) => {
     price: Joi.number().integer().required(),
     place: Joi.string().required(),
     stock: Joi.number().integer().required(),
+    description: Joi.string(),
   });
 
   const { error } = schema.validate(req.body);
