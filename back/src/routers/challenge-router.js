@@ -20,8 +20,7 @@ challengeRouter.post("/", login_required, async function (req, res, next) {
 
 challengeRouter.get("/", login_required, async function (req, res, next) {
   try {
-    const user_id = req.currentUserId;
-    const challenge = await challengeService.findChallenges({ user_id });
+    const challenge = await challengeService.findChallenges( );
     res.json(challenge);
   } catch (err) {
     next(err);
@@ -58,7 +57,6 @@ challengeRouter.delete("/:_id", login_required, async function (req, res, next){
   try {
     const _id = req.params._id;
     const currentUserId = req.currentUserId;
-
     const challenge = await challengeService.deleteChallenge(_id, currentUserId);
      
     res.status(200).json({ message: "challenge 삭제 완료"});

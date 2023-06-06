@@ -18,14 +18,14 @@ class challengeService {
   }
 
   static async findChallenges( ) {
-    const challenges = await Challenge.findAll({ });
+    const challenges = await Challenge.NoAsyncfindAll( ).populate('user_id', 'guCode guName').exec();
 
     return challenges;
   }
 
   static async findChallenge({ _id }) {
     const challenge = await Challenge.NoAsyncfindById({ _id }).populate('user_id', 'guCode guName').exec();
-    console.log('guName: ', challenge.user_id.guName);
+    //console.log('guName: ', challenge.user_id.guName);
     
     return challenge;
   }
@@ -35,8 +35,6 @@ class challengeService {
     if ( !findIdChallenge ) {
       throw new Error("해당 id를 가진 데이터는 없습니다.")
     }
-    console.log('findIdChallenge.user_id.toString(): ',findIdChallenge.user_id.toString());
-    console.log('currentUserId: ',currentUserId);
     if( findIdChallenge.user_id.toString() !== currentUserId )
       throw new Error("수정 권한이 없습니다.");
     
