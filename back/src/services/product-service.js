@@ -34,13 +34,11 @@ class productService {
     for (const [field, fieldToUpdate] of Object.entries(fieldsToUpdate)) {
       if (toUpdate[field] || field === "description") {
         const newValue = toUpdate[field];
-        console.log(newValue);
         product = await Product.update({
           productId,
           fieldToUpdate,
           newValue,
         });
-        console.log(product)
       }
     }
     return product;
