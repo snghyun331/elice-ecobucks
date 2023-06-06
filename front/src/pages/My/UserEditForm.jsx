@@ -10,7 +10,7 @@ const UserEditForm = ({ user }) => {
   const userState = useContext(UserStateContext);
 
   const [name, setName] = useState(user?.username || ""); // user가 null인 경우를 고려하여 기본값 설정
-  const [district, setDistrict] = useState(user?.gu_code || ""); // user가 null인 경우를 고려하여 기본값 설정
+  const [district, setDistrict] = useState(user?.guName || ""); // user가 null인 경우를 고려하여 기본값 설정
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
