@@ -8,6 +8,14 @@ class Gu {
         }
         return gu.code;
       }
+
+      static async getGuNameByCode(code) {
+        const gu = await GuModel.findOne({ code: code });
+        if (!gu) {
+          throw new Error("일치하는 자치코드가 없습니다.");
+        }
+        return gu.name;
+      }
 }
 
 export { Gu };

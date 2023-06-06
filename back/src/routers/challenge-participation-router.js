@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { login_required } from "../middlewares/login_required.js";
-import { ChallengeParticipationService } from "../services/challengeParticipationService.js";
+import { login_required } from "../middlewares/login-required.js";
+import { ChallengeParticipationService } from "../services/challenge-participation-service.js";
 import { validateEmptyBody } from "../utils/validators.js"
 
 const challengeParticipationRouter = Router();
