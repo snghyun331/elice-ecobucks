@@ -13,21 +13,26 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
     setShowModal(false);
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
+  };
+
   return (
     <Container>
       <h2>챌린지 내용 확인</h2>
       <Card className="m-2">
         <Card.Body>
           <Card.Title>{challenge.title}</Card.Title>
-          <Card.Text>{challenge.description}</Card.Text>
+          <Card.Text>{challenge.content}</Card.Text>
           <Card.Text>
-            작성일자: {challenge.createDate}
+            작성일자: {formatDate(challenge.createdAt)}
             <br />
-            진행 기간: {challenge.duration}
+            마감일자: {formatDate(challenge.dueDate)}
             <br />
-            작성자: {challenge.author}
+            작성자: {challenge.user_id}
             <br />
-            참여인원: {challenge.participantNumber.toLocaleString()} 명
+            참여인원: {challenge.participantsCount.toLocaleString()} 명
           </Card.Text>
         </Card.Body>
       </Card>

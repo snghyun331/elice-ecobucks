@@ -1,9 +1,11 @@
 import cors from "cors";
 import express from "express";
-import { userAuthRouter } from "./routers/userRouter.js";
+import { userAuthRouter } from "./routers/user-router.js";
 //import { blogpostRouter } from "./routers/blogpostRouter.js";
 import { productRouter } from "./routers/productRouter.js";
-import { errorMiddleware } from "./middlewares/errorMiddleware.js";
+import { errorMiddleware } from "./middlewares/error-middleware.js";
+import { challengeRouter } from "./routers/challenge-router.js";
+import { challengeParticipationRouter } from "./routers/challenge-participation-router.js";
 
 const app = express();
 
@@ -26,6 +28,8 @@ app.use(userAuthRouter);
 //app.use(blogpostRouter);
 app.use(productRouter);
 
+app.use("/challenges", challengeRouter);
+app.use("/challenges", challengeParticipationRouter);
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);
