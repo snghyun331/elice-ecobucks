@@ -36,7 +36,7 @@ function LoginForm() {
 
     try {
       // "user/login" 엔드포인트로 post요청함.
-      const res = await Api.post("user/login", {
+      const res = await Api.post("login", {
         email,
         password,
       });

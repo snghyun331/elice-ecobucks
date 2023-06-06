@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Form, Button, Dropdown, Alert } from "react-bootstrap";
 
+import * as Api from "../../api";
 import { UserStateContext } from "../../context/user/UserProvider";
 
 const UserEditForm = () => {
@@ -75,10 +76,26 @@ const UserEditForm = () => {
     setShowConfirm(true);
   };
 
-  const confirmWithdraw = () => {
-    // 탈퇴 요청을 보내는 로직을 구현 (예: Api.del("/mypage/withdraw",""))
-    console.log("탈퇴 요청을 보냈습니다.");
-    // 탈퇴 후 리디렉션 등의 작업 수행
+  const confirmWithdraw = async () => {
+    try {
+      const res = await Api.delete("mypage/withdraw");
+      console.log('탈퇴요청완료', res);
+      
+      // 탈퇴 후 리디렉션 등의 작업 수행
+      if (res.status === 200) {
+        setShowConfirm(false);
+        // Display success alert and navigate to login page
+        alert("서비스를 이용해주셔서 감사합니다. 로그인 창으로 이동합니다.");
+        navigate("/login");
+      } else {
+        // Display error alert
+        alert("탈퇴 과정에 오류가 발생했습니다.");
+      }
+    } catch (error) {
+      // Display error alert
+      alert("탈퇴 과정에 오류가 발생했습니다.");
+      console.error(error);
+    }
   };
 
   return (
