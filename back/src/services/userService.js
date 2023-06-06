@@ -1,5 +1,5 @@
 import { UserModel } from "../db/schemas/user.js";
-import { User, Gu } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import { User, Gu, Challenge } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -148,6 +148,20 @@ class userAuthService {
   
     return user;
   }
+
+  static async getUserMypage({user_id}){
+    const user  = await User.findById({user_id});
+
+    const challenges = await Challenge.findAllByUserId({ user_id: user_id });
+    const userInfo = {
+      ...user._doc,
+      challengeCount: challenges.length,
+      challengeList: challenges,
+    }
+    console.log('userInfo: ',userInfo);
+    return userInfo
+  }
+
 }
 
 export { userAuthService };
