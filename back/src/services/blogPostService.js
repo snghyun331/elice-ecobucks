@@ -59,8 +59,19 @@ class blogPostService {
     }
 
 
-} 
+    static async addLike({ post_id, pressLikeUserId }) {
+        const likeInfo = await BlogPost.findOneById({ post_id });
+        if (!likeInfo) {
+            const errorMessage =
+                "해당 id의 사용자는 존재하지 않습니다. 다시 한 번 확인해 주세요.";
+            return { errorMessage };
+        }
 
+        const AddLike = await BlogPost.addLike({ post_id, pressLikeUserId });
+        
+        return AddLike;
+    } 
 
+}
 
 export { blogPostService };

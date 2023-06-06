@@ -39,7 +39,7 @@ const blogpostPutWrite = async function(req, res, next) {
         return res.status(200).json(updatedPost);
 
     } catch (error) {
-        next(error)
+        next(error);
     }
 }
 
@@ -56,8 +56,32 @@ const blogpostDeleteWrite = async function(req, res, next) {
         return res.status(200).send(result);
 
     } catch(error) {
-        next(error)
+        next(error);
     }
 }
 
-export {blogpostPostWrite, blogpostPutWrite, blogpostDeleteWrite};
+
+const blogpostPutLikes = async function(req, res, next) {
+    try{
+        const post_id = req.params._id
+        const { pressLikeUserId } = req.body;
+        
+        const AddLike = await blogPostService.addLike({
+            post_id,
+            pressLikeUserId,
+        });
+
+        if (AddLike.errorMessage) {
+            throw new Error(AddLike.errorMessage);
+        }
+
+        return res.status(200).json(AddLike)
+    } catch(error) {
+        next(error);
+    }
+    
+    
+}
+
+export {blogpostPostWrite, blogpostPutWrite, blogpostDeleteWrite,
+    blogpostPutLikes};

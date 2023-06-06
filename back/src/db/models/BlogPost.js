@@ -33,6 +33,20 @@ class BlogPost {
         return isCompleteDeleted;
     }
 
+    static async addLike({ post_id, pressLikeUserId }) {
+        const filter = { _id: post_id };
+        const update = {
+            $inc: { likeCount: 1 },
+            $addToSet: { likeUsers: pressLikeUserId },
+        };
+        const option = { returnOriginal: false };
+    
+        const AddLike = await BlogPostModel.findOneAndUpdate(
+            filter, update, option
+        );
+        
+        return AddLike;
+    }
 }
 
 export { BlogPost };
