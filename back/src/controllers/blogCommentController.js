@@ -21,5 +21,23 @@ const blogcommentPostWrite = async (req, res, next) => {
     }
 };  
 
+const blogcommentPutWrite = async function(req, res, next) {
+    try{
+        const { comment_id, comment } = req.body;
+        const toUpdate = {comment};
+        const updatedComment = await blogCommentService.setComment({
+            comment_id, 
+            toUpdate
+        })
 
-export {blogcommentPostWrite};
+        if (updatedComment.errorMessage) {
+            throw new Error(updatedComment.errorMessage);
+        }
+
+        return res.status(200).json(updatedComment);
+
+    } catch (error) {
+        next(error)
+    }
+}
+export {blogcommentPostWrite, blogcommentPutWrite};
