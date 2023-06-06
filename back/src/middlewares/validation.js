@@ -1,5 +1,9 @@
 import Joi from "joi";
 
+const BAD_REQUEST = 400; 
+const usernameMin = 2;
+const usernameMax = 20;
+
 const productValidation = (req, res, next) => {
   const schema = Joi.object({
     name: Joi.string().required(),
@@ -10,15 +14,14 @@ const productValidation = (req, res, next) => {
 
   const { error } = schema.validate(req.body);
   if (error) {
-    return res.status(400).json({ error: error.details[0].message });
+    return res.status(BAD_REQUEST).json({ error: error.details[0].message });
   }
   next();
 };
 
 const userValidation = (req, res, next) => {
-  const usernameMin = 2;
   const schema = Joi.object({
-    username: Joi.string().required().min(2).max(20),
+    username: Joi.string().required().min(usernameMin).max(usernameMax),
     email: Joi.string().email().required(),
     password: Joi.string().required(),
     guName: Joi.string().required(), 
