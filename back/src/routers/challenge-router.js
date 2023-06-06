@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { login_required } from "../middlewares/login-required.js";
-import { ChallengeService } from "../services/challenge-service.js";
+import { challengeService } from "../services/challenge-service.js";
 import { validateEmptyBody } from "../utils/validators.js"
 
 const challengeRouter = Router();
@@ -11,7 +11,7 @@ challengeRouter.post("/", login_required, async function (req, res, next) {
     const user_id = req.currentUserId;
     const { title, content, icon, weeks } = req.body;
 
-    const challenge = await ChallengeService.createChallenge({ user_id, title, content, icon, weeks });
+    const challenge = await challengeService.createChallenge({ user_id, title, content, icon, weeks });
     res.json(challenge);
   } catch (err) {
     next(err);
@@ -21,7 +21,7 @@ challengeRouter.post("/", login_required, async function (req, res, next) {
 challengeRouter.get("/", login_required, async function (req, res, next) {
   try {
     const user_id = req.currentUserId;
-    const challenge = await ChallengeService.findChallenges({ user_id });
+    const challenge = await challengeService.findChallenges({ user_id });
     res.json(challenge);
   } catch (err) {
     next(err);
@@ -31,7 +31,7 @@ challengeRouter.get("/", login_required, async function (req, res, next) {
 challengeRouter.get("/:_id", login_required, async function (req, res, next) {
   try {
     const _id = req.params._id;
-    const challenge = await ChallengeService.findChallenge({ _id });
+    const challenge = await challengeService.findChallenge({ _id });
     res.json(challenge);
   } catch (err) {
     next(err);
@@ -42,9 +42,9 @@ challengeRouter.put("/:_id", login_required, async function (req, res, next) {
   try {
     const _id = req.params._id;
     const currentUserId = req.currentUserId;
-    const { icon, title, description, weeks } = req.body;  
+    const { icon, title, content, weeks } = req.body;  
 
-    const education = await ChallengeService.updateChallenge({ 
+    const education = await challengeService.updateChallenge({ 
       _id, currentUserId, title, content, icon, weeks, 
     });
     
@@ -54,5 +54,18 @@ challengeRouter.put("/:_id", login_required, async function (req, res, next) {
   }
 });
 
+challengeRouter.delete("/:_id", login_required, async function (req, res, next){
+  try {
+    const _id = req.params._id;
+    const currentUserId = req.currentUserId;
+
+    const challenge = await challengeService.deleteChallenge(_id, currentUserId);
+     
+    res.status(200).json({ message: "challenge 삭제 완료"});
+
+  } catch (error) {
+    next(error);
+  }
+});
 
 export { challengeRouter };

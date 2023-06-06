@@ -16,6 +16,11 @@ class Challenge {
     return Challenge
   }
 
+  static NoAsyncfindById({ _id }) {
+    const query = ChallengeModel.findById({ _id });
+    return query;
+  }
+
   static async findAllByUserId({ user_id }){
     const UserChallenges = await ChallengeModel.find({ user_id });;
     return UserChallenges
@@ -31,8 +36,8 @@ class Challenge {
     return updatedEducation;
   }
 
-  static async deleteById( challengeId ) {
-    await ChallengeModel.findByIdAndDelete(challengeId);
+  static async deleteById( _id ) {
+    await ChallengeModel.findByIdAndDelete( _id );
     return ;
   }
   
