@@ -1,15 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext, navigate } from "react";
 import { Container, Col, Row, Modal, Button } from "react-bootstrap";
 import UserEditForm from "./UserEditForm";
 import UserOrderHistory from "./UserOrderHistory";
 import UserMileageHistory from "./UserMileageHistory";
 import UserSummary from "./UserSummary";
 
-function MyPage() {
-  const [showModal, setShowModal] = useState(false);
+import * as Api from "../../api";
+import { UserStateContext, DispatchContext } from "../../context/user/UserProvider";
 
+function MyPage() {
+  const userState = useContext(UserStateContext);
+  
+  const [user, setUser] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => setShowModal(false);
   const handleOpenModal = () => setShowModal(true);
+
+  const fetchData = async () => {
+    try {
+        // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
+        const res = await Api.get('mypage');
+        console.log("통신결과", res.data)
+        setUser(res.data)
+    } catch (err) {
+        // if (err.response.status === 400) {
+        //     alert(err.response.data.error);
+        // }
+        console.log('User 정보 불러오기를 실패하였습니다.', err);
+    }
+}
+
+useEffect(() => {
+  fetchData()
+  // 만약 전역 상태의 user가 null이라면, 로그인 페이지로 이동함.
+  if (!userState.user) {
+      navigate('/login');
+      return;
+  } 
+}, [userState, navigate]);
+
 
   return (
     <div>
@@ -50,7 +79,7 @@ function MyPage() {
                 사진
               </Container>
               <Container className="mt-3">
-                <a style={{ fontWeight: "bold" }}>몽구</a> 님
+                <a style={{ fontWeight: "bold" }}>{userState.user.username}</a> 님
                 <br />
                 <a
                   style={{ fontSize: "0.8rem", cursor: "pointer" }}
@@ -95,7 +124,7 @@ function MyPage() {
           <Modal.Title>내 정보 수정</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
-          <UserEditForm />
+          <UserEditForm user={user}/>
         </Modal.Body>
         <Modal.Footer>
           <Button
