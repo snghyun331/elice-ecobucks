@@ -54,28 +54,16 @@ const Blog = () => {
           팁 작성하기
           </Button>
         </Link>
-        <Card>
-          <Card.Header>전기 아끼기 팁</Card.Header>
+        {blogPosts.map((post) => (
+        <Card key={post.id}>
+          <Card.Header>카드 헤더</Card.Header>
           <Card.Body>
-            <Card.Title>Special title treatment</Card.Title>
-            <Card.Text>
-              With supporting text below as a natural lead-in to additional
-              content.
-            </Card.Text>
-          </Card.Body>
-        </Card>
-        <br />
-        <Card>
-          <Card.Header>에어컨 절전모드</Card.Header>
-          <Card.Body>
-            <Card.Title>Special title treatment</Card.Title>
-            <Card.Text>
-              With supporting text below as a natural lead-in to additional
-              content.
-            </Card.Text>
+            <Card.Title>{post.title}</Card.Title>
+            <Card.Text>{post.content}</Card.Text>
             <Button variant="primary">Go somewhere</Button>
           </Card.Body>
         </Card>
+      ))}
       </Container>
     </div>
   );
