@@ -10,7 +10,41 @@ class productService {
     return createdNewProduct;
   }
 
-  // static async updateProduct({ name, price, stock, description })
+  static async updateProduct({ productId, sellerId, toUpdate }) {
+    let product = await Product.findById({ productId });
+    
+    // 상품이 없는 경우 오류 메시지
+    if (!product) {
+      const errorMessage =
+        "해당 id의 상품이 없습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+
+    if( product.seller.toString() !== sellerId )
+      throw new Error("수정 권한이 없습니다.");
+
+    const fieldsToUpdate = {
+      name: "name",
+      price: "price",
+      place: "place",
+      stock: "stock",
+      description: "description",
+    };
+
+    for (const [field, fieldToUpdate] of Object.entries(fieldsToUpdate)) {
+      if (toUpdate[field] || field === "description") {
+        const newValue = toUpdate[field];
+        console.log(newValue);
+        product = await Product.update({
+          productId,
+          fieldToUpdate,
+          newValue,
+        });
+        console.log(product)
+      }
+    }
+    return product;
+}
 }
 
 export { productService };

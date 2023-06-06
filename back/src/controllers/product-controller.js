@@ -24,5 +24,24 @@ const productPostCreate = async function(req, res, next) {
   }
 }
 
-export { productPostCreate };
+const productPutUpdate = async function(req, res, next) {
+  try {
+    const productId = req.params._id;
+    const sellerId = req.currentUserId;
+
+    const { name, price, place, stock, description } = req.body ?? null;
+    const toUpdate = { name, price, place, stock, description };
+
+    const product = await productService.updateProduct({ productId, sellerId, toUpdate });
+
+    if (product.errorMessage) {
+      throw new Error(product.errorMessage);
+    }
+    return res.status(200).send(product);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export { productPostCreate, productPutUpdate };
 //트리쉐이킹 : 메모리최적화. 
