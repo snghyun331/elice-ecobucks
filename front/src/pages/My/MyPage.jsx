@@ -7,14 +7,12 @@ import UserMileageHistory from "./UserMileageHistory";
 import UserSummary from "./UserSummary";
 
 import * as Api from "../../api";
-import {
-  UserStateContext,
-  DispatchContext,
-} from "../../context/user/UserProvider";
+import { UserStateContext, DispatchContext } from "../../context/user/UserProvider";
 
 function MyPage() {
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
   const userState = useContext(UserStateContext);
+  const dispatch = useContext(DispatchContext);
   const navigate = useNavigate();
 
   const [user, setUser] = useState(null);
@@ -28,26 +26,36 @@ function MyPage() {
       const res = await Api.get("mypage");
       console.log("통신결과", res.data);
       setUser(res.data);
-      setIsFetchCompleted(true)
+      setIsFetchCompleted(true);
     } catch (err) {
-      alert("User 정보 불러오기를 실패하였습니다.")
+      alert("User 정보 불러오기를 실패하였습니다.");
       console.log("User 정보 불러오기를 실패하였습니다.", err);
     }
   };
 
+  const logout = () => {
+    // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
+    sessionStorage.removeItem('userToken');
+    // dispatch 함수를 이용해 로그아웃함.
+    dispatch({ type: 'LOGOUT' });
+    alert('로그아웃하여 홈페이지로 이동합니다.')
+    // 기본 페이지로 돌아감.
+    navigate('/');
+};
+
   useEffect(() => {
-    // 만약 전역 상태의 user가 null이라면, 로그인 페이지로 이동함.
-    if(!userState.user) {
-      navigate('/login', { replace : true });
+    // 만약 전역 상태의 user가 null이거나 탈퇴한 회원이라면, 로그인 페이지로 이동함.
+    if (!userState.user || !userState.user.is_withdrawd == false) {
+      navigate("/login", { replace: true });
       return;
     } else {
       fetchData();
     }
-  }, [userState, navigate])
+  }, [userState, navigate]);
 
   if (!isFetchCompleted) {
-    return 'loading...';
-}
+    return "loading...";
+  }
 
   // if (!userState.user) {
   //   navigate("/login", { replace: true });
@@ -101,6 +109,13 @@ function MyPage() {
                   onClick={handleOpenModal}
                 >
                   나의 정보 수정
+                </a>{" "}
+                <br />
+                <a
+                  style={{ fontSize: "0.8rem", cursor: "pointer" }}
+                  onClick={logout}
+                >
+                  로그아웃
                 </a>
               </Container>
             </Container>
