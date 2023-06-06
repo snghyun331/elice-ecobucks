@@ -9,8 +9,8 @@ class blogCommentService {
         }
         const user = await User.findByWriterId({writer_id})
         
-        const username = user.username
-        const newComment = { post_id, writer_id, username, comment };
+        const writername = user.username
+        const newComment = { post_id, writer_id, writername, comment };
         const createdNewComment = await BlogComment.createComment({newComment})
         createdNewComment.errorMessage = null
 
