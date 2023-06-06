@@ -66,6 +66,22 @@ const productGetById = async function(req, res, next) {
   }
 }
 
+const productDelete = async function(req, res, next) {
+  try {
+    const productId = req.params._id;
+    const sellerId = req.currentUserId;
+    const result = await productService.deleteProduct({ productId, sellerId });
 
-export { productPostCreate, productPutUpdate, productGetAll, productGetById };
+    if (!result) {
+      throw new Error("해당 상품을 삭제할 수 없습니다.");
+    }
+
+    return res.status(204).send(result);
+  } catch (error) {
+    next(error);
+  }
+}
+
+
+export { productPostCreate, productPutUpdate, productGetAll, productGetById, productDelete };
 //트리쉐이킹 : 메모리최적화. 

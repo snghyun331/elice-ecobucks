@@ -49,10 +49,27 @@ class productService {
     return products;
   }
 
-  static async findProduct( { productId }) {
+  static async findProduct({ productId }) {
     const product = await Product.findById({ productId })
     return product
   }
+
+  static async deleteProduct({ productId, sellerId }) {
+    const product = await Product.findById({ productId });
+
+    if(product.seller.toString() !== sellerId) 
+      throw new Error("수정 권한이 없습니다.");
+
+    const isDataDeleted = await Product.deleteById({ productId });
+
+    if (!isDataDeleted) {
+      const errorMessage =
+        "해당 id를 가진 상품이 없습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+    return { status: "ok" };
+  }
 }
+
 
 export { productService };

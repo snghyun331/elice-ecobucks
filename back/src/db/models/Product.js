@@ -23,6 +23,12 @@ class Product {
     const products = await productModel.find();
     return products
   }
+
+  static async deleteById({ productId }) {
+    const deleteResult = await productModel.deleteOne({ _id: productId });
+    const isDataDeleted = deleteResult.deletedCount === 1;
+    return isDataDeleted;
+  }
 }
 
 export { Product };
