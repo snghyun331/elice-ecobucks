@@ -43,4 +43,21 @@ const blogpostPutWrite = async function(req, res, next) {
     }
 }
 
-export {blogpostPostWrite, blogpostPutWrite};
+
+const blogpostDeleteWrite = async function(req, res, next) {
+    try{
+        const { post_id } = req.body;
+        const result = await blogPostService.deletePost({ post_id });
+
+        if (result.errorMessage) {
+            throw new Error(result.errorMessage);
+        }
+
+        return res.status(200).send(result);
+
+    } catch(error) {
+        next(error)
+    }
+}
+
+export {blogpostPostWrite, blogpostPutWrite, blogpostDeleteWrite};

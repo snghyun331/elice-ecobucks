@@ -49,6 +49,15 @@ class blogPostService {
     }
 
 
+    static async deletePost({ post_id }) {
+        let isDeleted = await BlogPost.deleteOneById({ post_id });
+        if (!isDeleted) {
+            const errorMessage = "삭제할 게시글 정보가 없습니다.";
+            return { errorMessage };
+        }
+        return { result: "Success" };
+    }
+
 
 } 
 
