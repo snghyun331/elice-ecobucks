@@ -1,6 +1,5 @@
 import is from "@sindresorhus/is";
-import { productService } from "../services/productService.js";
-import jwt from "jsonwebtoken";
+import { productService } from "../services/product-service.js";
 
 class productController {
   static async productPost_create(req, res, next) {

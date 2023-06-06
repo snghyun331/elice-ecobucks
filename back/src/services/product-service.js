@@ -1,4 +1,4 @@
-import { Product } from "../db/models/Product.js";
+import { Product } from "../db/models/product.js";
 
 class productService {
   static async addProduct({

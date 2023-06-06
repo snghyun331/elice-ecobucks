@@ -2,7 +2,7 @@ import cors from "cors";
 import express from "express";
 import { userAuthRouter } from "./routers/user-router.js";
 //import { blogpostRouter } from "./routers/blogpostRouter.js";
-import { productRouter } from "./routers/productRouter.js";
+import { productRouter } from "./routers/product-router.js";
 import { errorMiddleware } from "./middlewares/error-middleware.js";
 import { challengeRouter } from "./routers/challenge-router.js";
 import { challengeParticipationRouter } from "./routers/challenge-participation-router.js";

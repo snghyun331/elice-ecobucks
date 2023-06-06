@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { productController } from "../controllers/productController.js";
+import { productController } from "../controllers/product-controller.js";
 import { productValidation } from "../middlewares/validation.js";
 import { login_required } from "../middlewares/login-required.js";
 

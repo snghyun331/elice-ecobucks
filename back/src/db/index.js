@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { User } from "./models/user.js";
 //import { BlogPost } from "./models/Blog_post.js";
 import { Gu } from "./models/Gu.js";
-import { Product } from "./models/Product.js";
+import { Product } from "./models/product.js";
 import { Challenge } from "./models/challenge.js";
 
 const DB_URL =
