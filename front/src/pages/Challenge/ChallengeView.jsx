@@ -135,7 +135,7 @@ const ChallengeView = () => {
                 <Card.Text>
                   작성일자: {formatDate(challenge.createdAt)}
                   <br />
-                  마감 기간: {formatDate(challenge.dueDate)}
+                  마감일자: {formatDate(challenge.dueDate)}
                   <br />
                   작성자: {challenge.user_id}
                   <br />
