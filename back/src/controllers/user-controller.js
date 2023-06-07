@@ -1,4 +1,4 @@
-import { userAuthService } from "../services/userService.js";
+import { userAuthService } from "../services/user-service.js";
 import is from '@sindresorhus/is';
 
 const PostUser_register = async function (req, res, next) {
@@ -11,7 +11,6 @@ const PostUser_register = async function (req, res, next) {
       
       const { username, email, password, guName } = req.body;
 
-  
       const newUser = await userAuthService.addUser({
         username,
         email,

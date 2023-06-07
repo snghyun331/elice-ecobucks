@@ -118,6 +118,9 @@ function RegisterForm() {
       navigate("/", { replace: true });
       
     } catch (err) {
+      if (err.response.status === 400) {
+        alert(err.response.data);
+    }
       console.log("회원가입에 실패하였습니다.", err);
     }
   };

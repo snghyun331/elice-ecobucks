@@ -5,14 +5,14 @@ class Challenge {
     const createdChallenge = await ChallengeModel.create(newChallenge);
     return createdChallenge;
   }
-
+  
   static async findAll() {
     const Challenges = await ChallengeModel.find({});
     return Challenges;
   }
   
-  static async findById({ chellenge_id }){
-    const Challenge = await ChallengeModel.findById({ chellenge_id });
+  static async findById({ _id }){
+    const Challenge = await ChallengeModel.findById({ _id });
     return Challenge
   }
 
@@ -22,10 +22,10 @@ class Challenge {
   }
 
   // update
-  static async update({ user_id, title, content, icon, DueDate }) {
+  static async update({ _id, title, content, icon, weeks, dueDate }) {
     const updatedEducation = await ChallengeModel.findOneAndUpdate(
-      {_id : user_id}
-      ,{title, content, icon, DueDate}
+      {_id : _id}
+      ,{title, content, icon, weeks, dueDate}
       ,{new: true});
 
     return updatedEducation;
