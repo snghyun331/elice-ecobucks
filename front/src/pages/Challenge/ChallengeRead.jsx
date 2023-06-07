@@ -87,7 +87,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
 
 
 
-      <Modal show={showUpdateModal} onHide={handleCloseUpdateModal}>
+      <Modal size='lg' show={showUpdateModal} onHide={handleCloseUpdateModal}>
         <Modal.Header closeButton>
           <Modal.Title>챌린지 수정</Modal.Title>
         </Modal.Header>

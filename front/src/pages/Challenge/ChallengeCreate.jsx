@@ -10,10 +10,8 @@ const ChallengeCreate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    console.log(title, content, icon, duration)
+
     try {
-      // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
       const res = await Api.post("challenges", {
         title,
         content,
