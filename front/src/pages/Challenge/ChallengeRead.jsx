@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Container, Card, Modal } from "react-bootstrap";
+import * as Api from "../../api";
+
 import ChallengeParticipate from "./ChallengeParticipate";
 import { UserStateContext } from "../../context/user/UserProvider";
 
@@ -36,9 +38,15 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
 
   const isCurrentUserAuthor = userState.user._id === challenge.user_id._id;
 
-  const handleDeleteClick = () => {
-    // Perform the delete action here
-    // You can add the necessary logic to delete the challenge
+  const handleDeleteClick = async (e) => {
+    e.preventDefault();
+    try {
+      await Api.delete(`challenges/${challenge._id}`)
+      window.location.reload();
+      alert('챌린지가 삭제되었습니다.')
+    } catch (err) {
+      alert("챌린지 삭제에 실패하였습니다.");
+    }
   };
 
   return (

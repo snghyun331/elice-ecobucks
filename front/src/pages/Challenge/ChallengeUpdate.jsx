@@ -18,8 +18,6 @@ const ChallengeUpdate = ({ challenge }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(challenge)
-    console.log(title, content, icon, duration);
     try {
       const res = await Api.put(`challenges/${challenge._id}`, {
         title,
