@@ -1,6 +1,21 @@
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { DispatchContext } from "../../context/user/UserProvider";
+
 const RightNav = ({ isLogin }) => {
   // 로그인 여부에 따라 다른 내용을 렌더링
   console.log(isLogin);
+  const dispatch = useContext(DispatchContext);
+  // const navigate = useNavigate();
+  const logout = () => {
+    // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
+    sessionStorage.removeItem('userToken');
+    // dispatch 함수를 이용해 로그아웃함.
+    dispatch({ type: 'LOGOUT' });
+    alert('로그아웃하여 홈페이지로 이동합니다.')
+    // 기본 페이지로 돌아감.
+    // navigate('/');
+};
   const renderNavContent = () => {
     if (isLogin) {
       return (
@@ -21,9 +36,11 @@ const RightNav = ({ isLogin }) => {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/">
-              로그아웃
-            </a>
+              <a
+                  className="nav-link"
+                  onClick={logout}
+                  href="/"
+                >로그아웃</a>  
           </li>
         </ul>
       );
