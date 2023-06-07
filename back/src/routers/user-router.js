@@ -15,17 +15,9 @@ userAuthRouter.get("/current",login_required, userGetcurrent);
 
 userAuthRouter.get("/mypage", login_required, GetUser_myPage);
 
-userAuthRouter.get(
-        "/users/:_id",
-        // login_required,
-        GetUser_err_yellow
-);
+userAuthRouter.get("/users/:_id", login_required, GetUser_err_yellow);
 
-userAuthRouter.put(
-        "/mypage/useredit/:_id",
-        login_required,
-        userPutMypage
-)
+userAuthRouter.put("/mypage/useredit/:_id",login_required,userPutMypage)
 
 userAuthRouter.delete("/mypage/withdraw",login_required,userDeleteWithdraw)
 
