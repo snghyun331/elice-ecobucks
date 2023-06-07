@@ -6,14 +6,24 @@ class ChallengeParticipation {
     return createdChallenge;
   }  
 
-  static async findAll() {
-    const Participations = await ChallengeParticipationModel.find({});
+  static async findAll( ) {
+    const Participations = await ChallengeParticipationModel.find( );
     return Participations;
   } 
+
+  static NoAsyncfindAll({ challenge_id }) {
+    const Participations = ChallengeParticipationModel.find({ challenge_id });
+    return Participations;
+  }
   
-  static async findById({ chellenge_id }){
-    const Participation = await ChallengeParticipationModel.findById({ chellenge_id });
+  static async findById({ _id }){
+    const Participation = await ChallengeParticipationModel.findById({ _id });
     return Participation
+  }
+
+  static NoAsyncfindById({ _id }) {
+    const Participation = ChallengeParticipationModel.findById({ _id });
+    return Participation;
   }
   
   static async findAllByUserId({ user_id }){
@@ -22,17 +32,17 @@ class ChallengeParticipation {
   }
 
   // update
-  static async update({ user_id, title, content, icon, DueDate }) {
+  static async update({ _id, image }) {
     const updatedEducation = await ChallengeParticipationModel.findOneAndUpdate(
-      {_id : user_id}
-      ,{title, content, icon, DueDate}
+      {_id : _id}
+      ,{image}
       ,{new: true});
 
     return updatedEducation;
   }
 
-  static async deleteById( challengeId ) {
-    await ChallengeParticipationModel.findByIdAndDelete(challengeId);
+  static async deleteById( _id ) {
+    await ChallengeParticipationModel.findByIdAndDelete( _id );
     return ;
   }
   
