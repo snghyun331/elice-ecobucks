@@ -5,7 +5,8 @@ import { userAuthRouter } from "./routers/user-router.js";
 import { errorMiddleware } from "./middlewares/error-middleware.js";
 
 import { challengeRouter } from "./routers/challenge-router.js";
-import { challengeParticipationRouter } from "./routers/challenge-participation-router.js";
+import { participationRouter } from "./routers/challenge-participation-router.js";
+import { commentRouter } from "./routers/challenge-comment-router.js";
 
 const app = express();
 
@@ -27,9 +28,8 @@ app.get("/", (req, res) => {
 app.use(userAuthRouter);
 //app.use(blogpostRouter);
 app.use("/challenges", challengeRouter);
-app.use("/challenges", challengeParticipationRouter);
-
-
+app.use("/challenges", participationRouter);
+app.use("/challenges", commentRouter);
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);

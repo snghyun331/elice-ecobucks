@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-const ChallengeSchema = new Schema(
+const challengeSchema = new Schema(
   {
     user_id: {
         type: Schema.Types.ObjectId, 
@@ -30,6 +30,10 @@ const ChallengeSchema = new Schema(
         type: Number, 
         default: 0 
     },
+    commentsCount: {
+        type: Number, 
+        default: 0
+    },
     isCompleted: {
         type: Boolean, 
         default: false
@@ -41,5 +45,5 @@ const ChallengeSchema = new Schema(
   }
 );
 
-const ChallengeModel = model('Challenge', ChallengeSchema);
-export { ChallengeModel };
+const challengeModel = model('Challenge', challengeSchema);
+export { challengeModel };

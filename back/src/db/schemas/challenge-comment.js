@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-const ChallengeCommentSchema = new Schema(
+const commentSchema = new Schema(
   {
     user_id: {
       type: Schema.Types.ObjectId,
@@ -9,7 +9,7 @@ const ChallengeCommentSchema = new Schema(
     },
     challenge_id: {
       type: Schema.Types.ObjectId,
-      ref: 'chellenge',
+      ref: 'Chellenge',
       required: true
     },
     content: {
@@ -22,5 +22,5 @@ const ChallengeCommentSchema = new Schema(
   }
 );
 
-const ChallengeCommentModel = model('ChallengeComment', ChallengeCommentSchema);
-export { ChallengeCommentModel };
+const commentModel = model('Comment', commentSchema);
+export { commentModel };

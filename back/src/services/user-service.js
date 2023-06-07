@@ -1,4 +1,4 @@
-import { UserModel } from "../db/schemas/user.js";
+import { userModel } from "../db/schemas/user.js";
 import { User, Gu, Challenge } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -19,7 +19,7 @@ class userAuthService {
       const hashedPassword = await bcrypt.hash(password, 10);
       const guCode = await Gu.getGuCodeByName(guName)
       // 기존 정보에서 다시 가입할 때 등록한 정보로 업데이트
-      const updatedUser = await UserModel.findOneAndUpdate(   
+      const updatedUser = await userModel.findOneAndUpdate(   
         {email: email, is_withdrawed: true},  // 필터링
         {username: username, email: email, password: hashedPassword, guCode: guCode, is_withdrawed: false},  // 업데이트 항목들
         { returnOriginal: false }   // 업데이트 된 상태로 저장
