@@ -3,46 +3,52 @@ import { Container, Button, Dropdown, DropdownButton} from "react-bootstrap";
 import map from "../../../../data/seoul_map/seoulMap.png";
 import DomesticAverage from "../../../../data/DomesticAverage.png";
 import DomesticDistrict from "../../../../data/DomesticDistrict.png";
+import district1 from "../../../../data/seoul_map/district1.png";
+import district2 from "../../../../data/seoul_map/district2.png";
+import district3 from "../../../../data/seoul_map/district3.png";
+import district4 from "../../../../data/seoul_map/district4.png";
+import district5 from "../../../../data/seoul_map/district5.png";
 import Industry from "../../../../data/Industry.png";
 import mall from "../../assets/mall.png";
 import tip from "../../assets/tip.png";
 import challenge from "../../assets/challenge.png";
 import TipCarousel from "./TipCarousel";
 import { useState } from "react";
+
 const HomePage = () => {
   const [currentImg, setCurrentImg] = useState(map);
+  
   const handleButtonClick = (img) => {
     setCurrentImg(img);
   };
 
-  const districts = {
-    1: "강남구",
-    2: "강동구",
-    3: "강북구",
-    4: "강서구",
-    5: "관악구",
-    6: "광진구",
-    7: "구로구",
-    8: "금천구",
-    9: "노원구",
-    10: "도봉구",
-    11: "동대문구",
-    12: "동작구",
-    13: "마포구",
-    14: "서대문구",
-    15: "서초구",
-    16: "성동구",
-    17: "성북구",
-    18: "송파구",
-    19: "양천구",
-    20: "영등포구",
-    21: "용산구",
-    22: "은평구",
-    23: "종로구",
-    24: "중구",
-    25: "중랑구"
-  };
-
+  const districts = [
+    "강남구",
+    "강동구",
+    "강북구",
+    "강서구",
+    "관악구",
+    // 6: "광진구",
+    // 7: "구로구",
+    // 8: "금천구",
+    // 9: "노원구",
+    // 10: "도봉구",
+    // 11: "동대문구",
+    // 12: "동작구",
+    // 13: "마포구",
+    // 14: "서대문구",
+    // 15: "서초구",
+    // 16: "성동구",
+    // 17: "성북구",
+    // 18: "송파구",
+    // 19: "양천구",
+    // 20: "영등포구",
+    // 21: "용산구",
+    // 22: "은평구",
+    // 23: "종로구",
+    // 24: "중구",
+    // 25: "중랑구"
+  ];
 
   return (
     <div style={{ justifyContent: "center", padding: "60px" }}>
@@ -136,12 +142,25 @@ const HomePage = () => {
           aria-label="Toolbar with button groups"
         >
           <div className="d-grid gap-2 mx-auto justify-content-md-end">
-            <DropdownButton title="서울시 전체">
-            {Object.entries(districts).map(([key, district]) => (
-          <Dropdown.Item key={key} onClick={() => handleButtonClick(district)}>
-            {district}
-          </Dropdown.Item>
-        ))}
+            <DropdownButton title="구 별 전력 사용량 보기">
+              <Dropdown.Item eventKey="seoul" onClick={() => handleButtonClick(map)}>
+                서울시 전체
+              </Dropdown.Item>
+              <Dropdown.Item eventKey="Gangnam" onClick={() => handleButtonClick(district1)}>
+                {districts[0]}
+              </Dropdown.Item>
+              <Dropdown.Item eventKey="something" onClick={() => handleButtonClick(district2)}>
+                {districts[1]}
+              </Dropdown.Item>
+              <Dropdown.Item eventKey="something" onClick={() => handleButtonClick(district3)}>
+                {districts[2]}
+              </Dropdown.Item>
+              <Dropdown.Item eventKey="something" onClick={() => handleButtonClick(district4)}>
+                {districts[3]}
+              </Dropdown.Item>
+              <Dropdown.Item eventKey="something" onClick={() => handleButtonClick(district5)}>
+                {districts[4]}
+              </Dropdown.Item>
             </DropdownButton>
             <button type="button" className="btn btn-primary" onClick={()=>handleButtonClick(Industry)}>
               산업용
