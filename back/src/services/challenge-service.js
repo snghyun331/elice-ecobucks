@@ -9,23 +9,23 @@ class challengeService {
     return newDueDate
   }
   
-  static async createChallenge({ user_id, title, content, icon, weeks }) {
+  static async createChallenge({ userId, title, content, icon, weeks }) {
     if (!title) throw new Error("모두 기입해 주세요."); // DueDate : ('1주','2주','3주','4주' 요청값) 
   
-    const createdChallenge = await Challenge.create({ user_id, title, content, icon, weeks, dueDate: this.makeDueDate(weeks) });
+    const createdChallenge = await Challenge.create({ userId, title, content, icon, weeks, dueDate: this.makeDueDate(weeks) });
     
     return createdChallenge;
   }
 
   static async findChallenges( ) {
-    const challenges = await Challenge.NoAsyncfindAll( ).populate('user_id', 'guCode guName').exec();
+    const challenges = await Challenge.NoAsyncfindAll( ).populate('userId', 'guCode guName').exec();
 
     return challenges;
   }
 
   static async findChallenge({ _id }) {
-    const challenge = await Challenge.NoAsyncfindById({ _id }).populate('user_id', 'guCode guName').exec();
-    //console.log('guName: ', challenge.user_id.guName);
+    const challenge = await Challenge.NoAsyncfindById({ _id }).populate('userId', 'guCode guName').exec();
+    //console.log('guName: ', challenge.userId.guName);
     
     return challenge;
   }
@@ -35,7 +35,7 @@ class challengeService {
     if ( !findIdChallenge ) {
       throw new Error("해당 id를 가진 데이터는 없습니다.")
     }
-    if( findIdChallenge.user_id.toString() !== currentUserId )
+    if( findIdChallenge.userId.toString() !== currentUserId )
       throw new Error("수정 권한이 없습니다.");
     
     const updatedChallenge = await Challenge.update({ _id, title, content, icon, weeks, dueDate: this.makeDueDate(weeks) })
@@ -45,7 +45,7 @@ class challengeService {
   
   static async deleteChallenge(_id, currentUserId) {
     const findIdChallenge = await Challenge.findById({ _id })
-    if(findIdChallenge.user_id.toString() !== currentUserId)
+    if(findIdChallenge.userId.toString() !== currentUserId)
       throw new Error("삭제 권한이 없습니다.");
 
     await Challenge.deleteById( _id );

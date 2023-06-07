@@ -1,27 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, ButtonGroup, Container, Form, Alert } from "react-bootstrap";
-import * as Api from '../../api'
+import * as Api from "../../api";
 
-const ChallengeCreate = () => {
+const ChallengeUpdate = ({ challenge }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [duration, setDuration] = useState("");
   const [icon, setIcon] = useState("");
 
+  useEffect(() => {
+    // Set the initial values based on the challenge prop
+    setTitle(challenge.title);
+    setContent(challenge.content);
+    setDuration(challenge.weeks);
+    setIcon(challenge.icon);
+  }, [challenge]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const res = await Api.post("challenges", {
+      if (!title || !content || !duration || !icon) {
+        alert("모든 값을 입력해주세요.");
+        return;
+      }
+      
+      const res = await Api.put(`challenges/${challenge._id}`, {
         title,
         content,
         icon,
-        weeks: duration
+        weeks: duration,
       });
-      window.location.reload()
+      console.log(res)
+      window.location.reload();
     } catch (err) {
-      alert("모든 값을 입력해주세요.")
-      console.log("챌린지 등록에 실패하였습니다.", err);
+      alert("모든 값을 입력해주세요.");
+      console.log("챌린지 수정에 실패하였습니다.", err);
     }
   };
 
@@ -42,13 +55,14 @@ const ChallengeCreate = () => {
   };
 
   return (
-    <div>
-      <h2>챌린지 시작하기</h2>
+    <div style={{ padding: "30px" }}>
+      <h2>챌린지 수정하기</h2>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="title">
           <Form.Label>제목</Form.Label>
-          <Container className="text-muted" style={{fontSize:'0.85rem'}}>
-            구체적인 행동을 지정해주세요. (i.e. 예비전력 절약을 위해 전기 코드를 뽑아요.)
+          <Container className="text-muted" style={{ fontSize: "0.85rem" }}>
+            구체적인 행동을 지정해주세요. (i.e. 예비전력 절약을 위해 전기 코드를
+            뽑아요.)
           </Container>
           <Form.Control
             type="text"
@@ -58,7 +72,7 @@ const ChallengeCreate = () => {
         </Form.Group>
         <Form.Group controlId="content">
           <Form.Label>설명</Form.Label>
-          <Container className="text-muted" style={{fontSize:'0.85rem'}}>
+          <Container className="text-muted" style={{ fontSize: "0.85rem" }}>
             이 행동을 하는 방법이나, 환경에 미치는 영향을 알려주세요.
           </Container>
           <Form.Control
@@ -69,8 +83,10 @@ const ChallengeCreate = () => {
         </Form.Group>
         <Form.Group controlId="duration">
           <Form.Label>진행기간</Form.Label>
-          <Container className="text-muted" style={{fontSize:'0.85rem'}}>
-          </Container>
+          <Container
+            className="text-muted"
+            style={{ fontSize: "0.85rem" }}
+          ></Container>
           <Form.Control
             as="select"
             value={duration}
@@ -85,8 +101,9 @@ const ChallengeCreate = () => {
         </Form.Group>
         <Form.Group controlId="icon">
           <Form.Label>아이콘</Form.Label>
-          <Container className="text-muted" style={{fontSize:'0.85rem'}}>
-            챌린지에 어울리는 테마 아이콘을 설정해주세요. 대표 이미지로 나타납니다.
+          <Container className="text-muted" style={{ fontSize: "0.85rem" }}>
+            챌 린지에 어울리는 테마 아이콘을 설정해주세요. 대표 이미지로
+            나타납니다.
           </Container>
           <ButtonGroup>
             <Button
@@ -156,17 +173,20 @@ const ChallengeCreate = () => {
               🌿
             </Button>
           </ButtonGroup>
-          <Alert variant='warning' className="mt-2 p-2 text-muted" style={{fontSize:'0.85rem'}}>
-            챌린지가 시작되고 참여인원이 1명 이상이 되면 수정, 삭제할 수 없습니다.
+          <Alert
+            variant="warning"
+            className="mt-2 p-2 text-muted"
+            style={{ fontSize: "0.85rem" }}
+          >
+            챌린지가 시작되고 참여인원이 1명 이상이 되면 수정, 삭제할 수
+            없습니다.
           </Alert>
         </Form.Group>
-        <Button type="submit">챌린지 게시</Button>
-      <Button>
-        목록으로
-      </Button>
+        <Button type="submit">챌린지 수정</Button>
+        <Button>목록으로</Button>
       </Form>
     </div>
   );
 };
 
-export default ChallengeCreate;
+export default ChallengeUpdate;
