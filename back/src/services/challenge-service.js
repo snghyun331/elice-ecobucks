@@ -9,22 +9,22 @@ class ChallengeService {
     return newDueDate
   }
   
-  static async createChallenge({ user_id, title, content, icon, weeks }) {
+  static async createChallenge({ userId, title, content, icon, weeks }) {
     if (!title) throw new Error("모두 기입해 주세요."); // DueDate : ('1주','2주','3주','4주' 요청값) 
   
-    const createdChallenge = await Challenge.create({ user_id, title, content, icon, weeks, dueDate: this.makeDueDate(weeks) });
+    const createdChallenge = await Challenge.create({ userId, title, content, icon, weeks, dueDate: this.makeDueDate(weeks) });
     
     return createdChallenge;
   }
 
   static async findChallenges( ) {
-    const challenge = await Challenge.NoAsyncfindAll( ).populate('user_id', 'username guCode guName').exec();
+    const challenge = await Challenge.NoAsyncfindAll( ).populate('userId', 'username guCode guName').exec();
 
     return challenge;
   }
 
   static async findChallenge({ _id }) {
-    const challenge = await Challenge.NoAsyncfindById({ _id }).populate('user_id', 'username guCode guName').exec();
+    const challenge = await Challenge.NoAsyncfindById({ _id }).populate('userId', 'username guCode guName').exec();
     
     return challenge;
   }
@@ -34,7 +34,7 @@ class ChallengeService {
     if ( !findIdChallenge ) {
       throw new Error("해당 id를 가진 데이터는 없습니다.")
     }
-    if( findIdChallenge.user_id.toString() !== currentUserId )
+    if( findIdChallenge.userId.toString() !== currentUserId )
       throw new Error("수정 권한이 없습니다.");
     
     const updatedChallenge = await Challenge.update({ _id, title, content, icon, weeks, dueDate: this.makeDueDate(weeks) })
@@ -44,7 +44,7 @@ class ChallengeService {
   
   static async deleteChallenge(_id, currentUserId) {
     const findIdChallenge = await Challenge.findById({ _id })
-    if(findIdChallenge.user_id.toString() !== currentUserId)
+    if(findIdChallenge.userId.toString() !== currentUserId)
       throw new Error("삭제 권한이 없습니다.");
 
     await Challenge.deleteById( _id );

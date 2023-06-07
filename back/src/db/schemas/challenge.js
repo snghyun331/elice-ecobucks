@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 
 const challengeSchema = new Schema(
   {
-    user_id: {
+    userId: {
         type: Schema.Types.ObjectId, 
         ref: 'User',
     },

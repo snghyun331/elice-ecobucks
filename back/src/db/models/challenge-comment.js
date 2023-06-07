@@ -26,8 +26,8 @@ class Comment {
     return comment;
   }
   
-  static async findAllByUserId({ user_id }){
-    const userComment = await commentModel.find({ user_id });;
+  static async findAllByUserId({ userId }){
+    const userComment = await commentModel.find({ userId });;
     return userComment
   }
 

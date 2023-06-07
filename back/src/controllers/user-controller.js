@@ -63,8 +63,8 @@ const GetUser_userlist = async function (req, res, next) {
 const GetUser_myPage = async function (req, res, next) {
     try {
       // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
-      const user_id = req.currentUserId;
-      const currentUserInfo = await userAuthService.getUserMypage({ user_id });
+      const userId = req.currentUserId;
+      const currentUserInfo = await userAuthService.getUserMypage({ userId });
 
       if (currentUserInfo.errorMessage) {
         throw new Error(currentUserInfo.errorMessage);
@@ -79,8 +79,8 @@ const GetUser_myPage = async function (req, res, next) {
 
 const GetUser_err_yellow =  async function (req, res, next) {
     try {
-      const user_id = req.params._id;
-      const currentUserInfo = await userAuthService.getUserInfo({ user_id });
+      const userId = req.params._id;
+      const currentUserInfo = await userAuthService.getUserInfo({ userId });
 
       if (currentUserInfo.errorMessage) {
         throw new Error(currentUserInfo.errorMessage);
@@ -95,9 +95,9 @@ const GetUser_err_yellow =  async function (req, res, next) {
 const userGetcurrent = async function (req, res, next) {
   try {
     // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
-    const user_id = req.currentUserId;
+    const userId = req.currentUserId;
     const currentUserInfo = await userAuthService.getUserInfo({
-      user_id,
+      userId,
     });
 
     if (currentUserInfo.errorMessage) {
@@ -112,9 +112,9 @@ const userGetcurrent = async function (req, res, next) {
 
 
 const userDeleteWithdraw = async function (req, res, next) {
-  const user_id = req.currentUserId;
+  const userId = req.currentUserId;
   try {
-    const user = await userAuthService.getUserInfo({ user_id })
+    const user = await userAuthService.getUserInfo({ userId })
 
     if(!user) {
       const errorMessage = "회원이 존재하지 않습니다."
@@ -134,14 +134,14 @@ const userDeleteWithdraw = async function (req, res, next) {
 const userPutMypage = async function (req, res, next) {
   try {
     // URI로부터 사용자 id를 추출함.
-    const user_id = req.params._id;
+    const userId = req.params._id;
 
     // body data 로부터 업데이트할 사용자 정보를 추출함.
     const { username, guName } = req.body ?? null;
     const toUpdate = { username, guName };
 
     // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
-    const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
+    const updatedUser = await userAuthService.setUser({ userId, toUpdate });
 
     if (updatedUser.errorMessage) {
       throw new Error(updatedUser.errorMessage);

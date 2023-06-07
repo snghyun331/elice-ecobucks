@@ -26,8 +26,8 @@ class Challenge {
     return Challenge;
   }
 
-  static async findAllByUserId({ user_id }){
-    const UserChallenges = await challengeModel.find({ user_id });;
+  static async findAllByUserId({ userId }){
+    const UserChallenges = await challengeModel.find({ userId });;
     return UserChallenges
   }
 

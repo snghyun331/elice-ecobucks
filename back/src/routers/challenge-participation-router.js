@@ -9,10 +9,10 @@ participationRouter.post("/:challenge_id/participants", login_required, async fu
   try {
     validateEmptyBody(req)
     const challengeId = req.params.challenge_id
-    const user_id = req.currentUserId;
+    const userId = req.currentUserId;
     const { image } = req.body;
     
-    const challenge = await ParticipationService.createParticipation({ user_id, challenge_id : challengeId, image });
+    const challenge = await ParticipationService.createParticipation({ userId, challenge_id : challengeId, image });
     res.json(challenge);
   } catch (err) {
     next(err);

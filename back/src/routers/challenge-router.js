@@ -8,10 +8,10 @@ const challengeRouter = Router();
 challengeRouter.post("/", login_required, async function (req, res, next) {
   try {
     validateEmptyBody(req)
-    const user_id = req.currentUserId;
+    const userId = req.currentUserId;
     const { title, content, icon, weeks } = req.body;
 
-    const challenge = await ChallengeService.createChallenge({ user_id, title, content, icon, weeks });
+    const challenge = await ChallengeService.createChallenge({ userId, title, content, icon, weeks });
     res.json(challenge);
   } catch (err) {
     next(err);
