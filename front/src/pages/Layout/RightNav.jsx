@@ -21,6 +21,11 @@ const RightNav = ({ isLogin }) => {
       return (
         <ul className="navbar-nav">
           <li className="nav-item">
+            <a className="nav-link" href="/challenge">
+              챌린지
+            </a>
+          </li>
+          <li className="nav-item">
             <a className="nav-link" href="/blog">
               블로그
             </a>
@@ -50,6 +55,11 @@ const RightNav = ({ isLogin }) => {
           <li className="nav-item">
             <a className="nav-link" href="/">
               홈
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/challenge">
+              챌린지
             </a>
           </li>
           <li className="nav-item">
