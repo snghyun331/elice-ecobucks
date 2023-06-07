@@ -9,7 +9,7 @@ const commentSchema = new Schema(
     },
     challenge_id: {
       type: Schema.Types.ObjectId,
-      ref: 'Chellenge',
+      ref: 'Challenge',
       required: true
     },
     content: {
