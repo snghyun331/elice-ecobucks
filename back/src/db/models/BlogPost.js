@@ -16,6 +16,11 @@ class BlogPost {
         return posts;
     }
 
+    static async findAllByTopic({ topic }){
+        const posts = await BlogPostModel.find({ topic : topic });;
+        return posts
+    }
+
     static async update({ post_id, fieldToUpdate, newValue }) {
         const filter = { _id: post_id };
         const update = { [fieldToUpdate]: newValue };
