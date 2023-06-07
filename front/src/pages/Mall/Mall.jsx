@@ -1,15 +1,19 @@
 /** 작성자: 정원석
  * mapping으로 판매할 물건 자동 추가, 삭제
  */
-import { Container, Button, Card, Row, Col } from "react-bootstrap";
+import { Container, Button, Card, Row, Col, Modal } from "react-bootstrap";
 import Logo from "../../assets/logo.png";
 import SeoulMap from "../../../../data/seoul_map/seoulMap.png"; // 나중에 삭제하기
 import * as Api from "../../api";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserStateContext } from "../../context/user/UserProvider";
+import MallProductSell from "./MallProductSell";
 const Mall = () => {
   const [list, setList] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const handleCloseModal = () => setShowModal(false);
+  const handleOpenModal = () => setShowModal(true);
   const userState = useContext(UserStateContext);
   const navigate = useNavigate();
   
@@ -79,17 +83,33 @@ const Mall = () => {
         <span>아마 지도 API로 지도가 들어갈 자리</span>
         <br />
         <img src={SeoulMap} style={{ maxWidth: "80%", maxHeight: "80%" }} />
-        <Button
-          style={{
-            position: "fixed",
-            right: "10%",
-            marginRight: "20px",
-            marginTop: "20px",
-          }}
-        >
-          떠리상품 판매하기(사장님이)
-        </Button>
+        .
       </Container>
+
+      <Modal show={showModal} onHide={handleCloseModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>상품 등록</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="text-center">
+          <MallProductSell />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            className="mt-4 mb-4"
+            variant="secondary"
+            onClick={handleCloseModal}
+            style={{
+              width: "100%",
+              borderRadius: "0px",
+            }}
+          >
+            닫기
+          </Button>
+        </Modal.Footer>
+      </Modal>
+          <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
+          판매 상품 등록하기
+          </Button>
       
       <Container>
         <Row>
