@@ -12,7 +12,7 @@ const ChallengeParticipationSchema = new Schema(
       ref: 'chellenge', 
       required: true 
     },
-    imageURL: { 
+    image: { 
       type: String, 
       required: true 
     },

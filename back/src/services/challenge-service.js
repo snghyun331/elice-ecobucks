@@ -1,6 +1,6 @@
 import { Challenge } from "../db/models/challenge.js";
 
-class ChallengeService {
+class challengeService {
   
   static makeDueDate(weeks){
     let weeksInt = parseInt(weeks.replace('주', '')) 
@@ -18,35 +18,40 @@ class ChallengeService {
   }
 
   static async findChallenges( ) {
-    const challenges = await Challenge.findAll({ });
+    const challenges = await Challenge.NoAsyncfindAll( ).populate('user_id', 'guCode guName').exec();
 
     return challenges;
   }
 
   static async findChallenge({ _id }) {
-    const challenge = await Challenge.findById({ _id });
-
+    const challenge = await Challenge.NoAsyncfindById({ _id }).populate('user_id', 'guCode guName').exec();
+    //console.log('guName: ', challenge.user_id.guName);
+    
     return challenge;
   }
 
   static async updateChallenge({ _id, currentUserId, title, content, icon, weeks }) {
     const findIdChallenge = await Challenge.findById({ _id })
-    console.log('findIdChallenge: ',findIdChallenge);
     if ( !findIdChallenge ) {
       throw new Error("해당 id를 가진 데이터는 없습니다.")
     }
-    console.log('findIdChallenge.user_id: ',findIdChallenge.user_id.toString());
-    console.log('currentUserId: ',currentUserId);
     if( findIdChallenge.user_id.toString() !== currentUserId )
       throw new Error("수정 권한이 없습니다.");
     
-    updatedChallenge = await Challenge.update({ _id, title, content, icon, weeks, DueDate: this.makeDueDate(weeks) })
-
+    const updatedChallenge = await Challenge.update({ _id, title, content, icon, weeks, dueDate: this.makeDueDate(weeks) })
+    
     return updatedChallenge;
   }
+  
+  static async deleteChallenge(_id, currentUserId) {
+    const findIdChallenge = await Challenge.findById({ _id })
+    if(findIdChallenge.user_id.toString() !== currentUserId)
+      throw new Error("삭제 권한이 없습니다.");
 
-
+    await Challenge.deleteById( _id );
+    return { status: "ok" };
+  }
 
 }
 
-export { ChallengeService };
+export { challengeService };
