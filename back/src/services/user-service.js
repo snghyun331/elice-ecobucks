@@ -71,7 +71,7 @@ class userAuthService {
 
     // 로그인 성공 -> JWT 웹 토큰 생성
     const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-    const token = jwt.sign({ user_id: user._id }, secretKey);
+    const token = jwt.sign({ userId: user._id }, secretKey);
 
     // 반환할 loginuser 객체를 위한 변수 설정
     const id = user._id;
@@ -98,8 +98,8 @@ class userAuthService {
   }
 
   
-  static async getUserInfo({ user_id }) {
-    const user = await User.findById({ user_id });
+  static async getUserInfo({ userId }) {
+    const user = await User.findById({ userId });
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
@@ -149,10 +149,10 @@ class userAuthService {
     return user;
   }
 
-  static async getUserMypage({user_id}){
-    const user  = await User.findById({user_id});
+  static async getUserMypage({userId}){
+    const user  = await User.findById({userId});
 
-    const challenges = await Challenge.findAllByUserId({ user_id: user_id });
+    const challenges = await Challenge.findAllByUserId({ userId: userId });
     const userInfo = {
       ...user._doc,
       challengeCount: challenges.length,

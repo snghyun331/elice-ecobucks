@@ -11,9 +11,9 @@ const blogpostPostWrite = async (req, res, next) => {
     
         const { title, topic, content } = req.body;
 
-        const user_id = req.currentUserId;
+        const userId = req.currentUserId;
         const newPost = await blogPostService.addPost({
-            user_id,title,topic, content
+            userId,title,topic, content
         });
         
         return res.status(201).json(newPost);
