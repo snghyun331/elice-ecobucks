@@ -6,7 +6,6 @@ import { errorMiddleware } from "./middlewares/error-middleware.js";
 import { challengeRouter } from "./routers/challenge-router.js";
 import { participationRouter } from "./routers/challenge-participation-router.js";
 import { commentRouter } from "./routers/challenge-comment-router.js";
-import { challengeParticipationRouter } from "./routers/challenge-participation-router.js";
 import { blogPostRouter } from "./routers/blogpost-router.js";
 import { blogCommentRouter } from "./routers/blogcomment-router.js";
 
@@ -33,7 +32,7 @@ app.use(productRouter);
 app.use("/challenges", challengeRouter);
 app.use("/challenges", participationRouter);
 app.use("/challenges", commentRouter);
-app.use("/challenges", challengeParticipationRouter);
+app.use("/challenges", participationRouter);
 
 
 app.use(blogPostRouter)
