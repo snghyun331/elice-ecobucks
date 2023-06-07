@@ -1,19 +1,20 @@
 import is from "@sindresorhus/is";
 import { productService } from "../services/product-service.js";
+import { validateEmptyBody } from "../utils/validators.js";
+import { userAuthService } from "../services/user-service.js";
 
 const productPostCreate = async function(req, res, next) {
   try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
+
+    validateEmptyBody(req)
 
     const { name, price, place, stock, description } = req.body;
 
     const seller = req.currentUserId;
+    const currentUserInfo = await userAuthService.getUserInfo({ userId:seller });
+    const sellerName = currentUserInfo.username;
 
-    const newProduct = await productService.addProduct({ seller, name, price, place, stock, description });
+    const newProduct = await productService.addProduct({ seller, sellerName, name, price, place, stock, description });
     if (newProduct.errorMessage) {
       throw new Error(newProduct.errorMessage);
     }

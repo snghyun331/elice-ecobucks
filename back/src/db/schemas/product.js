@@ -23,6 +23,11 @@ const productSchema = new Schema(
       ref: "User",
       required: true,
     },
+    sellerName: {
+      type: mongoose.Schema.Types.String,
+      ref: "User",
+      required: true,
+    },
     description: {
       type: String,
       default: "상품 상세 설명이 없습니다.",
