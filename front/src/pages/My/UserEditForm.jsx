@@ -2,17 +2,17 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Form, Button, Dropdown, Alert } from "react-bootstrap";
 
+import * as Api from "../../api";
 import { UserStateContext } from "../../context/user/UserProvider";
 
-const UserEditForm = () => {
+const UserEditForm = ({ user }) => {
   const navigate = useNavigate();
   const userState = useContext(UserStateContext);
 
-  const [name, setName] = useState(userState.user.username);
+  const [name, setName] = useState(user?.username || ""); // user가 null인 경우를 고려하여 기본값 설정
+  const [district, setDistrict] = useState(user?.guName || ""); // user가 null인 경우를 고려하여 기본값 설정
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [district, setDistrict] = useState(userState.user.gu_code);
-  const [greeting, setGreeting] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
 
   const districts = [
@@ -53,7 +53,8 @@ const UserEditForm = () => {
     return name.match(/^[a-zA-Z가-힣\s]{2,20}$/);
   };
 
-  const isPasswordValid = validatePassword(password);
+  const isPasswordValid =
+    password.length === 0 ? true : validatePassword(password);
   const isPasswordSame = password === confirmPassword;
   const isNameValid = validateName(name);
   const isDistrictValid = district != null;
@@ -61,24 +62,56 @@ const UserEditForm = () => {
   const isFormValid =
     isPasswordValid && isPasswordSame && isNameValid && isDistrictValid;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // 여기에서 변경된 정보를 처리하는 로직을 구현합니다.
-    // 예를 들어, 서버로 변경된 정보를 전송하거나 상태를 업데이트하는 등의 작업을 수행할 수 있습니다.
-    console.log("Name:", name);
-    console.log("Password:", password);
-    console.log("Greeting:", greeting);
-    console.log("District:", district);
+
+    try {
+      const res = await Api.put(`mypage/useredit/${userState.user._id}`, {
+        username: name,
+        guName: district,
+      });
+      console.log(res);
+      if (res.status === 200) {
+        // Display success alert
+        alert("변경된 정보가 저장되었습니다.");
+        window.location.reload()
+        
+        ; // Navigate to '/my' after saving the changes
+      } else {
+        // Display error alert
+        alert("정보 변경에 실패했습니다.");
+      }
+    } catch (error) {
+      // Display error alert
+      alert("정보 변경에 실패했습니다.");
+      console.error(error);
+    }
   };
 
   const handleWithdraw = () => {
     setShowConfirm(true);
   };
 
-  const confirmWithdraw = () => {
-    // 탈퇴 요청을 보내는 로직을 구현 (예: Api.del("/mypage/withdraw",""))
-    console.log("탈퇴 요청을 보냈습니다.");
-    // 탈퇴 후 리디렉션 등의 작업 수행
+  const confirmWithdraw = async () => {
+    try {
+      const res = await Api.delete("mypage/withdraw");
+      console.log("탈퇴요청완료", res);
+
+      // 탈퇴 후 리디렉션 등의 작업 수행
+      if (res.status === 200) {
+        setShowConfirm(false);
+        // Display success alert and navigate to login page
+        alert("에코벅스를 이용해주셔서 감사합니다. 로그인 창으로 이동합니다.");
+        navigate("/login");
+      } else {
+        // Display error alert
+        alert("탈퇴 과정에 오류가 발생했습니다.");
+      }
+    } catch (error) {
+      // Display error alert
+      alert("탈퇴 과정에 오류가 발생했습니다.");
+      console.error(error);
+    }
   };
 
   return (
@@ -111,22 +144,6 @@ const UserEditForm = () => {
             이름은 한글과 알파벳만 사용 가능합니다.
           </Form.Text>
         )}
-      </Form.Group>
-      <Form.Group controlId="formGreeting">
-        <Form.Label
-          className="d-block mt-4"
-          style={{ fontWeight: "bold", textAlign: "left" }}
-        >
-          인사말
-        </Form.Label>
-        <Form.Control
-          as="textarea"
-          rows={3}
-          value={greeting}
-          onChange={(e) => setGreeting(e.target.value)}
-          placeholder="인사말을 입력하세요"
-          style={{ borderRadius: "0px" }}
-        />
       </Form.Group>
       <Form.Group controlId="registerPassword" className="mt-4">
         <Form.Label

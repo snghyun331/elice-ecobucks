@@ -1,9 +1,13 @@
-import React, { useState } from "react";
-import { Container, Button, Row } from "react-bootstrap";
+import React, { useState, useContext } from "react";
+import { Container, Button } from "react-bootstrap";
 import ChallengeView from "./ChallengeView";
 import ChallengeCreate from "./ChallengeCreate";
 
+import * as Api from "../../api";
+import { UserStateContext } from "../../context/user/UserProvider";
+
 function ChallengePage() {
+  const userState = useContext(UserStateContext);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
 
