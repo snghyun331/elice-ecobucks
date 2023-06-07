@@ -1,39 +1,44 @@
-import { ChallengeModel } from "../schemas/challenge.js";
+import { challengeModel } from "../schemas/challenge.js";
 
 class Challenge {
   static async create(newChallenge) {
-    const createdChallenge = await ChallengeModel.create(newChallenge);
+    const createdChallenge = await challengeModel.create(newChallenge);
     return createdChallenge;
   }
   
   static async findAll( ) {
-    const Challenges = await ChallengeModel.find( );
+    const Challenges = await challengeModel.find( );
     return Challenges;
   }
 
   static NoAsyncfindAll( ) {
-    const Challenges = ChallengeModel.find( );
+    const Challenges = challengeModel.find( );
     return Challenges;
   }
   
   static async findById({ _id }){
-    const Challenge = await ChallengeModel.findById({ _id });
+    const Challenge = await challengeModel.findById({ _id });
     return Challenge
   }
 
   static NoAsyncfindById({ _id }) {
-    const Challenge = ChallengeModel.findById({ _id });
+    const Challenge = challengeModel.findById({ _id });
     return Challenge;
   }
 
+<<<<<<< HEAD
   static async findAllByUserId({ userId }){
     const UserChallenges = await ChallengeModel.find({ userId });;
+=======
+  static async findAllByUserId({ user_id }){
+    const UserChallenges = await challengeModel.find({ user_id });;
+>>>>>>> 8c5162323d2d38d1cccc9c74b35f6a3ac34f65db
     return UserChallenges
   }
 
   // update
   static async update({ _id, title, content, icon, weeks, dueDate }) {
-    const updatedEducation = await ChallengeModel.findOneAndUpdate(
+    const updatedEducation = await challengeModel.findOneAndUpdate(
       {_id : _id}
       ,{title, content, icon, weeks, dueDate}
       ,{new: true});
@@ -42,7 +47,7 @@ class Challenge {
   }
 
   static async deleteById( _id ) {
-    await ChallengeModel.findByIdAndDelete( _id );
+    await challengeModel.findByIdAndDelete( _id );
     return ;
   }
   
