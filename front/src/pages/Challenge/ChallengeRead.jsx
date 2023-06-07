@@ -43,6 +43,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
     if (confirmDelete) {
       try {
         await Api.delete(`challenges/${challenge._id}`);
+        window.location.reload();
       } catch (err) {
         alert("챌린지 삭제에 실패하였습니다.");
       }
