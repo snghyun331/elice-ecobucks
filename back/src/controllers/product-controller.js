@@ -1,4 +1,3 @@
-import is from "@sindresorhus/is";
 import { productService } from "../services/product-service.js";
 import { validateEmptyBody } from "../utils/validators.js";
 import { userAuthService } from "../services/user-service.js";
