@@ -1,21 +1,25 @@
 import React, { useState } from "react";
 import { Button, Form, Modal, Image, Alert, Container } from "react-bootstrap";
+import * as Api from "../../api";
 
-const ChallengeParticipate = ({ onClose }) => {
+const ChallengeParticipate = ({ onClose, challenge }) => {
+  console.log(challenge)
   const [selectedFile, setSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [previewURL, setPreviewURL] = useState(null);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
     setSelectedFile(file);
     setErrorMessage("");
     setPreviewURL(URL.createObjectURL(file));
   };
 
-  const handleUpload = () => {
+  const handleUpload = async (e) => {
     if (selectedFile) {
+      e.preventDefault();
+      
       // Perform your upload logic here
       // Replace the alert with your actual logic for handling the uploaded photo
 
@@ -30,10 +34,14 @@ const ChallengeParticipate = ({ onClose }) => {
     setShowConfirmation(false);
   };
 
-  const confirmUpload = () => {
+  const confirmUpload = async () => {
     // Replace with your logic for confirming the photo upload
     // For now, we'll just simulate a success message
+    const res = await Api.post(`challenges/${challenge._id}/participants`, {
+      image: "selectedFile"
+    })
     alert("인증사진 업로드가 완료되었습니다.");
+    window.location.reload();
     handleConfirmationClose();
     onClose();
   };

@@ -101,11 +101,18 @@ const blogpostPutDislikes = async function(req, res, next) {
     }
 }
 
-
 const blogpostGetAll = async function(req, res, next) {
+    let posts;
     try{
-        const posts = await blogPostService.getPosts();
-        res.status(200).send(posts);
+        if(req.query.topic) {
+            const topic = req.query.topic
+            posts = await blogPostService.getFilteredPosts({topic});
+            res.status(200).send(posts);
+        }
+        else {
+            posts = await blogPostService.getPosts();   
+            res.status(200).send(posts);
+        }
     } catch(error) {
         next(error)
     }
