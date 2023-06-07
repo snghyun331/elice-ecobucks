@@ -1,9 +1,34 @@
 import React, { useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
+import * as Api from '../../api'
+import { UserStateContext } from "../../context/user/UserProvider";
 const MallProductSell = (props) => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+    const [name, setName] = useState("");
+    const [price, setPrice] = useState("");
+    const [place, setPlace] = useState("");
+    const [stock, setStock] = useState(0);
+    const [description, setDescription] = useState("");
+    const userState = useContext(UserStateContext);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        try {
+          const res = await Api.post("products", {
+            name,
+            price: Number(price),
+            place,
+            stock: Number(stock),
+            seller: userState.user._id,
+            description
+          });
+          console.log(res);
+          window.location.reload()
+        } catch (err) {
+          alert("모든 값을 입력해주세요.")
+          console.log("상품 등록에 실패하였습니다.", err);
+        }
+      };
 
   return (
     <div style={{ padding: "16px", width: "calc(100% - 32px)" }}>
@@ -37,9 +62,9 @@ const MallProductSell = (props) => {
               lineHeight: "20px",
               marginBottom: "16px",
             }}
-            value={title}
+            value={name}
             onChange={(event) => {
-              setTitle(event.target.value);
+                setName(event.target.value);
             }}
           />
           <span>가격</span>
@@ -52,9 +77,9 @@ const MallProductSell = (props) => {
               lineHeight: "20px",
               marginBottom: "16px",
             }}
-            value={title}
+            value={price}
             onChange={(event) => {
-              setTitle(event.target.value);
+              setPrice(event.target.value);
             }}
           />
           <span>위치</span>
@@ -67,9 +92,24 @@ const MallProductSell = (props) => {
               lineHeight: "20px",
               marginBottom: "16px",
             }}
-            value={title}
+            value={place}
             onChange={(event) => {
-              setTitle(event.target.value);
+              setPlace(event.target.value);
+            }}
+          />
+          <span>수량</span>
+          <textarea
+            style={{
+              width: "100%",
+              height: "20px",
+              padding: "16px",
+              fontSize: "16px",
+              lineHeight: "20px",
+              marginBottom: "16px",
+            }}
+            value={stock}
+            onChange={(event) => {
+              setStock(event.target.value);
             }}
           />
             <span>설명</span>
@@ -82,9 +122,9 @@ const MallProductSell = (props) => {
               lineHeight: "20px",
               marginBottom: "16px",
             }}
-            value={content}
+            value={description}
             onChange={(event) => {
-              setContent(event.target.value);
+              setDescription(event.target.value);
             }}
           />
 
@@ -96,6 +136,7 @@ const MallProductSell = (props) => {
               borderRadius: "8px",
               cursor: "pointer",
             }}
+            onClick={handleSubmit}
           >
             상품 등록하기
           </button>
