@@ -8,6 +8,7 @@ class blogPostService {
             return { errorMessage };
         }
         const user = await User.findById({userId})
+        console.log(user)
         const username = user.username
         const newPost = { userId, username, title, topic, content };
         const createdNewPost = await BlogPost.createPost({newPost})
@@ -100,6 +101,12 @@ class blogPostService {
             commentList: comments,
         }
         return info
+    }
+
+
+    static async getFilteredPosts({topic}) {
+        const posts = await BlogPost.findAllByTopic( {topic} )
+        return posts
     }
 }
 
