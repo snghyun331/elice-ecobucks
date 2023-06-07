@@ -17,7 +17,6 @@ const orderPostCreate = async function(req, res, next) {
         const productPrice = product.price;
         const productPlace = product.place;
         const productDate = product.createdAt;
-        console.log(productName, productPrice, productPlace, productDate)
 
         const newOrder = await orderService.addOrder({ productId, buyer, buyerName })
         if (newOrder.errorMessage) {

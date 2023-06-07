@@ -114,39 +114,28 @@ class userAuthService {
   static async updateUser({ userId, toUpdate }) {
     // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
     let user = await User.findById({ userId });
+    
     // db에서 찾지 못한 경우, 에러 메시지 반환
-
     if (!user) {
       const errorMessage =
         "가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
-
+    
     // guName을 guCode로 변환
     if (toUpdate.guName) {
       const guCode = await Gu.getGuCodeByName(toUpdate.guName);
       toUpdate.guCode = guCode;
-      delete toUpdate.guName;
     }
+    
 
-    const fieldsToUpdate = {
-      username: "username",
-      guCode: "guCode",
-    };
-
-    for (const [field, fieldToUpdate] of Object.entries(fieldsToUpdate)) {
-      if (toUpdate[field]) {
-        const newValue = toUpdate[field];
-
-        user = await User.update({
-          userId,
-          fieldToUpdate,
-          newValue,
-        });
-      }
+    for (const [field, value] of Object.entries(toUpdate)) {
+      user[field] = value;
     }
   
-    return user;
+    await user.save();
+
+    return user;  
   }
 
   static async getUserMypage({userId}){
@@ -158,7 +147,6 @@ class userAuthService {
       challengeCount: challenges.length,
       challengeList: challenges,
     }
-    console.log('userInfo: ',userInfo);
     return userInfo
   }
 

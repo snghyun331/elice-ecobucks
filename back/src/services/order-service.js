@@ -11,7 +11,6 @@ class orderService {
 
     static async getUserOrders(userId) {
         const orders = await order.find({ buyer: userId });
-        console.log('서비스');
         return orders;
     }
 }
