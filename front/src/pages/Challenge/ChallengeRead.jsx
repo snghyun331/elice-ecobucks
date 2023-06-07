@@ -1,16 +1,15 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Button,
-  Container,
-  Card,
-  Modal,
-} from "react-bootstrap";
+import { Button, Container, Card, Modal } from "react-bootstrap";
 import ChallengeParticipate from "./ChallengeParticipate";
 import { UserStateContext } from "../../context/user/UserProvider";
 
+import ChallengeUpdate from "./ChallengeUpdate";
+
 const ChallengeRead = ({ challenge, onBackToListClick }) => {
   const [showModal, setShowModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+
   const userState = useContext(UserStateContext);
   const navigate = useNavigate();
 
@@ -18,8 +17,16 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
     setShowModal(true);
   };
 
+  const handleUpdateClick = () => {
+    setShowUpdateModal(true);
+  };
+
   const handleCloseModal = () => {
     setShowModal(false);
+  };
+
+  const handleCloseUpdateModal = () => {
+    setShowUpdateModal(false);
   };
 
   const formatDate = (dateString) => {
@@ -27,7 +34,12 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
     return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
   };
 
+  const isCurrentUserAuthor = userState.user._id === challenge.user_id;
 
+  const handleDeleteClick = () => {
+    // Perform the delete action here
+    // You can add the necessary logic to delete the challenge
+  };
 
   return (
     <Container>
@@ -50,15 +62,43 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
       <Button className="mt-3" onClick={handleJoinClick}>
         참가하기
       </Button>
+      {isCurrentUserAuthor && (
+        <>
+          <Button className="mt-3" onClick={handleUpdateClick}>
+            수정하기
+          </Button>
+          <Button className="mt-3" onClick={handleDeleteClick}>
+            삭제하기
+          </Button>
+        </>
+      )}
       <Button onClick={onBackToListClick} className="mt-3">
         목록으로
       </Button>
+
+
+
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>참가하기</Modal.Title>
         </Modal.Header>
         <ChallengeParticipate onClose={handleCloseModal} />
       </Modal>
+
+
+
+      <Modal show={showUpdateModal} onHide={handleCloseUpdateModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>챌린지 수정</Modal.Title>
+        </Modal.Header>
+        <ChallengeUpdate
+          challenge={challenge}
+          onClose={handleCloseUpdateModal}
+        />
+      </Modal>
+
+
+
     </Container>
   );
 };

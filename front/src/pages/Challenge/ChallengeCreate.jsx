@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, ButtonGroup, Container, Form } from "react-bootstrap";
+import { Button, ButtonGroup, Container, Form, Alert } from "react-bootstrap";
 import * as Api from '../../api'
 
 const ChallengeCreate = () => {
@@ -158,9 +158,14 @@ const ChallengeCreate = () => {
               🌿
             </Button>
           </ButtonGroup>
+          <Alert variant='warning' className="mt-2 p-2 text-muted" style={{fontSize:'0.85rem'}}>
+            챌린지가 시작되고 참여인원이 1명 이상이 되면 수정, 삭제할 수 없습니다.
+          </Alert>
         </Form.Group>
         <Button type="submit">챌린지 게시</Button>
-        <Button>목록으로</Button>
+      <Button>
+        목록으로
+      </Button>
       </Form>
     </div>
   );
