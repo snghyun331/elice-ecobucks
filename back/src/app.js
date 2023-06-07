@@ -2,8 +2,8 @@ import cors from "cors";
 import express from "express";
 import { userAuthRouter } from "./routers/user-router.js";
 //import { blogpostRouter } from "./routers/blogpostRouter.js";
+import { productRouter } from "./routers/product-router.js";
 import { errorMiddleware } from "./middlewares/error-middleware.js";
-
 import { challengeRouter } from "./routers/challenge-router.js";
 import { challengeParticipationRouter } from "./routers/challenge-participation-router.js";
 
@@ -26,6 +26,8 @@ app.get("/", (req, res) => {
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
 app.use(userAuthRouter);
 //app.use(blogpostRouter);
+app.use(productRouter);
+
 app.use("/challenges", challengeRouter);
 app.use("/challenges", challengeParticipationRouter);
 
