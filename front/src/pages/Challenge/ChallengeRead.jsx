@@ -92,7 +92,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
         <Modal.Header closeButton>
           <Modal.Title>참가하기</Modal.Title>
         </Modal.Header>
-        <ChallengeParticipate onClose={handleCloseModal} />
+        <ChallengeParticipate onClose={handleCloseModal} challenge={challenge} />
       </Modal>
 
 
