@@ -1,24 +1,18 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Button,
-  Container,
-  Card,
-  Modal,
-  Form,
-  ListGroup,
-} from "react-bootstrap";
+import { Button, Container, Card, Modal, Form, ListGroup } from "react-bootstrap";
 import * as Api from "../../api";
 
 import ChallengeParticipate from "./ChallengeParticipate";
 import { UserStateContext } from "../../context/user/UserProvider";
-
 import ChallengeUpdate from "./ChallengeUpdate";
 
 const ChallengeRead = ({ challenge, onBackToListClick }) => {
   const [showModal, setShowModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [comments, setComments] = useState([]);
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editedComment, setEditedComment] = useState("");
 
   const userState = useContext(UserStateContext);
   const navigate = useNavigate();
@@ -46,8 +40,10 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
     const day = String(date.getDate()).padStart(2, "0");
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
-    return `${year}-${month}-${day} ${hours}:${minutes}`;
+    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}`;
+    return formattedDate;
   };
+  
 
   const isCurrentUserAuthor = userState.user._id === challenge.userId._id;
 
@@ -67,7 +63,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const content = formData.get("content");
-  
+
     try {
       const response = await Api.post(`challenges/${challenge._id}/comments`, {
         userId: userState.user._id,
@@ -85,26 +81,34 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
     } catch (error) {
       console.log("Error adding comment:", error);
     }
-  
+
     event.target.reset();
   };
-  
 
-  const handleEditComment = async (commentId, content) => {
+  const handleEditComment = (commentId, content) => {
+    setEditingCommentId(commentId);
+    setEditedComment(content);
+  };
+
+  const handleUpdateComment = async (commentId) => {
     try {
       await Api.put(`challenges/${challenge._id}/comments/${commentId}`, {
-        content,
+        content: editedComment,
       });
-      const updatedComments = comments.map((comment) => {
-        if (comment._id === commentId) {
-          return { ...comment, content };
-        }
-        return comment;
-      });
+      const updatedComments = comments.map((comment) =>
+        comment._id === commentId ? { ...comment, content: editedComment } : comment
+      );
       setComments(updatedComments);
+      setEditingCommentId(null);
+      setEditedComment("");
     } catch (error) {
       console.log("Error editing comment:", error);
     }
+  };
+
+  const handleCancelEditComment = () => {
+    setEditingCommentId(null);
+    setEditedComment("");
   };
 
   const handleDeleteComment = async (commentId) => {
@@ -154,53 +158,99 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
             {comments.map((comment) => (
               <ListGroup.Item
                 key={comment._id}
-                className="d-flex justify-content-between"
-              >
+                className="d-flex flex-column justify-content-between align-items-start"
+                >
                 <div>
-                  <strong>{comment.userId.username}</strong> {" "}
-                  <span style={{ color: 'gray', fontSize: '0.8em' }}>{formatDate(comment.updatedAt)}</span>
-                  <br />
-                  {comment.content}
+                  <strong>{comment.userId.username}</strong>{" "}
+                  <span style={{ color: "gray", fontSize: "0.8em" }}>
+                    {formatDate(comment.updatedAt)}
+                  </span>
                 </div>
-                <div>
-                  {comment.userId._id === userState.user._id && (
-                    <Button
-                      variant="link"
-                      className="btn-sm"
-                      onClick={() =>
-                        handleEditComment(
-                          comment._id,
-                          prompt("Edit comment", comment.content)
-                        )
+                {editingCommentId === comment._id ? (
+                  <Form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      handleUpdateComment(comment._id);
+                    }}
+                  
+                  >
+                    <Form.Control
+                      name="content"
+                      as="textarea"
+                      rows={3}
+                      placeholder="댓글을 입력하세요."
+                      value={editedComment}
+                      onChange={(event) =>
+                        setEditedComment(event.target.value)
                       }
-                    >
-                      수정
-                    </Button>
-                  )}
-                  {comment.userId._id === userState.user._id && (
-                    <Button
-                      variant="link"
-                      className="btn-sm text-danger"
-                      onClick={() => handleDeleteComment(comment._id)}
-                    >
-                      삭제
-                    </Button>
-                  )}
-                </div>
+                      required
+                      className='mt-3 mb-2'
+                      style={{width: '282%'}}
+                    />
+                    <div>
+                      <Button
+                        type="submit"
+                        variant="link"
+                        className="btn-sm"
+                        style={{ textDecoration: "none" }}
+                      >
+                        수정완료
+                      </Button>
+                      <Button
+                        variant="link"
+                        className="btn-sm text-danger"
+                        style={{ textDecoration: "none" }}
+                        onClick={handleCancelEditComment}
+                      >
+                        취소
+                      </Button>
+                    </div>
+                  </Form>
+                ) : (
+                  <div style={{ flex: 1 }}>
+                    <div>
+                      {comment.content}
+                    </div>
+                    {comment.userId._id === userState.user._id && (
+                      <div>
+                        <Button
+                          variant="link"
+                          className="btn-sm"
+                          style={{ textDecoration: "none" }}
+                          onClick={() =>
+                            handleEditComment(comment._id, comment.content)
+                          }
+                        >
+                          수정
+                        </Button>
+                        <Button
+                          variant="link"
+                          className="btn-sm text-danger"
+                          style={{ textDecoration: "none" }}
+                          onClick={() => handleDeleteComment(comment._id)}
+                        >
+                          삭제
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                )}
               </ListGroup.Item>
             ))}
           </ListGroup>
-          <Form onSubmit={handleAddComment}>
+          <Form onSubmit={handleAddComment} className="mt-3 mb-3">
             <Form.Group controlId="content">
               <Form.Control
                 name="content"
                 as="textarea"
                 rows={3}
-                placeholder="댓글을 입력하세요..."
+                placeholder="댓글을 입력하세요."
                 required
               />
             </Form.Group>
-            <Button type="submit">댓글 추가</Button>
+            <Button type="submit" className="mt-3">
+              댓글 추가
+            </Button>
           </Form>
         </Card.Body>
       </Card>
