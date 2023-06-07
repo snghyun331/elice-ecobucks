@@ -11,27 +11,31 @@ const Mall = () => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    fetchDataAndCreateList();
+    fetchData();
   }, []);
-
-  async function fetchDataAndCreateList() {
+  const fetchData = async () => {
     try {
-      // 데이터베이스에서 데이터를 가져옵니다.
-      const response = await Api.get("mall"); // "your-endpoint"에 데이터 가져오기에 필요한 엔드포인트를 입력합니다.
-      const data = response.data;
-
-      // 데이터를 기반으로 목록을 생성합니다.
-      const newList = data.map(item => {
-        // 각 항목에 대한 작업 수행
-        return item.property; // 예시: 데이터에서 원하는 속성을 추출
+      // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
+      const res = await Api.get("products");
+      console.log("db data: ",res.data)
+      
+      const newList = res.data.map(item => {
+        return {
+          name: item.name,
+          price: item.price,
+          place: item.place,
+          stock: item.stock,
+          description: item.description
+        };
       });
-
-      // 생성된 목록을 상태로 설정합니다.
       setList(newList);
-    } catch (error) {
-      console.error("데이터를 가져오는 중에 오류가 발생했습니다.", error);
+      console.log(list.map(item => (console.log(item))));
+    } catch (err){
+      // alert("정보 불러오기를 실패하였습니다.");
+      console.log("몰불러오기를 실패하였습니다.", err);
     }
   }
+
   return (
     <div style={{zIndex: "-1", padding:"60px"}}>
       <div
@@ -74,19 +78,23 @@ const Mall = () => {
           떠리상품 판매하기(사장님이)
         </Button>
       </Container>
-
+      
       <Container>
         <Row>
         {list.map(item => (
-            <Col key={item.id}>
+            <Col key={item._id}>
               <Card style={{ width: "18rem" }}>
-                <img src={item.imageUrl} className="card-img-top" alt="Logo" />
+                {/* <img src={item.imageUrl} className="card-img-top" alt="Logo" /> */}
                 <Card.Body className="card-body">
-                  <Card.Title className="card-title">{item.title}</Card.Title>
-                  <Card.Text className="card-text">{item.description}</Card.Text>
-                  <a href={item.storeLocation} className="btn btn-primary">
+                  <Card.Title className="card-title"><span>상품명:</span> {item.name}</Card.Title>
+                  
+                  <Card.Text className="card-text">가격: {item.price}</Card.Text>
+                  <Card.Text className="card-text">위치: {item.place}</Card.Text>
+                  <Card.Text className="card-text">설명: {item.description}</Card.Text>
+                  {/* <a href={item.place} className="btn btn-primary">
                     판매하는 매장 위치나 정보 넣기
-                  </a>
+                  </a> */}
+                  
                 </Card.Body>
               </Card>
             </Col>
