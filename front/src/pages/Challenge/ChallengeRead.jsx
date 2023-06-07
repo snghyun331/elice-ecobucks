@@ -34,7 +34,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
     return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
   };
 
-  const isCurrentUserAuthor = userState.user._id === challenge.user_id;
+  const isCurrentUserAuthor = userState.user._id === challenge.user_id._id;
 
   const handleDeleteClick = () => {
     // Perform the delete action here
@@ -53,7 +53,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
             <br />
             마감일자: {formatDate(challenge.dueDate)}
             <br />
-            작성자: {challenge.user_id}
+            작성자: {challenge.user_id._id}
             <br />
             참여인원: {challenge.participantsCount.toLocaleString()} 명
           </Card.Text>
