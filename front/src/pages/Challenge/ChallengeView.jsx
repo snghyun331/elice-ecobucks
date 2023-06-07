@@ -32,7 +32,7 @@ const ChallengeView = () => {
 
   // Fetch data and update the challenges state
   useEffect(() => {
-        // 만약 전역 상태의 user가 null이거나 탈퇴한 회원이라면, 로그인 페이지로 이동함.
+    // 만약 전역 상태의 user가 null이거나 탈퇴한 회원이라면, 로그인 페이지로 이동함.
     if (!userState.user || !userState.user.is_withdrawed == false) {
       navigate("/login", { replace: true });
       return;
@@ -59,6 +59,14 @@ const ChallengeView = () => {
     return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
   };
 
+  const sortedChallenges = [...challenges];
+  sortedChallenges.sort((a, b) => {
+    const dateA = new Date(a.dueDate);
+    const dateB = new Date(b.dueDate);
+  
+    return dateA - dateB || a.isCompleted - b.isCompleted;
+  });
+  
   return (
     <>
       {selectedChallenge ? (
@@ -80,7 +88,7 @@ const ChallengeView = () => {
             <MegaChallengeCarousel />
           </Row>
 
-          {challenges.map((challenge, index) => (
+          {sortedChallenges.map((challenge, index) => (
             <Card
               key={index}
               className={`m-2 ${challenge.isCompleted ? "text-muted" : ""}`}
