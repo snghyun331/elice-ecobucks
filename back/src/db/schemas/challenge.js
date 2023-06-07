@@ -36,7 +36,7 @@ const challengeSchema = new Schema(
     },
     isCompleted: {
         type: Boolean, 
-        default: false
+        default: null
     }
     //mileage : {},
   },
