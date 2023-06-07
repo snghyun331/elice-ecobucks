@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Container, Card, Modal, Form, ListGroup } from "react-bootstrap";
+import { Button, Container, Card, Modal, Form, ListGroup, OverlayTrigger, Tooltip } from "react-bootstrap";
 import * as Api from "../../api";
 
 import ChallengeParticipate from "./ChallengeParticipate";
@@ -22,6 +22,9 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
   };
 
   const handleUpdateClick = () => {
+    if (challenge.participantsCount >= 1) {
+      return;
+    }
     setShowUpdateModal(true);
   };
 
@@ -32,6 +35,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
   const handleCloseUpdateModal = () => {
     setShowUpdateModal(false);
   };
+
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -48,6 +52,10 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
   const isCurrentUserAuthor = userState.user._id === challenge.userId._id;
 
   const handleDeleteClick = async () => {
+    if (challenge.participantsCount >= 1) {
+      alert("참가자가 1명 이상이므로 수정, 삭제할 수 없습니다");
+      return;
+    }
     const confirmDelete = window.confirm("챌린지를 삭제하시겠습니까?");
     if (confirmDelete) {
       try {
@@ -261,12 +269,43 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
       </>
       {isCurrentUserAuthor && (
         <>
-          <Button className="mt-3" onClick={handleUpdateClick}>
-            수정하기
-          </Button>
-          <Button className="mt-3" onClick={handleDeleteClick}>
-            삭제하기
-          </Button>
+          <OverlayTrigger
+            placement="top"
+            overlay={
+              <Tooltip id="tooltip-disabled">
+                참가자가 있을 시 수정, 삭제할 수 없습니다.
+              </Tooltip>
+            }
+          >
+            <a>
+              <Button
+                className="mt-3"
+                onClick={handleUpdateClick}
+                disabled={challenge.participantsCount >= 1}
+              >
+                수정하기
+              </Button>
+            </a>
+          </OverlayTrigger>
+          
+          <OverlayTrigger
+            placement="top"
+            overlay={
+              <Tooltip id="tooltip-disabled">
+                참가자가 있을 시 수정, 삭제할 수 없습니다.
+              </Tooltip>
+            }
+          ><a>
+              <Button
+                className="mt-3"
+                onClick={handleDeleteClick}
+                disabled={challenge.participantsCount >= 1}
+              >
+                삭제하기
+              </Button>
+              </a>
+          </OverlayTrigger>
+          
         </>
       )}
       <Button onClick={onBackToListClick} className="mt-3">
