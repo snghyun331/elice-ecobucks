@@ -35,8 +35,8 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
     const date = new Date(dateString);
     return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
   };
-
-  const isCurrentUserAuthor = userState.user._id === challenge.user_id._id;
+  console.log("리드", userState)
+  const isCurrentUserAuthor = userState.user._id === challenge.userId._id;
 
   const handleDeleteClick = async () => {
     const confirmDelete = window.confirm("챌린지를 삭제하시겠습니까?");
@@ -63,15 +63,17 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
             <br />
             마감일자: {formatDate(challenge.dueDate)}
             <br />
-            작성자: {challenge.user_id._id}
+            작성자: {challenge.userId._id}
             <br />
             참여인원: {challenge.participantsCount.toLocaleString()} 명
           </Card.Text>
         </Card.Body>
       </Card>
+      <>
       <Button className="mt-3" onClick={handleJoinClick}>
         참가하기
       </Button>
+      </>
       {isCurrentUserAuthor && (
         <>
           <Button className="mt-3" onClick={handleUpdateClick}>

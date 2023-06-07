@@ -150,7 +150,7 @@ const ChallengeView = () => {
                   <br />
                   마감일자: {formatDate(challenge.dueDate)}
                   <br />
-                  작성자: {challenge.user_id._id}
+                  작성자: {challenge.userId._id}
                   <br />
                   참여인원: {challenge.participantsCount.toLocaleString()} 명
                 </Card.Text>
