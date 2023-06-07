@@ -111,5 +111,20 @@ const blogpostGetAll = async function(req, res, next) {
     }
 }
 
+
+const blogpostGetDetail = async function(req, res, next) {
+    try{
+        const post_id = req.params._id;
+        const postInfo = await blogPostService.getPostsDetail({post_id})
+
+        if (postInfo.errorMessage) {
+            throw new Error(postInfo.errorMessage);
+        }
+        return res.status(200).send(postInfo);
+    } catch(error) {
+        next(error)
+    }
+}
+
 export {blogpostPostWrite, blogpostPutWrite, blogpostDeleteWrite,
-    blogpostPutLikes,blogpostPutDislikes, blogpostGetAll};
+    blogpostPutLikes,blogpostPutDislikes, blogpostGetAll, blogpostGetDetail};

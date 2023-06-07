@@ -11,6 +11,11 @@ class BlogComment {
         return comment
     }
 
+    static async findAllByPostId({ post_id }){
+        const PostComments = await BlogCommentModel.find({ post_id : post_id });;
+        return PostComments
+    }
+    
     static async update({ comment_id, fieldToUpdate, newValue }) {
         const filter = { _id: comment_id };
         const update = { [fieldToUpdate]: newValue };

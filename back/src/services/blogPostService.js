@@ -1,4 +1,4 @@
-import { User, BlogPost } from "../db/index.js";
+import { User, BlogPost, BlogComment } from "../db/index.js";
 import { v4 as uuidv4 } from "uuid";
 
 
@@ -91,6 +91,17 @@ class blogPostService {
         return DeleteLike;
     }
 
+
+    static async getPostsDetail({post_id}) {
+        const post  = await BlogPost.findOneById({post_id});
+        const comments = await BlogComment.findAllByPostId({ post_id });
+
+        const info = {
+            ...post._doc,
+            commentList: comments,
+        }
+        return info
+    }
 }
 
 export { blogPostService };
