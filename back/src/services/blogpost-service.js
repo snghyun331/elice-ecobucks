@@ -2,14 +2,14 @@ import { User, BlogPost, BlogComment } from "../db/index.js";
 
 
 class blogPostService {
-    static async addPost({ user_id, title, topic, content }) {
+    static async addPost({ userId, title, topic, content }) {
         if (!title || !topic || !content) {
             const errorMessage = "제목, 주제, 내용 모두 입력해주세요";
             return { errorMessage };
         }
-        const user = await User.findById({user_id})
+        const user = await User.findById({userId})
         const username = user.username
-        const newPost = { user_id, username, title, topic, content };
+        const newPost = { userId, username, title, topic, content };
         const createdNewPost = await BlogPost.createPost({newPost})
         createdNewPost.errorMessage = null
 
