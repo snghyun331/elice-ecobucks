@@ -28,11 +28,7 @@ class Challenge {
 
 <<<<<<< HEAD
   static async findAllByUserId({ userId }){
-    const UserChallenges = await ChallengeModel.find({ userId });;
-=======
-  static async findAllByUserId({ user_id }){
-    const UserChallenges = await challengeModel.find({ user_id });;
->>>>>>> 8c5162323d2d38d1cccc9c74b35f6a3ac34f65db
+    const UserChallenges = await challengeModel.find({ userId });;
     return UserChallenges
   }
 

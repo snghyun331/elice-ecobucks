@@ -27,8 +27,8 @@ class Participation {
   }
   
   static async findAllByUserId({ userId }){
-    const UserChallenges = await ChallengeParticipationModel.find({ userId });;
-    return UserChallenges
+    const userParticipations = await participationModel.find({ userId });;
+    return userParticipations
   }
 
   // update

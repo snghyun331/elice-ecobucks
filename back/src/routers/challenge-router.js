@@ -9,7 +9,6 @@ challengeRouter.post("/", login_required, async function (req, res, next) {
   try {
     validateEmptyBody(req)
     const userId = req.currentUserId;
-    console.log(req.body)
     const { title, content, icon, weeks } = req.body;
     
 

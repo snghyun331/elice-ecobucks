@@ -9,10 +9,10 @@ commentRouter.post("/:challenge_id/comments", login_required, async function (re
   try {
     validateEmptyBody(req)
     const challengeId = req.params.challenge_id
-    const user_id = req.currentUserId;
+    const userId = req.currentUserId;
     const { content } = req.body;
     
-    const challenge = await CommentService.createComment({ user_id, challenge_id : challengeId, content });
+    const challenge = await CommentService.createComment({ userId, challenge_id : challengeId, content });
     res.json(challenge);
   } catch (err) {
     next(err);

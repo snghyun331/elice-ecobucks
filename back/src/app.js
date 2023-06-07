@@ -30,8 +30,9 @@ app.use(userAuthRouter);
 app.use(productRouter);
 
 app.use("/challenges", challengeRouter);
-app.use("/challenges", participationRouter);
-app.use("/challenges", commentRouter);
+app.use("/challenges", challengeParticipationRouter);
+
+
 app.use(blogPostRouter)
 app.use(blogCommentRouter)
 

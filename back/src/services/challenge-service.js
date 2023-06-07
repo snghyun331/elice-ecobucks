@@ -18,22 +18,13 @@ class ChallengeService {
   }
 
   static async findChallenges( ) {
-<<<<<<< HEAD
-    const challenges = await Challenge.NoAsyncfindAll( ).populate('userId', 'guCode guName').exec();
-=======
-    const challenge = await Challenge.NoAsyncfindAll( ).populate('user_id', 'username guCode guName').exec();
->>>>>>> 8c5162323d2d38d1cccc9c74b35f6a3ac34f65db
+    const challenge = await Challenge.NoAsyncfindAll( ).populate('userId', 'username guCode guName').exec();
 
     return challenge;
   }
 
   static async findChallenge({ _id }) {
-<<<<<<< HEAD
-    const challenge = await Challenge.NoAsyncfindById({ _id }).populate('userId', 'guCode guName').exec();
-    //console.log('guName: ', challenge.userId.guName);
-=======
-    const challenge = await Challenge.NoAsyncfindById({ _id }).populate('user_id', 'username guCode guName').exec();
->>>>>>> 8c5162323d2d38d1cccc9c74b35f6a3ac34f65db
+    const challenge = await Challenge.NoAsyncfindById({ _id }).populate('userId', 'username guCode guName').exec();
     
     return challenge;
   }
