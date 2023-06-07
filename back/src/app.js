@@ -4,7 +4,8 @@ import { userAuthRouter } from "./routers/user-router.js";
 import { productRouter } from "./routers/product-router.js";
 import { errorMiddleware } from "./middlewares/error-middleware.js";
 import { challengeRouter } from "./routers/challenge-router.js";
-import { challengeParticipationRouter } from "./routers/challenge-participation-router.js";
+import { participationRouter } from "./routers/challenge-participation-router.js";
+import { commentRouter } from "./routers/challenge-comment-router.js";
 import { blogPostRouter } from "./routers/blogpost-router.js";
 import { blogCommentRouter } from "./routers/blogcomment-router.js";
 import { orderRouter } from "./routers/order-router.js";
@@ -30,7 +31,9 @@ app.use(userAuthRouter);
 app.use(productRouter);
 
 app.use("/challenges", challengeRouter);
-app.use("/challenges", challengeParticipationRouter);
+app.use("/challenges", participationRouter);
+app.use("/challenges", commentRouter);
+app.use("/challenges", participationRouter);
 
 
 app.use(blogPostRouter)
