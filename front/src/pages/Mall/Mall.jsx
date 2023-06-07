@@ -5,10 +5,22 @@ import { Container, Button, Card, Row, Col } from "react-bootstrap";
 import Logo from "../../assets/logo.png";
 import SeoulMap from "../../../../data/seoul_map/seoulMap.png"; // 나중에 삭제하기
 import * as Api from "../../api";
-import { useEffect, useState } from "react";
-
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserStateContext } from "../../context/user/UserProvider";
 const Mall = () => {
   const [list, setList] = useState([]);
+  const userState = useContext(UserStateContext);
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    // 만약 전역 상태의 user가 null이거나 탈퇴한 회원이라면, 로그인 페이지로 이동함.
+    if (!userState.user || !userState.user.is_withdrawed == false) {
+      navigate("/login", { replace: true });
+      return;
+    }
+    fetchData();
+  }, []);
 
   useEffect(() => {
     fetchData();
