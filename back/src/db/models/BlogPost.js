@@ -1,4 +1,4 @@
-import { BlogPostModel } from "../schemas/blogPost.js";
+import { BlogPostModel } from "../schemas/blogpost.js";
 
 class BlogPost {
     static async createPost({ newPost }) {

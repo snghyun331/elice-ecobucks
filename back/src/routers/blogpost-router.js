@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required.js";
 import {blogpostPostWrite, blogpostPutWrite, blogpostDeleteWrite,
-    blogpostPutLikes, blogpostPutDislikes, blogpostGetAll,blogpostGetDetail} from "../controllers/blogPostController.js"
+    blogpostPutLikes, blogpostPutDislikes, blogpostGetAll,blogpostGetDetail} from "../controllers/blogpost-controller.js"
 
 const blogPostRouter = Router();
 

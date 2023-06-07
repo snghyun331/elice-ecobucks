@@ -1,4 +1,4 @@
-import { BlogCommentModel } from "../schemas/blogComment.js";
+import { BlogCommentModel } from "../schemas/blogcomment.js";
 
 class BlogComment {
     static async createComment({ newComment }) {

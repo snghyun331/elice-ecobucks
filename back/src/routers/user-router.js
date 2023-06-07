@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required.js";
 import {PostUser_register, PostUser_login, GetUser_myPage,
-        GetUser_err_yellow, userDeleteWithdraw,userGetcurrent} from "../controllers/userController.js"
+        GetUser_err_yellow, userDeleteWithdraw,userGetcurrent} from "../controllers/user-controller.js"
 
 
 const userAuthRouter = Router();

@@ -1,4 +1,4 @@
-import { blogCommentService } from "../services/blogCommentService.js";
+import { blogCommentService } from "../services/blogcomment-service.js";
 import is from '@sindresorhus/is';
 
 const blogcommentPostWrite = async (req, res, next) => {

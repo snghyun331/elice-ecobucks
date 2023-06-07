@@ -1,4 +1,4 @@
-import { blogPostService } from "../services/blogPostService.js";
+import { blogPostService } from "../services/blogpost-service.js";
 import is from '@sindresorhus/is';
 
 const blogpostPostWrite = async (req, res, next) => {
