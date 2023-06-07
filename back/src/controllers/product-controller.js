@@ -8,7 +8,7 @@ const productPostCreate = async function(req, res, next) {
     validateEmptyBody(req)
 
     const { name, price, place, stock, description } = req.body;
-
+    
     const seller = req.currentUserId;
     const currentUserInfo = await userAuthService.getUserInfo({ userId:seller });
     const sellerName = currentUserInfo.username;

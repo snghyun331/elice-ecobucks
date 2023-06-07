@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 class userAuthService {
-  static async addUser({ username, email, password, guName }) {
+  static async addUser({ username, email, password, districtName }) {
     // 이메일 중복 확인
     const user = await User.findByEmail({ email });
     if ((user)&&(user.is_withdrawed === false)) {
@@ -17,11 +17,11 @@ class userAuthService {
     const withdrawnUser = await User.findWithdraw({ email })
     if (withdrawnUser) {
       const hashedPassword = await bcrypt.hash(password, 10);
-      const guCode = await Gu.getGuCodeByName(guName)
+      const districtCode = await Gu.getdistrictCodeByName(districtName)
       // 기존 정보에서 다시 가입할 때 등록한 정보로 업데이트
       const updatedUser = await userModel.findOneAndUpdate(   
         {email: email, is_withdrawed: true},  // 필터링
-        {username: username, email: email, password: hashedPassword, guCode: guCode, is_withdrawed: false},  // 업데이트 항목들
+        {username: username, email: email, password: hashedPassword, districtCode: districtCode, is_withdrawed: false},  // 업데이트 항목들
         { returnOriginal: false }   // 업데이트 된 상태로 저장
       )
       return updatedUser
@@ -31,9 +31,9 @@ class userAuthService {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // 구 코드 변환
-    const guCode = await Gu.getGuCodeByName(guName)
+    const districtCode = await Gu.getdistrictCodeByName(districtName)
 
-    const newUser = { username, email, password: hashedPassword, guCode, guName };
+    const newUser = { username, email, password: hashedPassword, districtCode, districtName };
 
     // db에 저장
     const createdNewUser = await User.create({ newUser });
@@ -99,7 +99,7 @@ class userAuthService {
 
   
   static async getUserInfo({ userId }) {
-    const user = await User.findById({ userId });
+    const user = await User.findById({userId});
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
@@ -122,10 +122,10 @@ class userAuthService {
       return { errorMessage };
     }
     
-    // guName을 guCode로 변환
-    if (toUpdate.guName) {
-      const guCode = await Gu.getGuCodeByName(toUpdate.guName);
-      toUpdate.guCode = guCode;
+    // districtName을 districtCode로 변환
+    if (toUpdate.districtName) {
+      const districtCode = await Gu.getdistrictCodeByName(toUpdate.districtName);
+      toUpdate.districtCode = districtCode;
     }
     
 

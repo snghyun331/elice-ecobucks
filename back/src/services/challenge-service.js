@@ -18,13 +18,13 @@ class ChallengeService {
   }
 
   static async findChallenges( ) {
-    const challenge = await Challenge.NoAsyncfindAll( ).populate('userId', 'username guCode guName').exec();
+    const challenge = await Challenge.NoAsyncfindAll( ).populate('userId', 'username districtCode districtName').exec();
 
     return challenge;
   }
 
   static async findChallenge({ _id }) {
-    const challenge = await Challenge.NoAsyncfindById({ _id }).populate('userId', 'username guCode guName').exec();
+    const challenge = await Challenge.NoAsyncfindById({ _id }).populate('userId', 'username districtCode districtName').exec();
     
     return challenge;
   }
