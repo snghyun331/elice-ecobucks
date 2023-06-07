@@ -16,6 +16,11 @@ const RightNav = ({ isLogin }) => {
             </a>
           </li>
           <li className="nav-item">
+            <a className="nav-link" href="/my">
+              마이페이지
+            </a>
+          </li>
+          <li className="nav-item">
             <a className="nav-link" href="/">
               로그아웃
             </a>
