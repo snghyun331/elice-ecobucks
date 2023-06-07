@@ -1,6 +1,6 @@
 import { Carousel } from "react-bootstrap";
 import Logo from "../../assets/logo.png";
-const tipCarousel = () => {
+const TipCarousel = () => {
   return (
     <Carousel>
       <Carousel.Item>
@@ -27,4 +27,4 @@ const tipCarousel = () => {
     </Carousel>
   );
 };
-export default tipCarousel;
+export default TipCarousel;

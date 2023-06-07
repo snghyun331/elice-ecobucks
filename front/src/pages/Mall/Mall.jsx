@@ -4,10 +4,51 @@
 import { Container, Button, Card, Row, Col } from "react-bootstrap";
 import Logo from "../../assets/logo.png";
 import SeoulMap from "../../../../data/seoul_map/seoulMap.png"; // 나중에 삭제하기
+import * as Api from "../../api";
+import { useEffect, useState } from "react";
 
 const Mall = () => {
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const fetchData = async () => {
+    try {
+      // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
+      const res = await Api.get("products");
+      console.log("db data: ",res.data)
+      
+      const newList = res.data.map(item => {
+        return {
+          name: item.name,
+          price: item.price,
+          place: item.place,
+          stock: item.stock,
+          description: item.description
+        };
+      });
+      setList(newList);
+      console.log(list.map(item => (console.log(item))));
+    } catch (err){
+      // alert("정보 불러오기를 실패하였습니다.");
+      console.log("몰불러오기를 실패하였습니다.", err);
+    }
+  }
+
   return (
-    <>
+    <div style={{zIndex: "-1", padding:"60px"}}>
+      <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: "70%",
+            background: "#4d9e81",
+            zIndex: -1,
+          }}
+        ></div>
       <Container className="text-center">
         <img src={Logo} className="w-50 mt-5 mb-5" alt="Logo" />
       </Container>
@@ -37,57 +78,30 @@ const Mall = () => {
           떠리상품 판매하기(사장님이)
         </Button>
       </Container>
-
+      
       <Container>
         <Row>
-          <Col>
-            <Card style={{ width: "18rem" }}>
-              <img src={Logo} className="card-img-top" alt="Logo" />
-              <Card.Body className="card-body">
-                <Card.Title className="card-title">물건 품목</Card.Title>
-                <Card.Text className="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the cards content.
-                </Card.Text>
-                <a href="#" className="btn btn-primary">
-                  판매하는 매장 위치나 정보 넣기
-                </a>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col>
-            <Card style={{ width: "18rem" }}>
-              <img src={Logo} className="card-img-top" alt="Logo" />
-              <Card.Body className="card-body">
-                <Card.Title className="card-title">물건 품목</Card.Title>
-                <Card.Text className="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the cards content.
-                </Card.Text>
-                <a href="#" className="btn btn-primary">
-                  판매하는 매장 위치나 정보 넣기
-                </a>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col>
-            <Card style={{ width: "18rem" }}>
-              <img src={Logo} className="card-img-top" alt="Logo" />
-              <Card.Body className="card-body">
-                <Card.Title className="card-title">물건 품목</Card.Title>
-                <Card.Text className="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the cards content.
-                </Card.Text>
-                <a href="#" className="btn btn-primary">
-                  판매하는 매장 위치나 정보 넣기
-                </a>
-              </Card.Body>
-            </Card>
-          </Col>
+        {list.map(item => (
+            <Col key={item._id}>
+              <Card style={{ width: "18rem" }}>
+                {/* <img src={item.imageUrl} className="card-img-top" alt="Logo" /> */}
+                <Card.Body className="card-body">
+                  <Card.Title className="card-title"><span>상품명:</span> {item.name}</Card.Title>
+                  
+                  <Card.Text className="card-text">가격: {item.price}</Card.Text>
+                  <Card.Text className="card-text">위치: {item.place}</Card.Text>
+                  <Card.Text className="card-text">설명: {item.description}</Card.Text>
+                  {/* <a href={item.place} className="btn btn-primary">
+                    판매하는 매장 위치나 정보 넣기
+                  </a> */}
+                  
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
         </Row>
       </Container>
-    </>
+    </div>
   );
 };
 
