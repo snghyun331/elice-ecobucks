@@ -79,9 +79,10 @@ const ChallengeCreate = () => {
             onChange={handleDurationChange}
           >
             <option value="">진행 기간을 선택해주세요.</option>
-            <option value="7">7일</option>
-            <option value="14">14일</option>
-            <option value="28">28일</option>
+            <option value="1주">1주</option>
+            <option value="2주">2주</option>
+            <option value="3주">3주</option>
+            <option value="4주">4주</option>
           </Form.Control>
         </Form.Group>
         <Form.Group controlId="icon">
