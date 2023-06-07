@@ -1,51 +1,50 @@
-import { challengeModel } from "../schemas/challenge.js";
+import { userModel } from "../schemas/user.js";
 
-class Challenge {
-  static async create(newChallenge) {
-    const createdChallenge = await challengeModel.create(newChallenge);
-    return createdChallenge;
-  }
-  
-  static async findAll( ) {
-    const Challenges = await challengeModel.find( );
-    return Challenges;
+class User {
+  static async create({ newUser }) {
+    const createdNewUser = await userModel.create(newUser);
+    return createdNewUser;
   }
 
-  static NoAsyncfindAll( ) {
-    const Challenges = challengeModel.find( );
-    return Challenges;
-  }
-  
-  static async findById({ _id }){
-    const Challenge = await challengeModel.findById({ _id });
-    return Challenge
+  static async findByEmail({ email }) {
+    const user = await userModel.findOne({ email });
+    return user;
   }
 
-  static NoAsyncfindById({ _id }) {
-    const Challenge = challengeModel.findById({ _id });
-    return Challenge;
+  static async findById({ userId }) {
+    const user = await userModel.findOne({ _id: userId });
+    return user;
   }
 
-  static async findAllByUserId({ userId }){
-    const UserChallenges = await challengeModel.find({ userId });;
-    return UserChallenges
+  // Comment용 (Comment 스키마에 userId 대신 writer_id로 정의함)
+  static async findByWriterId({ writer_id }) {
+    const user = await userModel.findOne({ _id: writer_id });
+    return user;
   }
 
-  // update
-  static async update({ _id, title, content, icon, weeks, dueDate }) {
-    const updatedEducation = await challengeModel.findOneAndUpdate(
-      {_id : _id}
-      ,{title, content, icon, weeks, dueDate}
-      ,{new: true});
-
-    return updatedEducation;
+  static async findAll() {
+    const users = await userModel.find({});
+    return users;
   }
 
-  static async deleteById( _id ) {
-    await challengeModel.findByIdAndDelete( _id );
-    return ;
+  // 탈퇴한 회원 찾는 함수
+  static async findWithdraw({ email }) {
+    const user = await userModel.findOne({ is_withdrawed: true, email: email})
+    return user
+  }
+
+  static async update({ userId, fieldToUpdate, newValue }) {
+    const filter = { _id: userId };
+    const update = { [fieldToUpdate]: newValue };
+    const option = { returnOriginal: false };
+    const updatedUser = await userModel.findOneAndUpdate(
+      filter,
+      update,
+      option
+    );
+    return updatedUser;
   }
   
 }
 
-export { Challenge };
+export { User };

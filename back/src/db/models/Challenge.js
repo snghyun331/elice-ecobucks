@@ -26,7 +26,6 @@ class Challenge {
     return Challenge;
   }
 
-<<<<<<< HEAD
   static async findAllByUserId({ userId }){
     const UserChallenges = await challengeModel.find({ userId });;
     return UserChallenges
