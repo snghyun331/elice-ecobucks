@@ -12,7 +12,7 @@ participationRouter.post("/:challenge_id/participants", login_required, async fu
     const userId = req.currentUserId;
     const { image } = req.body;
     
-    const challenge = await challengeParticipationService.createChallengeParticipation({ userId, challenge_id : challengeId, image });
+    const challenge = await ParticipationService.createParticipation({ userId, challenge_id : challengeId, image });
     res.json(challenge);
   } catch (err) {
     next(err);
