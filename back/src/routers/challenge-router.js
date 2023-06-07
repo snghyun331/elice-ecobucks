@@ -10,6 +10,7 @@ challengeRouter.post("/", login_required, async function (req, res, next) {
     validateEmptyBody(req)
     const userId = req.currentUserId;
     const { title, content, icon, weeks } = req.body;
+    
 
     const challenge = await ChallengeService.createChallenge({ userId, title, content, icon, weeks });
     res.json(challenge);

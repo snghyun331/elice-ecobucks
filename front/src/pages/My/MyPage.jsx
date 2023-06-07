@@ -1,15 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Modal, Button } from "react-bootstrap";
 import UserEditForm from "./UserEditForm";
 import UserOrderHistory from "./UserOrderHistory";
 import UserMileageHistory from "./UserMileageHistory";
 import UserSummary from "./UserSummary";
 
-function MyPage() {
-  const [showModal, setShowModal] = useState(false);
+import * as Api from "../../api";
+import { UserStateContext, DispatchContext } from "../../context/user/UserProvider";
 
+function MyPage() {
+  const [isFetchCompleted, setIsFetchCompleted] = useState(false);
+  const userState = useContext(UserStateContext);
+  const dispatch = useContext(DispatchContext);
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => setShowModal(false);
   const handleOpenModal = () => setShowModal(true);
+
+  const fetchData = async () => {
+    try {
+      // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
+      const res = await Api.get("mypage");
+      console.log("통신결과", res.data);
+      setUser(res.data);
+      setIsFetchCompleted(true);
+    } catch (err) {
+      alert("User 정보 불러오기를 실패하였습니다.");
+      console.log("User 정보 불러오기를 실패하였습니다.", err);
+    }
+  };
+
+  const logout = () => {
+    // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
+    sessionStorage.removeItem('userToken');
+    // dispatch 함수를 이용해 로그아웃함.
+    dispatch({ type: 'LOGOUT' });
+    alert('로그아웃하여 홈페이지로 이동합니다.')
+    // 기본 페이지로 돌아감.
+    navigate('/');
+};
+
+  useEffect(() => {
+    // 만약 전역 상태의 user가 null이거나 탈퇴한 회원이라면, 로그인 페이지로 이동함.
+    if (!userState.user || !userState.user.is_withdrawed == false) {
+      navigate("/login", { replace: true });
+      return;
+    } else {
+      fetchData();
+    }
+  }, [userState, navigate]);
+
+  if (!isFetchCompleted) {
+    return "loading...";
+  }
 
   return (
     <div>
@@ -50,13 +96,21 @@ function MyPage() {
                 사진
               </Container>
               <Container className="mt-3">
-                <a style={{ fontWeight: "bold" }}>몽구</a> 님
+                <a style={{ fontWeight: "bold" }}>{userState.user.username}</a>{" "}
+                님
                 <br />
                 <a
                   style={{ fontSize: "0.8rem", cursor: "pointer" }}
                   onClick={handleOpenModal}
                 >
                   나의 정보 수정
+                </a>{" "}
+                <br />
+                <a
+                  style={{ fontSize: "0.8rem", cursor: "pointer" }}
+                  onClick={logout}
+                >
+                  로그아웃
                 </a>
               </Container>
             </Container>
@@ -95,7 +149,7 @@ function MyPage() {
           <Modal.Title>내 정보 수정</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
-          <UserEditForm />
+          <UserEditForm user={user} />
         </Modal.Body>
         <Modal.Footer>
           <Button
