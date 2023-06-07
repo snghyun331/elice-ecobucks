@@ -216,9 +216,9 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
                   </Form>
                 ) : (
                   <div style={{ flex: 1 }}>
-                    <div>
+                    <Container className="mt-2 mb-2">
                       {comment.content}
-                    </div>
+                    </Container>
                     {comment.userId._id === userState.user._id && (
                       <div>
                         <Button
