@@ -1,28 +1,42 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, Container } from "react-bootstrap";
+import { Button, Card, Container, Modal } from "react-bootstrap";
 import * as Api from "../../api";
 import { useEffect } from "react";
-
+import BlogPost from "./BlogPost";
 const Blog = () => {
-  const [blogPosts, setBlogPosts] = useState([]);
+  // const [blogPosts, setBlogPosts] = useState([]);
+  
+  const [showModal, setShowModal] = useState(false);
+  const handleCloseModal = () => setShowModal(false);
+  const handleOpenModal = () => setShowModal(true);
+  const [tipList, setTipList] = useState([]);
 
   useEffect(() => {
-    Api.get('blog')
-      .then(response => {
-        // 요청이 성공한 경우
-        const blogPosts = response.data;
-        setBlogPosts(blogPosts);
-      })
-      .catch(error => {
-        // 요청 중 오류가 발생한 경우
-        console.error(error);
-      });
+    fetchData();
   }, []);
-
-  useEffect(() => {
-    console.log(blogPosts); // 블로그 게시물 데이터를 처리합니다.
-  }, [blogPosts]);
+  const fetchData = async () => {
+    try {
+      // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
+      const res = await Api.get("blog");
+      console.log("db data: ",res.data)
+      
+      // const newList = res.data.map(item => {
+      //   return {
+      //     name: item.name,
+      //     price: item.price,
+      //     place: item.place,
+      //     stock: item.stock,
+      //     description: item.description
+      //   };
+      // });
+      // setTipList(newList);
+      console.log(tipList.map(item => (console.log(item))));
+    } catch (err){
+      // alert("정보 불러오기를 실패하였습니다.");
+      console.log("블로그 불러오기를 실패하였습니다.", err);
+    }
+  }
 
   return (
     <div style={{ padding: "60px"}}>
@@ -49,21 +63,30 @@ const Blog = () => {
           alignItems: "Center",
         }}
       >
-        <Link to="/blog/write">
-          <Button variant="primary" style={{ marginBottom: "10px", top: "5" }}>
+        <Modal show={showModal} onHide={handleCloseModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>팁 작성하기</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="text-center">
+          <BlogPost />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            className="mt-4 mb-4"
+            variant="secondary"
+            onClick={handleCloseModal}
+            style={{
+              width: "100%",
+              borderRadius: "0px",
+            }}
+          >
+            닫기
+          </Button>
+        </Modal.Footer>
+      </Modal>
+          <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
           팁 작성하기
           </Button>
-        </Link>
-        {blogPosts.map((post) => (
-        <Card key={post.id}>
-          <Card.Header>카드 헤더</Card.Header>
-          <Card.Body>
-            <Card.Title>{post.title}</Card.Title>
-            <Card.Text>{post.content}</Card.Text>
-            <Button variant="primary">Go somewhere</Button>
-          </Card.Body>
-        </Card>
-      ))}
       </Container>
     </div>
   );

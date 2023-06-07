@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const BlogPost = (props) => {
-  const navigate = useNavigate();
-
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -66,9 +64,6 @@ const BlogPost = (props) => {
               borderWidth: "1px",
               borderRadius: "8px",
               cursor: "pointer",
-            }}
-            onClick={() => {
-              navigate("/");
             }}
           >
             글 작성하기
