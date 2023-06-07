@@ -63,8 +63,8 @@ const GetUser_userlist = async function (req, res, next) {
 const GetUser_myPage = async function (req, res, next) {
     try {
       // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
-      const user_id = req.currentUserId;
-      const currentUserInfo = await userAuthService.getUserMypage({ user_id });
+      const userId = req.currentUserId;
+      const currentUserInfo = await userAuthService.getUserMypage({ userId });
 
       if (currentUserInfo.errorMessage) {
         throw new Error(currentUserInfo.errorMessage);
@@ -79,8 +79,8 @@ const GetUser_myPage = async function (req, res, next) {
 
 const GetUser_err_yellow =  async function (req, res, next) {
     try {
-      const user_id = req.params._id;
-      const currentUserInfo = await userAuthService.getUserInfo({ user_id });
+      const userId = req.params._id;
+      const currentUserInfo = await userAuthService.getUserInfo({ userId });
 
       if (currentUserInfo.errorMessage) {
         throw new Error(currentUserInfo.errorMessage);
@@ -95,9 +95,9 @@ const GetUser_err_yellow =  async function (req, res, next) {
 const userGetcurrent = async function (req, res, next) {
   try {
     // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
-    const user_id = req.currentUserId;
+    const userId = req.currentUserId;
     const currentUserInfo = await userAuthService.getUserInfo({
-      user_id,
+      userId,
     });
 
     if (currentUserInfo.errorMessage) {
@@ -112,9 +112,9 @@ const userGetcurrent = async function (req, res, next) {
 
 
 const userDeleteWithdraw = async function (req, res, next) {
-  const user_id = req.currentUserId;
+  const userId = req.currentUserId;
   try {
-    const user = await userAuthService.getUserInfo({ user_id })
+    const user = await userAuthService.getUserInfo({ userId })
 
     if(!user) {
       const errorMessage = "회원이 존재하지 않습니다."
