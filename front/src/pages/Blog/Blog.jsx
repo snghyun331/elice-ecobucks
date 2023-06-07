@@ -1,16 +1,29 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Card, Container, Modal } from "react-bootstrap";
 import * as Api from "../../api";
 import { useEffect } from "react";
 import BlogPost from "./BlogPost";
+import { UserStateContext } from "../../context/user/UserProvider";
+import { useContext } from "react";
 const Blog = () => {
   // const [blogPosts, setBlogPosts] = useState([]);
-  
+  const userState = useContext(UserStateContext);
   const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => setShowModal(false);
   const handleOpenModal = () => setShowModal(true);
   const [tipList, setTipList] = useState([]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // 만약 전역 상태의 user가 null이거나 탈퇴한 회원이라면, 로그인 페이지로 이동함.
+    if (!userState.user || !userState.user.is_withdrawed == false) {
+      navigate("/login", { replace: true });
+      return;
+    }
+    fetchData();
+  }, []);
 
   useEffect(() => {
     fetchData();
