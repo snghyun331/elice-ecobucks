@@ -12,17 +12,13 @@ class User {
   }
 
   static async findById({ userId }) {
-<<<<<<< HEAD
     const user = await userModel.findOne({ _id: userId });
-=======
-    const user = await UserModel.findOne({ _id: userId });
     return user;
   }
 
   // Comment용 (Comment 스키마에 userId 대신 writer_id로 정의함)
   static async findByWriterId({ writer_id }) {
-    const user = await UserModel.findOne({ _id: writer_id });
->>>>>>> dev
+    const user = await userModel.findOne({ _id: writer_id });
     return user;
   }
 
