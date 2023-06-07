@@ -38,16 +38,17 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
 
   const isCurrentUserAuthor = userState.user._id === challenge.user_id._id;
 
-  const handleDeleteClick = async (e) => {
-    e.preventDefault();
-    try {
-      await Api.delete(`challenges/${challenge._id}`)
-      window.location.reload();
-      alert('챌린지가 삭제되었습니다.')
-    } catch (err) {
-      alert("챌린지 삭제에 실패하였습니다.");
+  const handleDeleteClick = async () => {
+    const confirmDelete = window.confirm("챌린지를 삭제하시겠습니까?");
+    if (confirmDelete) {
+      try {
+        await Api.delete(`challenges/${challenge._id}`);
+      } catch (err) {
+        alert("챌린지 삭제에 실패하였습니다.");
+      }
     }
   };
+  
 
   return (
     <Container>

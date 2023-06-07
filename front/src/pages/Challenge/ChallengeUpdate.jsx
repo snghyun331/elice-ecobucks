@@ -19,6 +19,11 @@ const ChallengeUpdate = ({ challenge }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (!title || !content || !duration || !icon) {
+        alert("모든 값을 입력해주세요.");
+        return;
+      }
+      
       const res = await Api.put(`challenges/${challenge._id}`, {
         title,
         content,
@@ -28,7 +33,7 @@ const ChallengeUpdate = ({ challenge }) => {
       console.log(res)
       window.location.reload();
     } catch (err) {
-      alert("챌린지 수정에 실패하였습니다.");
+      alert("모든 값을 입력해주세요.");
       console.log("챌린지 수정에 실패하였습니다.", err);
     }
   };
