@@ -9,6 +9,8 @@ import { commentRouter } from "./routers/challenge-comment-router.js";
 import { blogPostRouter } from "./routers/blogpost-router.js";
 import { blogCommentRouter } from "./routers/blogcomment-router.js";
 import { scheduleChallenge } from "./utils/cron-schedule.js";
+import { orderRouter } from "./routers/order-router.js";
+
 
 const app = express();
 
@@ -39,7 +41,10 @@ app.use("/challenges", participationRouter);
 app.use(blogPostRouter)
 app.use(blogCommentRouter)
 
+
 scheduleChallenge();
+app.use(orderRouter);
+
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);
 

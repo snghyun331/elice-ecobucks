@@ -25,7 +25,7 @@ const userValidation = (req, res, next) => {
     username: Joi.string().required().min(usernameMin).max(usernameMax),
     email: Joi.string().email().required(),
     password: Joi.string().required(),
-    guName: Joi.string().required(), 
+    districtName: Joi.string().required(), 
   });
 
   const { error } = schema.validate(req.body);

@@ -37,13 +37,13 @@ class ParticipationService {
   }
 
   static async findChallenges({ challenge_id }) {
-    const challenges = await Participation.NoAsyncfindAll({ challenge_id }).populate('userId', 'username guCode guName mileage').exec();
+    const challenges = await Participation.NoAsyncfindAll({ challenge_id }).populate('userId', 'username districtCode districtName').exec();
 
     return challenges;
   }
 
   static async findChallenge({ challenge_id, _id }) {
-    const challenge = await Participation.NoAsyncfindById({ _id }).populate('userId', 'username guCode guName mileage').exec();
+    const challenge = await Participation.NoAsyncfindById({ _id }).populate('userId', 'username districtCode districtName').exec();
     if (!challenge || challenge.challenge_id.toString() !== challenge_id) {
       throw new Error("찾을 수 없습니다.");
     }

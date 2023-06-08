@@ -1,74 +1,94 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Container, Modal, Button } from 'react-bootstrap';
 import Carousel from 'react-bootstrap/Carousel';
+import * as Api from "../../api";
+
+import ChallengeRead from './ChallengeRead';
 
 function MegaChallengeCarousel() {
-  const MegaChallenges = [
-    {
-      title: "메가 돌고래 밥주기",
-      description: "돌고래 밥을 줍시다.",
-      createDate: "2023-05-01",
-      duration: "4주",
-      completed: false,
-      author: "John Doe",
-      icon: "💧",
-      participantNumber: 13,
-    },
-    {
-      title: "메가 코드 뽑고 예비전력 아끼기",
-      description: "코드 뽑고 예비전력 아껴봅시다.",
-      createDate: "2023-05-10",
-      duration: "4주",
-      completed: false,
-      author: "Michael Johnson",
-      icon: "🌿",
-      participantNumber: 2048,
-    },
-    {
-      title: "메가 텀블러에 음료 테이크아웃",
-      description:
-        "텀블러에 음료 테이크아웃해봅시다. 용기에 음료 테이크아웃해봅시다...",
-      createDate: "2023-05-05",
-      duration: "4주",
-      completed: false,
-      author: "Jane Smith",
-      icon: "🌍",
-      participantNumber: 571,
-    },
-    {
-      title: "메가 용기에 포장하기",
-      description: "용기를 내요",
-      createDate: "2023-05-05",
-      duration: "4주",
-      completed: true,
-      author: "Jane Smith",
-      icon: "🌍",
-      participantNumber: 571,
-    },
-    // More challenge data...
-  ];
+  const [isFetchCompleted, setIsFetchCompleted] = useState(false);
+  const [megaChallenge, setMegaChallenge] = useState(null);
+  const [showChallengeRead, setShowChallengeRead] = useState(false);
+  const megaChallengeId = '64815e29f7aec0a6805f8ef4';
 
-  const filteredChallenges = MegaChallenges.filter(
-    (challenge) => challenge.completed === false
-  ).sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
-  
+  useEffect(() => {
+    if (isFetchCompleted) {
+      setShowChallengeRead(true);
+    }
+  }, [isFetchCompleted]);
 
-  const [index, setIndex] = useState(0);
+  const fetchMegaChallengeData = async () => {
+    try {
+      const res = await Api.get(`challenges/${megaChallengeId}`);
+      console.log("메가 챌린지 통신결과", res.data);
+      setMegaChallenge(res.data);
+      setIsFetchCompleted(true);
+    } catch (err) {
+      console.log("메가 챌린지 정보 불러오기를 실패하였습니다.", err);
+    }
+  };
 
-  const handleSelect = (selectedIndex) => {
-    setIndex(selectedIndex);
+  const handleFirstCarouselItemClick = () => {
+    if (!isFetchCompleted) {
+      fetchMegaChallengeData();
+    } else {
+      setShowChallengeRead(true);
+    }
+  };
+
+  const handleBackToListClick = () => {
+    setShowChallengeRead(false);
   };
 
   return (
-    <Carousel activeIndex={index} onSelect={handleSelect} style={{ backgroundColor: '#f4d6ff' }}>
-      {filteredChallenges.map((challenge, index) => (
-        <Carousel.Item key={index}>
-          <Carousel.Caption style={{ color: 'white'}}>
-            <h3>{challenge.title}</h3>
-            <p>{challenge.description}</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-      ))}
-    </Carousel>
+    <>
+      {!showChallengeRead && (
+        <Carousel style={{ backgroundColor: 'lightGrey' }} className='p-0'>
+          <Carousel.Item onClick={handleFirstCarouselItemClick} style={{ cursor: 'pointer' }}>
+            <Container style={{ width: '100%', height: '17rem', backgroundColor: '#6e63ff' }}>
+            </Container>
+            <Carousel.Caption>
+              <h3>5월의 메가챌린지</h3>
+              <p>
+                개발자가 제공하는 챌린지
+              </p>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <Container style={{ width: '100%', height: '17rem', backgroundColor: '#ffa1ee' }}>
+            </Container>
+            <Carousel.Caption>
+              <h3>지금 뜨는 챌린지</h3>
+              <p>개발자가 제공하는 챌린지</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <Container style={{ width: '100%', height: '17rem', backgroundColor: '#9acc54' }}>
+            </Container>
+            <Carousel.Caption>
+              <h3>절약짱 동네 랭킹</h3>
+              <p>모든 챌린지 참가 건에 대하여, 참가자의 구별로 랭킹 보여주기</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
+      )}
+      {showChallengeRead && (
+        <Modal show={showChallengeRead} onHide={handleBackToListClick} size="lg">
+          <Modal.Header closeButton>
+            <Modal.Title>{megaChallenge.title}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>{megaChallenge.description}</p>
+            <ChallengeRead size='xl' challenge={megaChallenge} onBackToListClick={handleBackToListClick} />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleBackToListClick}>
+              Back to List
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
+    </>
   );
 }
 

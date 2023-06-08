@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Card, Container, Modal } from "react-bootstrap";
+import { Button, Card, Container, Modal, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 import { useEffect } from "react";
 import BlogPost from "./BlogPost";
@@ -12,7 +12,7 @@ const Blog = () => {
   const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => setShowModal(false);
   const handleOpenModal = () => setShowModal(true);
-  const [tipList, setTipList] = useState([]);
+  const [blogList, setBlogList] = useState([]);
 
   const navigate = useNavigate();
 
@@ -32,19 +32,19 @@ const Blog = () => {
     try {
       // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
       const res = await Api.get("blog");
-      console.log("db data: ",res.data)
+      // console.log("db data: ",res.data)
       
-      // const newList = res.data.map(item => {
-      //   return {
-      //     name: item.name,
-      //     price: item.price,
-      //     place: item.place,
-      //     stock: item.stock,
-      //     description: item.description
-      //   };
-      // });
-      // setTipList(newList);
-      console.log(tipList.map(item => (console.log(item))));
+      const newList = res.data.map(item => {
+        return {
+          content: item.content,
+          likeCount: item.likeCount,
+          title: item.title,
+          topic: item.topic,
+          username: item.username
+        };
+      });
+      setBlogList(newList);
+      // console.log(blogList.map(item => (console.log(item))));
     } catch (err){
       // alert("정보 불러오기를 실패하였습니다.");
       console.log("블로그 불러오기를 실패하였습니다.", err);
@@ -100,6 +100,29 @@ const Blog = () => {
           <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
           팁 작성하기
           </Button>
+
+          <Container>
+        <Row>
+        {blogList.map(item => (
+            <Col key={item._id}>
+              <Card style={{ width: "18rem" }}>
+                {/* <img src={item.imageUrl} className="card-img-top" alt="Logo" /> */}
+                <Card.Body className="card-body">
+                  <Card.Title className="card-title"><span>제목:</span> {item.title}</Card.Title>
+                  
+                  <Card.Text className="card-text">{item.topic}</Card.Text>
+                  {/* <Card.Text className="card-text">위치: {item.place}</Card.Text> */}
+                  <Card.Text className="card-text">설명: {item.content}</Card.Text>
+                  {/* <a href={item.place} className="btn btn-primary">
+                    판매하는 매장 위치나 정보 넣기
+                  </a> */}
+                  
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Container>
       </Container>
     </div>
   );

@@ -23,7 +23,7 @@ class CommentService {
 
   static async findComments({ challenge_id }) {
     const challenges = await Comment.NoAsyncfindAll({ challenge_id })
-      .populate("userId", "username guCode guName")
+      .populate("userId", "username districtCode districtName")
       .exec();
 
     return challenges;
@@ -31,7 +31,7 @@ class CommentService {
 
   static async findComment({ challenge_id, _id }) {
     const challenge = await Comment.NoAsyncfindById({ _id })
-      .populate("userId", "username guCode guName")
+      .populate("userId", "username districtCode districtName")
       .exec();
     if (!challenge || challenge.challenge_id.toString() !== challenge_id) {
       throw new Error("찾을 수 없습니다.");

@@ -10,12 +10,12 @@ const UserEditForm = ({ user }) => {
   const userState = useContext(UserStateContext);
 
   const [name, setName] = useState(user?.username || ""); // user가 null인 경우를 고려하여 기본값 설정
-  const [district, setDistrict] = useState(user?.guName || ""); // user가 null인 경우를 고려하여 기본값 설정
+  const [districtName, setDistrict] = useState(user?.districtName || ""); // user가 null인 경우를 고려하여 기본값 설정
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
 
-  const districts = [
+  const districtNames = [
     "강남구",
     "강동구",
     "강북구",
@@ -57,36 +57,42 @@ const UserEditForm = ({ user }) => {
     password.length === 0 ? true : validatePassword(password);
   const isPasswordSame = password === confirmPassword;
   const isNameValid = validateName(name);
-  const isDistrictValid = district != null;
+  const isDistrictValid = districtName != null;
 
   const isFormValid =
     isPasswordValid && isPasswordSame && isNameValid && isDistrictValid;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const res = await Api.put(`mypage/useredit/${userState.user._id}`, {
-        username: name,
-        guName: district,
-      });
-      console.log(res);
-      if (res.status === 200) {
-        // Display success alert
-        alert("변경된 정보가 저장되었습니다.");
-        window.location.reload()
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+    
+      try {
+        const requestData = {
+          username: name,
+          districtName,
+        };
+    
+        if (password !== "") {
+          requestData.password = password;
+        }
+    
+        const res = await Api.put(`mypage/useredit/${userState.user._id}`, requestData);
         
-        ; // Navigate to '/my' after saving the changes
-      } else {
+        console.log(res);
+        if (res.status === 200) {
+          // Display success alert
+          alert("변경된 정보가 저장되었습니다.");
+          window.location.reload();
+          // Navigate to '/my' after saving the changes
+        } else {
+          // Display error alert
+          alert("정보 변경에 실패했습니다.");
+        }
+      } catch (error) {
         // Display error alert
         alert("정보 변경에 실패했습니다.");
+        console.error(error);
       }
-    } catch (error) {
-      // Display error alert
-      alert("정보 변경에 실패했습니다.");
-      console.error(error);
-    }
-  };
+    };
 
   const handleWithdraw = () => {
     setShowConfirm(true);
@@ -207,22 +213,22 @@ const UserEditForm = ({ user }) => {
           <Dropdown.Toggle
             className="text-start d-block"
             variant="light"
-            id="dropdown-district"
+            id="dropdown-districtName"
             style={{
               backgroundColor: "white",
               width: "100%",
               borderRadius: "0px",
             }}
           >
-            {district || "구를 선택해주세요. "}
+            {districtName || "구를 선택해주세요. "}
           </Dropdown.Toggle>
           <Dropdown.Menu style={{ maxHeight: "200px", overflowY: "auto" }}>
-            {districts.map((district) => (
+            {districtNames.map((districtName) => (
               <Dropdown.Item
-                key={district}
-                onClick={() => setDistrict(district)}
+                key={districtName}
+                onClick={() => setDistrict(districtName)}
               >
-                {district}
+                {districtName}
               </Dropdown.Item>
             ))}
           </Dropdown.Menu>

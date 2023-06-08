@@ -20,11 +20,11 @@ const userSchema = new Schema(
       required: false,
       default: 0
     },
-    guCode: {
+    districtCode: {
       type: Number,
       required: true
     },
-    guName: {
+    districtName: {
       type: String,
       required: true
     },

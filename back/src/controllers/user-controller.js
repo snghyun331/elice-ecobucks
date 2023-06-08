@@ -9,13 +9,13 @@ const PostUser_register = async function (req, res, next) {
         );
       }
       
-      const { username, email, password, guName } = req.body;
+      const { username, email, password, districtName } = req.body;
 
       const newUser = await userAuthService.addUser({
         username,
         email,
         password,
-        guName,
+        districtName,
       });
   
       if (newUser.errorMessage) {
@@ -137,10 +137,12 @@ const userPutMypage = async function (req, res, next) {
     const userId = req.params._id;
 
     // body data 로부터 업데이트할 사용자 정보를 추출함.
-    const { username, guName } = req.body ?? null;
-    const toUpdate = { username, guName };
+    const { username, districtName, password } = req.body ?? null;
+
+    const toUpdate = { username, districtName, password };
 
     // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
+    console.log(toUpdate)
     const updatedUser = await userAuthService.updateUser({ userId, toUpdate });
 
     if (updatedUser.errorMessage) {
