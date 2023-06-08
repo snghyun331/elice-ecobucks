@@ -76,7 +76,7 @@ class userAuthService {
     // 반환할 loginuser 객체를 위한 변수 설정
     const id = user._id;
     const username = user.username;
-    const gu_code = user.gu_code;
+    const districtCode = user.districtCode;
     const mileage = user.mileage;
 
     const loginUser = {
@@ -84,7 +84,7 @@ class userAuthService {
       id,
       email,
       username,
-      gu_code,
+      districtCode,
       mileage,
       errorMessage: null,
     };
