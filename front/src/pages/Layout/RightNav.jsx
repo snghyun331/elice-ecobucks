@@ -89,7 +89,7 @@ const RightNav = ({ isLogin, user }) => {
             </Link>
           </li>
           <li className="nav-item">
-            <a
+            <Link
               className="nav-link"
               onClick={logout}
               style={{
@@ -98,7 +98,7 @@ const RightNav = ({ isLogin, user }) => {
               }}
             >
               로그아웃
-            </a>
+            </Link>
           </li>
         </ul>
       );

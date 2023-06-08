@@ -3,7 +3,6 @@ import { Button, Form, Modal, Image, Alert, Container } from "react-bootstrap";
 import * as Api from "../../api";
 
 const ChallengeParticipate = ({ onClose, challenge }) => {
-  console.log(challenge)
   const [selectedFile, setSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -31,9 +30,11 @@ const ChallengeParticipate = ({ onClose, challenge }) => {
 
   const confirmUpload = async () => {
     try {
+      console.log('포스트요청')
       const res = await Api.post(`challenges/${challenge._id}/participants`, {
         image: "selectedFile"
       });
+      console.log(res)
       alert("인증사진 업로드가 완료되었습니다.");
       window.location.reload();
       handleConfirmationClose();
