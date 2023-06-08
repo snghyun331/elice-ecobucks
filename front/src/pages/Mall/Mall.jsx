@@ -70,7 +70,7 @@ const Mall = () => {
       // 마일리지 충분한지 확인하기
       // 구매할 수 있는 수량인지. (수량이 0 개이면 구매 버튼 비활성화시키기)
 
-      const res = await Api.get(`products/${selectedItem._id}`);
+      const res = await Api.get(`products/${selectedItem.productId}`);
       const product = res.data;
       console.log("받아온 product: ", product);
       // 상품의 재고(stock)를 1 감소시킵니다.
@@ -79,10 +79,19 @@ const Mall = () => {
         stock: product.stock - 1,
       };
       console.log(updatedProduct);
+
       // 상품 정보를 업데이트합니다.
+      const updatedList = list.map(item => {
+        if (item.productId === selectedItem.productId) {
+          // stock 값을 1 감소시킴
+          return { ...item, stock: item.stock - 1 };
+        }
+        return item;
+      });
+      setList(updatedList);
 
       
-      await Api.put(`products/${selectedItem._id}`, updatedProduct);
+      await Api.put(`products/${selectedItem.productId}`, updatedProduct);
       // 모달을 닫습니다.
        handleClosePurchaseModal();
     } catch (err) {
@@ -104,18 +113,21 @@ const Mall = () => {
       };
       console.log("updatedProduct: ", updatedProduct);
 
+      if (updatedProduct.stock === 0) {
+        //stock: 0 이면 삭제
+        await Api.delete(`products/${selectedItem.productId}`);
+      } else {
+        //상품정보 업데이트
+        await Api.put(`products/${selectedItem.productId}`, updatedProduct);
+      }
       const updatedList = list.map(item => {
         if (item.productId === selectedItem.productId) {
-          // console.log("item: ", item);
-          // console.log("selectedItem: ", selectedItem);
           // stock 값을 1 감소시킴
           return { ...item, stock: item.stock - 1 };
         }
         return item;
       });
       setList(updatedList);
-      // 상품 정보를 업데이트합니다.
-      await Api.put(`products/${selectedItem.productId}`, updatedProduct);
 
     } catch (err) {
       console.log("상품 수정에 실패했습니다", err);
@@ -182,7 +194,7 @@ const Mall = () => {
       
       <Container>
         <Row>
-        {list.map(item => (
+        {list.filter(item => item.stock !== 0).map(item => (
             <Col key={item._id}>
               <Card style={{ width: "18rem" }}>
                 <Card.Body className="card-body">
@@ -192,7 +204,6 @@ const Mall = () => {
                   <Card.Text className="card-text">위치: {item.place}</Card.Text>
                   <Card.Text className="card-text">재고: {item.stock}</Card.Text>
                   <Card.Text className="card-text">설명: {item.description}</Card.Text>
-                  <Card.Text className="card-text">상품 Id: {item._id ? item._id : "False"}</Card.Text>
                   {userState.user._id === item.seller && (
                     <>
                       <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleEditProduct(item)}>
