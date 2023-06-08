@@ -51,11 +51,12 @@ const Mall = () => {
           price: item.price,
           place: item.place,
           stock: item.stock,
-          description: item.description
+          description: item.description,
+          seller: item.seller
         };
       });
       setList(newList);
-      console.log(list.map(item => (console.log(item))));
+      // console.log(list.map(item => (console.log(item))));
     } catch (err){
       // alert("정보 불러오기를 실패하였습니다.");
       console.log("몰불러오기를 실패하였습니다.", err);
@@ -158,6 +159,12 @@ const Mall = () => {
                   <Card.Text className="card-text">위치: {item.place}</Card.Text>
                   <Card.Text className="card-text">설명: {item.description}</Card.Text>
                   <Card.Text className="card-text">상품 Id: {item._id}</Card.Text>
+                  {userState.user._id === item.seller && (
+                    <Button variant="primary" style={{ marginBottom: "10px", top: "5" }}>
+                      {/* onClick={() => handleEditProduct(item._id)} */}
+                      수정
+                    </Button>
+                  )}
                   <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={() => handleOpenPurchaseModal(item)}>
                       구매
                   </Button>
