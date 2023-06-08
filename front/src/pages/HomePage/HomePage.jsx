@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Container, Button, Dropdown, DropdownButton} from "react-bootstrap";
+import { Container, Button, Dropdown, DropdownButton } from "react-bootstrap";
 import map from "../../../../data/seoul_map/seoulMap.png";
 import DomesticAverage from "../../../../data/DomesticAverage.png";
 import DomesticDistrict from "../../../../data/DomesticDistrict.png";
@@ -17,7 +17,7 @@ import { useState } from "react";
 
 const HomePage = () => {
   const [currentImg, setCurrentImg] = useState(map);
-  
+
   const handleButtonClick = (img) => {
     setCurrentImg(img);
   };
@@ -53,97 +53,104 @@ const HomePage = () => {
   return (
     <div style={{ justifyContent: "center", padding: "90px" }}>
       <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: "60%",
-            background: "#00D387",
-            zIndex: -1
-          }}
-        ></div>
-        <Container style={{width: ''}}><TipCarousel />
-</Container>
-
-<Container
         style={{
-          width: "100%",
-          height: "30vh",
-          backgroundColor: "#fff",
-          padding: "10px",
-          marginTop: "10px",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: "70%",
+          background: "#00D387",
+          zIndex: -1,
         }}
-      >
-        
+      ></div>
+      <Container>
+        <TipCarousel />
       </Container>
-
-      <h3
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          position: "center",
-        }}
-      >
-      </h3>
-      <span
-        style={{
-          color: "#FF6B00",
-          fontSize: "24px",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        Make Tomorrow Bright
-      </span>
       <Container
         style={{
           marginBottom: "20px",
           display: "flex",
           justifyContent: "center",
+          marginTop: "30px",
         }}
       >
-        <Link to="/mall">
+        <Link to="/challenge">
           <Button
             type="button"
-            style={{display:"grid", marginRight: "20px", backgroundColor: "transparent", placeItems: "center", border: '0px'}}
+            style={{
+              display: "grid",
+              marginRight: "20px",
+              backgroundColor: "transparent",
+              placeItems: "center",
+              border: "0px",
+            }}
           >
-            <img src={mallIcon}></img>
-            <span style={{color: "black"}}>떠리몰</span>
+            <img
+              src={challengeIcon}
+              style={{ width: "3.5rem" }}
+              alt="Challenge"
+            />
+            <span style={{ color: "black", fontSize: "0.9rem" }}>챌린지</span>
           </Button>
         </Link>
         <Link to="/blog">
           <Button
             type="button"
-            style={{ display:"grid", marginRight: "20px", backgroundColor: "transparent", placeItems: "center", border: '0px' }}
+            style={{
+              display: "grid",
+              marginRight: "20px",
+              backgroundColor: "transparent",
+              placeItems: "center",
+              border: "0px",
+            }}
           >
-            <img src={blogIcon}></img>
-            <span style={{color: "black"}}>블로그</span>
+            <img src={blogIcon} style={{ width: "3.5rem" }} alt="Blog" />
+            <span
+              style={{
+                color: "black",
+                fontSize: "0.9rem",
+                textDecoration: "none",
+              }}
+            >
+              블로그
+            </span>{" "}
           </Button>
         </Link>
-        <Link to="/challenge">
-          <Button type="button" style={{ display:"grid", backgroundColor: "transparent", placeItems:"center", border: '0px' }}>
-          <img src={challengeIcon}></img>
-          <span style={{color: "black"}}>챌린지</span>
+        <Link to="/mall">
+          <Button
+            type="button"
+            style={{
+              display: "grid",
+              backgroundColor: "transparent",
+              placeItems: "center",
+              border: "0px",
+            }}
+          >
+            <img src={mallIcon} style={{ width: "3.5rem" }} alt="Mall" />
+            <span style={{ color: "black", fontSize: "0.9rem" }}>떠리몰</span>
           </Button>
         </Link>
       </Container>
-      <span>전력통계</span>
+
       <Container
         style={{
           width: "100%",
           height: "50vh",
           backgroundColor: "#fff",
-          border: "1px solid #000",
+          border: "1px solid #d6d6d6",
           borderRadius: "10px",
+          boxShadow: '3px 3px 4px #ebebeb',
           padding: "10px",
-          marginTop: "10px",
+          marginTop: "50px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
         }}
       >
-        <img src={currentImg}  style={{width:"50%", height:"100%" }} />
+        <h3>전력통계</h3>
+        <div style={{marginTop: '18px', height: '5.5px', width: '120px', backgroundColor: '#FF6B00', borderRadius: '10px'}}> 　</div>
+
+        <img src={currentImg} style={{ width: "50%", height: "100%" }} />
         <div
           className="btn-toolbar justify-content-md-end"
           role="toolbar"
@@ -151,73 +158,102 @@ const HomePage = () => {
         >
           <div className="d-grid gap-2 mx-auto justify-content-md-end">
             <DropdownButton title="구 별 전력 사용량 보기">
-              <Dropdown.Item eventKey="seoul" onClick={() => handleButtonClick(map)}>
+              <Dropdown.Item
+                eventKey="seoul"
+                onClick={() => handleButtonClick(map)}
+              >
                 서울시 전체
               </Dropdown.Item>
-              <Dropdown.Item eventKey="Gangnam" onClick={() => handleButtonClick(district1)}>
+              <Dropdown.Item
+                eventKey="Gangnam"
+                onClick={() => handleButtonClick(district1)}
+              >
                 {districts[0]}
               </Dropdown.Item>
-              <Dropdown.Item eventKey="something" onClick={() => handleButtonClick(district2)}>
+              <Dropdown.Item
+                eventKey="something"
+                onClick={() => handleButtonClick(district2)}
+              >
                 {districts[1]}
               </Dropdown.Item>
-              <Dropdown.Item eventKey="something" onClick={() => handleButtonClick(district3)}>
+              <Dropdown.Item
+                eventKey="something"
+                onClick={() => handleButtonClick(district3)}
+              >
                 {districts[2]}
               </Dropdown.Item>
-              <Dropdown.Item eventKey="something" onClick={() => handleButtonClick(district4)}>
+              <Dropdown.Item
+                eventKey="something"
+                onClick={() => handleButtonClick(district4)}
+              >
                 {districts[3]}
               </Dropdown.Item>
-              <Dropdown.Item eventKey="something" onClick={() => handleButtonClick(district5)}>
+              <Dropdown.Item
+                eventKey="something"
+                onClick={() => handleButtonClick(district5)}
+              >
                 {districts[4]}
               </Dropdown.Item>
             </DropdownButton>
-            <button type="button" className="btn btn-primary" onClick={()=>handleButtonClick(Industry)}>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => handleButtonClick(Industry)}
+            >
               산업용
             </button>
-            <button type="button" className="btn btn-primary" onClick={()=>handleButtonClick(DomesticAverage)}>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => handleButtonClick(DomesticAverage)}
+            >
               서울시 평균 사용량(가정용)
             </button>
-            <button type="button" className="btn btn-primary" onClick={()=>handleButtonClick(DomesticDistrict)}>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => handleButtonClick(DomesticDistrict)}
+            >
               구 별 사용량(가정용)
             </button>
           </div>
         </div>
       </Container>
+
       <Container
         style={{
           width: "100%",
           height: "30vh",
-          backgroundColor: "#fff",
-          border: "1px solid #000",
+          border: "1px solid #d6d6d6",
+          boxShadow: '3px 3px 4px #ebebeb',
           borderRadius: "10px",
-          padding: "10px",
-          marginTop: "10px",
+          padding: "20px",
+          marginTop: "50px",
         }}
       >
-        <TipCarousel />
+        {" "}
+        <h3>요즘 뜨는 절약 팁</h3>
+        <div style={{marginTop: '18px', height: '5.5px', width: '120px', backgroundColor: '#FF6B00', borderRadius: '10px'}}> 　</div>
+
       </Container>
-      
+
       <Container
         style={{
           width: "100%",
           height: "30vh",
           backgroundColor: "#fff",
-          border: "1px solid #000",
+          border: "1px solid #d6d6d6",
+          boxShadow: '3px 3px 4px #ebebeb',
           borderRadius: "10px",
-          padding: "10px",
-          marginTop: "10px",
+          padding: "20px",
+          marginTop: "50px",
         }}
-      ></Container>
-      <Container
-        style={{
-          width: "100%",
-          height: "30vh",
-          backgroundColor: "#fff",
-          border: "1px solid #000",
-          borderRadius: "10px",
-          padding: "10px",
-          marginTop: "10px",
-        }}
-      ></Container>
+      >
+        {" "}
+        <h3>요즘 뜨는 챌린지</h3>
+        <div style={{marginTop: '18px', height: '5.5px', width: '120px', backgroundColor: '#FF6B00', borderRadius: '10px'}}> 　</div>
+
+      </Container>
     </div>
   );
 };
