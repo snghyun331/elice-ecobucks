@@ -62,31 +62,37 @@ const UserEditForm = ({ user }) => {
   const isFormValid =
     isPasswordValid && isPasswordSame && isNameValid && isDistrictValid;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const res = await Api.put(`mypage/useredit/${userState.user._id}`, {
-        username: name,
-        districtName,
-      });
-      console.log(res);
-      if (res.status === 200) {
-        // Display success alert
-        alert("변경된 정보가 저장되었습니다.");
-        window.location.reload()
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+    
+      try {
+        const requestData = {
+          username: name,
+          districtName,
+        };
+    
+        if (password !== "") {
+          requestData.password = password;
+        }
+    
+        const res = await Api.put(`mypage/useredit/${userState.user._id}`, requestData);
         
-        ; // Navigate to '/my' after saving the changes
-      } else {
+        console.log(res);
+        if (res.status === 200) {
+          // Display success alert
+          alert("변경된 정보가 저장되었습니다.");
+          window.location.reload();
+          // Navigate to '/my' after saving the changes
+        } else {
+          // Display error alert
+          alert("정보 변경에 실패했습니다.");
+        }
+      } catch (error) {
         // Display error alert
         alert("정보 변경에 실패했습니다.");
+        console.error(error);
       }
-    } catch (error) {
-      // Display error alert
-      alert("정보 변경에 실패했습니다.");
-      console.error(error);
-    }
-  };
+    };
 
   const handleWithdraw = () => {
     setShowConfirm(true);
