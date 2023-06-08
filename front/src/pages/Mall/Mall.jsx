@@ -1,15 +1,22 @@
 /** 작성자: 정원석
  * mapping으로 판매할 물건 자동 추가, 삭제
  */
-import { Container, Button, Card, Row, Col } from "react-bootstrap";
+import { Container, Button, Card, Row, Col, Modal } from "react-bootstrap";
 import Logo from "../../assets/logo.png";
 import SeoulMap from "../../../../data/seoul_map/seoulMap.png"; // 나중에 삭제하기
 import * as Api from "../../api";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserStateContext } from "../../context/user/UserProvider";
+import MallProductSell from "./MallProductSell";
 const Mall = () => {
   const [list, setList] = useState([]);
+  const [sellModalOpen, setSellModalOpen] = useState(false);
+  const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
+  const handleCloseSellModal = () => setSellModalOpen(false);
+  const handleOpenSellModal = () => setSellModalOpen(true);
+  const handleClosePurchaseModal = () => setPurchaseModalOpen(false);
+  const handleOpenPurchaseModal = () => setPurchaseModalOpen(true);
   const userState = useContext(UserStateContext);
   const navigate = useNavigate();
   
@@ -48,6 +55,10 @@ const Mall = () => {
     }
   }
 
+  const handleConfirmPurchase = () => {
+
+  }
+
   return (
     <div style={{zIndex: "-1", padding:"60px"}}>
       <div
@@ -79,17 +90,32 @@ const Mall = () => {
         <span>아마 지도 API로 지도가 들어갈 자리</span>
         <br />
         <img src={SeoulMap} style={{ maxWidth: "80%", maxHeight: "80%" }} />
-        <Button
-          style={{
-            position: "fixed",
-            right: "10%",
-            marginRight: "20px",
-            marginTop: "20px",
-          }}
-        >
-          떠리상품 판매하기(사장님이)
-        </Button>
+        .
       </Container>
+      <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenSellModal}>
+          판매 상품 등록하기
+          </Button>
+      <Modal show={sellModalOpen} onHide={handleCloseSellModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>상품 등록</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="text-center">
+          <MallProductSell />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            className="mt-4 mb-4"
+            variant="secondary"
+            onClick={handleCloseSellModal}
+            style={{
+              width: "100%",
+              borderRadius: "0px",
+            }}
+          >
+            닫기
+          </Button>
+        </Modal.Footer>
+      </Modal>
       
       <Container>
         <Row>
@@ -103,16 +129,31 @@ const Mall = () => {
                   <Card.Text className="card-text">가격: {item.price}</Card.Text>
                   <Card.Text className="card-text">위치: {item.place}</Card.Text>
                   <Card.Text className="card-text">설명: {item.description}</Card.Text>
-                  {/* <a href={item.place} className="btn btn-primary">
-                    판매하는 매장 위치나 정보 넣기
-                  </a> */}
-                  
+                  <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenPurchaseModal}>
+          구매
+          </Button>
+                  {/* onClick={() => handlePurchase(item._id)} */}
                 </Card.Body>
               </Card>
             </Col>
           ))}
         </Row>
-      </Container>
+
+        
+        <Modal show={purchaseModalOpen} onHide={handleClosePurchaseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>구매 확인</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          선택한 상품을 구매하시겠습니까?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClosePurchaseModal}>취소</Button>
+          <Button variant="primary" onClick={handleConfirmPurchase}>구매하기</Button>
+          
+        </Modal.Footer>
+      </Modal>
+    </Container>
     </div>
   );
 };
