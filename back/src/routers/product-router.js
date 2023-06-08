@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { productPostCreate, productPutUpdate, productGetAll, productGetById, productDelete } from "../controllers/product-controller.js";
-import { productValidation } from "../middlewares/validation.js";
+import { Validation } from "../middlewares/validation.js";
 import { login_required } from "../middlewares/login-required.js";
 
+const productValidation = Validation.validate(Validation.productSchema);
 const productRouter = Router();
 productRouter.use(login_required);
 

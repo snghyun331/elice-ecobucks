@@ -127,7 +127,6 @@ class userAuthService {
       const districtCode = await Gu.getdistrictCodeByName(toUpdate.districtName);
       toUpdate.districtCode = districtCode;
     }
-    console.log(toUpdate)
     if (toUpdate.password) {
       const hashedPassword = await bcrypt.hash(toUpdate.password, 10);
       toUpdate.password = hashedPassword;
