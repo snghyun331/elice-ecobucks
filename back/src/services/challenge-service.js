@@ -1,6 +1,6 @@
 import { Challenge } from "../db/models/challenge.js";
 
-class challengeService {
+class ChallengeService {
   
   static makeDueDate(weeks){
     let weeksInt = parseInt(weeks.replace('주', '')) 
@@ -18,14 +18,13 @@ class challengeService {
   }
 
   static async findChallenges( ) {
-    const challenges = await Challenge.NoAsyncfindAll( ).populate('userId', 'guCode guName').exec();
+    const challenge = await Challenge.NoAsyncfindAll( ).populate('userId', 'username districtCode districtName').exec();
 
-    return challenges;
+    return challenge;
   }
 
   static async findChallenge({ _id }) {
-    const challenge = await Challenge.NoAsyncfindById({ _id }).populate('userId', 'guCode guName').exec();
-    //console.log('guName: ', challenge.userId.guName);
+    const challenge = await Challenge.NoAsyncfindById({ _id }).populate('userId', 'username districtCode districtName').exec();
     
     return challenge;
   }
@@ -54,4 +53,4 @@ class challengeService {
 
 }
 
-export { challengeService };
+export { ChallengeService };

@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const UserSchema = new Schema(
+const userSchema = new Schema(
   {
     email: {
       type: String,
@@ -20,11 +20,11 @@ const UserSchema = new Schema(
       required: false,
       default: 0
     },
-    guCode: {
+    districtCode: {
       type: Number,
       required: true
     },
-    guName: {
+    districtName: {
       type: String,
       required: true
     },
@@ -38,6 +38,6 @@ const UserSchema = new Schema(
   }
 );
 
-const UserModel = model("User", UserSchema);
+const userModel = model("User", userSchema);
 
-export { UserModel };
+export { userModel };

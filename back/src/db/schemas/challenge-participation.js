@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-const ChallengeParticipationSchema = new Schema(
+const participationSchema = new Schema(
   {
     userId: { 
       type: Schema.Types.ObjectId, 
@@ -9,7 +9,7 @@ const ChallengeParticipationSchema = new Schema(
     },
     challenge_id: { 
       type: Schema.Types.ObjectId, 
-      ref: 'chellenge', 
+      ref: 'Challenge', 
       required: true 
     },
     image: { 
@@ -22,5 +22,5 @@ const ChallengeParticipationSchema = new Schema(
   }
 );
 
-const ChallengeParticipationModel = model('ChallengeParticipation', ChallengeParticipationSchema);
-export { ChallengeParticipationModel };
+const participationModel = model('Participation', participationSchema);
+export { participationModel };
