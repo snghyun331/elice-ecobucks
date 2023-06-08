@@ -11,9 +11,12 @@ import { UserStateContext } from "../../context/user/UserProvider";
 import MallProductSell from "./MallProductSell";
 const Mall = () => {
   const [list, setList] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const handleCloseModal = () => setShowModal(false);
-  const handleOpenModal = () => setShowModal(true);
+  const [sellModalOpen, setSellModalOpen] = useState(false);
+  const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
+  const handleCloseSellModal = () => setSellModalOpen(false);
+  const handleOpenSellModal = () => setSellModalOpen(true);
+  const handleClosePurchaseModal = () => setPurchaseModalOpen(false);
+  const handleOpenPurchaseModal = () => setPurchaseModalOpen(true);
   const userState = useContext(UserStateContext);
   const navigate = useNavigate();
   
@@ -52,6 +55,10 @@ const Mall = () => {
     }
   }
 
+  const handleConfirmPurchase = () => {
+
+  }
+
   return (
     <div style={{zIndex: "-1", padding:"60px"}}>
       <div
@@ -85,8 +92,10 @@ const Mall = () => {
         <img src={SeoulMap} style={{ maxWidth: "80%", maxHeight: "80%" }} />
         .
       </Container>
-
-      <Modal show={showModal} onHide={handleCloseModal} centered>
+      <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenSellModal}>
+          판매 상품 등록하기
+          </Button>
+      <Modal show={sellModalOpen} onHide={handleCloseSellModal} centered>
         <Modal.Header closeButton>
           <Modal.Title>상품 등록</Modal.Title>
         </Modal.Header>
@@ -97,7 +106,7 @@ const Mall = () => {
           <Button
             className="mt-4 mb-4"
             variant="secondary"
-            onClick={handleCloseModal}
+            onClick={handleCloseSellModal}
             style={{
               width: "100%",
               borderRadius: "0px",
@@ -107,9 +116,6 @@ const Mall = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-          <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
-          판매 상품 등록하기
-          </Button>
       
       <Container>
         <Row>
@@ -123,16 +129,31 @@ const Mall = () => {
                   <Card.Text className="card-text">가격: {item.price}</Card.Text>
                   <Card.Text className="card-text">위치: {item.place}</Card.Text>
                   <Card.Text className="card-text">설명: {item.description}</Card.Text>
-                  {/* <a href={item.place} className="btn btn-primary">
-                    판매하는 매장 위치나 정보 넣기
-                  </a> */}
-                  
+                  <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenPurchaseModal}>
+          구매
+          </Button>
+                  {/* onClick={() => handlePurchase(item._id)} */}
                 </Card.Body>
               </Card>
             </Col>
           ))}
         </Row>
-      </Container>
+
+        
+        <Modal show={purchaseModalOpen} onHide={handleClosePurchaseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>구매 확인</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          선택한 상품을 구매하시겠습니까?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClosePurchaseModal}>취소</Button>
+          <Button variant="primary" onClick={handleConfirmPurchase}>구매하기</Button>
+          
+        </Modal.Footer>
+      </Modal>
+    </Container>
     </div>
   );
 };
