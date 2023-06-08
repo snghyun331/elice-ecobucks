@@ -173,6 +173,41 @@ class userAuthService {
     await user.save();
   }
 
+  static async getUserChallenges({userId}){
+    const user  = await User.findById({userId});
+
+    const challenges = await Challenge.findAllByUserId({ userId: userId });
+    const userInfo = {
+      ...user._doc,
+      challengeCount: challenges.length,
+      challengeList: challenges,
+    }
+    return userInfo
+  }
+
+  static async getUserParticipants({userId}){
+    const user  = await User.findById({userId});
+
+    const challenges = await Challenge.findAllByUserId({ userId: userId });
+    const userInfo = {
+      ...user._doc,
+      challengeCount: challenges.length,
+      challengeList: challenges,
+    }
+    return userInfo
+  }
+
+  static async getUserComments({userId}){
+    const user  = await User.findById({userId});
+
+    const challenges = await Challenge.findAllByUserId({ userId: userId });
+    const userInfo = {
+      ...user._doc,
+      challengeCount: challenges.length,
+      challengeList: challenges,
+    }
+    return userInfo
+  }
 }
 
 export { userAuthService };

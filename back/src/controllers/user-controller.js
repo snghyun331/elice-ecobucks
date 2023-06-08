@@ -151,9 +151,57 @@ const userPutMypage = async function (req, res, next) {
     return res.status(200).json(updatedUser);
   } catch (error) {
     next(error);
+  }                                                      
+}
+
+const userGetChallenges = async function (req, res, next) {
+  try {
+    // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
+    const userId = req.currentUserId;
+    const currentUserInfo = await userAuthService.getUserChallenges({ userId });
+
+    if (currentUserInfo.errorMessage) {
+      throw new Error(currentUserInfo.errorMessage);
+    }
+
+  return res.status(200).send(currentUserInfo);
+  } catch (error) {
+    next(error);
+  }
+}
+
+const userGetParticipants = async function (req, res, next) {
+  try {
+    // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
+    const userId = req.currentUserId;
+    const currentUserInfo = await userAuthService.getUserParticipants({ userId });
+
+    if (currentUserInfo.errorMessage) {
+      throw new Error(currentUserInfo.errorMessage);
+    }
+
+  return res.status(200).send(currentUserInfo);
+  } catch (error) {
+    next(error);
+  }
+}
+
+const userGetComments = async function (req, res, next) {
+  try {
+    // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
+    const userId = req.currentUserId;
+    const currentUserInfo = await userAuthService.getUserComments({ userId });
+
+    if (currentUserInfo.errorMessage) {
+      throw new Error(currentUserInfo.errorMessage);
+    }
+
+  return res.status(200).send(currentUserInfo);
+  } catch (error) {
+    next(error);
   }
 }
 
 
-export {PostUser_register, PostUser_login, GetUser_userlist, 
-    GetUser_myPage, GetUser_err_yellow, userDeleteWithdraw, userGetcurrent,userPutMypage};
+export {PostUser_register, PostUser_login, GetUser_userlist, userGetChallenges, userGetParticipants, userGetComments,
+    GetUser_myPage, GetUser_err_yellow, userDeleteWithdraw, userGetcurrent, userPutMypage};

@@ -55,7 +55,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
         await Api.delete(`challenges/${challenge._id}`);
         window.location.reload();
       } catch (err) {
-        alert("챌린지 삭제에 실패하였습니다.");
+        alert(err.response.data);
       }
     }
   };
@@ -305,7 +305,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
         목록으로
       </Button>
 
-      <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal show={showModal} onHide={handleCloseModal} style={{zIndex: '9999', marginTop: '200px'}}>
         <Modal.Header closeButton>
           <Modal.Title>참가하기</Modal.Title>
         </Modal.Header>
@@ -315,7 +315,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
         />
       </Modal>
 
-      <Modal size="lg" show={showUpdateModal} onHide={handleCloseUpdateModal}>
+      <Modal size="lg" show={showUpdateModal} onHide={handleCloseUpdateModal} style={{zIndex: '9998', marginTop: '100px'}}>
         <Modal.Header closeButton>
           <Modal.Title>챌린지 수정</Modal.Title>
         </Modal.Header>

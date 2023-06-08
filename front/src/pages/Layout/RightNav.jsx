@@ -1,7 +1,8 @@
-import { useContext, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { DispatchContext } from "../../context/user/UserProvider";
+import { useContext } from "react";
+import { useNavigate, useLocation, Link, redirect } from "react-router-dom";
+import { UserStateContext, DispatchContext } from "../../context/user/UserProvider";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+
 
 const RightNav = ({ isLogin, user }) => {
   const location = useLocation();
@@ -12,6 +13,9 @@ const RightNav = ({ isLogin, user }) => {
     sessionStorage.removeItem("userToken");
     dispatch({ type: "LOGOUT" });
     alert("로그아웃하여 홈페이지로 이동합니다.");
+    if (location.pathname !== '/') {
+      window.location.href = '/'
+    }
   };
 
   const renderNavContent = () => {
@@ -19,9 +23,9 @@ const RightNav = ({ isLogin, user }) => {
       return (
         <ul className="navbar-nav" style={{ whiteSpace: "nowrap" }}>
           <li className="nav-item" style={{ marginRight: '25px'}}>
-            <a
+            <Link
               className="nav-link"
-              href="/my"
+              to="/my"
               style={{
                 border: "0px solid grey",
                 borderRadius: "13px",
@@ -33,13 +37,13 @@ const RightNav = ({ isLogin, user }) => {
               }}
             >
               🪙
-              <a style={{}}>{user.mileage.toLocaleString()}</a>
-            </a>
+              <span style={{}}>{user.mileage.toLocaleString()}</span>
+            </Link>
           </li>
           <li className="nav-item" style={{ marginRight: '25px'}}>
-            <a
+            <Link
               className="nav-link"
-              href="/challenge"
+              to="/challenge"
               style={{
                 color: location.pathname === "/challenge" ? "#00D387" : "",
                 fontWeight: location.pathname === "/challenge" ? "900" : "600",
@@ -47,12 +51,12 @@ const RightNav = ({ isLogin, user }) => {
               }}
             >
               챌린지
-            </a>
+            </Link>
           </li>
           <li className="nav-item" style={{ marginRight: '25px'}}>
-            <a
+            <Link
               className="nav-link"
-              href="/blog"
+              to="/blog"
               style={{
                 color: location.pathname === "/blog" ? "#00D387" : "",
                 fontWeight: location.pathname === "/blog" ? "900" : "600",
@@ -60,12 +64,12 @@ const RightNav = ({ isLogin, user }) => {
               }}
             >
               블로그
-            </a>
+            </Link>
           </li>
           <li className="nav-item" style={{ marginRight: '25px'}}>
-            <a
+            <Link
               className="nav-link"
-              href="/mall"
+              to="/mall"
               style={{
                 color: location.pathname === "/mall" ? "#00D387" : "",
                 fontWeight: location.pathname === "/mall" ? "900" : "600",
@@ -73,12 +77,12 @@ const RightNav = ({ isLogin, user }) => {
               }}
             >
               떠리몰
-            </a>
+            </Link>
           </li>
           <li className="nav-item" style={{ marginRight: '25px'}}>
-            <a
+            <Link
               className="nav-link"
-              href="/my"
+              to="/my"
               style={{
                 color: location.pathname === "/my" ? "#00D387" : "",
                 fontWeight: location.pathname === "/my" ? "900" : "600",
@@ -86,10 +90,10 @@ const RightNav = ({ isLogin, user }) => {
               }}
             >
               마이페이지
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a
+            <Link
               className="nav-link"
               onClick={logout}
               style={{
@@ -98,7 +102,7 @@ const RightNav = ({ isLogin, user }) => {
               }}
             >
               로그아웃
-            </a>
+            </Link>
           </li>
         </ul>
       );
@@ -106,13 +110,13 @@ const RightNav = ({ isLogin, user }) => {
       return (
         <ul className="navbar-nav" style={{ whiteSpace: "nowrap" }}>
           <li className="nav-item">
-            <a
+            <Link
               className="nav-link"
-              href="/"
+              to="/"
               style={{ fontSize: "1.3em", fontWeight: "600" }}
             >
               홈
-            </a>
+            </Link>
           </li>
           <OverlayTrigger
             placement="bottom"
@@ -123,13 +127,13 @@ const RightNav = ({ isLogin, user }) => {
             }
           >
             <li className="nav-item">
-              <a
+              <Link
                 className="nav-link disabled"
-                href="/challenge"
+                to="/challenge"
                 style={{ fontSize: "1.3em", fontWeight: "600" }}
               >
                 챌린지
-              </a>
+              </Link>
             </li>
           </OverlayTrigger>
           <OverlayTrigger
@@ -141,13 +145,13 @@ const RightNav = ({ isLogin, user }) => {
             }
           >
             <li className="nav-item">
-              <a
+              <Link
                 className="nav-link disabled"
-                href="/blog"
+                to="/blog"
                 style={{ fontSize: "1.3em", fontWeight: "600" }}
               >
                 블로그
-              </a>
+              </Link>
             </li>
           </OverlayTrigger>
           <OverlayTrigger
@@ -159,32 +163,32 @@ const RightNav = ({ isLogin, user }) => {
             }
           >
             <li className="nav-item">
-              <a
+              <Link
                 className="nav-link disabled"
-                href="/mall"
+                to="/mall"
                 style={{ fontSize: "1.3em", fontWeight: "600" }}
               >
                 떠리몰
-              </a>
+              </Link>
             </li>
           </OverlayTrigger>
           <li className="nav-item">
-            <a
+            <Link
               className="nav-link"
-              href="/register"
+              to="/register"
               style={{ fontSize: "1.3em", fontWeight: "600" }}
             >
               회원가입
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a
+            <Link
               className="nav-link"
-              href="/login"
+              to="/login"
               style={{ fontSize: "1.3em", fontWeight: "600" }}
             >
               로그인
-            </a>
+            </Link>
           </li>
         </ul>
       );
@@ -202,4 +206,5 @@ const RightNav = ({ isLogin, user }) => {
     </div>
   );
 };
+
 export default RightNav;
