@@ -62,7 +62,7 @@ const RightNav = ({ isLogin, user }) => {
                 fontWeight: location.pathname === "/mall" ? "900" : "500",
               }}
             >
-              쇼핑몰
+              떠리몰
             </a>
           </li>
           <li className="nav-item">
@@ -104,7 +104,7 @@ const RightNav = ({ isLogin, user }) => {
           </li>
           <li className="nav-item">
             <a className="nav-link" href="/mall">
-              쇼핑몰
+              떠리몰
             </a>
           </li>
           <li className="nav-item">

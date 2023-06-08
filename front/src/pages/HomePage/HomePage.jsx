@@ -9,9 +9,9 @@ import district3 from "../../../../data/seoul_map/district3.png";
 import district4 from "../../../../data/seoul_map/district4.png";
 import district5 from "../../../../data/seoul_map/district5.png";
 import Industry from "../../../../data/Industry.png";
-import mall from "../../assets/mall.png";
-import tip from "../../assets/tip.png";
-import challenge from "../../assets/challenge.png";
+import mallIcon from "../../assets/mallIcon.png";
+import blogIcon from "../../assets/blogIcon.png";
+import challengeIcon from "../../assets/challengeIcon.png";
 import TipCarousel from "./TipCarousel";
 import { useState } from "react";
 
@@ -51,7 +51,7 @@ const HomePage = () => {
   ];
 
   return (
-    <div style={{ justifyContent: "center", padding: "60px" }}>
+    <div style={{ justifyContent: "center", padding: "90px" }}>
       <div
           style={{
             position: "absolute",
@@ -59,10 +59,25 @@ const HomePage = () => {
             left: 0,
             right: 0,
             bottom: "60%",
-            background: "#4d9e81",
+            background: "#00D387",
             zIndex: -1
           }}
         ></div>
+        <Container style={{width: ''}}><TipCarousel />
+</Container>
+
+<Container
+        style={{
+          width: "100%",
+          height: "30vh",
+          backgroundColor: "#fff",
+          padding: "10px",
+          marginTop: "10px",
+        }}
+      >
+        
+      </Container>
+
       <h3
         style={{
           display: "flex",
@@ -70,7 +85,6 @@ const HomePage = () => {
           position: "center",
         }}
       >
-        <span style={{ color: "#00D387", fontSize: "48px" }}>ECOBUCKS</span>
       </h3>
       <span
         style={{
@@ -92,30 +106,24 @@ const HomePage = () => {
         <Link to="/mall">
           <Button
             type="button"
-            style={{display:"grid", marginRight: "20px", backgroundColor: "#fff", placeItems: "center",}}
+            style={{display:"grid", marginRight: "20px", backgroundColor: "transparent", placeItems: "center", border: '0px'}}
           >
-            <img src={mall}></img>
+            <img src={mallIcon}></img>
             <span style={{color: "black"}}>떠리몰</span>
           </Button>
         </Link>
         <Link to="/blog">
           <Button
             type="button"
-            style={{ display:"grid", marginRight: "20px", backgroundColor: "#fff", placeItems: "center", }}
+            style={{ display:"grid", marginRight: "20px", backgroundColor: "transparent", placeItems: "center", border: '0px' }}
           >
-            <img src={tip}></img>
+            <img src={blogIcon}></img>
             <span style={{color: "black"}}>블로그</span>
           </Button>
         </Link>
-        <button
-          type="button"
-          style={{ marginRight: "20px", backgroundColor: "#fff" }}
-        >
-          <span style={{color:"black"}}>전력 통계</span>
-        </button>
         <Link to="/challenge">
-          <Button type="button" style={{ display:"grid", backgroundColor: "#fff", placeItems:"center" }}>
-          <img src={challenge}></img>
+          <Button type="button" style={{ display:"grid", backgroundColor: "transparent", placeItems:"center", border: '0px' }}>
+          <img src={challengeIcon}></img>
           <span style={{color: "black"}}>챌린지</span>
           </Button>
         </Link>
