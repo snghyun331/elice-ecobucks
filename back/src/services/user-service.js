@@ -1,5 +1,5 @@
 import { userModel } from "../db/schemas/user.js";
-import { User, Gu, Challenge, Participation, Comment } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import { User, District, Challenge, Participation, Comment } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt, { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
 import { updateTimestamps } from "../utils/update-time-stamps.js";
@@ -18,7 +18,7 @@ class userAuthService {
     const withdrawnUser = await User.findWithdraw({ email })
     if (withdrawnUser) {
       const hashedPassword = await bcrypt.hash(password, 10);
-      const districtCode = await Gu.getdistrictCodeByName(districtName)
+      const districtCode = await District.getdistrictCodeByName(districtName)
       // 기존 정보에서 다시 가입할 때 등록한 정보로 업데이트
       const updatedUser = await userModel.findOneAndUpdate(   
         {email: email, is_withdrawed: true},  // 필터링
@@ -32,7 +32,7 @@ class userAuthService {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // 구 코드 변환
-    const districtCode = await Gu.getdistrictCodeByName(districtName)
+    const districtCode = await District.getdistrictCodeByName(districtName)
 
     const newUser = { username, email, password: hashedPassword, districtCode, districtName };
 
@@ -124,7 +124,7 @@ class userAuthService {
     
     // districtName을 districtCode로 변환
     if (toUpdate.districtName) {
-      const districtCode = await Gu.getdistrictCodeByName(toUpdate.districtName);
+      const districtCode = await District.getdistrictCodeByName(toUpdate.districtName);
       toUpdate.districtCode = districtCode;
     }
     if (toUpdate.password) {
@@ -171,6 +171,14 @@ class userAuthService {
       userCommentsList: comments,
     }
     return userInfo
+  }
+
+  static async subtractMileage(userId, amount) {
+    //유저 마일리지 차감 로직
+    const user = await User.findById({ userId });
+    user.mileage -= amount;
+    console.log(user.mileage)
+    await user.save();
   }
 
   static async getUserChallenges({userId}){

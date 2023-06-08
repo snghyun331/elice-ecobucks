@@ -9,8 +9,22 @@ const orderPostCreate = async function(req, res, next) {
         const { productId } = req.body;
         const buyer = req.currentUserId;
 
-        const { username: buyerName } = await userAuthService.getUserInfo({ userId: buyer });
-        const { name: productName } = await productService.findProduct({ productId });
+        const { username: buyerName, mileage: buyerMileage } = await userAuthService.getUserInfo({ userId: buyer });
+        const { name: productName, price: productPrice, stock: productStock } = await productService.findProduct({ productId });
+        
+        // 마일리지 차감
+        const requiredMileage = productPrice; // 상품 가격만큼 마일리지 차감
+        if (buyerMileage < requiredMileage) {
+            throw new Error("마일리지가 부족합니다.");
+        }
+        await userAuthService.subtractMileage(buyer, requiredMileage);
+        
+        // 상품 재고 감소
+        if (productStock <= 0) {
+        throw new Error("상품 재고가 부족합니다.");
+        }
+        await productService.decreaseProductStock(productId);
+      
         const newOrder = await orderService.addOrder({ productId, productName, buyer, buyerName })
         
         if (newOrder.errorMessage) {

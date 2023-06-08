@@ -34,11 +34,7 @@ class productService {
     for (const [field, fieldToUpdate] of Object.entries(fieldsToUpdate)) {
       if (toUpdate[field] || field === "description") {
         const newValue = toUpdate[field];
-        product = await Product.update({
-          productId,
-          fieldToUpdate,
-          newValue,
-        });
+        product = await Product.update({ productId, fieldToUpdate, newValue, });
       }
     }
     return product;
@@ -68,6 +64,27 @@ class productService {
       return { errorMessage };
     }
     return { status: "ok" };
+  }
+
+  static async decreaseProductStock(productId) {
+    try {
+      const product = await Product.findById({productId});
+
+      if (!product) {
+        throw new Error("상품을 찾을 수 없습니다.");
+      }
+
+      if (product.stock <= 0) {
+        throw new Error("상품 재고가 부족합니다.");
+      }
+
+      product.stock -= 1; // 재고 감소
+      await product.save();
+      console.log(product.stock)
+      return product;
+    } catch (error) {
+      throw new Error(`상품 재고를 감소시키는 도중 오류가 발생했습니다: ${error.message}`);
+    }
   }
 }
 
