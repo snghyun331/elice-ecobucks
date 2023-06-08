@@ -20,14 +20,25 @@ const Mall = () => {
   
   const handleCloseSellModal = () => setSellModalOpen(false);
   const handleOpenSellModal = () => setSellModalOpen(true);
+
   const handleClosePurchaseModal = () => setPurchaseModalOpen(false);
   const handleOpenPurchaseModal = (item) => {
     setSelectedItem(item);
     setPurchaseModalOpen(true);
   };
+
   const handleCloseEditModal = () => setEditModalOpen(false);
-  const handleOpenEditModal = (item) => {
-    setSelectedItem(item);
+  const handleOpenEditModal = async (itemId) => {
+    try {
+      const res = await Api.get(`products/${itemId}`);
+      // console.log(res); //res 데이터 잘 받아옴.
+      const product = res.data;
+      setSelectedItem(product);
+      console.log("selectedItem: ", selectedItem);
+    } catch(err) {
+      console.log(err);
+    }
+    // setSelectedItem(item);
     setEditModalOpen(true);
   };
   const userState = useContext(UserStateContext);
@@ -93,6 +104,7 @@ const Mall = () => {
       }
 
       // 상품 정보를 업데이트합니다.
+      //여기서 오류나는건가
       const updatedList = list.map(item => {
         if (item.productId === selectedItem.productId) {
           // stock 값을 1 감소시킴
@@ -107,35 +119,40 @@ const Mall = () => {
     }
   }
 
-  const handleEditProduct = async (selectedItem) => {
+  const handleEditProduct = async (selectedItem, updatedItem) => {
     try {
       console.log("selectedItem: ", selectedItem);
-
-      const res = await Api.get(`products/${selectedItem.productId}`);
-      const product = res.data;
-      console.log("받아온 product: ", product);
+      console.log("updatedItem: ", updatedItem);
+      //잘 받아옴.
+      // const res = await Api.get(`products/${selectedItem.productId}`);
+      // const product = res.data;
+      // console.log("받아온 product: ", product);
       // 상품의 재고(stock)를 1 감소시킵니다.
       const updatedProduct = {
-        ...product,
-        stock: product.stock - 1,
+        ...selectedItem,
+        name: updatedItem.name,
+        place: updatedItem.place,
+        price: updatedItem.price,
+        stock: updatedItem.stock
       };
       console.log("updatedProduct: ", updatedProduct);
 
-      if (updatedProduct.stock === 0) {
+      await Api.put(`products/${updatedProduct._id}`, updatedProduct);
+      // if (updatedProduct.stock === 0) {
         //stock: 0 이면 삭제
-        await Api.delete(`products/${selectedItem.productId}`);
-      } else {
-        //상품정보 업데이트
-        await Api.put(`products/${selectedItem.productId}`, updatedProduct);
-      }
-      const updatedList = list.map(item => {
-        if (item.productId === selectedItem.productId) {
-          // stock 값을 1 감소시킴
-          return { ...item, stock: item.stock - 1 };
-        }
-        return item;
-      });
-      setList(updatedList);
+        // await Api.delete(`products/${selectedItem.productId}`);
+      // } else {
+      //   //상품정보 업데이트
+      //   await Api.put(`products/${selectedItem.productId}`, updatedProduct);
+      // }
+      // const updatedList = list.map(item => {
+      //   if (item.productId === selectedItem.productId) {
+      //     // stock 값을 1 감소시킴
+      //     return { ...item, stock: item.stock - 1 };
+      //   }
+      //   return item;
+      // });
+      // setList(updatedList);
       handleCloseEditModal();
 
     } catch (err) {
@@ -216,7 +233,7 @@ const Mall = () => {
                   <Card.Text className="card-text">설명: {item.description}</Card.Text>
                   {userState.user._id === item.seller && (
                     <>
-                      <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item)}>
+                      <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item.productId)}>
                         수정
                       </Button>
                       <Modal show={editModalOpen} onHide={handleCloseEditModal} centered>
@@ -224,7 +241,7 @@ const Mall = () => {
                           <Modal.Title>상품 수정</Modal.Title>
                         </Modal.Header>
                         <Modal.Body className="text-center">
-                          <MallProductEdit handleEditProduct={handleEditProduct} selectedItem={item} />
+                          <MallProductEdit handleEditProduct={handleEditProduct} selectedItem={selectedItem} />
                         </Modal.Body>
                         <Modal.Footer>
                           <Button

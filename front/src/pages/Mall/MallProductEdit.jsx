@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Api from '../../api'
@@ -10,11 +11,21 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
     const [stock, setStock] = useState("");
     const [description, setDescription] = useState("");
 
-    
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            handleEditProduct(selectedItem);
+          const updatedItem = {
+            name: name || selectedItem.name, //selectedItem이 하나만 들어오는게 아님
+            price: price || selectedItem.price,
+            place: place || selectedItem.place,
+            stock: stock || selectedItem.stock,
+            description: description || selectedItem.description,
+          };
+          // setList(updatedItem);
+          // console.log("updatedItem: ", updatedItem);
+          // console.log("바뀐 list: ", list);
+
+          await handleEditProduct(selectedItem, updatedItem);
         //   const res = await Api.post("products", {
         //     name,
         //     price: Number(price),
