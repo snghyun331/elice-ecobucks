@@ -7,8 +7,7 @@ const challengeController = {
       validateEmptyBody(req)
       const userId = req.currentUserId;
       const { title, content, icon, weeks } = req.body;
-      
-  
+    
       const challenge = await ChallengeService.createChallenge({ userId, title, content, icon, weeks });
       res.json(challenge);
     } catch (err) {
