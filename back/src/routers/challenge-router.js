@@ -1,16 +1,16 @@
 import { Router } from "express";
 import { login_required } from "../middlewares/login-required.js";
-import { challengeCreate, challengeGetAll, challengeGet, challengeUpdate, challengeDelete } from "../controllers/challenge-controller.js"
+import { challengeController } from "../controllers/challenge-controller.js"
 const challengeRouter = Router();
 
-challengeRouter.post("/", login_required, challengeCreate);
+challengeRouter.post("/", login_required, challengeController.challengeCreat);
 
-challengeRouter.get("/", login_required, challengeGetAll);
+challengeRouter.get("/", login_required, challengeController.challengeGetAll);
 
-challengeRouter.get("/:_id", login_required, challengeGet);
+challengeRouter.get("/:_id", login_required, challengeController.challengeGet);
 
-challengeRouter.put("/:_id", login_required, challengeUpdate);
+challengeRouter.put("/:_id", login_required, challengeController.challengeUpdate);
 
-challengeRouter.delete("/:_id", login_required, challengeDelete);
+challengeRouter.delete("/:_id", login_required, challengeController.challengeDelete);
 
 export { challengeRouter };
