@@ -37,7 +37,7 @@ function ChallengePage() {
     top: 80,
     left: '18%',
     right: 0,
-    zIndex: 9998,
+    zIndex: 1,
     color: 'white',
     fontSize: '2rem',
     fontWeight: '900',

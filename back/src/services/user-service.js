@@ -74,14 +74,14 @@ class userAuthService {
     const token = jwt.sign({ userId: user._id }, secretKey);
   
     // 반환할 loginuser 객체를 위한 변수 설정
-    const id = user._id;
+    const _id = user._id;
     const username = user.username;
     const districtCode = user.districtCode;
     const mileage = user.mileage;
 
     const loginUser = {
       token,
-      id,
+      _id,
       email,
       username,
       districtCode,
@@ -167,6 +167,41 @@ class userAuthService {
     return userInfo
   }
 
+  static async getUserChallenges({userId}){
+    const user  = await User.findById({userId});
+
+    const challenges = await Challenge.findAllByUserId({ userId: userId });
+    const userInfo = {
+      ...user._doc,
+      challengeCount: challenges.length,
+      challengeList: challenges,
+    }
+    return userInfo
+  }
+
+  static async getUserParticipants({userId}){
+    const user  = await User.findById({userId});
+
+    const challenges = await Challenge.findAllByUserId({ userId: userId });
+    const userInfo = {
+      ...user._doc,
+      challengeCount: challenges.length,
+      challengeList: challenges,
+    }
+    return userInfo
+  }
+
+  static async getUserComments({userId}){
+    const user  = await User.findById({userId});
+
+    const challenges = await Challenge.findAllByUserId({ userId: userId });
+    const userInfo = {
+      ...user._doc,
+      challengeCount: challenges.length,
+      challengeList: challenges,
+    }
+    return userInfo
+  }
 }
 
 export { userAuthService };

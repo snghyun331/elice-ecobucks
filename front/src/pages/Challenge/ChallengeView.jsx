@@ -1,4 +1,4 @@
-import { Card, Container, Row } from "react-bootstrap";
+import { Card, Container, Row, Badge } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import ChallengeRead from "./ChallengeRead";
@@ -59,14 +59,19 @@ const ChallengeView = () => {
     return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
   };
 
-  const sortedChallenges = [...challenges];
-  sortedChallenges.sort((a, b) => {
-    const dateA = new Date(a.dueDate);
-    const dateB = new Date(b.dueDate);
-  
-    return dateA - dateB || a.isCompleted - b.isCompleted;
+  const sortedChallenges = challenges.sort((a, b) => {
+    if (a.isCompleted !== b.isCompleted) {
+      return a.isCompleted ? 1 : -1;
+    }
+    return new Date(a.dueDate) - new Date(b.dueDate);
   });
-  
+
+  const isToday = (dateString) => {
+    const today = new Date().toLocaleDateString();
+    const date = new Date(dateString).toLocaleDateString();
+    return today === date;
+  };
+
   return (
     <>
       {selectedChallenge ? (
@@ -82,7 +87,6 @@ const ChallengeView = () => {
               border: "solid 1px #878787",
               borderRadius: "15px",
               height: "17rem",
-              
               overflow: "hidden",
             }}
           >
@@ -94,7 +98,7 @@ const ChallengeView = () => {
               key={index}
               className={`m-2 ${challenge.isCompleted ? "text-muted" : ""}`}
               style={{
-                width: "16rem",
+                width: "17rem",
                 position: "relative",
                 cursor: challenge.isCompleted ? "default" : "pointer", // Set cursor style
               }}
@@ -144,16 +148,44 @@ const ChallengeView = () => {
                 {challenge.icon}
               </div>
               <Card.Body>
-                <Card.Title>{challenge.title}</Card.Title>
+                <Card.Title>
+                  {challenge.title}
+                  {isToday(challenge.createdAt) && (
+                    <Badge
+                      pill
+                      bg="warning"
+                      text="dark"
+                      className="ml-2"
+                      style={{ marginLeft: "4px", fontSize: "0.7rem" }}
+                    >
+                      New
+                    </Badge>
+                  )}
+                </Card.Title>
                 <Card.Text>{challenge.content}</Card.Text>
                 <Card.Text>
-                  작성일자: {formatDate(challenge.createdAt)}
+                  <span style={{ fontWeight: "900", fontSize: "0.9em" }}>
+                    마감 일자
+                  </span>{" "}
+                  <span style={{ fontSize: "0.8em" }}>
+                    {formatDate(challenge.dueDate)}
+                  </span>
                   <br />
-                  마감일자: {formatDate(challenge.dueDate)}
+                  <span style={{ fontWeight: "900", fontSize: "0.9em" }}>
+                    참여 인원
+                  </span>{" "}
+                  <span style={{ fontSize: "0.8em" }}>
+                    {challenge.participantsCount.toLocaleString()} 명
+                  </span>
                   <br />
-                  작성자: {challenge.userId.username}
-                  <br />
-                  참여인원: {challenge.participantsCount.toLocaleString()} 명
+                  <Badge
+                    bg="info"
+                    className="position-absolute bottom-0 end-0 m-3"
+                    style={{ zIndex: 1 }}
+                  >
+                    {challenge.commentsCount > 0 &&
+                      `댓글 ${challenge.commentsCount}`}
+                  </Badge>
                 </Card.Text>
               </Card.Body>
             </Card>

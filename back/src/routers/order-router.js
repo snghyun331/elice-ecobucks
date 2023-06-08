@@ -6,6 +6,6 @@ const orderRouter = Router();
 orderRouter.use(login_required);
 
 orderRouter.post("/orders", orderPostCreate);
-orderRouter.get("/users/orders/:_id", orderGetMypage);
+orderRouter.get("/mypage/orders", orderGetMypage);
 
 export { orderRouter };
