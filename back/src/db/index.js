@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { User } from "./models/User.js";
 import { BlogPost } from "./models/BlogPost.js";
 import { BlogComment } from "./models/BlogComment.js";
-import { Gu } from "./models/Gu.js";
+import { District } from "./models/district.js";
 import { Product } from "./models/product.js";
 import { Challenge } from "./models/challenge.js";
 import { order } from "./models/order.js";
@@ -24,4 +24,4 @@ db.on("error", (error) =>
 );
 
 
-export {User, Gu, Product, Challenge, BlogPost, BlogComment, order, Participation, Comment};
+export {User, District, Product, Challenge, BlogPost, BlogComment, order, Participation, Comment};
