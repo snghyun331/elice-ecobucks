@@ -170,7 +170,7 @@ function MyPage() {
           <Modal.Title>내 정보 수정</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
-          <UserEditForm user={user} />
+          <UserEditForm onClose={handleCloseModal} user={user} />
         </Modal.Body>
         <Modal.Footer>
           <Button

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Button, Form, Modal, Image, Alert, Container } from "react-bootstrap";
+import { Button, Form, Modal, Image, Alert } from "react-bootstrap";
 
 import {
   UserStateContext,
@@ -38,7 +38,6 @@ const ChallengeParticipate = ({ onClose, challenge }) => {
 
   const confirmUpload = async () => {
     try {
-      console.log("유저", userState.user);
       const res = await Api.post(`challenges/${challenge._id}/participants`, {
         image: "selectedFile",
       });
@@ -47,7 +46,7 @@ const ChallengeParticipate = ({ onClose, challenge }) => {
 
       const userData = await Api.get("current");
       const user = userData.data;
-      
+
       dispatch({
         type: "UPDATE_USER",
         payload: user,

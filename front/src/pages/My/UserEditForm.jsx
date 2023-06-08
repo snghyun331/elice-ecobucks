@@ -2,11 +2,15 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Form, Button, Dropdown, Alert } from "react-bootstrap";
 
+import {
+  UserStateContext,
+  DispatchContext,
+} from "../../context/user/UserProvider";
 import * as Api from "../../api";
-import { UserStateContext } from "../../context/user/UserProvider";
 
-const UserEditForm = ({ user }) => {
+const UserEditForm = ({ onClose, user }) => {
   const navigate = useNavigate();
+  const dispatch = useContext(DispatchContext);
   const userState = useContext(UserStateContext);
 
   const [name, setName] = useState(user?.username || ""); // user가 null인 경우를 고려하여 기본값 설정
@@ -62,37 +66,45 @@ const UserEditForm = ({ user }) => {
   const isFormValid =
     isPasswordValid && isPasswordSame && isNameValid && isDistrictValid;
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-    
-      try {
-        const requestData = {
-          username: name,
-          districtName,
-        };
-    
-        if (password !== "") {
-          requestData.password = password;
-        }
-    
-        const res = await Api.put(`mypage/useredit/${userState.user._id}`, requestData);
-        
-        console.log(res);
-        if (res.status === 200) {
-          // Display success alert
-          alert("변경된 정보가 저장되었습니다.");
-          window.location.reload();
-          // Navigate to '/my' after saving the changes
-        } else {
-          // Display error alert
-          alert("정보 변경에 실패했습니다.");
-        }
-      } catch (error) {
-        // Display error alert
-        alert("정보 변경에 실패했습니다.");
-        console.error(error);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const requestData = {
+        username: name,
+        districtName,
+      };
+
+      if (password !== "") {
+        requestData.password = password;
       }
-    };
+
+      const res = await Api.put(
+        `mypage/useredit/${userState.user._id}`,
+        requestData
+      );
+
+      console.log(res);
+      if (res.status === 200) {
+        alert("변경된 정보가 저장되었습니다.");
+
+        const userData = await Api.get("current");
+        const user = userData.data;
+
+        dispatch({
+          type: "UPDATE_USER",
+          payload: user,
+        });
+
+        onClose();
+      } else {
+        alert("정보 변경에 실패했습니다.");
+      }
+    } catch (error) {
+      alert("정보 변경에 실패했습니다.");
+      console.error(error);
+    }
+  };
 
   const handleWithdraw = () => {
     setShowConfirm(true);
@@ -146,7 +158,10 @@ const UserEditForm = ({ user }) => {
           style={{ borderRadius: "0px" }}
         />
         {!isNameValid && name.length > 0 && (
-          <Form.Text className="text-success">
+          <Form.Text
+            className="text-success d-block"
+            style={{ textAlign: "left" }}
+          >
             이름은 한글과 알파벳만 사용 가능합니다.
           </Form.Text>
         )}
