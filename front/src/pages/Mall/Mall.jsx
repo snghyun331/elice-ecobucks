@@ -9,21 +9,27 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserStateContext } from "../../context/user/UserProvider";
 import MallProductSell from "./MallProductSell";
+import MallProductEdit from "./MallProductEdit";
 const Mall = () => {
   const [list, setList] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
 
   const [sellModalOpen, setSellModalOpen] = useState(false);
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
   
   const handleCloseSellModal = () => setSellModalOpen(false);
   const handleOpenSellModal = () => setSellModalOpen(true);
   const handleClosePurchaseModal = () => setPurchaseModalOpen(false);
   const handleOpenPurchaseModal = (item) => {
     setSelectedItem(item);
-    // console.log(item);
     setPurchaseModalOpen(true);
-  }
+  };
+  const handleCloseEditModal = () => setEditModalOpen(false);
+  const handleOpenEditModal = (item) => {
+    setSelectedItem(item);
+    setEditModalOpen(true);
+  };
   const userState = useContext(UserStateContext);
   const navigate = useNavigate();
   
@@ -68,7 +74,7 @@ const Mall = () => {
 // 물건 구매 버튼, stock, user mileage 줄이기
     try {
       // 마일리지 충분한지 확인하기
-      // 구매할 수 있는 수량인지. (수량이 0 개이면 구매 버튼 비활성화시키기)
+      // 유효성 검사: 구매할 수 있는 수량인지. (수량이 0 개이면 db 삭제)
 
       const res = await Api.get(`products/${selectedItem.productId}`);
       const product = res.data;
@@ -128,6 +134,7 @@ const Mall = () => {
         return item;
       });
       setList(updatedList);
+      handleCloseEditModal();
 
     } catch (err) {
       console.log("상품 수정에 실패했습니다", err);
@@ -169,7 +176,7 @@ const Mall = () => {
       </Container>
       <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenSellModal}>
           판매 상품 등록하기
-          </Button>
+      </Button>
       <Modal show={sellModalOpen} onHide={handleCloseSellModal} centered>
         <Modal.Header closeButton>
           <Modal.Title>상품 등록</Modal.Title>
@@ -206,9 +213,33 @@ const Mall = () => {
                   <Card.Text className="card-text">설명: {item.description}</Card.Text>
                   {userState.user._id === item.seller && (
                     <>
-                      <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleEditProduct(item)}>
+                      <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item)}>
                         수정
                       </Button>
+                      <Modal show={editModalOpen} onHide={handleCloseEditModal} centered>
+                        <Modal.Header closeButton>
+                          <Modal.Title>상품 수정</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body className="text-center">
+                          <MallProductEdit handleEditProduct={handleEditProduct} selectedItem={item} />
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <Button
+                            className="mt-4 mb-4"
+                            variant="secondary"
+                            onClick={handleCloseEditModal}
+                            style={{
+                              width: "100%",
+                              borderRadius: "0px",
+                            }}
+                          >
+                            닫기
+                          </Button>
+                        </Modal.Footer>
+                      </Modal>
+                      {/* <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleEditProduct(item)}>
+                        수정
+                      </Button> */}
                       <Button variant="primary" style={{ margin: "10px", top: "5" }}>
                         {/* onClick={() => handleEditProduct(item._id)} */}
                         삭제
