@@ -1,22 +1,20 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { DispatchContext } from "../../context/user/UserProvider";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 const RightNav = ({ isLogin, user }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  // 로그인 여부에 따라 다른 내용을 렌더링
   const dispatch = useContext(DispatchContext);
-  // const navigate = useNavigate();
+
   const logout = () => {
-    // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
     sessionStorage.removeItem("userToken");
-    // dispatch 함수를 이용해 로그아웃함.
     dispatch({ type: "LOGOUT" });
     alert("로그아웃하여 홈페이지로 이동합니다.");
-    // 기본 페이지로 돌아감.
-    navigate('/');
+    navigate("/");
   };
+  
   const renderNavContent = () => {
     if (isLogin) {
       return (
@@ -92,21 +90,36 @@ const RightNav = ({ isLogin, user }) => {
               홈
             </a>
           </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/challenge">
-              챌린지
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/blog">
-              블로그
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/mall">
-              떠리몰
-            </a>
-          </li>
+          <OverlayTrigger
+            placement="bottom"
+            overlay={<Tooltip style={{zIndex: '9999'}}>로그인 후 이용 가능합니다.</Tooltip>}
+          >
+            <li className="nav-item">
+              <a className="nav-link disabled" href="/challenge">
+                챌린지
+              </a>
+            </li>
+          </OverlayTrigger>
+          <OverlayTrigger
+            placement="bottom"
+            overlay={<Tooltip style={{zIndex: '9999'}}>로그인 후 이용 가능합니다.</Tooltip>}
+          >
+            <li className="nav-item">
+              <a className="nav-link disabled" href="/blog">
+                블로그
+              </a>
+            </li>
+          </OverlayTrigger>
+          <OverlayTrigger
+            placement="bottom"
+            overlay={<Tooltip style={{zIndex: '9999'}}>로그인 후 이용 가능합니다.</Tooltip>}
+          >
+            <li className="nav-item">
+              <a className="nav-link disabled" href="/mall">
+                떠리몰
+              </a>
+            </li>
+          </OverlayTrigger>
           <li className="nav-item">
             <a className="nav-link" href="/register">
               회원가입
