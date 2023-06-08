@@ -8,17 +8,14 @@ const orderPostCreate = async function(req, res, next) {
         validateEmptyBody(req)
         const { productId } = req.body;
 
-        const buyer = req.currentUserId;
+        const buyer = req.currentUserId.toString();
         const currentUserInfo = await userAuthService.getUserInfo({ userId:buyer });
         const buyerName = currentUserInfo.username;
 
         const product = await productService.findProduct({ productId });
         const productName = product.name;
-        const productPrice = product.price;
-        const productPlace = product.place;
-        const productDate = product.createdAt;
 
-        const newOrder = await orderService.addOrder({ productId, buyer, buyerName })
+        const newOrder = await orderService.addOrder({ productId, productName, buyer, buyerName })
         if (newOrder.errorMessage) {
             throw new Error(newOrder.errorMessage);
           }
@@ -32,7 +29,8 @@ const orderPostCreate = async function(req, res, next) {
 const orderGetMypage = async function(req, res, next) {
     try {
         const userId = req.currentUserId;
-        const orders = await orderService.getUserOrders(userId);
+        const orders = await orderService.getUserOrders({userId});
+        // console.log('주문내역',orders)
         if (orders.length === 0) {
             return res.json({ message: '주문 내역이 없습니다.' });
         }
@@ -42,7 +40,6 @@ const orderGetMypage = async function(req, res, next) {
         for (const order of orders) {
             const productId = order.productId;
             const product = await productService.findProduct({ productId });
-
             orderDetails.push({
                 createdAt: order.createdAt,
                 name: product.name,
