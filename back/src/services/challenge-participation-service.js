@@ -4,10 +4,10 @@ import { User } from "../db/models/User.js"
 import { updateTimestamps } from "../utils/update-time-stamps.js";
 class ParticipationService {
   static async createParticipation({ userId, challenge_id, image }) {
-    if (!image) 
+    if (!image) {
       throw new Error("이미지가 없습니다."); 
-    
-    // Challenge Update
+    }
+    //--- Challenge Update ---
     // 신청자수 count 증가, user의 마일리지 1000추가
     const challenge = await Challenge.findById({ _id:challenge_id })
     // dueDate(마감기한)를 넘을경우 신청x
@@ -20,16 +20,15 @@ class ParticipationService {
     else challenge.participantsCount += 1;
     await challenge.save();
     
-    // User Update
+    //--- User Update ---
     // 유저정보 갱신 - 참여자 마일리지 추가
     const user = await User.findById({ userId: challenge.userId })
     user.mileage += 1000;
     await user.save();
 
-    // Participation Create
+    //--- Participation Create ---
     // 참가 신청 생성
     const createdParticipation = await Participation.create({ userId, challenge_id, image });
-    
     // 시간을 한국표준시간으로 변경
     const updateCreatedParticipation=updateTimestamps(createdParticipation)
 

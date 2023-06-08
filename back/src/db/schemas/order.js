@@ -10,6 +10,10 @@ const orderSchema = new Schema(
       type: mongoose.Schema.Types.String,
       ref: "User",
     },
+    productName: {
+      type: mongoose.Schema.Types.String,
+      ref: "Product",
+    },
     productId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product",

@@ -58,11 +58,12 @@ class ChallengeService {
   
   static async deleteChallenge(_id, currentUserId) {
     const findIdChallenge = await Challenge.findById({ _id })
-    if(findIdChallenge.userId.toString() !== currentUserId)
+    if(findIdChallenge.userId.toString() !== currentUserId){
       throw new Error("삭제 권한이 없습니다.");
-    if (findIdChallenge.isCompleted === false)
+    }
+    if (findIdChallenge.commentsCount != 0){
       throw new Error("참여자가 존재하여 삭제 할 수 없습니다.")
-
+    }
     await Challenge.deleteById( _id );
     return { status: "ok" };
   }

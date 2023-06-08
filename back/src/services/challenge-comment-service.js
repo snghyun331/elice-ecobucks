@@ -1,22 +1,29 @@
 import { Comment } from "../db/models/challenge-comment.js";
+import { Challenge } from "../db/models/challenge.js";
 import { challengeModel } from "../db/schemas/challenge.js";
 import { updateTimestamps } from "../utils/update-time-stamps.js";
 class CommentService {
   static async createComment({ userId, challenge_id, content }) {
-    if (!content) 
+    if (!content){ 
       throw new Error("댓글 내용이 없습니다.");  
-    const createdChallenge = await Comment.create({
-      userId,
-      challenge_id,
-      content,
-    });
+    }
+    //--- Challenge Update ---
+    // 신청자수 count 증가, user의 마일리지 1000추가
+    const challenge = await Challenge.findById({ _id:challenge_id })
+    // dueDate(마감기한)를 넘을경우 신청x
+    const currentDateTime = new Date();
+    if (challenge.dueDate.getTime() < currentDateTime.getTime()){
+      challenge.isCompleted = true;
+      throw new Error("참여기간이 종료되었습니다")
+    }
+    // 참여자수 카운트      
+    else challenge.participantsCount += 1;
+    await challenge.save();
     
-    // Challenge의 participantsCount 1 증가
-    await challengeModel.updateOne(
-      { _id: challenge_id },
-      { $inc: { commentsCount: 1 } }
-    );
-    const updateCreatedChallenge=updateTimestamps(createdChallenge)  
+    //--- Comment Create ---
+    const createdComment = await Comment.create({ userId, challenge_id, content });
+    // 시간을 한국표준시간으로 변경
+    const updateCreatedChallenge=updateTimestamps(createdComment)  
 
     return updateCreatedChallenge;
   }
@@ -56,8 +63,9 @@ class CommentService {
 
   static async deleteComment(_id, currentUserId) {
     const findIdComment = await Comment.findById({ _id });
-    if (findIdComment.userId.toString() !== currentUserId)
+    if (findIdComment.userId.toString() !== currentUserId){
       throw new Error("삭제 권한이 없습니다.");
+    }
     const challenge_id = findIdComment.challenge_id.toString();
     await challengeModel.updateOne(
       { _id: challenge_id },
