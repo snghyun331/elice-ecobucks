@@ -10,7 +10,6 @@ import { useContext } from "react";
 import { UserStateContext } from "../../context/user/UserProvider";
 const Header = () => {
   const { user }  = useContext(UserStateContext)
-  console.log('user', user)
 
   return (
     <Navbar
@@ -25,7 +24,7 @@ const Header = () => {
     >
       <div className="container-fluid">
         <LeftNav />
-        <RightNav isLogin={user ? true : false } />
+        <RightNav isLogin={user ? true : false } user = {user} />
       </div>
     </Navbar>
   );
