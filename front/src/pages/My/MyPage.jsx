@@ -70,9 +70,26 @@ function MyPage() {
           zIndex: -1,
         }}
       ></div>
-      <Container className="pt-5 ps-0 pb-5" style={{ width: "80%" }}>
+
+<div
+  style={{
+    position: "absolute",
+    top: 80,
+    left: '18%',
+    right: 0,
+    zIndex: 9999,
+    color: 'white',
+    fontSize: '2rem',
+    fontWeight: '900'
+  }}
+>마이페이지 :
+<br />
+<span style={{fontSize: '1.3rem', fontWeight: '400' }}>내 정보를 수정하고 내 활동을 확인할 수 있어요.</span>
+</div>
+
+      <Container className="mt-5 pt-5 ps-0 pb-5" style={{ width: "80%" }}>
         <Row>
-          <Col xs={3} className="ps-0">
+          <Col xs={3} className="ps-0" style={{marginTop: '100px'}}>
             {/* 왼쪽 컬럼 */}
             <Container
               className="p-4"
@@ -81,6 +98,8 @@ function MyPage() {
                 background: "white",
                 textAlign: "center",
                 border: "1px solid lightgray",
+                borderTopLeftRadius: '10px',
+                borderBottomLeftRadius: '10px'
               }}
             >
               <Container
@@ -115,7 +134,7 @@ function MyPage() {
               </Container>
             </Container>
           </Col>
-          <Col className="ps-0" xs={9}>
+          <Col className="ps-0" xs={9} style={{marginTop: '100px'}}>
             {/* 오른쪽 컬럼 */}
             <Container
               className="p-5"
@@ -125,6 +144,8 @@ function MyPage() {
                 border: "1px solid lightgray",
                 borderLeft: "1px solid lightgray",
                 marginLeft: "-13px",
+                borderTopRightRadius: '10px',
+                borderBottomRightRadius: '10px'
               }}
             >
               <Row>
