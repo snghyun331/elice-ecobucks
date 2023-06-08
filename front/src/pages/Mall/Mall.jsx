@@ -11,12 +11,19 @@ import { UserStateContext } from "../../context/user/UserProvider";
 import MallProductSell from "./MallProductSell";
 const Mall = () => {
   const [list, setList] = useState([]);
+  const [selectedItem, setSelectedItem] = useState("");
+
   const [sellModalOpen, setSellModalOpen] = useState(false);
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
+  
   const handleCloseSellModal = () => setSellModalOpen(false);
   const handleOpenSellModal = () => setSellModalOpen(true);
   const handleClosePurchaseModal = () => setPurchaseModalOpen(false);
-  const handleOpenPurchaseModal = () => setPurchaseModalOpen(true);
+  const handleOpenPurchaseModal = (item) => {
+    setSelectedItem(item);
+    // console.log(item);
+    setPurchaseModalOpen(true);
+  }
   const userState = useContext(UserStateContext);
   const navigate = useNavigate();
   
@@ -55,9 +62,19 @@ const Mall = () => {
     }
   }
 
-  const handleConfirmPurchase = () => {
+//   const handleConfirmPurchase = async () => {
+// // 물건 구매 버튼, stock, user mileage 줄이기
+//     try () {
+//       // 마일리지 충분한지 확인하기
+//       // 구매할 수 있는 수량인지. (수량이 0 개이면 구매 버튼 비활성화시키기)
 
-  }
+//       const selectedProduct = await Api.get("products");
+//       //상품 구매 Api
+//       const res = await Api.post("products", {
+//         productId: 
+//       })
+//     }
+//   }
 
   return (
     <div style={{zIndex: "-1", padding:"60px"}}>
@@ -122,16 +139,16 @@ const Mall = () => {
         {list.map(item => (
             <Col key={item._id}>
               <Card style={{ width: "18rem" }}>
-                {/* <img src={item.imageUrl} className="card-img-top" alt="Logo" /> */}
                 <Card.Body className="card-body">
                   <Card.Title className="card-title"><span>상품명:</span> {item.name}</Card.Title>
                   
                   <Card.Text className="card-text">가격: {item.price}</Card.Text>
                   <Card.Text className="card-text">위치: {item.place}</Card.Text>
                   <Card.Text className="card-text">설명: {item.description}</Card.Text>
-                  <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenPurchaseModal}>
-          구매
-          </Button>
+                  <Card.Text className="card-text">상품 Id: {item._id}</Card.Text>
+                  <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={() => handleOpenPurchaseModal(item)}>
+                      구매
+                  </Button>
                   {/* onClick={() => handlePurchase(item._id)} */}
                 </Card.Body>
               </Card>
@@ -145,12 +162,17 @@ const Mall = () => {
           <Modal.Title>구매 확인</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <Card.Text className="card-text">상품: {selectedItem && selectedItem.name}</Card.Text>
+          <Card.Text className="card-text">가격: {selectedItem && selectedItem.price}</Card.Text>
+          <Card.Text className="card-text">판매처: {selectedItem && selectedItem.place}</Card.Text>
+          <Card.Text className="card-text">설명: {selectedItem && selectedItem.description}</Card.Text>
+          <Card.Text className="card-text">물건 아이디: {selectedItem && selectedItem._id}</Card.Text>
           선택한 상품을 구매하시겠습니까?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClosePurchaseModal}>취소</Button>
-          <Button variant="primary" onClick={handleConfirmPurchase}>구매하기</Button>
-          
+          <Button variant="primary" >구매하기</Button>
+          {/* onClick={handleConfirmPurchase} */}
         </Modal.Footer>
       </Modal>
     </Container>
