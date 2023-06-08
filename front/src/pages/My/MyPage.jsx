@@ -129,7 +129,7 @@ function MyPage() {
             >
               <Row>
                 <h5 style={{ fontWeight: "bold" }}>나의 활동</h5>
-                <UserSummary />
+                <UserSummary user = {user} />
               </Row>
               <Row>
                 <h5 style={{ fontWeight: "bold" }}>주문 이력</h5>
