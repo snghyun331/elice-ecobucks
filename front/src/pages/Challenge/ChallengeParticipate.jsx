@@ -36,7 +36,6 @@ const ChallengeParticipate = ({ onClose, challenge }) => {
       });
       console.log(res)
       alert("인증사진 업로드가 완료되었습니다.");
-      window.location.reload();
       handleConfirmationClose();
       onClose();
     } catch (err) {
@@ -74,7 +73,7 @@ const ChallengeParticipate = ({ onClose, challenge }) => {
         돌아가기
       </Button>
 
-      <Modal show={showConfirmation} onHide={handleConfirmationClose}>
+      <Modal show={showConfirmation} onHide={handleConfirmationClose} style={{marginTop:'200px', zIndex: 9999 }}>
         <Modal.Header closeButton style={{ backgroundColor: "#fffee3" }}>
           <Modal.Title>반드시 확인해주세요.</Modal.Title>
         </Modal.Header>
