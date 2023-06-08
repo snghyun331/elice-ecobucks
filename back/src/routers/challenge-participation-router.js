@@ -61,7 +61,7 @@ participationRouter.delete("/:challenge_id/participants/:_id", login_required, a
     const { challenge_id, _id } = req.params;
     const currentUserId = req.currentUserId;
 
-    const participation = await ParticipationService.deleteChallenge(challenge_id, _id, currentUserId);
+    await ParticipationService.deleteChallenge(challenge_id, _id, currentUserId);
      
     res.status(200).json({ message: "challenge 삭제 완료"});
 
