@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Api from '../../api'
-import { UserStateContext } from "../../context/user/UserProvider";
+// import { UserStateContext } from "../../context/user/UserProvider";
 const MallProductSell = (props) => {
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [place, setPlace] = useState("");
-    const [stock, setStock] = useState(0);
+    const [stock, setStock] = useState("");
     const [description, setDescription] = useState("");
-    const userState = useContext(UserStateContext);
+    // const userState = useContext(UserStateContext);
     const handleSubmit = async (e) => {
         e.preventDefault();
     
@@ -19,17 +19,17 @@ const MallProductSell = (props) => {
             price: Number(price),
             place,
             stock: Number(stock),
-            seller: userState.user._id,
+            // seller: userState.user._id,
             description
           });
           console.log(res);
           window.location.reload()
 
-          const product = res.data;
-          console.log("product: ", product);
-          // JWT 토큰은 유저 정보의 token임.
-          const jwtToken = product.token;
-          console.log("jwtTokenn: ", jwtToken);
+          // const product = res.data;
+          // console.log("product: ", product);
+          // // JWT 토큰은 유저 정보의 token임.
+          // const jwtToken = product.token;
+          // console.log("jwtTokenn: ", jwtToken);
           // sessionStorage에 "productToken"이라는 키로 JWT 토큰을 저장함.
           // sessionStorage.setItem("productToken", jwtToken);
         } catch (err) {
