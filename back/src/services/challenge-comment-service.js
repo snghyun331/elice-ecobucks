@@ -22,22 +22,22 @@ class CommentService {
   }
 
   static async findComments({ challenge_id }) {
-    const challenges = await Comment.NoAsyncfindAll({ challenge_id })
+    const comments = await Comment.NoAsyncfindAll({ challenge_id })
       .populate("userId", "username districtCode districtName")
       .exec();
 
-    return challenges;
+    return comments;
   }
 
   static async findComment({ challenge_id, _id }) {
-    const challenge = await Comment.NoAsyncfindById({ _id })
+    const comment = await Comment.NoAsyncfindById({ _id })
       .populate("userId", "username districtCode districtName")
       .exec();
-    if (!challenge || challenge.challenge_id.toString() !== challenge_id) {
+    if (!comment || comment.challenge_id.toString() !== challenge_id) {
       throw new Error("찾을 수 없습니다.");
     }
 
-    return challenge;
+    return updateTimestamps(comment);
   }
 
   static async updateComment({ _id, currentUserId, content }) {
@@ -49,9 +49,9 @@ class CommentService {
       throw new Error("수정 권한이 없습니다.");
     }
 
-    const updatedChallenge = await Comment.update({ _id, content });
+    const updatedComment = await Comment.update({ _id, content });
 
-    return updatedChallenge;
+    return updateTimestamps(updatedComment);
   }
 
   static async deleteComment(_id, currentUserId) {
