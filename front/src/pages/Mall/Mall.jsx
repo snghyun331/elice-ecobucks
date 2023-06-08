@@ -133,11 +133,27 @@ const Mall = () => {
         name: updatedItem.name,
         place: updatedItem.place,
         price: updatedItem.price,
-        stock: updatedItem.stock
+        stock: updatedItem.stock,
+        description: updatedItem.description
       };
       console.log("updatedProduct: ", updatedProduct);
 
       await Api.put(`products/${updatedProduct._id}`, updatedProduct);
+
+      const updatedList = list.map(item => {
+        if (item.productId === selectedItem._id) {
+          // stock 값을 1 감소시킴
+          return { ...selectedItem,
+            name: updatedItem.name,
+            place: updatedItem.place,
+            price: updatedItem.price,
+            stock: updatedItem.stock,
+            description: updatedItem.description
+          };
+        }
+        return item;
+      });
+      setList(updatedList);
       // if (updatedProduct.stock === 0) {
         //stock: 0 이면 삭제
         // await Api.delete(`products/${selectedItem.productId}`);
