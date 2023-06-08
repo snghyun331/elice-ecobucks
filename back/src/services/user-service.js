@@ -132,11 +132,25 @@ class userAuthService {
       const hashedPassword = await bcrypt.hash(toUpdate.password, 10);
       toUpdate.password = hashedPassword;
     }
-    for (const [field, value] of Object.entries(toUpdate)) {
-      user[field] = value;
+
+    const fieldsToUpdate = {
+      username: "username",
+      password: "password",
+      districtName: "districtName",
+      districtCode: "districtCode",
     }
-  
-    await user.save();
+
+
+    for (const [field, fieldToUpdate] of Object.entries(fieldsToUpdate)) {
+      if (toUpdate[field] || field === "description") {
+        const newValue = toUpdate[field];
+        user = await User.update({
+          userId,
+          fieldToUpdate,
+          newValue,
+        });
+      }
+    }
 
     return user;  
   }
