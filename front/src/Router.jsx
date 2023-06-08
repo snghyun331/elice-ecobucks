@@ -6,10 +6,12 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import MyPage from "./pages/My/MyPage";
 import ChallengePage from "./pages/Challenge/ChallengePage";
+import Header from "./pages/Layout/Header";
 
 const Router = () => {
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/mall" element={<Mall />} />

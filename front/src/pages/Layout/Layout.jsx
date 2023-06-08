@@ -3,7 +3,6 @@ import Router from "../../Router";
 const Layout = () => {
   return (
     <>
-      <Header />
       <Router />
     </>
   );

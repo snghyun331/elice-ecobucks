@@ -19,11 +19,6 @@ const ChallengeParticipate = ({ onClose, challenge }) => {
   const handleUpload = async (e) => {
     if (selectedFile) {
       e.preventDefault();
-      
-      // Perform your upload logic here
-      // Replace the alert with your actual logic for handling the uploaded photo
-
-      // Show confirmation dialog for valid photo
       setShowConfirmation(true);
     } else {
       setErrorMessage("파일을 선택해주세요.");
@@ -35,16 +30,19 @@ const ChallengeParticipate = ({ onClose, challenge }) => {
   };
 
   const confirmUpload = async () => {
-    // Replace with your logic for confirming the photo upload
-    // For now, we'll just simulate a success message
-    const res = await Api.post(`challenges/${challenge._id}/participants`, {
-      image: "selectedFile"
-    })
-    alert("인증사진 업로드가 완료되었습니다.");
-    window.location.reload();
-    handleConfirmationClose();
-    onClose();
+    try {
+      const res = await Api.post(`challenges/${challenge._id}/participants`, {
+        image: "selectedFile"
+      });
+      alert("인증사진 업로드가 완료되었습니다.");
+      window.location.reload();
+      handleConfirmationClose();
+      onClose();
+    } catch (err) {
+      alert(err.response.data);
+    }
   };
+  
 
   return (
     <Modal.Body>
