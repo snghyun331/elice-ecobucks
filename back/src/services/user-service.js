@@ -1,6 +1,6 @@
 import { userModel } from "../db/schemas/user.js";
 import { User, Gu, Challenge } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
-import bcrypt from "bcrypt";
+import bcrypt, { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
 
 class userAuthService {
@@ -128,7 +128,10 @@ class userAuthService {
       toUpdate.districtCode = districtCode;
     }
     
-
+    if (toUpdate.password) {
+      const hashedPassword = await bcrypt.hash(toUpdate.password, 10);
+      toUpdate.password = hashedPassword;
+    }
     for (const [field, value] of Object.entries(toUpdate)) {
       user[field] = value;
     }
