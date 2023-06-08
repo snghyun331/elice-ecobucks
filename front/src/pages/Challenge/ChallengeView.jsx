@@ -164,9 +164,19 @@ const ChallengeView = () => {
                 </Card.Title>
                 <Card.Text>{challenge.content}</Card.Text>
                 <Card.Text>
-                  마감일자: {formatDate(challenge.dueDate)}
+                  <span style={{ fontWeight: "900", fontSize: "0.9em" }}>
+                    마감 일자
+                  </span>{" "}
+                  <span style={{ fontSize: "0.8em" }}>
+                    {formatDate(challenge.dueDate)}
+                  </span>
                   <br />
-                  참여인원: {challenge.participantsCount.toLocaleString()} 명
+                  <span style={{ fontWeight: "900", fontSize: "0.9em" }}>
+                    참여 인원
+                  </span>{" "}
+                  <span style={{ fontSize: "0.8em" }}>
+                    {challenge.participantsCount.toLocaleString()} 명
+                  </span>
                   <br />
                   <Badge
                     bg="info"
