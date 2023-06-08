@@ -1,5 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button, Form, Modal, Image, Alert, Container } from "react-bootstrap";
+
+import {
+  UserStateContext,
+  DispatchContext,
+} from "../../context/user/UserProvider";
 import * as Api from "../../api";
 
 const ChallengeParticipate = ({ onClose, challenge }) => {
@@ -7,6 +12,9 @@ const ChallengeParticipate = ({ onClose, challenge }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [previewURL, setPreviewURL] = useState(null);
+
+  const dispatch = useContext(DispatchContext);
+  const userState = useContext(UserStateContext);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -30,19 +38,27 @@ const ChallengeParticipate = ({ onClose, challenge }) => {
 
   const confirmUpload = async () => {
     try {
-      console.log('포스트요청')
+      console.log("유저", userState.user);
       const res = await Api.post(`challenges/${challenge._id}/participants`, {
-        image: "selectedFile"
+        image: "selectedFile",
       });
-      console.log(res)
+      console.log(res);
       alert("인증사진 업로드가 완료되었습니다.");
+
+      const userData = await Api.get("current");
+      const user = userData.data;
+      
+      dispatch({
+        type: "UPDATE_USER",
+        payload: user,
+      });
+
       handleConfirmationClose();
       onClose();
     } catch (err) {
       alert(err.response.data);
     }
   };
-  
 
   return (
     <Modal.Body>
@@ -73,7 +89,11 @@ const ChallengeParticipate = ({ onClose, challenge }) => {
         돌아가기
       </Button>
 
-      <Modal show={showConfirmation} onHide={handleConfirmationClose} style={{marginTop:'200px', zIndex: 9999 }}>
+      <Modal
+        show={showConfirmation}
+        onHide={handleConfirmationClose}
+        style={{ marginTop: "200px", zIndex: 9999 }}
+      >
         <Modal.Header closeButton style={{ backgroundColor: "#fffee3" }}>
           <Modal.Title>반드시 확인해주세요.</Modal.Title>
         </Modal.Header>
