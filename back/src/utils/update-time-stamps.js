@@ -9,7 +9,7 @@ export function updateTimestamps(preQuery) {
   }
   // challenge의 경우 dueDate가 있어서 추가적으로 변경
   if (preQuery.dueDate) {
-    query.dueDate = updateTime.toKST(preQuery.dueDate);
+    updateQuery.dueDate = updateTime.toKST(preQuery.dueDate);
   }
   
   return updateQuery

@@ -11,9 +11,9 @@ class ChallengeService {
   }
   
   static async createChallenge({ userId, title, content, icon, weeks }) {
-    if (!title || !content || !icon || !weeks) 
+    if (!title || !content || !icon || !weeks){ 
       throw new Error("제목, 내용, 아이콘, 기간 모두 입력해 주세요."); 
-    
+    }
     // 테스트용 마감기한 1분뒤로 설정해서 확인  
     //let newDueDate = new Date();
     //const dueDate = newDueDate.setMinutes(newDueDate.getMinutes() + 1);
@@ -27,15 +27,15 @@ class ChallengeService {
   }
 
   static async findChallenges( ) {
-    const challenge = await Challenge.NoAsyncfindAll( ).populate('userId', 'username districtCode districtName').exec();
-
-    return challenge;
+    const challenges = await Challenge.NoAsyncfindAll( ).populate('userId', 'username districtCode districtName').exec();
+  
+    return challenges;
   }
 
   static async findChallenge({ _id }) {
     const challenge = await Challenge.NoAsyncfindById({ _id }).populate('userId', 'username districtCode districtName').exec();
-    
-    return challenge;
+    // 시간을 한국표준시간으로 변경
+    return updateTimestamps(challenge);
   }
 
   static async updateChallenge({ _id, currentUserId, title, content, icon, weeks }) {
@@ -52,7 +52,8 @@ class ChallengeService {
 
     const updatedChallenge = await Challenge.update({ _id, title, content, icon, weeks, dueDate: this.makeDueDate(weeks) })
     
-    return updatedChallenge;
+    // 시간을 한국표준시간으로 변경
+    return updateTimestamps(updatedChallenge);
   }
   
   static async deleteChallenge(_id, currentUserId) {

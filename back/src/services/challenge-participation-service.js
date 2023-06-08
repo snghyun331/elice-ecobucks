@@ -37,38 +37,38 @@ class ParticipationService {
   }
 
   static async findChallenges({ challenge_id }) {
-    const challenges = await Participation.NoAsyncfindAll({ challenge_id }).populate('userId', 'username districtCode districtName').exec();
+    const participations = await Participation.NoAsyncfindAll({ challenge_id }).populate('userId', 'username districtCode districtName').exec();
 
-    return challenges;
+    return participations;
   }
 
   static async findChallenge({ challenge_id, _id }) {
-    const challenge = await Participation.NoAsyncfindById({ _id }).populate('userId', 'username districtCode districtName').exec();
-    if (!challenge || challenge.challenge_id.toString() !== challenge_id) {
+    const participation = await Participation.NoAsyncfindById({ _id }).populate('userId', 'username districtCode districtName').exec();
+    if (!participation || participation.challenge_id.toString() !== challenge_id) {
       throw new Error("찾을 수 없습니다.");
     }
 
-    return challenge;
+    return updateTimestamps(participation);
   }
 
   static async updateChallenge({ _id, currentUserId, image }) {
     const findIdParticipation = await Participation.findById({ _id })
-    if ( !findIdParticipation ) 
+    if ( !findIdParticipation ){ 
       throw new Error("해당 id를 가진 데이터는 없습니다.")
-    
-    if( findIdParticipation.userId.toString() !== currentUserId )
+    }
+    if( findIdParticipation.userId.toString() !== currentUserId ){
       throw new Error("수정 권한이 없습니다.");
+    }
+    const updatedParticipation = await Participation.update({ _id, image })
     
-    
-    const updatedChallenge = await Participation.update({ _id, image })
-    
-    return updatedChallenge;
+    return updateTimestamps(updatedParticipation);;
   }
 
   static async deleteChallenge(challenge_id, _id, currentUserId) {
     const findIdParticipation = await Participation.findById({ _id })
-    if(findIdParticipation.userId.toString() !== currentUserId)
+    if(findIdParticipation.userId.toString() !== currentUserId){
       throw new Error("삭제 권한이 없습니다.");
+    }
     //const challenge_id = findIdParticipation.challenge_id.toString()
     //await challengeModel.updateOne({ _id: challenge_id }, { $inc: { participantsCount: -1 } });
 
