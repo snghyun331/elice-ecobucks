@@ -59,13 +59,14 @@ const ChallengeView = () => {
     return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
   };
 
-  const sortedChallenges = [...challenges];
-  sortedChallenges.sort((a, b) => {
-    const dateA = new Date(a.dueDate);
-    const dateB = new Date(b.dueDate);
-  
-    return dateA - dateB || a.isCompleted - b.isCompleted;
-  });
+const sortedChallenges = challenges.sort((a, b) => {
+  if (a.isCompleted !== b.isCompleted) {
+    return a.isCompleted ? 1 : -1;
+  }
+  return new Date(a.dueDate) - new Date(b.dueDate);
+});
+
+
   
   return (
     <>
