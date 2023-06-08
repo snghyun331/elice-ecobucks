@@ -11,7 +11,7 @@ import { UserStateContext } from "../../context/user/UserProvider";
 import MallProductSell from "./MallProductSell";
 const Mall = () => {
   const [list, setList] = useState([]);
-  const [selectedItem, setSelectedItem] = useState("");
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const [sellModalOpen, setSellModalOpen] = useState(false);
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
@@ -62,19 +62,31 @@ const Mall = () => {
     }
   }
 
-//   const handleConfirmPurchase = async () => {
-// // 물건 구매 버튼, stock, user mileage 줄이기
-//     try () {
-//       // 마일리지 충분한지 확인하기
-//       // 구매할 수 있는 수량인지. (수량이 0 개이면 구매 버튼 비활성화시키기)
+  const handleConfirmPurchase = async (selectedItem) => {
+// 물건 구매 버튼, stock, user mileage 줄이기
+    try {
+      // 마일리지 충분한지 확인하기
+      // 구매할 수 있는 수량인지. (수량이 0 개이면 구매 버튼 비활성화시키기)
 
-//       const selectedProduct = await Api.get("products");
-//       //상품 구매 Api
-//       const res = await Api.post("products", {
-//         productId: 
-//       })
-//     }
-//   }
+      const res = await Api.get(`products/${selectedItem._id}`);
+      const product = res.data;
+      console.log("받아온 product: ", product);
+      // 상품의 재고(stock)를 1 감소시킵니다.
+      const updatedProduct = {
+        ...product,
+        stock: product.stock - 1,
+      };
+      console.log(updatedProduct);
+      // 상품 정보를 업데이트합니다.
+
+      
+      // await Api.put(`products/${selectedItem._id}`, updatedProduct);
+      // 모달을 닫습니다.
+       handleClosePurchaseModal();
+    } catch (err) {
+      console.log("상품 구매에 실패하였습니다.", err);
+    }
+  }
 
   return (
     <div style={{zIndex: "-1", padding:"60px"}}>
@@ -149,7 +161,6 @@ const Mall = () => {
                   <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={() => handleOpenPurchaseModal(item)}>
                       구매
                   </Button>
-                  {/* onClick={() => handlePurchase(item._id)} */}
                 </Card.Body>
               </Card>
             </Col>
@@ -171,8 +182,7 @@ const Mall = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClosePurchaseModal}>취소</Button>
-          <Button variant="primary" >구매하기</Button>
-          {/* onClick={handleConfirmPurchase} */}
+          <Button variant="primary" onClick={() => handleConfirmPurchase(selectedItem)}>구매하기</Button> 
         </Modal.Footer>
       </Modal>
     </Container>
