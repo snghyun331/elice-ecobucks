@@ -17,7 +17,7 @@ productRouter.get("/products", productGetAll);
 productRouter.get("/products/:_id", productGetById);
 
 //상품 정보 수정
-productRouter.put("/products/:_id", productPutUpdate);
+productRouter.put("/products/:_id", productValidation, productPutUpdate);
 
 productRouter.delete("/products/:_id", productDelete)
 

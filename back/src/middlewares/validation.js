@@ -1,22 +1,21 @@
 import Joi from "joi";
 
 const BAD_REQUEST = 400; 
-const usernameMin = 2;
-const usernameMax = 20;
+const USERNAME_MIN = 2, USERNAME_MAX = 20, PWD_MIN = 6, PWD_MAX = 18;
 
 class Validation {
   static productSchema = Joi.object({
-    name: Joi.string().required(),
-    price: Joi.number().integer().required(),
-    place: Joi.string().required(),
-    stock: Joi.number().integer().required(),
+    name: Joi.string(),
+    price: Joi.number().integer(),
+    place: Joi.string(),
+    stock: Joi.number().integer(),
     description: Joi.string(),
   });
 
   static userSchema = Joi.object({
-    username: Joi.string().min(usernameMin).max(usernameMax),
+    username: Joi.string().min(USERNAME_MIN).max(USERNAME_MAX),
     email: Joi.string().email(),
-    password: Joi.string().regex(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]{6,18}$/),
+    password: Joi.string().regex(new RegExp(`^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*()])[a-zA-Z\\d!@#$%^&*()]{${PWD_MIN},${PWD_MAX}}$`)),
     districtName: Joi.string(), 
   });
 
