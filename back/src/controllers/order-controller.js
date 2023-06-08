@@ -33,7 +33,6 @@ const orderGetMypage = async function(req, res, next) {
     try {
         const userId = req.currentUserId;
         const orders = await orderService.getUserOrders(userId);
-        console.log('cont', userId, orders)
         if (orders.length === 0) {
             return res.json({ message: '주문 내역이 없습니다.' });
         }
