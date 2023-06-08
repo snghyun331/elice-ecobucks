@@ -39,15 +39,8 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}`;
-    return formattedDate;
+    return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
   };
-  
 
   const isCurrentUserAuthor = userState.user._id === challenge.userId._id;
 
@@ -145,7 +138,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
   }, [challenge]);
 
   return (
-    <Container>
+    <Container className="mt-5">
       <h2>챌린지 내용 확인</h2>
       <Card className="m-2">
         <Card.Body>
