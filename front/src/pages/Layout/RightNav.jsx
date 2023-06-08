@@ -1,8 +1,10 @@
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { DispatchContext } from "../../context/user/UserProvider";
 
 const RightNav = ({ isLogin, user }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
   // 로그인 여부에 따라 다른 내용을 렌더링
   const dispatch = useContext(DispatchContext);
   // const navigate = useNavigate();
@@ -13,34 +15,65 @@ const RightNav = ({ isLogin, user }) => {
     dispatch({ type: "LOGOUT" });
     alert("로그아웃하여 홈페이지로 이동합니다.");
     // 기본 페이지로 돌아감.
-    // navigate('/');
+    navigate('/');
   };
   const renderNavContent = () => {
     if (isLogin) {
       return (
-        <ul className="navbar-nav" style={{ whiteSpace: 'nowrap' }} >
-          <li className="nav-item" style={{paddingRight: '5'}}>
+        <ul className="navbar-nav" style={{ whiteSpace: "nowrap" }}>
+          <li className="nav-item" style={{ paddingRight: "5" }}>
             <a className="nav-link" href="/my">
-              🪙<a style={{fontWeight: '900'}}>{user.mileage.toLocaleString()}</a>
+              🪙
+              <a style={{ fontWeight: "900" }}>
+                {user.mileage.toLocaleString()}
+              </a>
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/challenge">
+            <a
+              className="nav-link"
+              href="/challenge"
+              style={{
+                color: location.pathname === "/challenge" ? "#00D387" : "",
+                fontWeight: location.pathname === "/challenge" ? "900" : "500",
+              }}
+            >
               챌린지
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/blog">
+            <a
+              className="nav-link"
+              href="/blog"
+              style={{
+                color: location.pathname === "/blog" ? "#00D387" : "",
+                fontWeight: location.pathname === "/blog" ? "900" : "500",
+              }}
+            >
               블로그
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/mall">
+            <a
+              className="nav-link"
+              href="/mall"
+              style={{
+                color: location.pathname === "/mall" ? "#00D387" : "",
+                fontWeight: location.pathname === "/mall" ? "900" : "500",
+              }}
+            >
               쇼핑몰
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/my">
+            <a
+              className="nav-link"
+              href="/my"
+              style={{
+                color: location.pathname === "/my" ? "#00D387" : "",
+                fontWeight: location.pathname === "/my" ? "900" : "500",
+              }}
+            >
               마이페이지
             </a>
           </li>
