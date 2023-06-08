@@ -305,7 +305,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
         목록으로
       </Button>
 
-      <Modal show={showModal} onHide={handleCloseModal} style={{zIndex: '9998', marginTop: '200px'}}>
+      <Modal show={showModal} onHide={handleCloseModal} style={{zIndex: '9999', marginTop: '200px'}}>
         <Modal.Header closeButton>
           <Modal.Title>참가하기</Modal.Title>
         </Modal.Header>
