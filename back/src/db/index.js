@@ -6,6 +6,8 @@ import { Gu } from "./models/Gu.js";
 import { Product } from "./models/product.js";
 import { Challenge } from "./models/challenge.js";
 import { order } from "./models/order.js";
+import { Participation } from "./models/challenge-participation.js";
+import { Comment } from "./models/challenge-comment.js";
 
 const DB_URL =
   process.env.MONGODB_URL ||
@@ -22,4 +24,4 @@ db.on("error", (error) =>
 );
 
 
-export {User, Gu, Product, Challenge, BlogPost, BlogComment, order};
+export {User, Gu, Product, Challenge, BlogPost, BlogComment, order, Participation, Comment};
