@@ -1,37 +1,43 @@
 import { Comment } from "../db/models/challenge-comment.js";
 import { challengeModel } from "../db/schemas/challenge.js";
+import { updateTimestamps } from "../utils/update-time-stamps.js";
 class CommentService {
   static async createComment({ userId, challenge_id, content }) {
+    if (!content) 
+      throw new Error("댓글 내용이 없습니다.");  
     const createdChallenge = await Comment.create({
       userId,
       challenge_id,
       content,
     });
+    
     // Challenge의 participantsCount 1 증가
     await challengeModel.updateOne(
       { _id: challenge_id },
       { $inc: { commentsCount: 1 } }
     );
-    return createdChallenge;
+    const updateCreatedChallenge=updateTimestamps(createdChallenge)  
+
+    return updateCreatedChallenge;
   }
 
   static async findComments({ challenge_id }) {
-    const challenges = await Comment.NoAsyncfindAll({ challenge_id })
+    const comments = await Comment.NoAsyncfindAll({ challenge_id })
       .populate("userId", "username districtCode districtName")
       .exec();
 
-    return challenges;
+    return comments;
   }
 
   static async findComment({ challenge_id, _id }) {
-    const challenge = await Comment.NoAsyncfindById({ _id })
+    const comment = await Comment.NoAsyncfindById({ _id })
       .populate("userId", "username districtCode districtName")
       .exec();
-    if (!challenge || challenge.challenge_id.toString() !== challenge_id) {
+    if (!comment || comment.challenge_id.toString() !== challenge_id) {
       throw new Error("찾을 수 없습니다.");
     }
 
-    return challenge;
+    return updateTimestamps(comment);
   }
 
   static async updateComment({ _id, currentUserId, content }) {
@@ -43,9 +49,9 @@ class CommentService {
       throw new Error("수정 권한이 없습니다.");
     }
 
-    const updatedChallenge = await Comment.update({ _id, content });
+    const updatedComment = await Comment.update({ _id, content });
 
-    return updatedChallenge;
+    return updateTimestamps(updatedComment);
   }
 
   static async deleteComment(_id, currentUserId) {
