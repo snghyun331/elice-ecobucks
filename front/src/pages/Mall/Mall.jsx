@@ -59,6 +59,7 @@ const Mall = () => {
           stock: item.stock,
           description: item.description,
           seller: item.seller,
+          sellerName: item.sellerName,
           productId: item._id
         };
       });
@@ -75,7 +76,6 @@ const Mall = () => {
     try {
       // 마일리지 충분한지 확인하기
       // 유효성 검사: 구매할 수 있는 수량인지. (수량이 0 개이면 db 삭제)
-
       const res = await Api.get(`products/${selectedItem.productId}`);
       const product = res.data;
       console.log("받아온 product: ", product);
@@ -84,7 +84,13 @@ const Mall = () => {
         ...product,
         stock: product.stock - 1,
       };
-      console.log(updatedProduct);
+      console.log("업데이트 상품: ",updatedProduct);
+
+      if (updatedProduct.stock === 0) {
+        await Api.delete(`products/${selectedItem.productId}`);
+      } else {
+        await Api.put(`products/${selectedItem.productId}`, updatedProduct);
+      }
 
       // 상품 정보를 업데이트합니다.
       const updatedList = list.map(item => {
@@ -95,11 +101,7 @@ const Mall = () => {
         return item;
       });
       setList(updatedList);
-
-      
-      await Api.put(`products/${selectedItem.productId}`, updatedProduct);
-      // 모달을 닫습니다.
-       handleClosePurchaseModal();
+      handleClosePurchaseModal();
     } catch (err) {
       console.log("상품 구매에 실패하였습니다.", err);
     }
@@ -199,7 +201,7 @@ const Mall = () => {
         </Modal.Footer>
       </Modal>
       
-      <Container>
+      <Container> 
         <Row>
         {list.filter(item => item.stock !== 0).map(item => (
             <Col key={item._id}>
@@ -209,6 +211,7 @@ const Mall = () => {
                   
                   <Card.Text className="card-text">가격: {item.price}</Card.Text>
                   <Card.Text className="card-text">위치: {item.place}</Card.Text>
+                  <Card.Text className="card-text">판매자: {item.sellerName}</Card.Text>
                   <Card.Text className="card-text">재고: {item.stock}</Card.Text>
                   <Card.Text className="card-text">설명: {item.description}</Card.Text>
                   {userState.user._id === item.seller && (
@@ -265,7 +268,6 @@ const Mall = () => {
           <Card.Text className="card-text">가격: {selectedItem && selectedItem.price}</Card.Text>
           <Card.Text className="card-text">판매처: {selectedItem && selectedItem.place}</Card.Text>
           <Card.Text className="card-text">설명: {selectedItem && selectedItem.description}</Card.Text>
-          <Card.Text className="card-text">물건 아이디: {selectedItem && selectedItem._id}</Card.Text>
           선택한 상품을 구매하시겠습니까?
         </Modal.Body>
         <Modal.Footer>
