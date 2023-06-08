@@ -148,36 +148,36 @@ const ChallengeView = () => {
                 {challenge.icon}
               </div>
               <Card.Body>
-  <Card.Title>
-    {challenge.title}
-    {isToday(challenge.createdAt) && (
-      <Badge
-        pill
-        bg="warning"
-        text="dark"
-        className="ml-2"
-        style={{ marginLeft: "4px" }}
-      >
-        New
-      </Badge>
-    )}
-  </Card.Title>
-  <Card.Text>{challenge.content}</Card.Text>
-  <Card.Text>
-    마감일자: {formatDate(challenge.dueDate)}
-    <br />
-    참여인원: {challenge.participantsCount.toLocaleString()} 명
-    <br />
-    <Badge
-      bg="info"
-      className="position-absolute bottom-0 end-0 m-3"
-      style={{ zIndex: 1 }}
-    >
-      {challenge.commentsCount > 0 && `댓글 ${challenge.commentsCount}`}
-    </Badge>
-  </Card.Text>
-</Card.Body>
-
+                <Card.Title>
+                  {challenge.title}
+                  {isToday(challenge.createdAt) && (
+                    <Badge
+                      pill
+                      bg="warning"
+                      text="dark"
+                      className="ml-2"
+                      style={{ marginLeft: "4px", fontSize: "0.7rem" }}
+                    >
+                      New
+                    </Badge>
+                  )}
+                </Card.Title>
+                <Card.Text>{challenge.content}</Card.Text>
+                <Card.Text>
+                  마감일자: {formatDate(challenge.dueDate)}
+                  <br />
+                  참여인원: {challenge.participantsCount.toLocaleString()} 명
+                  <br />
+                  <Badge
+                    bg="info"
+                    className="position-absolute bottom-0 end-0 m-3"
+                    style={{ zIndex: 1 }}
+                  >
+                    {challenge.commentsCount > 0 &&
+                      `댓글 ${challenge.commentsCount}`}
+                  </Badge>
+                </Card.Text>
+              </Card.Body>
             </Card>
           ))}
         </Container>
