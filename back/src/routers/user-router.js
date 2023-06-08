@@ -2,9 +2,9 @@ import { Router } from "express";
 import { login_required } from "../middlewares/login-required.js";
 import {PostUser_register, PostUser_login, GetUser_myPage, userGetChallenges, userGetParticipants, userGetComments,
         GetUser_err_yellow, userDeleteWithdraw,userGetcurrent,userPutMypage} from "../controllers/user-controller.js"
-import { userValidation } from "../middlewares/validation.js";
+import { Validation } from "../middlewares/validation.js";
 
-
+const userValidation = Validation.validate(Validation.userSchema);
 const userAuthRouter = Router();
 
 userAuthRouter.post("/register", userValidation, PostUser_register);
@@ -23,8 +23,8 @@ userAuthRouter.get("/users/:_id/participants", login_required, userGetParticipan
 // 유저의 댓글 내역들을 조회 
 userAuthRouter.get("/users/:_id/comments", login_required, userGetComments);
 
-userAuthRouter.put("/mypage/useredit/:_id",login_required,userPutMypage)
+userAuthRouter.put("/mypage/useredit/:_id", login_required, userValidation, userPutMypage)
 
-userAuthRouter.delete("/mypage/withdraw",login_required,userDeleteWithdraw)
+userAuthRouter.delete("/mypage/withdraw", login_required, userDeleteWithdraw)
 
 export { userAuthRouter };

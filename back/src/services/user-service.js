@@ -77,7 +77,7 @@ class userAuthService {
     // 반환할 loginuser 객체를 위한 변수 설정
     const _id = user._id;
     const username = user.username;
-    const gu_code = user.gu_code;
+    const districtCode = user.districtCode;
     const mileage = user.mileage;
 
     const loginUser = {
@@ -85,7 +85,7 @@ class userAuthService {
       _id,
       email,
       username,
-      gu_code,
+      districtCode,
       mileage,
       errorMessage: null,
     };
@@ -100,8 +100,7 @@ class userAuthService {
 
   
   static async getUserInfo({ userId }) {
-    const user = await User.findById({userId});
-
+    const user = await User.findById({ userId });
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
       const errorMessage =
@@ -128,7 +127,6 @@ class userAuthService {
       const districtCode = await Gu.getdistrictCodeByName(toUpdate.districtName);
       toUpdate.districtCode = districtCode;
     }
-    console.log(toUpdate)
     if (toUpdate.password) {
       const hashedPassword = await bcrypt.hash(toUpdate.password, 10);
       toUpdate.password = hashedPassword;

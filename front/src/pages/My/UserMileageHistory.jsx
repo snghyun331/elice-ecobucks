@@ -6,20 +6,33 @@ const UserMileageHistory = ({ user }) => {
   console.log(user._id)
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 5;
-  const [orderHistory, setOrderHistory] = useState([]);
+  // const [orderHistory, setOrderHistory] = useState([]);
 
-  useEffect(() => {
-    const fetchOrderHistory = async () => {
-      try {
-        const res = await Api.get(`users/${user._id}/participants`);
-        setOrderHistory(res.data);
-      } catch (err) {
-        console.error("Failed to fetch order history:", err);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchOrderHistory = async () => {
+  //     try {
+  //       const res = await Api.get(`users/${user._id}/participants`);
+  //       setOrderHistory(res.data);
+  //     } catch (err) {
+  //       console.error("Failed to fetch order history:", err);
+  //     }
+  //   };
 
-    fetchOrderHistory();
-  }, [user]);
+  //   fetchOrderHistory();
+  // }, [user]);
+
+  const orderHistory = [
+    {timestamp: '2022-02-02',
+    mileage: 1000,
+    challenge_id: '구름빵'},
+    {timestamp: '2022-02-02',
+    mileage: 1000,
+    challenge_id: '감자빵'},
+    {timestamp: '2022-02-02',
+    mileage: 1000,
+    challenge_id: '고구마빵'}
+
+  ]
 
   const indexOfLastMileage = currentPage * ordersPerPage;
   const indexOfFirstMileage = indexOfLastMileage - ordersPerPage;

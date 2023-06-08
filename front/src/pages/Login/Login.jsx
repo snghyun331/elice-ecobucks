@@ -48,7 +48,6 @@ function LoginForm() {
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
       sessionStorage.setItem("userToken", jwtToken);
       // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
-      console.log(user)
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: user,
@@ -75,7 +74,7 @@ function LoginForm() {
         }}
       >
         <Container className="text-center">
-          <img src={Logo} className="w-25 mt-5 mb-5" alt="Logo" />
+          <img src={Logo} className="w-50 mt-5 mb-5" alt="Logo" />
         </Container>
         <Container style={{ width: "95%" }}>
           <Form onSubmit={handleSubmit}>

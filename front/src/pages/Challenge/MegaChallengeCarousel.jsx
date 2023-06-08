@@ -9,7 +9,7 @@ function MegaChallengeCarousel() {
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
   const [megaChallenge, setMegaChallenge] = useState(null);
   const [showChallengeRead, setShowChallengeRead] = useState(false);
-  const megaChallengeId = '64815e29f7aec0a6805f8ef4';
+  const megaChallengeId = '6481efc623b4714735854fca';
 
   useEffect(() => {
     if (isFetchCompleted) {
@@ -73,9 +73,9 @@ function MegaChallengeCarousel() {
         </Carousel>
       )}
       {showChallengeRead && (
-        <Modal show={showChallengeRead} onHide={handleBackToListClick} size="lg">
+        <Modal show={showChallengeRead} onHide={handleBackToListClick} size="lg" className="mt-5" style={{zIndex: '9999'}}>
           <Modal.Header closeButton>
-            <Modal.Title>{megaChallenge.title}</Modal.Title>
+            <Modal.Title>✨ 지금 뜨는 챌린지를 확인해보세요.</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <p>{megaChallenge.description}</p>
@@ -83,7 +83,7 @@ function MegaChallengeCarousel() {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleBackToListClick}>
-              Back to List
+              돌아가기
             </Button>
           </Modal.Footer>
         </Modal>

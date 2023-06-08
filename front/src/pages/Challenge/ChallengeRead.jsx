@@ -39,15 +39,8 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}`;
-    return formattedDate;
+    return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
   };
-  
 
   const isCurrentUserAuthor = userState.user._id === challenge.userId._id;
 
@@ -62,7 +55,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
         await Api.delete(`challenges/${challenge._id}`);
         window.location.reload();
       } catch (err) {
-        alert("챌린지 삭제에 실패하였습니다.");
+        alert(err.response.data);
       }
     }
   };
@@ -145,7 +138,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
   }, [challenge]);
 
   return (
-    <Container>
+    <Container className="mt-5">
       <h2>챌린지 내용 확인</h2>
       <Card className="m-2">
         <Card.Body>
@@ -312,7 +305,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
         목록으로
       </Button>
 
-      <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal show={showModal} onHide={handleCloseModal} style={{zIndex: '9999', marginTop: '200px'}}>
         <Modal.Header closeButton>
           <Modal.Title>참가하기</Modal.Title>
         </Modal.Header>
@@ -322,7 +315,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
         />
       </Modal>
 
-      <Modal size="lg" show={showUpdateModal} onHide={handleCloseUpdateModal}>
+      <Modal size="lg" show={showUpdateModal} onHide={handleCloseUpdateModal} style={{zIndex: '9998', marginTop: '100px'}}>
         <Modal.Header closeButton>
           <Modal.Title>챌린지 수정</Modal.Title>
         </Modal.Header>
