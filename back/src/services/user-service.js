@@ -165,6 +165,14 @@ class userAuthService {
     return userInfo
   }
 
+  static async subtractMileage(userId, amount) {
+    //유저 마일리지 차감 로직
+    const user = await User.findById({ userId });
+    user.mileage -= amount;
+    console.log(user.mileage)
+    await user.save();
+  }
+
 }
 
 export { userAuthService };
