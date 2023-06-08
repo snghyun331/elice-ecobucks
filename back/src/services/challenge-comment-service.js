@@ -1,18 +1,24 @@
 import { Comment } from "../db/models/challenge-comment.js";
 import { challengeModel } from "../db/schemas/challenge.js";
+import { updateTimestamps } from "../utils/update-time-stamps.js";
 class CommentService {
   static async createComment({ userId, challenge_id, content }) {
+    if (!content) 
+      throw new Error("댓글 내용이 없습니다.");  
     const createdChallenge = await Comment.create({
       userId,
       challenge_id,
       content,
     });
+    
     // Challenge의 participantsCount 1 증가
     await challengeModel.updateOne(
       { _id: challenge_id },
       { $inc: { commentsCount: 1 } }
     );
-    return createdChallenge;
+    const updateCreatedChallenge=updateTimestamps(createdChallenge)  
+
+    return updateCreatedChallenge;
   }
 
   static async findComments({ challenge_id }) {

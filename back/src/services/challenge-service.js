@@ -1,5 +1,5 @@
 import { Challenge } from "../db/models/challenge.js";
-import { updateTime } from "../utils/updateTime.js";
+import { updateTimestamps } from "../utils/update-time-stamps.js";
 class ChallengeService {
   
   static makeDueDate(weeks){
@@ -19,13 +19,9 @@ class ChallengeService {
     //const dueDate = newDueDate.setMinutes(newDueDate.getMinutes() + 1);
     const dueDate = this.makeDueDate(weeks)
     const createdChallenge = await Challenge.create({ userId, title, content, icon, weeks, dueDate });
+    
     // 시간을 한국표준시간으로 변경
-    const updateCreatedChallenge = {
-      ...createdChallenge._doc,
-      dueDate : updateTime.toKST(createdChallenge.dueDate),
-      createdAt: updateTime.toKST(createdChallenge.createdAt),
-      updatedAt: updateTime.toKST(createdChallenge.updatedAt),
-    }
+    const updateCreatedChallenge=updateTimestamps(createdChallenge)
     
     return updateCreatedChallenge;
   }

@@ -1,7 +1,7 @@
 import { Participation } from "../db/models/challenge-participation.js";
 import { Challenge } from "../db/models/challenge.js"
 import { User } from "../db/models/User.js"
-import { updateTime } from "../utils/updateTime.js";
+import { updateTimestamps } from "../utils/update-time-stamps.js";
 class ParticipationService {
   static async createParticipation({ userId, challenge_id, image }) {
     if (!image) 
@@ -29,13 +29,9 @@ class ParticipationService {
     // Participation Create
     // 참가 신청 생성
     const createdParticipation = await Participation.create({ userId, challenge_id, image });
+    
     // 시간을 한국표준시간으로 변경
-    const updateCreatedParticipation = {
-      ...createdParticipation._doc,
-      dueDate : updateTime.toKST(createdParticipation.dueDate),
-      createdAt: updateTime.toKST(createdParticipation.createdAt),
-      updatedAt: updateTime.toKST(createdParticipation.updatedAt),
-    }
+    const updateCreatedParticipation=updateTimestamps(createdParticipation)
 
     return updateCreatedParticipation;
   }

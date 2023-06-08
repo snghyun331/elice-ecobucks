@@ -28,19 +28,16 @@ const updateTime = {
     return kstDate.format();
   },
 
-  //  
+  // 시간으로 받아서 날짜 차이나는 일수 계산  
   dateComparison: function (date1, date2) {
-    // 하루를 밀리초로 변환 (1000 ms/s * 60 s/min * 60 min/hr * 24 hr/day)
+    // 하루를 밀리초로 변환 (1000ms/s * 60s/min * 60min/hr * 24hr/day)
     const MS_PER_DAY = 1000 * 60 * 60 * 24; 
-
-    // 두 날짜의 차이
-    const diffInMs = date1.getTime() - date2.getTime();
-
+    // 두 날짜의 차이 절대값
+    const diffInMs = Math.abs(date1.getTime() - date2.getTime());
     // 차이를 일수로 변환하고 소수점 이하를 버림
     const diffInDays = Math.floor(diffInMs / MS_PER_DAY);
-
-    // 차이가 정확히 1일이면 true, 아니면 false를 반환
-    return diffInDays === 1;
+    
+    return diffInDays
   }
 }
 
