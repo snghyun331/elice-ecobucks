@@ -52,7 +52,8 @@ const Mall = () => {
           place: item.place,
           stock: item.stock,
           description: item.description,
-          seller: item.seller
+          seller: item.seller,
+          productId: item._id
         };
       });
       setList(newList);
@@ -81,11 +82,43 @@ const Mall = () => {
       // 상품 정보를 업데이트합니다.
 
       
-      // await Api.put(`products/${selectedItem._id}`, updatedProduct);
+      await Api.put(`products/${selectedItem._id}`, updatedProduct);
       // 모달을 닫습니다.
        handleClosePurchaseModal();
     } catch (err) {
       console.log("상품 구매에 실패하였습니다.", err);
+    }
+  }
+
+  const handleEditProduct = async (selectedItem) => {
+    try {
+      console.log("selectedItem: ", selectedItem);
+
+      const res = await Api.get(`products/${selectedItem.productId}`);
+      const product = res.data;
+      console.log("받아온 product: ", product);
+      // 상품의 재고(stock)를 1 감소시킵니다.
+      const updatedProduct = {
+        ...product,
+        stock: product.stock - 1,
+      };
+      console.log("updatedProduct: ", updatedProduct);
+
+      const updatedList = list.map(item => {
+        if (item.productId === selectedItem.productId) {
+          // console.log("item: ", item);
+          // console.log("selectedItem: ", selectedItem);
+          // stock 값을 1 감소시킴
+          return { ...item, stock: item.stock - 1 };
+        }
+        return item;
+      });
+      setList(updatedList);
+      // 상품 정보를 업데이트합니다.
+      await Api.put(`products/${selectedItem.productId}`, updatedProduct);
+
+    } catch (err) {
+      console.log("상품 수정에 실패했습니다", err);
     }
   }
 
@@ -157,12 +190,12 @@ const Mall = () => {
                   
                   <Card.Text className="card-text">가격: {item.price}</Card.Text>
                   <Card.Text className="card-text">위치: {item.place}</Card.Text>
+                  <Card.Text className="card-text">재고: {item.stock}</Card.Text>
                   <Card.Text className="card-text">설명: {item.description}</Card.Text>
-                  <Card.Text className="card-text">상품 Id: {item._id}</Card.Text>
+                  <Card.Text className="card-text">상품 Id: {item._id ? item._id : "False"}</Card.Text>
                   {userState.user._id === item.seller && (
                     <>
-                      <Button variant="primary" style={{ margin: "10px", top: "5" }}>
-                        {/* onClick={() => handleEditProduct(item._id)} */}
+                      <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleEditProduct(item)}>
                         수정
                       </Button>
                       <Button variant="primary" style={{ margin: "10px", top: "5" }}>
@@ -196,6 +229,7 @@ const Mall = () => {
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClosePurchaseModal}>취소</Button>
           <Button variant="primary" onClick={() => handleConfirmPurchase(selectedItem)}>구매하기</Button> 
+          
         </Modal.Footer>
       </Modal>
     </Container>
