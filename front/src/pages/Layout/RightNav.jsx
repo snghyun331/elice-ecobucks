@@ -86,7 +86,7 @@ const RightNav = ({ isLogin, user }) => {
       );
     } else {
       return (
-        <ul className="navbar-nav">
+        <ul className="navbar-nav" style={{ whiteSpace: "nowrap" }}>
           <li className="nav-item">
             <a className="nav-link" href="/">
               홈

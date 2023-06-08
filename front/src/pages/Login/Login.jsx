@@ -75,7 +75,7 @@ function LoginForm() {
         }}
       >
         <Container className="text-center">
-          <img src={Logo} className="w-25 mt-5 mb-5" alt="Logo" />
+          <img src={Logo} className="w-50 mt-5 mb-5" alt="Logo" />
         </Container>
         <Container style={{ width: "95%" }}>
           <Form onSubmit={handleSubmit}>
