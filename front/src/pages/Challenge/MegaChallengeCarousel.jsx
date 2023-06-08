@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Container } from 'react-bootstrap';
 import Carousel from 'react-bootstrap/Carousel';
 
 function MegaChallengeCarousel() {
@@ -59,15 +60,33 @@ function MegaChallengeCarousel() {
   };
 
   return (
-    <Carousel activeIndex={index} onSelect={handleSelect} style={{ backgroundColor: '#f4d6ff' }}>
-      {filteredChallenges.map((challenge, index) => (
-        <Carousel.Item key={index}>
-          <Carousel.Caption style={{ color: 'white'}}>
-            <h3>{challenge.title}</h3>
-            <p>{challenge.description}</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-      ))}
+<Carousel style={{backgroundColor: 'lightGrey'}} className='ps-0'>
+      <Carousel.Item>
+        <Container style={{ width: '100%', height: '19rem', backgroundColor: '#6e63ff'}}>
+        </Container>
+        <Carousel.Caption>
+          <h3>First slide label</h3>
+          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+      <Container style={{ width: '100%', height: '19rem', backgroundColor: '#ffa1ee'}}>
+        </Container>
+        <Carousel.Caption>
+          <h3>Second slide label</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+      <Container style={{ width: '100%', height: '19rem', backgroundColor: '#caff80'}}>
+        </Container>
+        <Carousel.Caption>
+          <h3>Third slide label</h3>
+          <p>
+            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+          </p>
+        </Carousel.Caption>
+      </Carousel.Item>
     </Carousel>
   );
 }

@@ -9,7 +9,7 @@ const participationSchema = new Schema(
     },
     challenge_id: { 
       type: Schema.Types.ObjectId, 
-      ref: 'Chellenge', 
+      ref: 'Challenge', 
       required: true 
     },
     image: { 
