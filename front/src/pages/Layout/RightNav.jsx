@@ -18,7 +18,7 @@ const RightNav = ({ isLogin, user }) => {
   const renderNavContent = () => {
     if (isLogin) {
       return (
-        <ul className="navbar-nav">
+        <ul className="navbar-nav" style={{ whiteSpace: 'nowrap' }} >
           <li className="nav-item" style={{paddingRight: '5'}}>
             <a className="nav-link" href="/my">
               🪙<a style={{fontWeight: '900'}}>{user.mileage.toLocaleString()}</a>
