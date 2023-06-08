@@ -22,5 +22,5 @@ const commentSchema = new Schema(
   }
 );
 
-const commentModel = model('Comment', commentSchema);
+const commentModel = model('ChallengeComment', commentSchema);
 export { commentModel };

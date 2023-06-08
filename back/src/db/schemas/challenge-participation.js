@@ -22,5 +22,5 @@ const participationSchema = new Schema(
   }
 );
 
-const participationModel = model('Participation', participationSchema);
+const participationModel = model('ChallengeParticipation', participationSchema);
 export { participationModel };
