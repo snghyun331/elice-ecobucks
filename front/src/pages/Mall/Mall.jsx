@@ -160,12 +160,18 @@ const Mall = () => {
                   <Card.Text className="card-text">설명: {item.description}</Card.Text>
                   <Card.Text className="card-text">상품 Id: {item._id}</Card.Text>
                   {userState.user._id === item.seller && (
-                    <Button variant="primary" style={{ marginBottom: "10px", top: "5" }}>
-                      {/* onClick={() => handleEditProduct(item._id)} */}
-                      수정
-                    </Button>
+                    <>
+                      <Button variant="primary" style={{ margin: "10px", top: "5" }}>
+                        {/* onClick={() => handleEditProduct(item._id)} */}
+                        수정
+                      </Button>
+                      <Button variant="primary" style={{ margin: "10px", top: "5" }}>
+                        {/* onClick={() => handleEditProduct(item._id)} */}
+                        삭제
+                      </Button>
+                    </>
                   )}
-                  <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={() => handleOpenPurchaseModal(item)}>
+                  <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenPurchaseModal(item)}>
                       구매
                   </Button>
                 </Card.Body>
