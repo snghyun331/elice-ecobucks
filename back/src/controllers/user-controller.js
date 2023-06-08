@@ -1,5 +1,6 @@
 import { userAuthService } from "../services/user-service.js";
 import is from '@sindresorhus/is';
+import { OK, CREATED } from "../utils/constants.js";
 
 const PostUser_register = async function (req, res, next) {
     try {
@@ -22,7 +23,7 @@ const PostUser_register = async function (req, res, next) {
         throw new Error(newUser.errorMessage);
       }
   
-      return res.status(201).json(newUser);
+      return res.status(CREATED).json(newUser);
     } catch (error) {
       next(error);
     }
@@ -41,7 +42,7 @@ const PostUser_login = async function (req, res, next) {
         throw new Error(user.errorMessage);
       }
   
-    return res.status(200).send(user);
+    return res.status(OK).send(user);
     } catch (error) {
       next(error);
     }
@@ -53,7 +54,7 @@ const GetUser_userlist = async function (req, res, next) {
     try {
       // 전체 사용자 목록을 얻음
       const users = await userAuthService.getUsers();
-      res.status(200).send(users);
+      res.status(OK).send(users);
     } catch (error) {
       next(error);
     }
@@ -70,7 +71,7 @@ const GetUser_myPage = async function (req, res, next) {
         throw new Error(currentUserInfo.errorMessage);
       }
 
-    return res.status(200).send(currentUserInfo);
+    return res.status(OK).send(currentUserInfo);
     } catch (error) {
       next(error);
     }
@@ -86,7 +87,7 @@ const GetUser_err_yellow =  async function (req, res, next) {
         throw new Error(currentUserInfo.errorMessage);
       }
 
-    return res.status(200).send(currentUserInfo);
+    return res.status(OK).send(currentUserInfo);
     } catch (error) {
       next(error);
     }
@@ -104,7 +105,7 @@ const userGetcurrent = async function (req, res, next) {
       throw new Error(currentUserInfo.errorMessage);
     }
 
-  return res.status(200).send(currentUserInfo);
+  return res.status(OK).send(currentUserInfo);
   } catch (error) {
     next(error);
   }
@@ -125,7 +126,7 @@ const userDeleteWithdraw = async function (req, res, next) {
     await user.save()
 
     const result = { result : "Successfully withdraw"}
-    return res.status(200).send(result)
+    return res.status(OK).send(result)
   } catch (error) {
     next(error)
   } 
@@ -148,7 +149,7 @@ const userPutMypage = async function (req, res, next) {
       throw new Error(updatedUser.errorMessage);
     }
 
-    return res.status(200).json(updatedUser);
+    return res.status(OK).json(updatedUser);
   } catch (error) {
     next(error);
   }                                                      
@@ -166,7 +167,7 @@ const userGetChallenges = async function (req, res, next) {
       throw new Error(currentUserInfo.errorMessage);
     }
 
-  return res.status(200).send(currentUserInfo);
+  return res.status(OK).send(currentUserInfo);
   } catch (error) {
     next(error);
   }
@@ -182,7 +183,7 @@ const userGetParticipants = async function (req, res, next) {
       throw new Error(currentUserInfo.errorMessage);
     }
 
-  return res.status(200).send(currentUserInfo);
+  return res.status(OK).send(currentUserInfo);
   } catch (error) {
     next(error);
   }
@@ -198,7 +199,7 @@ const userGetComments = async function (req, res, next) {
       throw new Error(currentUserInfo.errorMessage);
     }
 
-  return res.status(200).send(currentUserInfo);
+  return res.status(OK).send(currentUserInfo);
   } catch (error) {
     next(error);
   }

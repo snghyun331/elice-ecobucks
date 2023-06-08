@@ -2,7 +2,7 @@ import { orderService } from "../services/order-service.js";
 import { validateEmptyBody } from "../utils/validators.js";
 import { userAuthService } from "../services/user-service.js";
 import { productService } from "../services/product-service.js";
-
+import { CREATED } from "../utils/constants.js";
 const orderPostCreate = async function(req, res, next) {
     try{
         validateEmptyBody(req)
@@ -31,7 +31,7 @@ const orderPostCreate = async function(req, res, next) {
             throw new Error(newOrder.errorMessage);
         }
       
-        return res.status(201).json(newOrder);
+        return res.status(CREATED).json(newOrder);
     } catch (error) {
     next(error);
     }
