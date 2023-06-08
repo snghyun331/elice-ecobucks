@@ -24,9 +24,9 @@ function RegisterForm() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
-  const [district, setDistrict] = useState(null);
+  const [districtName, setDistrict] = useState(null);
 
-  const districts = [
+  const districtNames = [
     "강남구",
     "강동구",
     "강북구",
@@ -76,7 +76,7 @@ function RegisterForm() {
   const isPasswordValid = validatePassword(password);
   const isPasswordSame = password === confirmPassword;
   const isNameValid = validateName(name);
-  const isDistrictValid = district != null;
+  const isDistrictValid = districtName != null;
 
   const isFormValid =
     isEmailValid &&
@@ -94,7 +94,7 @@ function RegisterForm() {
         username: name,
         email,
         password,
-        guName: district,
+        districtName,
       });
 
       // 회원가입과 동시에 로그인 되도록 함.
@@ -237,22 +237,22 @@ function RegisterForm() {
               <Dropdown.Toggle
                 variant="light"
                 className="text-start d-block"
-                id="dropdown-district"
+                id="dropdown-districtName"
                 style={{
                   backgroundColor: "white",
                   width: "100%",
                   borderRadius: "0px",
                 }}
               >
-                {district || "구를 선택해주세요. "}
+                {districtName || "구를 선택해주세요. "}
               </Dropdown.Toggle>
               <Dropdown.Menu style={{ maxHeight: "200px", overflowY: "auto" }}>
-                {districts.map((district) => (
+                {districtNames.map((districtName) => (
                   <Dropdown.Item
-                    key={district}
-                    onClick={() => setDistrict(district)}
+                    key={districtName}
+                    onClick={() => setDistrict(districtName)}
                   >
-                    {district}
+                    {districtName}
                   </Dropdown.Item>
                 ))}
               </Dropdown.Menu>
