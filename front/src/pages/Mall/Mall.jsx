@@ -1,15 +1,29 @@
 /** 작성자: 정원석
  * mapping으로 판매할 물건 자동 추가, 삭제
  */
-import { Container, Button, Card, Row, Col } from "react-bootstrap";
+import { Container, Button, Card, Row, Col, Modal } from "react-bootstrap";
 import Logo from "../../assets/logo.png";
 import SeoulMap from "../../../../data/seoul_map/seoulMap.png"; // 나중에 삭제하기
 import * as Api from "../../api";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserStateContext } from "../../context/user/UserProvider";
+import MallProductSell from "./MallProductSell";
 const Mall = () => {
   const [list, setList] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  const [sellModalOpen, setSellModalOpen] = useState(false);
+  const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
+  
+  const handleCloseSellModal = () => setSellModalOpen(false);
+  const handleOpenSellModal = () => setSellModalOpen(true);
+  const handleClosePurchaseModal = () => setPurchaseModalOpen(false);
+  const handleOpenPurchaseModal = (item) => {
+    setSelectedItem(item);
+    // console.log(item);
+    setPurchaseModalOpen(true);
+  }
   const userState = useContext(UserStateContext);
   const navigate = useNavigate();
   
@@ -37,14 +51,41 @@ const Mall = () => {
           price: item.price,
           place: item.place,
           stock: item.stock,
-          description: item.description
+          description: item.description,
+          seller: item.seller
         };
       });
       setList(newList);
-      console.log(list.map(item => (console.log(item))));
+      // console.log(list.map(item => (console.log(item))));
     } catch (err){
       // alert("정보 불러오기를 실패하였습니다.");
       console.log("몰불러오기를 실패하였습니다.", err);
+    }
+  }
+
+  const handleConfirmPurchase = async (selectedItem) => {
+// 물건 구매 버튼, stock, user mileage 줄이기
+    try {
+      // 마일리지 충분한지 확인하기
+      // 구매할 수 있는 수량인지. (수량이 0 개이면 구매 버튼 비활성화시키기)
+
+      const res = await Api.get(`products/${selectedItem._id}`);
+      const product = res.data;
+      console.log("받아온 product: ", product);
+      // 상품의 재고(stock)를 1 감소시킵니다.
+      const updatedProduct = {
+        ...product,
+        stock: product.stock - 1,
+      };
+      console.log(updatedProduct);
+      // 상품 정보를 업데이트합니다.
+
+      
+      // await Api.put(`products/${selectedItem._id}`, updatedProduct);
+      // 모달을 닫습니다.
+       handleClosePurchaseModal();
+    } catch (err) {
+      console.log("상품 구매에 실패하였습니다.", err);
     }
   }
 
@@ -79,40 +120,79 @@ const Mall = () => {
         <span>아마 지도 API로 지도가 들어갈 자리</span>
         <br />
         <img src={SeoulMap} style={{ maxWidth: "80%", maxHeight: "80%" }} />
-        <Button
-          style={{
-            position: "fixed",
-            right: "10%",
-            marginRight: "20px",
-            marginTop: "20px",
-          }}
-        >
-          떠리상품 판매하기(사장님이)
-        </Button>
+        .
       </Container>
+      <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenSellModal}>
+          판매 상품 등록하기
+          </Button>
+      <Modal show={sellModalOpen} onHide={handleCloseSellModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>상품 등록</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="text-center">
+          <MallProductSell />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            className="mt-4 mb-4"
+            variant="secondary"
+            onClick={handleCloseSellModal}
+            style={{
+              width: "100%",
+              borderRadius: "0px",
+            }}
+          >
+            닫기
+          </Button>
+        </Modal.Footer>
+      </Modal>
       
       <Container>
         <Row>
         {list.map(item => (
             <Col key={item._id}>
               <Card style={{ width: "18rem" }}>
-                {/* <img src={item.imageUrl} className="card-img-top" alt="Logo" /> */}
                 <Card.Body className="card-body">
                   <Card.Title className="card-title"><span>상품명:</span> {item.name}</Card.Title>
                   
                   <Card.Text className="card-text">가격: {item.price}</Card.Text>
                   <Card.Text className="card-text">위치: {item.place}</Card.Text>
                   <Card.Text className="card-text">설명: {item.description}</Card.Text>
-                  {/* <a href={item.place} className="btn btn-primary">
-                    판매하는 매장 위치나 정보 넣기
-                  </a> */}
-                  
+                  <Card.Text className="card-text">상품 Id: {item._id}</Card.Text>
+                  {userState.user._id === item.seller && (
+                    <Button variant="primary" style={{ marginBottom: "10px", top: "5" }}>
+                      {/* onClick={() => handleEditProduct(item._id)} */}
+                      수정
+                    </Button>
+                  )}
+                  <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={() => handleOpenPurchaseModal(item)}>
+                      구매
+                  </Button>
                 </Card.Body>
               </Card>
             </Col>
           ))}
         </Row>
-      </Container>
+
+        
+        <Modal show={purchaseModalOpen} onHide={handleClosePurchaseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>구매 확인</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Card.Text className="card-text">상품: {selectedItem && selectedItem.name}</Card.Text>
+          <Card.Text className="card-text">가격: {selectedItem && selectedItem.price}</Card.Text>
+          <Card.Text className="card-text">판매처: {selectedItem && selectedItem.place}</Card.Text>
+          <Card.Text className="card-text">설명: {selectedItem && selectedItem.description}</Card.Text>
+          <Card.Text className="card-text">물건 아이디: {selectedItem && selectedItem._id}</Card.Text>
+          선택한 상품을 구매하시겠습니까?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClosePurchaseModal}>취소</Button>
+          <Button variant="primary" onClick={() => handleConfirmPurchase(selectedItem)}>구매하기</Button> 
+        </Modal.Footer>
+      </Modal>
+    </Container>
     </div>
   );
 };
