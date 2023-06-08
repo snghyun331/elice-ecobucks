@@ -136,8 +136,8 @@ function MyPage() {
                 <UserOrderHistory />
               </Row>
               <Row>
-                <h5 style={{ fontWeight: "bold" }}>마일리지 적립 이력</h5>
-                <UserMileageHistory />
+                <h5 style={{ fontWeight: "bold" }}>챌린지 참가 및 마일리지 이력</h5>
+                <UserMileageHistory user={userState.user} />
               </Row>
             </Container>
           </Col>

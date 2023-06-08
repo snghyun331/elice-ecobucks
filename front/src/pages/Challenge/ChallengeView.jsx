@@ -82,6 +82,7 @@ const ChallengeView = () => {
               border: "solid 1px #878787",
               borderRadius: "15px",
               height: "17rem",
+              
               overflow: "hidden",
             }}
           >
