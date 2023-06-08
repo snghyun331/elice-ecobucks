@@ -99,15 +99,14 @@ class userAuthService {
 
   
   static async getUserInfo({ userId }) {
-    const user = await User.findById({userId});
-
+    const user = await User.findById({ userId });
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
       const errorMessage =
         "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
-
+    
     return user;
   }
 
@@ -127,7 +126,6 @@ class userAuthService {
       const districtCode = await Gu.getdistrictCodeByName(toUpdate.districtName);
       toUpdate.districtCode = districtCode;
     }
-    console.log(toUpdate)
     if (toUpdate.password) {
       const hashedPassword = await bcrypt.hash(toUpdate.password, 10);
       toUpdate.password = hashedPassword;
