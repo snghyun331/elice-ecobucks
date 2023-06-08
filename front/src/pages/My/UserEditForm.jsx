@@ -10,12 +10,12 @@ const UserEditForm = ({ user }) => {
   const userState = useContext(UserStateContext);
 
   const [name, setName] = useState(user?.username || ""); // user가 null인 경우를 고려하여 기본값 설정
-  const [district, setDistrict] = useState(user?.guName || ""); // user가 null인 경우를 고려하여 기본값 설정
+  const [districtName, setDistrict] = useState(user?.districtName || ""); // user가 null인 경우를 고려하여 기본값 설정
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
 
-  const districts = [
+  const districtNames = [
     "강남구",
     "강동구",
     "강북구",
@@ -57,7 +57,7 @@ const UserEditForm = ({ user }) => {
     password.length === 0 ? true : validatePassword(password);
   const isPasswordSame = password === confirmPassword;
   const isNameValid = validateName(name);
-  const isDistrictValid = district != null;
+  const isDistrictValid = districtName != null;
 
   const isFormValid =
     isPasswordValid && isPasswordSame && isNameValid && isDistrictValid;
@@ -68,7 +68,7 @@ const UserEditForm = ({ user }) => {
     try {
       const res = await Api.put(`mypage/useredit/${userState.user._id}`, {
         username: name,
-        guName: district,
+        districtName,
       });
       console.log(res);
       if (res.status === 200) {
@@ -207,22 +207,22 @@ const UserEditForm = ({ user }) => {
           <Dropdown.Toggle
             className="text-start d-block"
             variant="light"
-            id="dropdown-district"
+            id="dropdown-districtName"
             style={{
               backgroundColor: "white",
               width: "100%",
               borderRadius: "0px",
             }}
           >
-            {district || "구를 선택해주세요. "}
+            {districtName || "구를 선택해주세요. "}
           </Dropdown.Toggle>
           <Dropdown.Menu style={{ maxHeight: "200px", overflowY: "auto" }}>
-            {districts.map((district) => (
+            {districtNames.map((districtName) => (
               <Dropdown.Item
-                key={district}
-                onClick={() => setDistrict(district)}
+                key={districtName}
+                onClick={() => setDistrict(districtName)}
               >
-                {district}
+                {districtName}
               </Dropdown.Item>
             ))}
           </Dropdown.Menu>
