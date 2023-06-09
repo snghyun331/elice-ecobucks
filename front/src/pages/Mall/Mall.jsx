@@ -14,7 +14,7 @@ const Mall = () => {
   const [sellModalOpen, setSellModalOpen] = useState(false);
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
-  // const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   
   const handleCloseSellModal = () => setSellModalOpen(false);
   const handleOpenSellModal = async (itemId) => {
@@ -47,8 +47,20 @@ const Mall = () => {
     } catch(err) {
       console.log(err);
     }
-    // setSelectedItem(item);
+    
     setEditModalOpen(true);
+  };
+  const handleCloseDeleteModal = () => setDeleteModalOpen(false);
+  const handleOpenDeleteModal = async (itemId) => {
+    try {
+      const res = await Api.get(`products/${itemId}`);
+      const product = res.data;
+      console.log(product);
+      setSelectedItem(product);
+    } catch (err) {
+      console.log(err);
+    }
+    setDeleteModalOpen(true);
   };
 
   const userState = useContext(UserStateContext);
@@ -101,27 +113,7 @@ const Mall = () => {
       await Api.post(`orders/`, {
         productId: selectedItem._id,
       });
-      // const res = await Api.get(`products/${selectedItem.productId}`);
-      // const product = res.data;
-      // console.log("받아온 product: ", product);
-      // 상품의 재고(stock)를 1 감소시킵니다.
-      // const updatedProduct = {
-      //   name: selectedItem.name,
-      //   price: selectedItem.price,
-      //   place: selectedItem.place,
-      //   stock: selectedItem.stock - 1, //이거 백엔드에서 처리하니까 바꾸기
-      //   description: selectedItem.description
-      // };
-      // console.log("업데이트 상품: ",updatedProduct);
 
-      // if (updatedProduct.stock === 0) {
-      //   await Api.delete(`products/${selectedItem._id}`);
-      // } else {
-      //   await Api.post(`orders/`, {
-      //     productId: selectedItem._id,
-      //   });
-      //   // await Api.put(`products/${selectedItem._id}`, updatedProduct);
-      // }
       const newRes = await Api.get(`products/${selectedItem._id}`);
       const newProduct = newRes.data;
       // console.log(newProduct);
@@ -133,17 +125,6 @@ const Mall = () => {
       })
       // console.log("updatedList: ", updatedList);
       setList(updatedList);
-
-      // 상품 정보를 업데이트합니다.
-      //여기서 오류나는건가
-      // const updatedList = list.map(item => {
-      //   if (item.productId === newProduct._id) {
-      //     // stock 값을 1 감소시킴
-      //     return { ...item, stock: item.stock - 1 };
-      //   }
-      //   return item;
-      // });
-      // setList(updatedList);
       handleClosePurchaseModal();
     } catch (err) {
       console.log("상품 구매에 실패하였습니다.", err);
@@ -185,6 +166,31 @@ const Mall = () => {
 
     } catch (err) {
       console.log("상품 수정에 실패했습니다", err);
+    }
+  }
+  
+  const handleDeleteProduct = async (selectedItem) => {
+    try {
+      console.log("삭제할 상품: ", selectedItem);
+      await Api.delete(`products/${selectedItem._id}`);
+      
+      const res = await Api.get("products");
+      const newList = res.data.map(item => {
+        return {
+          name: item.name,
+          price: item.price,
+          place: item.place,
+          stock: item.stock,
+          description: item.description,
+          seller: item.seller,
+          sellerName: item.sellerName,
+          _id: item._id //상품 ObjectId
+        };
+      });
+      setList(newList);
+      handleCloseDeleteModal();
+    } catch (err) {
+      console.log("상품 삭제에 실패했습니다.", err);
     }
   }
 
@@ -232,7 +238,7 @@ const Mall = () => {
       
       <Container> 
         <Row>
-        {list.filter(item => item.stock !== 0).map(item => (
+        {list.map(item => (
             <Col key={item._id}>
               <Card style={{ width: "18rem" }}>
                 <Card.Body className="card-body">
@@ -269,13 +275,29 @@ const Mall = () => {
                           </Button>
                         </Modal.Footer>
                       </Modal>
-                      <Button variant="primary" style={{ margin: "10px", top: "5" }}>
+                      <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenDeleteModal(item._id)}>
                         삭제
                       </Button>
-                      {/* onClick={() => handleOpenDeleteModal(item.productId)} */}
+                      <Modal show={deleteModalOpen} onHide={handleCloseDeleteModal} centered>
+                        <Modal.Header closeButton>
+                          <Modal.Title>상품 삭제</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body className="text-center">
+                          선택한 상품을 삭제하시겠습니까?
+                        </Modal.Body>
+                        <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseDeleteModal}>취소</Button>
+                        <Button variant="primary" onClick={() => handleDeleteProduct(selectedItem)}>삭제하기</Button> 
+                        </Modal.Footer>
+                      </Modal>
                     </>
                   )}
-                  <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenPurchaseModal(item)}>
+                  <Button 
+                    variant="primary" 
+                    style={{ margin: "10px", top: "5" }} 
+                    onClick={() => handleOpenPurchaseModal(item)}
+                    disabled={item.stock === 0}
+                  >
                       구매
                   </Button>
                 </Card.Body>
