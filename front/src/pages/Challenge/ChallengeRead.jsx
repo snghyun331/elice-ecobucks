@@ -333,7 +333,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
         size="lg"
         show={showUpdateModal}
         onHide={handleCloseUpdateModal}
-        style={{ zIndex: "9998", marginTop: "100px" }}
+        style={{ zIndex: "9999", marginTop: "20px" }}
       >
         <Modal.Header closeButton>
           <Modal.Title>챌린지 수정</Modal.Title>

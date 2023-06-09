@@ -20,7 +20,7 @@ const Header = () => {
         left: "0",
         width: "100%",
         backgroundColor: "dark",
-        zIndex: "9999",
+        zIndex: "9990",
       }}
     >
       <div className="container-fluid">
