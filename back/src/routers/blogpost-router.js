@@ -7,9 +7,9 @@ const blogPostRouter = Router();
 
 blogPostRouter.post("/blog/write", login_required, blogpostPostWrite);
 
-blogPostRouter.put("/blog/write", login_required, blogpostPutWrite)
+blogPostRouter.put("/blog/:_id/write", login_required, blogpostPutWrite)
 
-blogPostRouter.delete("/blog/write", login_required, blogpostDeleteWrite)
+blogPostRouter.delete("/blog/:_id", login_required, blogpostDeleteWrite)
 
 blogPostRouter.put("/blog/:_id/likes", login_required, blogpostPutLikes)
 
