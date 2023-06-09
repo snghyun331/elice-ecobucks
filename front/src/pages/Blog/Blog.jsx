@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import BlogPost from "./BlogPost";
 import { UserStateContext } from "../../context/user/UserProvider";
 import { useContext } from "react";
+import BlogPostEdit from "./BlogPostEdit";
 const Blog = () => {
   // const [blogPosts, setBlogPosts] = useState([]);
   const userState = useContext(UserStateContext);
@@ -13,6 +14,25 @@ const Blog = () => {
   const handleCloseModal = () => setShowModal(false);
   const handleOpenModal = () => setShowModal(true);
   const [blogList, setBlogList] = useState([]);
+  const [selectedBlog, setSelectedBlog] = useState(null);
+
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const handleCloseEditModal = () => setEditModalOpen(false);
+  const handleOpenEditModal = async (blogId) => {
+    try {
+      const res = await Api.get(`blog/${blogId}`);
+      // console.log(res); //res 데이터 잘 받아옴.
+      // console.log(res);
+      const blog = res.data;
+      console.log("받아온 blog: ", blog);
+      setSelectedBlog(blog);
+      // console.log("selectedItem: ", selectedItem);
+    } catch(err) {
+      console.log("수정 모달 열 때 에러 ", err);
+    }
+    // setSelectedItem(item);
+    setEditModalOpen(true);
+  };
 
   const navigate = useNavigate();
 
@@ -40,14 +60,54 @@ const Blog = () => {
           likeCount: item.likeCount,
           title: item.title,
           topic: item.topic,
-          username: item.username
+          username: item.username,
+          userId: item.userId, //작성자 아아디
+          blogId: item._id //블로그 고유 아이디
         };
       });
+      console.log(newList);
       setBlogList(newList);
       // console.log(blogList.map(item => (console.log(item))));
     } catch (err){
       // alert("정보 불러오기를 실패하였습니다.");
       console.log("블로그 불러오기를 실패하였습니다.", err);
+    }
+  }
+
+  const handleEditProduct = async (selectedBlog, updatedBlog) => {
+    try {
+      console.log("selectedBlog: ", selectedBlog);
+      console.log("updatedBlog: ", updatedBlog);
+
+      const updatedProduct = {
+        // ...selectedItem,
+        _id: selectedBlog._id,
+        title: updatedBlog.title,
+        topic: updatedBlog.topic,
+        content: updatedBlog.content
+      };
+      console.log("updatedProduct: ", updatedProduct);
+      ///blog/write에서 blogId===_id인 값 찾아야 함.
+      // const res = await Api.get(`blog`);
+      // const findBlog = res.data;
+      // console.log(findBlog);
+      await Api.put(`blog/write`, updatedProduct);
+
+      // const updatedList = blogList.map(item => {
+      //   if (item._id === selectedBlog._id) {
+      //     return { ...selectedBlog,
+      //       title: updatedBlog.title,
+      //       topic: updatedBlog.topic,
+      //       content: updatedBlog.content,
+      //     };
+      //   }
+      //   return item;
+      // });
+      // setBlogList(updatedList);
+      handleCloseEditModal();
+
+    } catch (err) {
+      console.log("글 수정에 실패했습니다", err);
     }
   }
 
@@ -121,7 +181,39 @@ const Blog = () => {
                   <Card.Text className="card-text">분야: {item.topic}</Card.Text>
                   <Card.Text className="card-text">likeCount: {item.likeCount}</Card.Text>
                   <Card.Text className="card-text">설명: {item.content}</Card.Text>
-                  <Card.Text className="card-text">작성자: {item.username}</Card.Text>                  
+                  <Card.Text className="card-text">작성자: {item.username}</Card.Text>
+                  {userState.user._id === item.userId && (
+                    <>
+                      <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item.blogId)}>
+                        수정
+                      </Button>
+                      <Modal show={editModalOpen} onHide={handleCloseEditModal} centered>
+                        <Modal.Header closeButton>
+                          <Modal.Title>글 수정</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body className="text-center">
+                          <BlogPostEdit handleEditProduct={handleEditProduct} selectedBlog={selectedBlog} />
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <Button
+                            className="mt-4 mb-4"
+                            variant="secondary"
+                            onClick={handleCloseEditModal}
+                            style={{
+                              width: "100%",
+                              borderRadius: "0px",
+                            }}
+                          >
+                            닫기
+                          </Button>
+                        </Modal.Footer>
+                      </Modal>
+                      <Button variant="primary" style={{ margin: "10px", top: "5" }}>
+                        삭제
+                      </Button>
+                      {/* onClick={() => handleOpenDeleteModal(item.productId)} */}
+                    </>
+                  )}             
                 </Card.Body>
               </Card>
             </Col>
