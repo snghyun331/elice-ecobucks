@@ -17,12 +17,13 @@ const Blog = () => {
   const [selectedBlog, setSelectedBlog] = useState(null);
 
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const handleCloseEditModal = () => setEditModalOpen(false);
   const handleOpenEditModal = async (blogId) => {
     try {
       const res = await Api.get(`blog/${blogId}`);
       const blog = res.data;
-      console.log("받아온 blog: ", blog);
+      // console.log("받아온 blog: ", blog);
       setSelectedBlog(blog);
       // console.log("selectedItem: ", selectedItem);
     } catch(err) {
@@ -30,6 +31,18 @@ const Blog = () => {
     }
     // setSelectedItem(item);
     setEditModalOpen(true);
+  };
+  const handleCloseDeleteModal = () => setDeleteModalOpen(false);
+  const handleOpenDeleteModal = async (blogId) => {
+    try {
+      const res = await Api.get(`blog/${blogId}`);
+      const blog = res.data;
+      // console.log("삭제 blog: ", blog);
+      setSelectedBlog(blog);
+    } catch (err) {
+      console.log(err);
+    }
+    setDeleteModalOpen(true);
   };
 
   const navigate = useNavigate();
@@ -63,7 +76,7 @@ const Blog = () => {
           blogId: item._id //블로그 고유 아이디
         };
       });
-      console.log(newList);
+      // console.log(newList);
       setBlogList(newList);
       // console.log(blogList.map(item => (console.log(item))));
     } catch (err){
@@ -72,7 +85,7 @@ const Blog = () => {
     }
   }
 
-  const handleEditProduct = async (selectedBlog, updatedBlog) => {
+  const handleEditBlog = async (selectedBlog, updatedBlog) => {
     try {
       console.log("selectedBlog: ", selectedBlog);
       console.log("updatedBlog: ", updatedBlog);
@@ -95,6 +108,25 @@ const Blog = () => {
 
     } catch (err) {
       console.log("글 수정에 실패했습니다", err);
+    }
+  }
+  const handleDeleteBlog = async (selectedBlog) => {
+    try {
+      console.log("삭제할 블로그: ", selectedBlog);
+      await Api.delete(`blog/${selectedBlog._id}`);
+      fetchData();
+      // const res = await Api.get("products");
+      // const newList = res.data.map(item => {
+      //   return { ...selectedBlog,
+      //       title: updatedBlog.title,
+      //       topic: updatedBlog.topic,
+      //       content: updatedBlog.content,
+      //   };
+      // });
+      // setBlogList(newList);
+      handleCloseDeleteModal();
+    } catch (err) {
+      console.log("블로그 삭제에 실패했습니다.", err);
     }
   }
 
@@ -179,7 +211,7 @@ const Blog = () => {
                           <Modal.Title>글 수정</Modal.Title>
                         </Modal.Header>
                         <Modal.Body className="text-center">
-                          <BlogPostEdit handleEditProduct={handleEditProduct} selectedBlog={selectedBlog} />
+                          <BlogPostEdit handleEditBlog={handleEditBlog} selectedBlog={selectedBlog} />
                         </Modal.Body>
                         <Modal.Footer>
                           <Button
@@ -195,10 +227,21 @@ const Blog = () => {
                           </Button>
                         </Modal.Footer>
                       </Modal>
-                      <Button variant="primary" style={{ margin: "10px", top: "5" }}>
+                      <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenDeleteModal(item.blogId)}>
                         삭제
                       </Button>
-                      {/* onClick={() => handleOpenDeleteModal(item.productId)} */}
+                      <Modal show={deleteModalOpen} onHide={handleCloseDeleteModal} centered>
+                        <Modal.Header closeButton>
+                          <Modal.Title>상품 삭제</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body className="text-center">
+                          선택한 상품을 삭제하시겠습니까?
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <Button variant="secondary" onClick={handleCloseDeleteModal}>취소</Button>
+                          <Button variant="primary" onClick={() => handleDeleteBlog(selectedBlog)}>삭제하기</Button> 
+                        </Modal.Footer>
+                      </Modal>
                     </>
                   )}             
                 </Card.Body>

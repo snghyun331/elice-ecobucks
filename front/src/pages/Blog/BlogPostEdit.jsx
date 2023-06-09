@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Api from '../../api'
 // import { UserStateContext } from "../../context/user/UserProvider";
-const BlogPostEdit = ({ handleEditProduct, selectedBlog }) => {
+const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [topic, setTopic] = useState("");
