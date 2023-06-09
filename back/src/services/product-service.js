@@ -80,7 +80,7 @@ class productService {
 
       product.stock -= 1; // 재고 감소
       await product.save();
-      console.log(product.stock)
+
       return product;
     } catch (error) {
       throw new Error(`상품 재고를 감소시키는 도중 오류가 발생했습니다: ${ error.message }`);

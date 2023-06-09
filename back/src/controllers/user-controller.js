@@ -43,7 +43,7 @@ const userController = {
     }
   },
 
-  etUser_userlist: async function (req, res, next) {
+  GetUser_userlist: async function (req, res, next) {
     try {
       // 전체 사용자 목록을 얻음
       const users = await userAuthService.getUsers();

@@ -4,7 +4,7 @@ import { blogpostController } from "../controllers/blogpost-controller.js"
 
 const blogPostRouter = Router();
 
-blogPostRouter.post("/blog/write", login_required, blogpostController.blogpostDeleteWrite);
+blogPostRouter.post("/blog/write", login_required, blogpostController.blogpostPostWrite);
 
 blogPostRouter.put("/blog/:_id/write", login_required, blogpostController.blogpostPutWrite)
 

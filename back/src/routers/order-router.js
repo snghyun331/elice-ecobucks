@@ -7,7 +7,6 @@ const orderRouter = Router();
 orderRouter.use(login_required);
 
 orderRouter.post("/orders", orderController.orderPostCreate);
-
 orderRouter.get("/mypage/orders", orderController.orderGetMypage);
 
 export { orderRouter };

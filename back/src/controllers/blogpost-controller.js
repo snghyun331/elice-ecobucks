@@ -12,7 +12,6 @@ const blogpostController = {
             const newPost = await blogPostService.addPost({
                 userId,title,topic, content
             });
-            
             return res.status(CREATED).json(newPost);
         } catch (error) {
             next(error);
