@@ -27,8 +27,8 @@ const challengeController = {
 
   challengeGet : async function (req, res, next) {
     try {
-      const _id = req.params._id;
-      const challenge = await ChallengeService.findChallenge({ _id });
+      const chllengeId = req.params._id;
+      const challenge = await ChallengeService.findChallenge({ chllengeId });
       res.json(challenge);
     } catch (err) {
       next(err);
@@ -37,12 +37,12 @@ const challengeController = {
   
   challengeUpdate : async function (req, res, next) {
     try {
-      const _id = req.params._id;
+      const chllengeId = req.params._id;
       const currentUserId = req.currentUserId;
       const { icon, title, content, weeks } = req.body;  
   
       const education = await ChallengeService.updateChallenge({ 
-        _id, currentUserId, title, content, icon, weeks, 
+        chllengeId, currentUserId, title, content, icon, weeks, 
       });
       
       res.json(education);
@@ -53,9 +53,9 @@ const challengeController = {
   
   challengeDelete : async function (req, res, next){
     try {
-      const _id = req.params._id;
+      const chllengeId = req.params._id;
       const currentUserId = req.currentUserId;
-      const challenge = await ChallengeService.deleteChallenge(_id, currentUserId);
+      await ChallengeService.deleteChallenge(chllengeId, currentUserId);
        
       res.status(OK).json({ message: "challenge 삭제 완료"});
   
