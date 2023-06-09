@@ -23,14 +23,14 @@ const ChallengeUpdate = ({ challenge }) => {
         alert("모든 값을 입력해주세요.");
         return;
       }
-      
+
       const res = await Api.put(`challenges/${challenge._id}`, {
         title,
         content,
         icon,
         weeks: duration,
       });
-      console.log(res)
+      console.log(res);
       window.location.reload();
     } catch (err) {
       alert("모든 값을 입력해주세요.");
@@ -59,7 +59,10 @@ const ChallengeUpdate = ({ challenge }) => {
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="title">
           <Form.Label>제목</Form.Label>
-          <Container className="text-muted mb-2" style={{ fontSize: "0.85rem" }}>
+          <Container
+            className="text-muted mb-2"
+            style={{ fontSize: "0.85rem" }}
+          >
             구체적인 행동을 지정해주세요. (i.e. 예비전력 절약을 위해 전기 코드를
             뽑아요.)
           </Container>
@@ -67,19 +70,26 @@ const ChallengeUpdate = ({ challenge }) => {
             type="text"
             value={title}
             onChange={handleTitleChange}
-            style={{ borderRadius: "0px", marginBottom: '20px' }}
+            maxLength={20}
+            placeholder="제목을 입력해주세요 (최대 20자)"
+            style={{ borderRadius: "0px", marginBottom: "20px" }}
           />
         </Form.Group>
         <Form.Group controlId="content">
           <Form.Label>설명</Form.Label>
-          <Container className="text-muted mb-2" style={{ fontSize: "0.85rem" }}>
+          <Container
+            className="text-muted mb-2"
+            style={{ fontSize: "0.85rem" }}
+          >
             이 행동을 하는 방법이나, 환경에 미치는 영향을 알려주세요.
           </Container>
           <Form.Control
             as="textarea"
             value={content}
             onChange={handleContentChange}
-            style={{ borderRadius: "0px", marginBottom: '20px' }}
+            maxLength={100}
+            placeholder="설명을 입력해주세요 (최대 100자)"
+            style={{ borderRadius: "0px", marginBottom: "20px" }}
           />
         </Form.Group>
         <Form.Group controlId="duration">
@@ -92,7 +102,7 @@ const ChallengeUpdate = ({ challenge }) => {
             as="select"
             value={duration}
             onChange={handleDurationChange}
-            style={{ borderRadius: "0px", marginBottom: '20px' }}
+            style={{ borderRadius: "0px", marginBottom: "20px" }}
           >
             <option value="">진행 기간을 선택해주세요.</option>
             <option value="1주">1주</option>
@@ -103,14 +113,17 @@ const ChallengeUpdate = ({ challenge }) => {
         </Form.Group>
         <Form.Group controlId="icon">
           <Form.Label>아이콘</Form.Label>
-          <Container className="text-muted mb-2" style={{ fontSize: "0.85rem" }}>
+          <Container
+            className="text-muted mb-2"
+            style={{ fontSize: "0.85rem" }}
+          >
             챌린지에 어울리는 테마 아이콘을 설정해주세요. 대표 이미지로
             나타납니다.
           </Container>
-          <ButtonGroup style={{width: '100%'}}>
+          <ButtonGroup style={{ width: "100%" }}>
             <Button
               variant={icon === "♻️" ? "success" : "outline-success"}
-              style={{borderRadius: '0px'}}
+              style={{ borderRadius: "0px" }}
               onClick={() => handleIconSelect("♻️")}
             >
               ♻️
@@ -172,7 +185,7 @@ const ChallengeUpdate = ({ challenge }) => {
             <Button
               variant={icon === "🌿" ? "success" : "outline-success"}
               onClick={() => handleIconSelect("🌿")}
-              style={{borderRadius: '0px'}}
+              style={{ borderRadius: "0px" }}
             >
               🌿
             </Button>
@@ -186,11 +199,18 @@ const ChallengeUpdate = ({ challenge }) => {
             없습니다.
           </Alert>
         </Form.Group>
-        <Button type="submit" variant="light" className="mt-2 mb-1" style={{
-          width: "100%",
-          borderRadius: "0px",
-          backgroundColor: "#00D387",
-        }}>챌린지 수정</Button>
+        <Button
+          type="submit"
+          variant="light"
+          className="mt-2 mb-1"
+          style={{
+            width: "100%",
+            borderRadius: "0px",
+            backgroundColor: "#00D387",
+          }}
+        >
+          챌린지 수정
+        </Button>
       </Form>
     </div>
   );
