@@ -3,6 +3,7 @@ import { User, District, Challenge, ChallengeParticipation, ChallengeComment } f
 import bcrypt, { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
 import { updateTimestamps } from "../utils/update-time-stamps.js";
+import { challengeModel } from "../db/schemas/challenge.js";
 
 class userAuthService {
   static async addUser({ username, email, password, districtName }) {
@@ -184,7 +185,7 @@ class userAuthService {
   static async getUserChallenges({userId}){
     const user  = await User.findById({userId});
     console.log('user: ',user);
-    const challenges = await ChallengeComment.findAllByUserId({ userId: userId });
+    const challenges = await Challenge.findAllByUserId({ userId: userId });
     console.log('challenges: ',challenges);
     const userInfo = {
       ...user._doc,
@@ -203,6 +204,8 @@ class userAuthService {
       userParticipantsCount: participations.length,
       participantsList: participations,
     }
+
+
     return userInfo
   }
 

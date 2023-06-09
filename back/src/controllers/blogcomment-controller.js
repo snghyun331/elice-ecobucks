@@ -24,10 +24,10 @@ const blogcommentPostWrite = async (req, res, next) => {
 
 const blogcommentPutWrite = async function(req, res, next) {
     try{
-        const { comment_id, comment } = req.body;
+        const { commentId, comment } = req.body;
         const toUpdate = {comment};
         const updatedComment = await blogCommentService.setComment({
-            comment_id, 
+            commentId, 
             toUpdate
         })
 
@@ -45,8 +45,8 @@ const blogcommentPutWrite = async function(req, res, next) {
 
 const blogcommentDeleteWrite = async function(req, res, next) {
     try{
-        const {comment_id} = req.body;
-        const result = await blogCommentService.deleteComment({comment_id})
+        const {commentId} = req.body;
+        const result = await blogCommentService.deleteComment({commentId})
 
         if (result.errorMessage) {
             throw new Error(result.errorMessage)
