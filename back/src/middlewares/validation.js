@@ -17,7 +17,7 @@ class Validation {
     price: Joi.number().integer().required(),
     place: Joi.string().required(),
     stock: Joi.number().integer().required(),
-    description: Joi.string(),
+    description: Joi.string().required(),
   });
 
   static productUpdateSchema = Joi.object({
