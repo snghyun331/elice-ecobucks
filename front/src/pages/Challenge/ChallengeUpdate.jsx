@@ -183,7 +183,6 @@ const ChallengeUpdate = ({ challenge }) => {
           </Alert>
         </Form.Group>
         <Button type="submit">챌린지 수정</Button>
-        <Button>목록으로</Button>
       </Form>
     </div>
   );

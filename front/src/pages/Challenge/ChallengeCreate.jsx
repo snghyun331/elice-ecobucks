@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, ButtonGroup, Container, Form, Alert } from "react-bootstrap";
 import * as Api from "../../api";
 
-const ChallengeCreate = () => {
+const ChallengeCreate = ({ onBackToListClick }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [duration, setDuration] = useState("");
@@ -181,7 +181,7 @@ const ChallengeCreate = () => {
           </Alert>
         </Form.Group>
         <Button type="submit">챌린지 게시</Button>
-      <Button>
+        <Button onClick={onBackToListClick} className="mt-3">
         목록으로
       </Button>
       </Form>
