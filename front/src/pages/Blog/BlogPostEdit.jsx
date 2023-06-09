@@ -1,8 +1,4 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import * as Api from '../../api'
 // import { UserStateContext } from "../../context/user/UserProvider";
 const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
     const [title, setTitle] = useState("");
@@ -22,7 +18,7 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
           // console.log("updatedItem: ", updatedItem);
           // console.log("바뀐 list: ", list);
 
-          await handleEditProduct(selectedBlog, updatedBlog);
+          await handleEditBlog(selectedBlog, updatedBlog);
 
 
       } catch (err) {
@@ -63,6 +59,7 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
               lineHeight: "20px",
               marginBottom: "16px",
             }}
+            placeholder={selectedBlog.title}
             value={title}
             onChange={(event) => {
                 setTitle(event.target.value);
@@ -78,6 +75,7 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
               lineHeight: "20px",
               marginBottom: "16px",
             }}
+            placeholder={selectedBlog.topic}
             value={topic}
             onChange={(event) => {
               setTopic(event.target.value);
@@ -93,6 +91,7 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
               lineHeight: "20px",
               marginBottom: "16px",
             }}
+            placeholder={selectedBlog.content}
             value={content}
             onChange={(event) => {
               setContent(event.target.value);
