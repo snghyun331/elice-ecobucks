@@ -26,7 +26,8 @@ const blogpostPostWrite = async (req, res, next) => {
 
 const blogpostPutWrite = async function(req, res, next) {
     try{
-        const { post_id, title, topic, content } = req.body;
+        const post_id = req.params._id
+        const { title, topic, content } = req.body;
         const toUpdate = { title, topic, content };
         const updatedPost = await blogPostService.setPost({
             post_id,
@@ -47,7 +48,7 @@ const blogpostPutWrite = async function(req, res, next) {
 
 const blogpostDeleteWrite = async function(req, res, next) {
     try{
-        const { post_id } = req.body;
+        const post_id = req.params._id
         const result = await blogPostService.deletePost({ post_id });
 
         if (result.errorMessage) {
