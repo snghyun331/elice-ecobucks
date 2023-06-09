@@ -81,7 +81,7 @@ const Mall = () => {
           description: item.description,
           seller: item.seller,
           sellerName: item.sellerName,
-          _id: item._id
+          _id: item._id //상품 ObjectId
         };
       });
       setList(newList);
@@ -98,27 +98,30 @@ const Mall = () => {
       // 마일리지 충분한지 확인하기
       // 유효성 검사: 구매할 수 있는 수량인지. (수량이 0 개이면 db 삭제)
       console.log("함수 안에서 selectedItem: ", selectedItem);
+      await Api.post(`orders/`, {
+        productId: selectedItem._id,
+      });
       // const res = await Api.get(`products/${selectedItem.productId}`);
       // const product = res.data;
       // console.log("받아온 product: ", product);
       // 상품의 재고(stock)를 1 감소시킵니다.
-      const updatedProduct = {
-        name: selectedItem.name,
-        price: selectedItem.price,
-        place: selectedItem.place,
-        stock: selectedItem.stock - 1,
-        description: selectedItem.description
-      };
-      console.log("업데이트 상품: ",updatedProduct);
+      // const updatedProduct = {
+      //   name: selectedItem.name,
+      //   price: selectedItem.price,
+      //   place: selectedItem.place,
+      //   stock: selectedItem.stock - 1, //이거 백엔드에서 처리하니까 바꾸기
+      //   description: selectedItem.description
+      // };
+      // console.log("업데이트 상품: ",updatedProduct);
 
-      if (updatedProduct.stock === 0) {
-        await Api.delete(`products/${selectedItem._id}`);
-      } else {
-        await Api.post(`orders/`, {
-          productId: selectedItem._id,
-        });
-        // await Api.put(`products/${selectedItem._id}`, updatedProduct);
-      }
+      // if (updatedProduct.stock === 0) {
+      //   await Api.delete(`products/${selectedItem._id}`);
+      // } else {
+      //   await Api.post(`orders/`, {
+      //     productId: selectedItem._id,
+      //   });
+      //   // await Api.put(`products/${selectedItem._id}`, updatedProduct);
+      // }
       const newRes = await Api.get(`products/${selectedItem._id}`);
       const newProduct = newRes.data;
       // console.log(newProduct);
@@ -167,7 +170,6 @@ const Mall = () => {
 
       const updatedList = list.map(item => {
         if (item._id === selectedItem._id) {
-          // stock 값을 1 감소시킴
           return { ...selectedItem,
             name: updatedItem.name,
             place: updatedItem.place,
