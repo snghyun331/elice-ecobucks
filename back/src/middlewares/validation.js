@@ -37,9 +37,9 @@ class Validation {
 
   static userUpdateSchema = Joi.object({
     username: Joi.string().min(USERNAME_MIN).max(USERNAME_MAX),
-    password: Joi.string().regex(new RegExp(`^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*()])[a-zA-Z\\d!@#$%^&*()]{${PWD_MIN},${PWD_MAX}}$`)).required(),
+    password: Joi.string().regex(new RegExp(`^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*()])[a-zA-Z\\d!@#$%^&*()]{${PWD_MIN},${PWD_MAX}}$`)),
     districtName: Joi.string(), 
-  }).or('username', 'email', 'password', 'districtName');
+  }).or('username', 'password', 'districtName');
 
   static validate(schema) {
     return (req, res, next) => {

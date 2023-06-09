@@ -11,6 +11,11 @@ class ChallengeParticipation {
     return participations;
   } 
 
+  static async find({ _id }) {
+    const participations = await participationModel.find({ _id });
+    return participations;
+  } 
+
   static NoAsyncfindAll({ challengeId }) {
     const participations = participationModel.find({ challengeId });
     return participations;
@@ -18,6 +23,11 @@ class ChallengeParticipation {
   
   static async findById({ _id }){
     const participation = await participationModel.findById({ _id });
+    return participation
+  }
+
+  static async findOne({ challengeId }){
+    const participation = await participationModel.findOne({ challengeId });
     return participation
   }
 
