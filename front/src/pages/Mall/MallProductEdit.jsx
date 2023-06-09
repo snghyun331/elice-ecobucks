@@ -16,9 +16,9 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
         try {
           const updatedItem = {
             name: name || selectedItem.name, //selectedItem이 하나만 들어오는게 아님
-            price: price || selectedItem.price,
+            price: Number(price) || Number(selectedItem.price),
             place: place || selectedItem.place,
-            stock: stock || selectedItem.stock,
+            stock: Number(stock) || Number(selectedItem.stock),
             description: description || selectedItem.description,
           };
           // setList(updatedItem);
@@ -36,17 +36,10 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
         //   console.log(res);
         //   window.location.reload()
 
-          // const product = res.data;
-          // console.log("product: ", product);
-          // // JWT 토큰은 유저 정보의 token임.
-          // const jwtToken = product.token;
-          // console.log("jwtTokenn: ", jwtToken);
-          // sessionStorage에 "productToken"이라는 키로 JWT 토큰을 저장함.
-          // sessionStorage.setItem("productToken", jwtToken);
-     } catch (err) {
+      } catch (err) {
           alert("모든 값을 입력해주세요.")
           console.log("상품 등록에 실패하였습니다.", err);
-        };
+      }
     }
 
   return (

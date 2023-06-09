@@ -1,9 +1,6 @@
-/** 작성자: 정원석
- * mapping으로 판매할 물건 자동 추가, 삭제
- */
+/** 작성자: 정원석 */
 import { Container, Button, Card, Row, Col, Modal } from "react-bootstrap";
 import Logo from "../../assets/logo.png";
-import SeoulMap from "../../../../data/seoul_map/seoulMap.png"; // 나중에 삭제하기
 import * as Api from "../../api";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -35,11 +32,25 @@ const Mall = () => {
   const handleClosePurchaseModal = () => setPurchaseModalOpen(false);
   const handleOpenPurchaseModal = (item) => {
     setSelectedItem(item);
+    console.log(selectedItem);
     setPurchaseModalOpen(true);
   };
 
   const handleCloseEditModal = () => setEditModalOpen(false);
-  const handleOpenEditModal = () => setEditModalOpen(true);
+  const handleOpenEditModal = async (itemId) => {
+    try {
+      const res = await Api.get(`products/${itemId}`);
+      // console.log(res); //res 데이터 잘 받아옴.
+      const product = res.data;
+      setSelectedItem(product);
+      // console.log("selectedItem: ", selectedItem);
+    } catch(err) {
+      console.log(err);
+    }
+    // setSelectedItem(item);
+    setEditModalOpen(true);
+  };
+
   const userState = useContext(UserStateContext);
   const navigate = useNavigate();
   
@@ -70,7 +81,7 @@ const Mall = () => {
           description: item.description,
           seller: item.seller,
           sellerName: item.sellerName,
-          productId: item._id
+          _id: item._id
         };
       });
       setList(newList);
@@ -92,27 +103,44 @@ const Mall = () => {
       // console.log("받아온 product: ", product);
       // 상품의 재고(stock)를 1 감소시킵니다.
       const updatedProduct = {
-        ...selectedItem,
+        name: selectedItem.name,
+        price: selectedItem.price,
+        place: selectedItem.place,
         stock: selectedItem.stock - 1,
+        description: selectedItem.description
       };
       console.log("업데이트 상품: ",updatedProduct);
 
       if (updatedProduct.stock === 0) {
-        await Api.delete(`products/${updatedProduct.productId}`);
+        await Api.delete(`products/${selectedItem._id}`);
       } else {
-        await Api.put(`products/${updatedProduct.productId}`, updatedProduct);
+        await Api.post(`orders/`, {
+          productId: selectedItem._id,
+        });
+        // await Api.put(`products/${selectedItem._id}`, updatedProduct);
       }
-      
-      // 상품 정보를 업데이트합니다.
-      //여기서 오류나는건가
+      const newRes = await Api.get(`products/${selectedItem._id}`);
+      const newProduct = newRes.data;
+      // console.log(newProduct);
       const updatedList = list.map(item => {
-        if (item.productId === selectedItem.productId) {
-          // stock 값을 1 감소시킴
-          return { ...item, stock: item.stock - 1 };
+        if (item._id === newProduct._id) {
+          return { ...newProduct };
         }
         return item;
-      });
+      })
+      // console.log("updatedList: ", updatedList);
       setList(updatedList);
+
+      // 상품 정보를 업데이트합니다.
+      //여기서 오류나는건가
+      // const updatedList = list.map(item => {
+      //   if (item.productId === newProduct._id) {
+      //     // stock 값을 1 감소시킴
+      //     return { ...item, stock: item.stock - 1 };
+      //   }
+      //   return item;
+      // });
+      // setList(updatedList);
       handleClosePurchaseModal();
     } catch (err) {
       console.log("상품 구매에 실패하였습니다.", err);
@@ -126,7 +154,7 @@ const Mall = () => {
       //잘 받아옴.
 
       const updatedProduct = {
-        ...selectedItem,
+        // ...selectedItem,
         name: updatedItem.name,
         place: updatedItem.place,
         price: updatedItem.price,
@@ -135,10 +163,10 @@ const Mall = () => {
       };
       console.log("updatedProduct: ", updatedProduct);
 
-      await Api.put(`products/${updatedProduct._id}`, updatedProduct);
+      await Api.put(`products/${selectedItem._id}`, updatedProduct);
 
       const updatedList = list.map(item => {
-        if (item.productId === selectedItem._id) {
+        if (item._id === selectedItem._id) {
           // stock 값을 1 감소시킴
           return { ...selectedItem,
             name: updatedItem.name,
@@ -215,7 +243,7 @@ const Mall = () => {
                   <Card.Text className="card-text">설명: {item.description}</Card.Text>
                   {userState.user._id === item.seller && (
                     <>
-                      <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item.productId)}>
+                      <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item._id)}>
                         수정
                       </Button>
                       <Modal show={editModalOpen} onHide={handleCloseEditModal} centered>
