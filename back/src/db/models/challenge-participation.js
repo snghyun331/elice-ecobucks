@@ -1,6 +1,6 @@
 import { participationModel } from "../schemas/challenge-participation.js";
 
-class Participation {
+class ChallengeParticipation {
   static async create(newChallenge) {
     const createdChallenge = await participationModel.create(newChallenge);
     return createdChallenge;
@@ -48,4 +48,4 @@ class Participation {
   
 }
 
-export { Participation };
+export { ChallengeParticipation };

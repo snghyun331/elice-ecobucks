@@ -1,4 +1,4 @@
-import { Comment } from "../db/models/challenge-comment.js";
+import { ChallengeComment } from "../db/models/challenge-comment.js";
 import { Challenge } from "../db/models/challenge.js";
 import { challengeModel } from "../db/schemas/challenge.js";
 import { updateTimestamps } from "../utils/update-time-stamps.js";
@@ -21,7 +21,7 @@ class CommentService {
     await challenge.save();
     
     //--- Comment Create ---
-    const createdComment = await Comment.create({ userId, challenge_id, content });
+    const createdComment = await ChallengeComment.create({ userId, challenge_id, content });
     // 시간을 한국표준시간으로 변경
     const updateCreatedChallenge=updateTimestamps(createdComment)  
 
@@ -29,7 +29,7 @@ class CommentService {
   }
 
   static async findComments({ challenge_id }) {
-    const comments = await Comment.NoAsyncfindAll({ challenge_id })
+    const comments = await ChallengeComment.NoAsyncfindAll({ challenge_id })
       .populate("userId", "username districtCode districtName")
       .exec();
 
@@ -37,7 +37,7 @@ class CommentService {
   }
 
   static async findComment({ challenge_id, _id }) {
-    const comment = await Comment.NoAsyncfindById({ _id })
+    const comment = await ChallengeComment.NoAsyncfindById({ _id })
       .populate("userId", "username districtCode districtName")
       .exec();
     if (!comment || comment.challenge_id.toString() !== challenge_id) {
@@ -48,7 +48,7 @@ class CommentService {
   }
 
   static async updateComment({ _id, currentUserId, content }) {
-    const findIdComment = await Comment.findById({ _id });
+    const findIdComment = await ChallengeComment.findById({ _id });
     if (!findIdComment) {
       throw new Error("해당 id를 가진 데이터는 없습니다.");
     }
@@ -56,13 +56,13 @@ class CommentService {
       throw new Error("수정 권한이 없습니다.");
     }
 
-    const updatedComment = await Comment.update({ _id, content });
+    const updatedComment = await ChallengeComment.update({ _id, content });
 
     return updateTimestamps(updatedComment);
   }
 
   static async deleteComment(_id, currentUserId) {
-    const findIdComment = await Comment.findById({ _id });
+    const findIdComment = await ChallengeComment.findById({ _id });
     if (findIdComment.userId.toString() !== currentUserId){
       throw new Error("삭제 권한이 없습니다.");
     }
@@ -72,7 +72,7 @@ class CommentService {
       { $inc: { commentsCount: -1 } }
     );
 
-    await Comment.deleteById(_id);
+    await ChallengeComment.deleteById(_id);
     return { status: "ok" };
   }
 }

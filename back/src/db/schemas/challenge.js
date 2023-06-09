@@ -1,9 +1,5 @@
 import { Schema, model } from 'mongoose';
 
-function toKST(date) {
-    date.setMinutes(date.getMinutes() + date.getTimezoneOffset() + 9 * 60);
-    return date;
-}
 
 const challengeSchema = new Schema(
   {
