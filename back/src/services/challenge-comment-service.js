@@ -55,9 +55,9 @@ class CommentService {
       throw new Error("수정 권한이 없습니다.");
     }
 
-    const updatedComment = await ChallengeComment.update({ _id, content });
+    const updateComment = await ChallengeComment.update({ _id, content });
 
-    return updateTimestamps(updatedComment);
+    return updateTimestamps(updateComment);
   }
 
   static async deleteComment(_id, currentUserId) {
