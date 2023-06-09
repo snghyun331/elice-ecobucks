@@ -1,29 +1,38 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Api from '../../api'
-const BlogPost = (props) => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [topic, setTopic] = useState("");
+// import { UserStateContext } from "../../context/user/UserProvider";
+const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+    const [topic, setTopic] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          const updatedBlog = {
+            _id: selectedBlog._id,
+            title: title || selectedBlog.title,
+            content: content || selectedBlog.content,
+            topic: topic || selectedBlog.topic
+          };
+          // setList(updatedItem);
+          // console.log("updatedItem: ", updatedItem);
+          // console.log("바뀐 list: ", list);
 
-    try {
-      const res = await Api.post("blog/write", {
-        title,
-        content,
-        topic
-      });
-      console.log("블로그 작성 res: ", res);
-      window.location.reload()
-    } catch (err) {
-      console.log("블로그 글 작성에 실패했습니다.", err);
+          await handleEditProduct(selectedBlog, updatedBlog);
+
+
+      } catch (err) {
+          alert("모든 값을 입력해주세요.")
+          console.log("상품 등록에 실패하였습니다.", err);
+      }
     }
-  }
 
   return (
-    <div style={{ padding: "16px", width: "calc(100% - 32px)", overflow:"auto"}}>
+    <div style={{ padding: "16px", width: "calc(100% - 32px)" }}>
       <div
             style={{
               position: "absolute",
@@ -44,7 +53,7 @@ const BlogPost = (props) => {
         }}
       >
         <div style={{ width: "100%", maxWidth: "720px", padding:"60px" }}>
-          <span>제목</span>
+            <span>제목</span>
           <textarea
             style={{
               width: "100%",
@@ -56,7 +65,7 @@ const BlogPost = (props) => {
             }}
             value={title}
             onChange={(event) => {
-              setTitle(event.target.value);
+                setTitle(event.target.value);
             }}
           />
           <span>주제</span>
@@ -78,7 +87,7 @@ const BlogPost = (props) => {
           <textarea
             style={{
               width: "100%",
-              height: "480px",
+              height: "20px",
               padding: "16px",
               fontSize: "16px",
               lineHeight: "20px",
@@ -89,7 +98,6 @@ const BlogPost = (props) => {
               setContent(event.target.value);
             }}
           />
-
           <button
             style={{
               padding: "8px 16px",
@@ -100,7 +108,7 @@ const BlogPost = (props) => {
             }}
             onClick={handleSubmit}
           >
-            글 작성하기
+            글 수정하기
           </button>
         </div>
       </div>
@@ -108,4 +116,4 @@ const BlogPost = (props) => {
   );
 };
 
-export default BlogPost;
+export default BlogPostEdit;

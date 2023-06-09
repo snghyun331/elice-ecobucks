@@ -74,6 +74,7 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
               lineHeight: "20px",
               marginBottom: "16px",
             }}
+            placeholder={selectedItem.name}
             value={name}
             onChange={(event) => {
                 setName(event.target.value);
@@ -89,6 +90,7 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
               lineHeight: "20px",
               marginBottom: "16px",
             }}
+            placeholder={selectedItem.price}
             value={price}
             onChange={(event) => {
               setPrice(event.target.value);
@@ -104,6 +106,7 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
               lineHeight: "20px",
               marginBottom: "16px",
             }}
+            placeholder={selectedItem.place}
             value={place}
             onChange={(event) => {
               setPlace(event.target.value);
@@ -119,6 +122,7 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
               lineHeight: "20px",
               marginBottom: "16px",
             }}
+            placeholder={selectedItem.stock}
             value={stock}
             onChange={(event) => {
               setStock(event.target.value);
@@ -134,6 +138,7 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
               lineHeight: "20px",
               marginBottom: "16px",
             }}
+            placeholder={selectedItem.description}
             value={description}
             onChange={(event) => {
               setDescription(event.target.value);
