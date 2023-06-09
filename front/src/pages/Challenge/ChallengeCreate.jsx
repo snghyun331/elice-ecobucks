@@ -181,7 +181,7 @@ const ChallengeCreate = ({ onBackToListClick }) => {
           </Alert>
         </Form.Group>
         <Button type="submit">챌린지 게시</Button>
-        <Button onClick={onBackToListClick} className="mt-3">
+        <Button onClick={onBackToListClick} >
         목록으로
       </Button>
       </Form>
