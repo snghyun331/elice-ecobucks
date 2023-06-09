@@ -1,7 +1,8 @@
 import { userModel } from "../db/schemas/user.js";
-import { User, Gu, Challenge } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import { User, District, Challenge, Participation, Comment } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt, { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
+import { updateTimestamps } from "../utils/update-time-stamps.js";
 
 class userAuthService {
   static async addUser({ username, email, password, districtName }) {
@@ -17,7 +18,7 @@ class userAuthService {
     const withdrawnUser = await User.findWithdraw({ email })
     if (withdrawnUser) {
       const hashedPassword = await bcrypt.hash(password, 10);
-      const districtCode = await Gu.getdistrictCodeByName(districtName)
+      const districtCode = await District.getdistrictCodeByName(districtName)
       // 기존 정보에서 다시 가입할 때 등록한 정보로 업데이트
       const updatedUser = await userModel.findOneAndUpdate(   
         {email: email, is_withdrawed: true},  // 필터링
@@ -31,7 +32,7 @@ class userAuthService {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // 구 코드 변환
-    const districtCode = await Gu.getdistrictCodeByName(districtName)
+    const districtCode = await District.getdistrictCodeByName(districtName)
 
     const newUser = { username, email, password: hashedPassword, districtCode, districtName };
 
@@ -39,7 +40,7 @@ class userAuthService {
     const createdNewUser = await User.create({ newUser });
     createdNewUser.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
-    return createdNewUser;
+    return updateTimestamps(createdNewUser);
   }
 
 
@@ -99,8 +100,7 @@ class userAuthService {
 
   
   static async getUserInfo({ userId }) {
-    const user = await User.findById({userId});
-
+    const user = await User.findById({ userId });
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
       const errorMessage =
@@ -108,7 +108,7 @@ class userAuthService {
       return { errorMessage };
     }
 
-    return user;
+    return updateTimestamps(user);
   }
 
   static async updateUser({ userId, toUpdate }) {
@@ -124,10 +124,9 @@ class userAuthService {
     
     // districtName을 districtCode로 변환
     if (toUpdate.districtName) {
-      const districtCode = await Gu.getdistrictCodeByName(toUpdate.districtName);
+      const districtCode = await District.getdistrictCodeByName(toUpdate.districtName);
       toUpdate.districtCode = districtCode;
     }
-    console.log(toUpdate)
     if (toUpdate.password) {
       const hashedPassword = await bcrypt.hash(toUpdate.password, 10);
       toUpdate.password = hashedPassword;
@@ -157,24 +156,40 @@ class userAuthService {
 
   static async getUserMypage({userId}){
     const user  = await User.findById({userId});
-
     const challenges = await Challenge.findAllByUserId({ userId: userId });
+    const participations = await Participation.findAllByUserId({ userId: userId });
+    const comments = await Comment.findAllByUserId({ userId: userId });
     const userInfo = {
       ...user._doc,
       challengeCount: challenges.length,
       challengeList: challenges,
+      userChallengeCount: challenges.length,
+      userChallengeList: challenges,
+      userParticipantsCount: participations.length,
+      participantsList: participations,
+      userCommentsCount: comments.length,
+      userCommentsList: comments,
     }
     return userInfo
   }
 
+  static async subtractMileage(userId, amount) {
+    //유저 마일리지 차감 로직
+    const user = await User.findById({ userId });
+    user.mileage -= amount;
+    console.log(user.mileage)
+    await user.save();
+  }
+
   static async getUserChallenges({userId}){
     const user  = await User.findById({userId});
-
-    const challenges = await Challenge.findAllByUserId({ userId: userId });
+    console.log('user: ',user);
+    const challenges = await Comment.findAllByUserId({ userId: userId });
+    console.log('challenges: ',challenges);
     const userInfo = {
       ...user._doc,
-      challengeCount: challenges.length,
-      challengeList: challenges,
+      userChallengeCount: challenges.length,
+      userChallengeList: challenges,
     }
     return userInfo
   }
@@ -182,11 +197,11 @@ class userAuthService {
   static async getUserParticipants({userId}){
     const user  = await User.findById({userId});
 
-    const challenges = await Challenge.findAllByUserId({ userId: userId });
+    const participations = await Participation.findAllByUserId({ userId: userId });
     const userInfo = {
       ...user._doc,
-      challengeCount: challenges.length,
-      challengeList: challenges,
+      userParticipantsCount: participations.length,
+      participantsList: participations,
     }
     return userInfo
   }
@@ -194,11 +209,11 @@ class userAuthService {
   static async getUserComments({userId}){
     const user  = await User.findById({userId});
 
-    const challenges = await Challenge.findAllByUserId({ userId: userId });
+    const comments = await Comment.findAllByUserId({ userId: userId });
     const userInfo = {
       ...user._doc,
-      challengeCount: challenges.length,
-      challengeList: challenges,
+      userCommentsCount: comments.length,
+      userCommentsList: comments,
     }
     return userInfo
   }

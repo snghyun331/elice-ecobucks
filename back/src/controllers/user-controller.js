@@ -142,7 +142,6 @@ const userPutMypage = async function (req, res, next) {
     const toUpdate = { username, districtName, password };
 
     // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
-    console.log(toUpdate)
     const updatedUser = await userAuthService.updateUser({ userId, toUpdate });
 
     if (updatedUser.errorMessage) {
@@ -158,7 +157,9 @@ const userPutMypage = async function (req, res, next) {
 const userGetChallenges = async function (req, res, next) {
   try {
     // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
-    const userId = req.currentUserId;
+    //const userId = req.currentUserId;
+    const userId = req.params._id;
+    console.log('userId: ',userId);
     const currentUserInfo = await userAuthService.getUserChallenges({ userId });
 
     if (currentUserInfo.errorMessage) {
@@ -174,7 +175,7 @@ const userGetChallenges = async function (req, res, next) {
 const userGetParticipants = async function (req, res, next) {
   try {
     // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
-    const userId = req.currentUserId;
+    const userId = req.params._id;
     const currentUserInfo = await userAuthService.getUserParticipants({ userId });
 
     if (currentUserInfo.errorMessage) {
@@ -190,7 +191,7 @@ const userGetParticipants = async function (req, res, next) {
 const userGetComments = async function (req, res, next) {
   try {
     // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
-    const userId = req.currentUserId;
+    const userId = req.params._id;
     const currentUserInfo = await userAuthService.getUserComments({ userId });
 
     if (currentUserInfo.errorMessage) {
@@ -202,7 +203,6 @@ const userGetComments = async function (req, res, next) {
     next(error);
   }
 }
-
 
 export {PostUser_register, PostUser_login, GetUser_userlist, userGetChallenges, userGetParticipants, userGetComments,
     GetUser_myPage, GetUser_err_yellow, userDeleteWithdraw, userGetcurrent, userPutMypage};

@@ -4,13 +4,12 @@ import { userAuthService } from "../services/user-service.js";
 
 const productPostCreate = async function(req, res, next) {
   try {
-
     validateEmptyBody(req)
 
     const { name, price, place, stock, description } = req.body;
-    
     const seller = req.currentUserId;
-    const currentUserInfo = await userAuthService.getUserInfo({ userId:seller });
+    
+    const currentUserInfo = await userAuthService.getUserInfo({ userId: seller });
     const sellerName = currentUserInfo.username;
 
     const newProduct = await productService.addProduct({ seller, sellerName, name, price, place, stock, description });
@@ -84,4 +83,3 @@ const productDelete = async function(req, res, next) {
 
 
 export { productPostCreate, productPutUpdate, productGetAll, productGetById, productDelete };
-//트리쉐이킹 : 메모리최적화. 

@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const GuSchema = new Schema(
+const districtSchema = new Schema(
   {
     code: {
       type: Number,
@@ -13,6 +13,6 @@ const GuSchema = new Schema(
   }
 );
 
-const GuModel = model("Gu", GuSchema);
+const districtModel = model("District", districtSchema);
 
-export { GuModel };
+export { districtModel };

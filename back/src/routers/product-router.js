@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { productPostCreate, productPutUpdate, productGetAll, productGetById, productDelete } from "../controllers/product-controller.js";
-import { productValidation } from "../middlewares/validation.js";
+import { Validation } from "../middlewares/validation.js";
 import { login_required } from "../middlewares/login-required.js";
 
+const productValidation = Validation.validate(Validation.productSchema);
 const productRouter = Router();
 productRouter.use(login_required);
 
@@ -16,7 +17,7 @@ productRouter.get("/products", productGetAll);
 productRouter.get("/products/:_id", productGetById);
 
 //상품 정보 수정
-productRouter.put("/products/:_id", productPutUpdate);
+productRouter.put("/products/:_id", productValidation, productPutUpdate);
 
 productRouter.delete("/products/:_id", productDelete)
 
