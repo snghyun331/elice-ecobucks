@@ -28,7 +28,7 @@ const blogcommentPutWrite = async function(req, res, next) {
         const { comment } = req.body;
         const toUpdate = { comment };
         const updatedComment = await blogCommentService.setComment({
-            comment_id, 
+            commentId, 
             toUpdate
         })
 
