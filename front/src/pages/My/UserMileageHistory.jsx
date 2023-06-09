@@ -12,7 +12,7 @@ const UserMileageHistory = ({ user }) => {
       try {
         const res = await Api.get(`users/${user._id}/participants`);
         setOrderHistory(res.data.participantsList);
-        console.log(orderHistory)
+        console.log('마일리지히스토리', res.data);
       } catch (err) {
         console.error("Failed to fetch order history:", err);
       }
@@ -23,10 +23,18 @@ const UserMileageHistory = ({ user }) => {
 
   const indexOfLastMileage = currentPage * ordersPerPage;
   const indexOfFirstMileage = indexOfLastMileage - ordersPerPage;
-  const currentMileages = orderHistory.slice(indexOfFirstMileage, indexOfLastMileage);
+  const currentMileages = orderHistory.slice(
+    indexOfFirstMileage,
+    indexOfLastMileage
+  );
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
   };
 
   return (
@@ -42,7 +50,7 @@ const UserMileageHistory = ({ user }) => {
         <tbody>
           {currentMileages.map((order, index) => (
             <tr key={index} style={{ fontSize: "0.8rem" }}>
-              <td style={{ width: "25%" }}>{order.updatedAt}</td>
+              <td style={{ width: "25%" }}>{formatDate(order.updatedAt)}</td>
               <td style={{ width: "25%" }}>1,000</td>
               <td style={{ width: "50%" }}>{order.challenge_id}</td>
             </tr>
@@ -53,7 +61,9 @@ const UserMileageHistory = ({ user }) => {
       {orderHistory.length > ordersPerPage && (
         <Container className="d-flex justify-content-center">
           <Pagination size="sm">
-            {Array.from({ length: Math.ceil(orderHistory.length / ordersPerPage) }).map((_, index) => (
+            {Array.from({
+              length: Math.ceil(orderHistory.length / ordersPerPage),
+            }).map((_, index) => (
               <Pagination.Item
                 key={index + 1}
                 active={index + 1 === currentPage}
