@@ -54,27 +54,35 @@ const Blog = () => {
   return (
     <div style={{ padding: "60px"}}>
       <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: "70%",
-              background: "#4d9e81",
-              zIndex: -1,
-            }}
-          ></div>
-      <h3 style={{ display: "flex", justifyContent: "center" }}>
-        블로그페이지.
-      </h3>
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: "70%",
+          background: "#00D387",
+          zIndex: -1,
+        }}
+      >
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          top: 80,
+          left: '18%',
+          right: 0,
+          zIndex: 1,
+          color: 'white',
+          fontSize: '2rem',
+          fontWeight: '900',
+        }}
+      >짧로그 :
+        <br />
+        <span style={{fontSize: '1.3rem', fontWeight: '400' }}>절약 꿀팁 공유해요</span>
+      </div>
       <Container
         className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
-        style={{
-          width: "80%",
-          border: "1px solid #c2c2c2",
-          justifyContent: "Center",
-          alignItems: "Center",
-        }}
+        style={{ marginTop: '200px', paddingTop: '30px', width: "80%", border: "1px solid #c2c2c2", backgroundColor: 'white', borderRadius: '10px' }}
       >
         <Modal show={showModal} onHide={handleCloseModal} centered>
         <Modal.Header closeButton>
@@ -106,17 +114,13 @@ const Blog = () => {
         {blogList.map(item => (
             <Col key={item._id}>
               <Card style={{ width: "18rem" }}>
-                {/* <img src={item.imageUrl} className="card-img-top" alt="Logo" /> */}
                 <Card.Body className="card-body">
                   <Card.Title className="card-title"><span>제목:</span> {item.title}</Card.Title>
                   
-                  <Card.Text className="card-text">{item.topic}</Card.Text>
-                  {/* <Card.Text className="card-text">위치: {item.place}</Card.Text> */}
+                  <Card.Text className="card-text">분야: {item.topic}</Card.Text>
+                  <Card.Text className="card-text">likeCount: {item.likeCount}</Card.Text>
                   <Card.Text className="card-text">설명: {item.content}</Card.Text>
-                  {/* <a href={item.place} className="btn btn-primary">
-                    판매하는 매장 위치나 정보 넣기
-                  </a> */}
-                  
+                  <Card.Text className="card-text">작성자: {item.username}</Card.Text>                  
                 </Card.Body>
               </Card>
             </Col>
