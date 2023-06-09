@@ -16,11 +16,6 @@ const participationSchema = new Schema(
       type: String, 
       required: true 
     },
-    title: {
-      type: String, 
-      required: false,
-      default: ""
-    },
     hasParticipatedToday: {
       type: Boolean, 
       required: false,

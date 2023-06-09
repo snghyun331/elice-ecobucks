@@ -12,7 +12,7 @@ class ParticipationService {
     
     // participation가 처음 생성일 때 create
     if (participation == null){
-      const createInput = { userId, challengeId, image, title: challenge.title, hasParticipatedToday: true }
+      const createInput = { userId, challengeId, image, hasParticipatedToday: true }
       const createdParticipation = await ChallengeParticipation.create(createInput);
       // 시간을 한국표준시간으로 변경
       createdNewParticipation=updateTimestamps(createdParticipation);
@@ -26,7 +26,7 @@ class ParticipationService {
     else {
       participation.hasParticipatedToday = true
       await participation.save();
-      const createInput = { userId, challengeId, image, title: challenge.title, hasParticipatedToday: true }
+      const createInput = { userId, challengeId, image, hasParticipatedToday: true }
       const createdParticipation = await ChallengeParticipation.create(createInput);
       createdNewParticipation=updateTimestamps(createdParticipation);
     }

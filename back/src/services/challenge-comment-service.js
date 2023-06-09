@@ -20,7 +20,7 @@ class CommentService {
     await challenge.save();
     
     //--- Comment Create ---
-    const createdChallenge = await ChallengeComment.create({ userId, challengeId, content, title: challenge.title });
+    const createdChallenge = await ChallengeComment.create({ userId, challengeId, content });
     // 시간을 한국표준시간으로 변경
     const createdNewChallenge=updateTimestamps(createdChallenge)  
 

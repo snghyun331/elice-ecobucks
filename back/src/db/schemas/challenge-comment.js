@@ -15,12 +15,7 @@ const commentSchema = new Schema(
     content: {
       type: String, 
       required: true
-    },
-    title: {
-      type: String, 
-      required: false,
-      default: ""
-    },
+    }
   },
   {
     timestamps: true,    
