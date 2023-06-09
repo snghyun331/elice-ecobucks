@@ -1,5 +1,6 @@
 import { blogCommentService } from "../services/blogcomment-service.js";
 import is from '@sindresorhus/is';
+import { CREATED, OK } from "../utils/constants.js";
 
 const blogcommentPostWrite = async (req, res, next) => {
     try {
@@ -15,7 +16,7 @@ const blogcommentPostWrite = async (req, res, next) => {
             post_id, writer_id, comment
         });
         
-        return res.status(201).json(newComment);
+        return res.status(CREATED).json(newComment);
     } catch (error) {
         next(error);
     }
@@ -34,7 +35,7 @@ const blogcommentPutWrite = async function(req, res, next) {
             throw new Error(updatedComment.errorMessage);
         }
 
-        return res.status(200).json(updatedComment);
+        return res.status(OK).json(updatedComment);
 
     } catch (error) {
         next(error)
@@ -51,7 +52,7 @@ const blogcommentDeleteWrite = async function(req, res, next) {
             throw new Error(result.errorMessage)
         }
 
-        return res.status(200).send(result)
+        return res.status(OK).send(result)
 
     } catch(error) {
         next(error)
