@@ -232,10 +232,10 @@ const Blog = () => {
                       </Button>
                       <Modal show={deleteModalOpen} onHide={handleCloseDeleteModal} centered>
                         <Modal.Header closeButton>
-                          <Modal.Title>상품 삭제</Modal.Title>
+                          <Modal.Title>팁 삭제</Modal.Title>
                         </Modal.Header>
                         <Modal.Body className="text-center">
-                          선택한 상품을 삭제하시겠습니까?
+                          선택한 팁을 삭제하시겠습니까?
                         </Modal.Body>
                         <Modal.Footer>
                           <Button variant="secondary" onClick={handleCloseDeleteModal}>취소</Button>

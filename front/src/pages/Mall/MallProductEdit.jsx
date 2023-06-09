@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import * as Api from '../../api'
-// import { UserStateContext } from "../../context/user/UserProvider";
+
 const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
@@ -26,15 +22,6 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
           // console.log("바뀐 list: ", list);
 
           await handleEditProduct(selectedItem, updatedItem);
-        //   const res = await Api.post("products", {
-        //     name,
-        //     price: Number(price),
-        //     place,
-        //     stock: Number(stock),
-        //     description
-        //   });
-        //   console.log(res);
-        //   window.location.reload()
 
       } catch (err) {
           alert("모든 값을 입력해주세요.")
