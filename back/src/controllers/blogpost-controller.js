@@ -1,5 +1,6 @@
 import { blogPostService } from "../services/blogpost-service.js";
 import is from '@sindresorhus/is';
+import { OK, CREATED } from "../utils/constants.js";
 
 const blogpostPostWrite = async (req, res, next) => {
     try {
@@ -16,7 +17,7 @@ const blogpostPostWrite = async (req, res, next) => {
             userId,title,topic, content
         });
         
-        return res.status(201).json(newPost);
+        return res.status(CREATED).json(newPost);
     } catch (error) {
         next(error);
     }
@@ -36,7 +37,7 @@ const blogpostPutWrite = async function(req, res, next) {
             throw new Error(updatedPost.errorMessage);
         }
 
-        return res.status(200).json(updatedPost);
+        return res.status(OK).json(updatedPost);
 
     } catch (error) {
         next(error);
@@ -53,7 +54,7 @@ const blogpostDeleteWrite = async function(req, res, next) {
             throw new Error(result.errorMessage);
         }
 
-        return res.status(200).send(result);
+        return res.status(OK).send(result);
 
     } catch(error) {
         next(error);
@@ -75,7 +76,7 @@ const blogpostPutLikes = async function(req, res, next) {
             throw new Error(AddLike.errorMessage);
         }
 
-        return res.status(200).json(AddLike)
+        return res.status(OK).json(AddLike)
     } catch(error) {
         next(error);
     }
@@ -95,7 +96,7 @@ const blogpostPutDislikes = async function(req, res, next) {
             throw new Error(DeleteLike.errorMessage);
         }
 
-        return res.status(200).json(DeleteLike);
+        return res.status(OK).json(DeleteLike);
     } catch(error) {
 
     }
@@ -107,11 +108,11 @@ const blogpostGetAll = async function(req, res, next) {
         if(req.query.topic) {
             const topic = req.query.topic
             posts = await blogPostService.getFilteredPosts({topic});
-            res.status(200).send(posts);
+            res.status(OK).send(posts);
         }
         else {
             posts = await blogPostService.getPosts();   
-            res.status(200).send(posts);
+            res.status(OK).send(posts);
         }
     } catch(error) {
         next(error)
@@ -127,7 +128,7 @@ const blogpostGetDetail = async function(req, res, next) {
         if (postInfo.errorMessage) {
             throw new Error(postInfo.errorMessage);
         }
-        return res.status(200).send(postInfo);
+        return res.status(OK).send(postInfo);
     } catch(error) {
         next(error)
     }

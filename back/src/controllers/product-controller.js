@@ -1,6 +1,7 @@
 import { productService } from "../services/product-service.js";
 import { validateEmptyBody } from "../utils/validators.js";
 import { userAuthService } from "../services/user-service.js";
+import { OK, CREATED, NO_CONTENT } from "../utils/constants.js";
 
 const productPostCreate = async function(req, res, next) {
   try {
@@ -17,7 +18,7 @@ const productPostCreate = async function(req, res, next) {
       throw new Error(newProduct.errorMessage);
     }
 
-    return res.status(201).json(newProduct);
+    return res.status(CREATED).json(newProduct);
   } catch (error) {
     next(error);
   }
@@ -36,7 +37,7 @@ const productPutUpdate = async function(req, res, next) {
     if (product.errorMessage) {
       throw new Error(product.errorMessage);
     }
-    return res.status(200).send(product);
+    return res.status(OK).send(product);
   } catch (error) {
     next(error);
   }
@@ -45,7 +46,7 @@ const productPutUpdate = async function(req, res, next) {
 const productGetAll = async function(req, res, next) {
   try {
     const products = await productService.findAllProducts();
-    res.status(200).json(products);
+    res.status(OK).json(products);
   } catch (error) {
     next(error);
   }
@@ -59,7 +60,7 @@ const productGetById = async function(req, res, next) {
     if (product.errorMessage) {
       throw new Error(product.errorMessage);
     }
-    return res.status(200).send(product);
+    return res.status(OK).send(product);
   } catch (error) {
     next(error);
   }
@@ -75,7 +76,7 @@ const productDelete = async function(req, res, next) {
       throw new Error("해당 상품을 삭제할 수 없습니다.");
     }
 
-    return res.status(204).send(result);
+    return res.status(NO_CONTENT).send(result);
   } catch (error) {
     next(error);
   }

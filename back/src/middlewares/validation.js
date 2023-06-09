@@ -1,6 +1,5 @@
 import Joi from "joi";
-
-const BAD_REQUEST = 400; 
+import { BAD_REQUEST } from "../utils/constants.js";
 const USERNAME_MIN = 2, USERNAME_MAX = 20, PWD_MIN = 6, PWD_MAX = 18;
 
 class Validation {

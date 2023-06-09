@@ -1,5 +1,6 @@
 import { ChallengeService } from "../services/challenge-service.js";
 import { validateEmptyBody } from "../utils/validators.js"
+import { OK } from "../utils/constants.js";
 
 const challengeController = {
   challengeCreat: async function (req, res, next) {
@@ -56,7 +57,7 @@ const challengeController = {
       const currentUserId = req.currentUserId;
       const challenge = await ChallengeService.deleteChallenge(_id, currentUserId);
        
-      res.status(200).json({ message: "challenge 삭제 완료"});
+      res.status(OK).json({ message: "challenge 삭제 완료"});
   
     } catch (error) {
       next(error);
