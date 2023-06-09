@@ -7,7 +7,7 @@ const participationSchema = new Schema(
       ref: 'User', 
       required: true 
     },
-    challenge_id: { 
+    challengeId: { 
       type: Schema.Types.ObjectId, 
       ref: 'Challenge', 
       required: true 
@@ -16,6 +16,16 @@ const participationSchema = new Schema(
       type: String, 
       required: true 
     },
+    title: {
+      type: String, 
+      required: false,
+      default: ""
+    },
+    hasParticipatedToday: {
+      type: Boolean, 
+      required: false,
+      default: false
+    }
   },
   {
     timestamps: true,    

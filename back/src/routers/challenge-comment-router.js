@@ -5,49 +5,49 @@ import { validateEmptyBody } from "../utils/validators.js"
 
 const commentRouter = Router();
 
-commentRouter.post("/:challenge_id/comments", login_required, async function (req, res, next) {
+commentRouter.post("/:challengeId/comments", login_required, async function (req, res, next) {
   try {
     validateEmptyBody(req)
-    const challengeId = req.params.challenge_id
+    const challengeId = req.params.challengeId
     const userId = req.currentUserId;
     const { content } = req.body;
     
-    const challenge = await CommentService.createComment({ userId, challenge_id : challengeId, content });
+    const challenge = await CommentService.createComment({ userId, challengeId : challengeId, content });
     res.json(challenge);
   } catch (err) {
     next(err);
   }
 });
 
-commentRouter.get("/:challenge_id/comments", login_required, async function (req, res, next) {
+commentRouter.get("/:challengeId/comments", login_required, async function (req, res, next) {
   try {
-    const challenge_id = req.params.challenge_id
-    const comments = await CommentService.findComments({ challenge_id });
+    const challengeId = req.params.challengeId
+    const comments = await CommentService.findComments({ challengeId });
     res.json(comments);
   } catch (err) {
     next(err);
   }
 });
 
-commentRouter.get("/:challenge_id/comments/:_id", login_required, async function (req, res, next) {
+commentRouter.get("/:challengeId/comments/:_id", login_required, async function (req, res, next) {
   try {
-    const { challenge_id, _id } = req.params;
+    const { challengeId, _id } = req.params;
   
-    const Comment = await CommentService.findComment({ challenge_id, _id });
+    const Comment = await CommentService.findComment({ challengeId, _id });
     res.json(Comment);
   } catch (err) {
     next(err);
   }
 });
 
-commentRouter.put("/:challenge_id/comments/:_id", login_required, async function (req, res, next) {
+commentRouter.put("/:challengeId/comments/:_id", login_required, async function (req, res, next) {
   try {
-    const { challenge_id, _id } = req.params;
+    const { challengeId, _id } = req.params;
     const currentUserId = req.currentUserId;
     const { content } = req.body;  
 
     const comment = await CommentService.updateComment({ 
-      challenge_id, _id, currentUserId, content
+      challengeId, _id, currentUserId, content
     });
     
     res.json(comment);
@@ -56,7 +56,7 @@ commentRouter.put("/:challenge_id/comments/:_id", login_required, async function
   }
 });
 
-commentRouter.delete("/:challenge_id/comments/:_id", login_required, async function (req, res, next){
+commentRouter.delete("/:challengeId/comments/:_id", login_required, async function (req, res, next){
   try {
     const _id = req.params._id;
     const currentUserId = req.currentUserId;

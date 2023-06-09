@@ -11,8 +11,8 @@ class ChallengeComment {
     return comments;
   } 
 
-  static NoAsyncfindAll({ challenge_id }) {
-    const comments = commentModel.find({ challenge_id });
+  static NoAsyncfindAll({ challengeId }) {
+    const comments = commentModel.find({ challengeId });
     return comments;
   }
   
