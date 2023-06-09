@@ -1,4 +1,4 @@
-import { Participation } from "../db/models/challenge-participation.js";
+import { ChallengeParticipation } from "../db/models/challenge-participation.js";
 import { Challenge } from "../db/models/challenge.js"
 import { User } from "../db/models/User.js"
 import { updateTimestamps } from "../utils/update-time-stamps.js";
@@ -28,7 +28,7 @@ class ParticipationService {
 
     //--- Participation Create ---
     // 참가 신청 생성
-    const createdParticipation = await Participation.create({ userId, challenge_id, image });
+    const createdParticipation = await ChallengeParticipation.create({ userId, challenge_id, image });
     // 시간을 한국표준시간으로 변경
     const updateCreatedParticipation=updateTimestamps(createdParticipation)
 
@@ -36,13 +36,13 @@ class ParticipationService {
   }
 
   static async findChallenges({ challenge_id }) {
-    const participations = await Participation.NoAsyncfindAll({ challenge_id }).populate('userId', 'username districtCode districtName').exec();
+    const participations = await ChallengeParticipation.NoAsyncfindAll({ challenge_id }).populate('userId', 'username districtCode districtName').exec();
 
     return participations;
   }
 
   static async findChallenge({ challenge_id, _id }) {
-    const participation = await Participation.NoAsyncfindById({ _id }).populate('userId', 'username districtCode districtName').exec();
+    const participation = await ChallengeParticipation.NoAsyncfindById({ _id }).populate('userId', 'username districtCode districtName').exec();
     if (!participation || participation.challenge_id.toString() !== challenge_id) {
       throw new Error("찾을 수 없습니다.");
     }
@@ -51,32 +51,30 @@ class ParticipationService {
   }
 
   static async updateChallenge({ _id, currentUserId, image }) {
-    const findIdParticipation = await Participation.findById({ _id })
+    const findIdParticipation = await ChallengeParticipation.findById({ _id })
     if ( !findIdParticipation ){ 
       throw new Error("해당 id를 가진 데이터는 없습니다.")
     }
     if( findIdParticipation.userId.toString() !== currentUserId ){
       throw new Error("수정 권한이 없습니다.");
     }
-    const updatedParticipation = await Participation.update({ _id, image })
+    const updatedParticipation = await ChallengeParticipation.update({ _id, image })
     
     return updateTimestamps(updatedParticipation);;
   }
 
   static async deleteChallenge(challenge_id, _id, currentUserId) {
-    const findIdParticipation = await Participation.findById({ _id })
+    const findIdParticipation = await ChallengeParticipation.findById({ _id })
     if(findIdParticipation.userId.toString() !== currentUserId){
       throw new Error("삭제 권한이 없습니다.");
     }
-    //const challenge_id = findIdParticipation.challenge_id.toString()
-    //await challengeModel.updateOne({ _id: challenge_id }, { $inc: { participantsCount: -1 } });
 
     // 삭제시 Challenge의 participantsCount 1감소
     const findchallenge = await Challenge.findById({ _id:challenge_id })
     findchallenge.participantsCount += -1;
     await findchallenge.save();
 
-    await Participation.deleteById(_id);
+    await ChallengeParticipation.deleteById(_id);
     return { status: "ok" };
   }
 

@@ -1,35 +1,46 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Api from '../../api'
 // import { UserStateContext } from "../../context/user/UserProvider";
-const MallProductSell = (props) => {
+const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [place, setPlace] = useState("");
     const [stock, setStock] = useState("");
     const [description, setDescription] = useState("");
-    // const userState = useContext(UserStateContext);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
         try {
-          const res = await Api.post("products", {
-            name,
-            price: Number(price),
-            place,
-            stock: Number(stock),
-            // seller: userState.user._id,
-            description,
-          });
-          console.log(res);
-          window.location.reload()
+          const updatedItem = {
+            name: name || selectedItem.name, //selectedItem이 하나만 들어오는게 아님
+            price: Number(price) || Number(selectedItem.price),
+            place: place || selectedItem.place,
+            stock: Number(stock) || Number(selectedItem.stock),
+            description: description || selectedItem.description,
+          };
+          // setList(updatedItem);
+          // console.log("updatedItem: ", updatedItem);
+          // console.log("바뀐 list: ", list);
 
-        } catch (err) {
+          await handleEditProduct(selectedItem, updatedItem);
+        //   const res = await Api.post("products", {
+        //     name,
+        //     price: Number(price),
+        //     place,
+        //     stock: Number(stock),
+        //     description
+        //   });
+        //   console.log(res);
+        //   window.location.reload()
+
+      } catch (err) {
           alert("모든 값을 입력해주세요.")
           console.log("상품 등록에 실패하였습니다.", err);
-        }
-      };
+      }
+    }
 
   return (
     <div style={{ padding: "16px", width: "calc(100% - 32px)" }}>
@@ -139,7 +150,7 @@ const MallProductSell = (props) => {
             }}
             onClick={handleSubmit}
           >
-            상품 등록하기
+            상품 수정하기
           </button>
         </div>
       </div>
@@ -147,4 +158,4 @@ const MallProductSell = (props) => {
   );
 };
 
-export default MallProductSell;
+export default MallProductEdit;

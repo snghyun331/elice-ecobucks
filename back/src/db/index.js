@@ -6,8 +6,8 @@ import { District } from "./models/district.js";
 import { Product } from "./models/product.js";
 import { Challenge } from "./models/challenge.js";
 import { order } from "./models/order.js";
-import { Participation } from "./models/challenge-participation.js";
-import { Comment } from "./models/challenge-comment.js";
+import { ChallengeParticipation } from "./models/challenge-participation.js";
+import { ChallengeComment } from "./models/challenge-comment.js";
 
 const DB_URL =
   process.env.MONGODB_URL ||
@@ -24,4 +24,4 @@ db.on("error", (error) =>
 );
 
 
-export {User, District, Product, Challenge, BlogPost, BlogComment, order, Participation, Comment};
+export {User, District, Product, Challenge, BlogPost, BlogComment, order, ChallengeParticipation, ChallengeComment};
