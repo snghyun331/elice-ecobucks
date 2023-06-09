@@ -25,7 +25,7 @@ const challengeController = {
     }
   },
 
-  challengeGet : async function (req, res, next) {
+  challengeGet: async function (req, res, next) {
     try {
       const chllengeId = req.params._id;
       const challenge = await ChallengeService.findChallenge({ chllengeId });
@@ -35,7 +35,7 @@ const challengeController = {
     }
   },
   
-  challengeUpdate : async function (req, res, next) {
+  challengeUpdate: async function (req, res, next) {
     try {
       const chllengeId = req.params._id;
       const currentUserId = req.currentUserId;
@@ -51,7 +51,7 @@ const challengeController = {
     }
   },
   
-  challengeDelete : async function (req, res, next){
+  challengeDelete: async function (req, res, next){
     try {
       const chllengeId = req.params._id;
       const currentUserId = req.currentUserId;

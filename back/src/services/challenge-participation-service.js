@@ -73,9 +73,9 @@ class ParticipationService {
     if( participation.userId.toString() !== currentUserId ){
       throw new Error("수정 권한이 없습니다.");
     }
-    const updatedParticipation = await ChallengeParticipation.update({ _id, image })
+    const updateParticipation = await ChallengeParticipation.update({ _id, image })
     
-    return updateTimestamps(updatedParticipation);;
+    return updateTimestamps(updateParticipation);;
   }
 
   static async deleteChallenge(challengeId, _id, currentUserId) {
