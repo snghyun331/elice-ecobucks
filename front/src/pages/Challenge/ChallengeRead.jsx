@@ -55,7 +55,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
         await Api.delete(`challenges/${challenge._id}`);
         window.location.reload();
       } catch (err) {
-        alert(err.response.data);
+        alert(err.res.data);
       }
     }
   };
@@ -66,13 +66,13 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
     const content = formData.get("content");
 
     try {
-      const response = await Api.post(`challenges/${challenge._id}/comments`, {
+      const res = await Api.post(`challenges/${challenge._id}/comments`, {
         userId: userState.user._id,
         challengeId: challenge._id,
         content,
       });
       const newComment = {
-        ...response.data,
+        ...res.data,
         userId: {
           _id: userState.user._id,
           username: userState.user.username,
@@ -127,8 +127,9 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await Api.get(`challenges/${challenge._id}/comments`);
-        setComments(response.data);
+        const res = await Api.get(`challenges/${challenge._id}/comments`);
+        console.log("코멘트", res.data)
+        setComments(res.data);
       } catch (error) {
         console.log("Error fetching comments:", error);
       }

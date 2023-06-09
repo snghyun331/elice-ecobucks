@@ -3,36 +3,23 @@ import { Table, Pagination, Container } from "react-bootstrap";
 import * as Api from "../../api";
 
 const UserMileageHistory = ({ user }) => {
-  console.log(user._id)
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 5;
-  // const [orderHistory, setOrderHistory] = useState([]);
+  const [orderHistory, setOrderHistory] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchOrderHistory = async () => {
-  //     try {
-  //       const res = await Api.get(`users/${user._id}/participants`);
-  //       setOrderHistory(res.data);
-  //     } catch (err) {
-  //       console.error("Failed to fetch order history:", err);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchOrderHistory = async () => {
+      try {
+        const res = await Api.get(`users/${user._id}/participants`);
+        setOrderHistory(res.data.participantsList);
+        console.log(orderHistory)
+      } catch (err) {
+        console.error("Failed to fetch order history:", err);
+      }
+    };
 
-  //   fetchOrderHistory();
-  // }, [user]);
-
-  const orderHistory = [
-    {timestamp: '2022-02-02',
-    mileage: 1000,
-    challenge_id: '구름빵'},
-    {timestamp: '2022-02-02',
-    mileage: 1000,
-    challenge_id: '감자빵'},
-    {timestamp: '2022-02-02',
-    mileage: 1000,
-    challenge_id: '고구마빵'}
-
-  ]
+    fetchOrderHistory();
+  }, [user]);
 
   const indexOfLastMileage = currentPage * ordersPerPage;
   const indexOfFirstMileage = indexOfLastMileage - ordersPerPage;
@@ -55,8 +42,8 @@ const UserMileageHistory = ({ user }) => {
         <tbody>
           {currentMileages.map((order, index) => (
             <tr key={index} style={{ fontSize: "0.8rem" }}>
-              <td style={{ width: "25%" }}>{order.timestamp}</td>
-              <td style={{ width: "25%" }}>{order.mileage.toLocaleString()}</td>
+              <td style={{ width: "25%" }}>{order.updatedAt}</td>
+              <td style={{ width: "25%" }}>1,000</td>
               <td style={{ width: "50%" }}>{order.challenge_id}</td>
             </tr>
           ))}

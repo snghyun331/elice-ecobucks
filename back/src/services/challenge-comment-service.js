@@ -16,9 +16,9 @@ class CommentService {
       challenge.isCompleted = true;
       throw new Error("참여기간이 종료되었습니다")
     }
-    // 참여자수 카운트      
-    else challenge.participantsCount += 1;
-    await challenge.save();
+// 참여자수 카운트
+else challenge.commentsCount += 1;
+await challenge.save(); 
     
     //--- Comment Create ---
     const createdComment = await ChallengeComment.create({ userId, challenge_id, content });
