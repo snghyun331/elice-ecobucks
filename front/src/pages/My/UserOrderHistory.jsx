@@ -8,49 +8,49 @@ const UserOrderHistory = () => {
   // 더미 데이터 주문 내역
   const orderHistory = [
     {
-      date: "2023-05-15",
+      date: "2023. 05. 15.",
       product: "Product A",
       price: 100,
       location: "Location A",
     },
     {
-      date: "2023-05-16",
+      date: "2023. 05. 16.",
       product: "Product B",
       price: 200,
       location: "Location B",
     },
     {
-      date: "2023-05-16",
+      date: "2023. 05. 16.",
       product: "Product C",
       price: 200,
       location: "Location C",
     },
     {
-      date: "2023-05-16",
+      date: "2023. 05. 16.",
       product: "Product D",
       price: 200,
       location: "Location D",
     },
     {
-      date: "2023-05-16",
+      date: "2023. 05. 16.",
       product: "Product E",
       price: 200,
       location: "Location E",
     },
     {
-      date: "2023-05-16",
+      date: "2023. 05. 16.",
       product: "Product E",
       price: 200,
       location: "Location E",
     },
     {
-      date: "2023-05-16",
+      date: "2023. 05. 16.",
       product: "Product E",
       price: 200,
       location: "Location E",
     },
     {
-      date: "2023-05-16",
+      date: "2023. 05. 16.",
       product: "Product E",
       price: 200,
       location: "Location E",
