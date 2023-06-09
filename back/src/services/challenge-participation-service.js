@@ -92,6 +92,12 @@ class ParticipationService {
     challenge.participantsCount += -1;
     await challenge.save();
 
+    //--- User Update ---
+    // 유저정보 갱신 - 참여자 마일리지 1000감소
+    const user = await User.findById({ userId: currentUserId });
+    user.mileage -= 1000;
+    await user.save();
+
     await ChallengeParticipation.deleteById(_id);
     return { status: "ok" };
   }

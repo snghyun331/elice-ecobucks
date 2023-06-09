@@ -1,5 +1,6 @@
 import { CommentService } from "../services/challenge-comment-service.js";
 import { validateEmptyBody } from "../utils/validators.js"
+import { NOT_FOUND, CREATED, OK, NO_CONTENT } from "../utils/constants.js";
 
 const commentController = {
   commentCreate: async function (req, res, next) {
@@ -10,9 +11,9 @@ const commentController = {
       const { content } = req.body;
       
       const challenge = await CommentService.createComment({ userId, challengeId : challengeId, content });
-      res.json(challenge);
-    } catch (err) {
-      next(err);
+      res.status(CREATED).json(challenge);
+    } catch (error) {
+      next(error);
     }
   },
   
@@ -20,9 +21,10 @@ const commentController = {
     try {
       const challengeId = req.params.challengeId
       const comments = await CommentService.findComments({ challengeId });
-      res.json(comments);
-    } catch (err) {
-      next(err);
+      res.status(OK).json(comments);
+    } catch (error) {
+      error.status = NOT_FOUND;
+      next(error);
     }
   },
   
@@ -31,9 +33,10 @@ const commentController = {
       const { challengeId, _id } = req.params;
     
       const Comment = await CommentService.findComment({ challengeId, _id });
-      res.json(Comment);
-    } catch (err) {
-      next(err);
+      res.status(OK).json(Comment);
+    } catch (error) {
+      error.status = NOT_FOUND;
+      next(error);
     }
   },
   
@@ -47,7 +50,7 @@ const commentController = {
         challengeId, _id, currentUserId, content
       });
       
-      res.json(comment);
+      res.status(OK).json(comment);
     } catch (error) {
       next(error);
     }
@@ -60,9 +63,10 @@ const commentController = {
   
       await CommentService.deleteComment(_id, currentUserId);
        
-      res.status(200).json({ message: "challenge 삭제 완료"});
+      res.status(NO_CONTENT).json({ message: "challenge 삭제 완료"});
   
     } catch (error) {
+      error.status = NOT_FOUND;
       next(error);
     }
   }
