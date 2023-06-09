@@ -162,8 +162,6 @@ class userAuthService {
     const comments = await ChallengeComment.findAllByUserId({ userId: userId });
     const userInfo = {
       ...user._doc,
-      challengeCount: challenges.length,
-      challengeList: challenges,
       userChallengeCount: challenges.length,
       userChallengeList: challenges,
       userParticipantsCount: participations.length,
