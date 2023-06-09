@@ -4,11 +4,12 @@ import {PostUser_register, PostUser_login, GetUser_myPage, userGetChallenges, us
         GetUser_err_yellow, userDeleteWithdraw,userGetcurrent,userPutMypage} from "../controllers/user-controller.js"
 import { Validation } from "../middlewares/validation.js";
 
-const userValidation = Validation.validate(Validation.userSchema);
+const userRegisterValidation = Validation.validate(Validation.userSchema);
+const userUpdateValidation = Validation.validate(Validation.userUpdateSchema);
 
 const userAuthRouter = Router();
 
-userAuthRouter.post("/register", userValidation, PostUser_register);
+userAuthRouter.post("/register", userRegisterValidation, PostUser_register);
 
 userAuthRouter.post("/login", PostUser_login);
 
@@ -24,7 +25,7 @@ userAuthRouter.get("/users/:_id/participants", login_required, userGetParticipan
 // 유저의 댓글 내역들을 조회 
 userAuthRouter.get("/users/:_id/comments", login_required, userGetComments);
 
-userAuthRouter.put("/mypage/useredit/:_id", login_required, userValidation, userPutMypage)
+userAuthRouter.put("/mypage/useredit/:_id", login_required, userUpdateValidation, userPutMypage)
 
 userAuthRouter.delete("/mypage/withdraw", login_required, userDeleteWithdraw)
 

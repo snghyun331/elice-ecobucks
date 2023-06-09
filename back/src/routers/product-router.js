@@ -5,23 +5,22 @@ import { login_required } from "../middlewares/login-required.js";
 
 const productValidation = Validation.validate(Validation.productSchema);
 
-const controller = productController; 
 const productRouter = Router();
 productRouter.use(login_required);
 
 //상품 등록
-productRouter.post("/products", productValidation, controller.productPostCreate);
+productRouter.post("/products", productValidation, productController.productPostCreate);
 
 //전체 상품 조회
-productRouter.get("/products", controller.productGetAll);
+productRouter.get("/products", productController.productGetAll);
 
 //개별 상품 조회
-productRouter.get("/products/:_id", controller.productGetById);
+productRouter.get("/products/:_id", productController.productGetById);
 
 //상품 정보 수정
-productRouter.put("/products/:_id", productValidation, controller.productPutUpdate);
+productRouter.put("/products/:_id", productValidation, productController.productPutUpdate);
 
 //개별 상품 삭제
-productRouter.delete("/products/:_id", controller.productDelete)
+productRouter.delete("/products/:_id", productController.productDelete)
 
 export { productRouter };
