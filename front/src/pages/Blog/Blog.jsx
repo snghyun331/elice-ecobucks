@@ -84,6 +84,9 @@ const Blog = () => {
         className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
         style={{ marginTop: '200px', paddingTop: '30px', width: "80%", border: "1px solid #c2c2c2", backgroundColor: 'white', borderRadius: '10px' }}
       >
+        <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
+          팁 작성하기
+          </Button>
         <Modal show={showModal} onHide={handleCloseModal} centered>
         <Modal.Header closeButton>
           <Modal.Title>팁 작성하기</Modal.Title>
@@ -105,9 +108,7 @@ const Blog = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-          <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
-          팁 작성하기
-          </Button>
+          
 
           <Container>
         <Row>
