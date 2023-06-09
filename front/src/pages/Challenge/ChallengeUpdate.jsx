@@ -74,6 +74,11 @@ const ChallengeUpdate = ({ challenge }) => {
             placeholder="제목을 입력해주세요 (최대 20자)"
             style={{ borderRadius: "0px", marginBottom: "20px" }}
           />
+          {title.length > 20 && (
+            <Alert variant="danger" className="mt-2 p-2">
+              제목은 최대 20자까지 입력 가능합니다.
+            </Alert>
+          )}
         </Form.Group>
         <Form.Group controlId="content">
           <Form.Label>설명</Form.Label>
@@ -91,6 +96,11 @@ const ChallengeUpdate = ({ challenge }) => {
             placeholder="설명을 입력해주세요 (최대 100자)"
             style={{ borderRadius: "0px", marginBottom: "20px" }}
           />
+          {content.length > 100 && (
+            <Alert variant="danger" className="mt-2 p-2">
+              설명은 최대 100자까지 입력 가능합니다.
+            </Alert>
+          )}
         </Form.Group>
         <Form.Group controlId="duration">
           <Form.Label>진행기간</Form.Label>
@@ -207,6 +217,8 @@ const ChallengeUpdate = ({ challenge }) => {
             width: "100%",
             borderRadius: "0px",
             backgroundColor: "#00D387",
+            color: 'white',
+            fontWeight: '900'
           }}
         >
           챌린지 수정

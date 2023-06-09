@@ -257,7 +257,8 @@ const UserEditForm = ({ onClose, user }) => {
         style={{
           width: "100%",
           borderRadius: "0px",
-          backgroundColor: "#00D387",
+          backgroundColor: "#00D387",            color: "white",
+          fontWeight: "900",
         }}
       >
         저장
