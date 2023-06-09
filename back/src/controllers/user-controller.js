@@ -1,6 +1,6 @@
 import { userAuthService } from "../services/user-service.js";
 import { validateEmptyBody } from "../utils/validators.js";
-import { OK, CREATED } from "../utils/constants.js";
+import { NOT_FOUND, CREATED, OK, NO_CONTENT } from "../utils/constants.js";
 
 const userController = {
   PostUser_register: async function (req, res, next) {
@@ -49,6 +49,7 @@ const userController = {
       const users = await userAuthService.getUsers();
       res.status(OK).send(users);
     } catch (error) {
+      error.status = NOT_FOUND;
       next(error);
     }
   },
@@ -65,6 +66,7 @@ const userController = {
 
     return res.status(OK).send(currentUserInfo);
     } catch (error) {
+      error.status = NOT_FOUND;
       next(error);
     }
   },
@@ -80,6 +82,7 @@ const userController = {
 
     return res.status(OK).send(currentUserInfo);
     } catch (error) {
+      error.status = NOT_FOUND;
       next(error);
     }
   },
@@ -98,6 +101,7 @@ const userController = {
 
       return res.status(OK).send(currentUserInfo);
       } catch (error) {
+        error.status = NOT_FOUND;
         next(error);
     }
   },
@@ -117,8 +121,9 @@ const userController = {
       await user.save()
 
       const result = { result : "Successfully withdraw"}
-      return res.status(OK).send(result)
+      return res.status(NO_CONTENT).send(result)
     } catch (error) {
+      error.status = NOT_FOUND;
       next(error)
     } 
   },
@@ -160,6 +165,7 @@ const userController = {
 
     return res.status(OK).send(currentUserInfo);
     } catch (error) {
+      error.status = NOT_FOUND;
       next(error);
     }
   },
@@ -176,6 +182,7 @@ const userController = {
 
     return res.status(OK).send(currentUserInfo);
     } catch (error) {
+      error.status = NOT_FOUND;
       next(error);
     }
   },
@@ -192,6 +199,7 @@ const userController = {
 
       return res.status(OK).send(currentUserInfo);
       } catch (error) {
+        error.status = NOT_FOUND;
         next(error);
       }
   }

@@ -1,5 +1,5 @@
 import { blogPostService } from "../services/blogpost-service.js";
-import { OK, CREATED } from "../utils/constants.js";
+import { NOT_FOUND, CREATED, OK, NO_CONTENT } from "../utils/constants.js";
 import { validateEmptyBody } from "../utils/validators.js"
 
 const blogpostController = {
@@ -51,6 +51,7 @@ const blogpostController = {
             return res.status(OK).send(result);
     
         } catch(error) {
+            error.status = NOT_FOUND;
             next(error);
         }
     },
@@ -107,6 +108,7 @@ const blogpostController = {
                 res.status(OK).send(posts);
             }
         } catch(error) {
+            error.status = NOT_FOUND;
             next(error)
         }
     },
@@ -119,8 +121,9 @@ const blogpostController = {
             if (postInfo.errorMessage) {
                 throw new Error(postInfo.errorMessage);
             }
-            return res.status(OK).send(postInfo);
+            return res.status(NO_CONTENT).send(postInfo);
         } catch(error) {
+            error.status = NOT_FOUND;
             next(error)
         }
     }

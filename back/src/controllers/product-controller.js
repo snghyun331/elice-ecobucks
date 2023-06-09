@@ -1,7 +1,7 @@
 import { productService } from "../services/product-service.js";
 import { validateEmptyBody } from "../utils/validators.js";
 import { userAuthService } from "../services/user-service.js";
-import { OK, CREATED, NO_CONTENT } from "../utils/constants.js";
+import { NOT_FOUND, CREATED, OK, NO_CONTENT } from "../utils/constants.js";
 
 const productController = {
   productPostCreate: async function (req, res, next) {

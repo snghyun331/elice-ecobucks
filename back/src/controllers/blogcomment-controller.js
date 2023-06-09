@@ -1,6 +1,7 @@
 import { blogCommentService } from "../services/blogcomment-service.js";
 import { validateEmptyBody } from "../utils/validators.js"
-import { CREATED, OK } from "../utils/constants.js";
+import { NOT_FOUND, CREATED, OK, NO_CONTENT } from "../utils/constants.js";
+
 
 const blogcommentController = {
     blogcommentPostWrite: async (req, res, next) => {
@@ -48,9 +49,10 @@ const blogcommentController = {
                 throw new Error(result.errorMessage)
             }
     
-            return res.status(OK).send(result)
+            return res.status(NO_CONTENT).send(result)
     
         } catch(error) {
+            error.status = NOT_FOUND;
             next(error)
         }
     }    

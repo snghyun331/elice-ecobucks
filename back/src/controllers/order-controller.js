@@ -2,7 +2,7 @@ import { orderService } from "../services/order-service.js";
 import { validateEmptyBody } from "../utils/validators.js";
 import { userAuthService } from "../services/user-service.js";
 import { productService } from "../services/product-service.js";
-import { CREATED } from "../utils/constants.js";
+import { NOT_FOUND, CREATED, OK, NO_CONTENT } from "../utils/constants.js";
 
 const orderController = {
     orderPostCreate: async function(req, res, next) {
@@ -71,8 +71,9 @@ const orderController = {
                     };
             }));    
     
-            return res.json(orderDetails);
+            return res.status(OK).json(orderDetails);
         } catch (error) {
+            error.status = NOT_FOUND;
             next(error);
         }
     }
