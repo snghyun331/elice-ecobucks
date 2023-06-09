@@ -7,7 +7,7 @@ const commentSchema = new Schema(
       ref: 'User',
       required: true
     },
-    challenge_id: {
+    challengeId: {
       type: Schema.Types.ObjectId,
       ref: 'Challenge',
       required: true
@@ -15,6 +15,11 @@ const commentSchema = new Schema(
     content: {
       type: String, 
       required: true
+    },
+    title: {
+      type: String, 
+      required: false,
+      default: ""
     },
   },
   {
