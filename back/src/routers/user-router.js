@@ -5,6 +5,7 @@ import {PostUser_register, PostUser_login, GetUser_myPage, userGetChallenges, us
 import { Validation } from "../middlewares/validation.js";
 
 const userValidation = Validation.validate(Validation.userSchema);
+
 const userAuthRouter = Router();
 
 userAuthRouter.post("/register", userValidation, PostUser_register);
