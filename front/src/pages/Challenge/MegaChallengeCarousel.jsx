@@ -9,7 +9,7 @@ function MegaChallengeCarousel() {
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
   const [megaChallenge, setMegaChallenge] = useState(null);
   const [showChallengeRead, setShowChallengeRead] = useState(false);
-  const megaChallengeId = '6481efc623b4714735854fca';
+  const megaChallengeId = "6481f13423b4714735855046";
 
   useEffect(() => {
     if (isFetchCompleted) {
