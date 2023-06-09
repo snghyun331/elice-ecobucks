@@ -17,9 +17,20 @@ const Mall = () => {
   const [sellModalOpen, setSellModalOpen] = useState(false);
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  // const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   
   const handleCloseSellModal = () => setSellModalOpen(false);
-  const handleOpenSellModal = () => setSellModalOpen(true);
+  const handleOpenSellModal = async (itemId) => {
+    try {
+      const res = await Api.get(`products/${itemId}`);
+      const product = res.data;
+      setSelectedItem(product);
+      console.log("handleOpenSellModal 안에서 selectedItem: ", selectedItem)
+    } catch (err) {
+      console.log(err);
+    }
+    setSellModalOpen(true)
+  };
 
   const handleClosePurchaseModal = () => setPurchaseModalOpen(false);
   const handleOpenPurchaseModal = (item) => {
@@ -28,19 +39,7 @@ const Mall = () => {
   };
 
   const handleCloseEditModal = () => setEditModalOpen(false);
-  const handleOpenEditModal = async (itemId) => {
-    try {
-      const res = await Api.get(`products/${itemId}`);
-      // console.log(res); //res 데이터 잘 받아옴.
-      const product = res.data;
-      setSelectedItem(product);
-      console.log("selectedItem: ", selectedItem);
-    } catch(err) {
-      console.log(err);
-    }
-    // setSelectedItem(item);
-    setEditModalOpen(true);
-  };
+  const handleOpenEditModal = () => setEditModalOpen(true);
   const userState = useContext(UserStateContext);
   const navigate = useNavigate();
   
@@ -87,22 +86,23 @@ const Mall = () => {
     try {
       // 마일리지 충분한지 확인하기
       // 유효성 검사: 구매할 수 있는 수량인지. (수량이 0 개이면 db 삭제)
-      const res = await Api.get(`products/${selectedItem.productId}`);
-      const product = res.data;
-      console.log("받아온 product: ", product);
+      console.log("함수 안에서 selectedItem: ", selectedItem);
+      // const res = await Api.get(`products/${selectedItem.productId}`);
+      // const product = res.data;
+      // console.log("받아온 product: ", product);
       // 상품의 재고(stock)를 1 감소시킵니다.
       const updatedProduct = {
-        ...product,
-        stock: product.stock - 1,
+        ...selectedItem,
+        stock: selectedItem.stock - 1,
       };
       console.log("업데이트 상품: ",updatedProduct);
 
       if (updatedProduct.stock === 0) {
-        await Api.delete(`products/${selectedItem.productId}`);
+        await Api.delete(`products/${updatedProduct.productId}`);
       } else {
-        await Api.put(`products/${selectedItem.productId}`, updatedProduct);
+        await Api.put(`products/${updatedProduct.productId}`, updatedProduct);
       }
-
+      
       // 상품 정보를 업데이트합니다.
       //여기서 오류나는건가
       const updatedList = list.map(item => {
@@ -124,10 +124,7 @@ const Mall = () => {
       console.log("selectedItem: ", selectedItem);
       console.log("updatedItem: ", updatedItem);
       //잘 받아옴.
-      // const res = await Api.get(`products/${selectedItem.productId}`);
-      // const product = res.data;
-      // console.log("받아온 product: ", product);
-      // 상품의 재고(stock)를 1 감소시킵니다.
+
       const updatedProduct = {
         ...selectedItem,
         name: updatedItem.name,
@@ -154,21 +151,6 @@ const Mall = () => {
         return item;
       });
       setList(updatedList);
-      // if (updatedProduct.stock === 0) {
-        //stock: 0 이면 삭제
-        // await Api.delete(`products/${selectedItem.productId}`);
-      // } else {
-      //   //상품정보 업데이트
-      //   await Api.put(`products/${selectedItem.productId}`, updatedProduct);
-      // }
-      // const updatedList = list.map(item => {
-      //   if (item.productId === selectedItem.productId) {
-      //     // stock 값을 1 감소시킴
-      //     return { ...item, stock: item.stock - 1 };
-      //   }
-      //   return item;
-      // });
-      // setList(updatedList);
       handleCloseEditModal();
 
     } catch (err) {
@@ -192,23 +174,7 @@ const Mall = () => {
       <Container className="text-center">
         <img src={Logo} className="w-50 mt-5 mb-5" alt="Logo" />
       </Container>
-      <Container
-        style={{
-          width: "60%",
-          height: "30vh",
-          backgroundColor: "#fff",
-          border: "1px solid #000",
-          borderRadius: "10px",
-          padding: "10px",
-          marginTop: "10px",
-          marginBottom: "10px",
-        }}
-      >
-        <span>아마 지도 API로 지도가 들어갈 자리</span>
-        <br />
-        <img src={SeoulMap} style={{ maxWidth: "80%", maxHeight: "80%" }} />
-        .
-      </Container>
+
       <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenSellModal}>
           판매 상품 등록하기
       </Button>
@@ -273,13 +239,10 @@ const Mall = () => {
                           </Button>
                         </Modal.Footer>
                       </Modal>
-                      {/* <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleEditProduct(item)}>
-                        수정
-                      </Button> */}
                       <Button variant="primary" style={{ margin: "10px", top: "5" }}>
-                        {/* onClick={() => handleEditProduct(item._id)} */}
                         삭제
                       </Button>
+                      {/* onClick={() => handleOpenDeleteModal(item.productId)} */}
                     </>
                   )}
                   <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenPurchaseModal(item)}>
