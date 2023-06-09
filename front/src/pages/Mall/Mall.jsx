@@ -75,9 +75,9 @@ const Mall = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
   const fetchData = async () => {
     try {
       // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.

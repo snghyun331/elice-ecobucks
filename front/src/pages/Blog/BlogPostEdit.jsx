@@ -13,9 +13,10 @@ const BlogPostEdit = ({ handleEditProduct, selectedBlog }) => {
         e.preventDefault();
         try {
           const updatedBlog = {
+            _id: selectedBlog._id,
             title: title || selectedBlog.title,
             content: content || selectedBlog.content,
-            topic: content || selectedBlog.topic
+            topic: topic || selectedBlog.topic
           };
           // setList(updatedItem);
           // console.log("updatedItem: ", updatedItem);
