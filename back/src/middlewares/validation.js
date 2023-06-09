@@ -20,6 +20,14 @@ class Validation {
     description: Joi.string(),
   });
 
+  static productUpdateSchema = Joi.object({
+    name: Joi.string(),
+    price: Joi.number().integer(),
+    place: Joi.string(),
+    stock: Joi.number().integer(),
+    description: Joi.string(),
+  })
+
   static userSchema = Joi.object({
     username: Joi.string().min(USERNAME_MIN).max(USERNAME_MAX).required(),
     email: Joi.string().email().required(),
@@ -29,7 +37,7 @@ class Validation {
 
   static userUpdateSchema = Joi.object({
     username: Joi.string().min(USERNAME_MIN).max(USERNAME_MAX),
-    password: Joi.string().regex(new RegExp(`^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*()])[a-zA-Z\\d!@#$%^&*()]{${PWD_MIN},${PWD_MAX}}$`)),
+    password: Joi.string().regex(new RegExp(`^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*()])[a-zA-Z\\d!@#$%^&*()]{${PWD_MIN},${PWD_MAX}}$`)).required(),
     districtName: Joi.string(), 
   }).or('username', 'email', 'password', 'districtName');
 
