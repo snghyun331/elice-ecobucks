@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Button, ButtonGroup, Container, Form, Alert } from "react-bootstrap";
-import * as Api from '../../api'
+import * as Api from "../../api";
 
-const ChallengeCreate = () => {
+const ChallengeCreate = ({ onBackToListClick }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [duration, setDuration] = useState("");
@@ -16,21 +16,27 @@ const ChallengeCreate = () => {
         title,
         content,
         icon,
-        weeks: duration
+        weeks: duration,
       });
-      window.location.reload()
+      window.location.reload();
     } catch (err) {
-      alert("모든 값을 입력해주세요.")
+      alert("모든 값을 입력해주세요.");
       console.log("챌린지 등록에 실패하였습니다.", err);
     }
   };
 
   const handleTitleChange = (event) => {
-    setTitle(event.target.value);
+    const { value } = event.target;
+    if (value.length <= 20) {
+      setTitle(value);
+    }
   };
 
   const handleContentChange = (event) => {
-    setContent(event.target.value);
+    const { value } = event.target;
+    if (value.length <= 100) {
+      setContent(value);
+    }
   };
 
   const handleDurationChange = (event) => {
@@ -47,29 +53,43 @@ const ChallengeCreate = () => {
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="title">
           <Form.Label>제목</Form.Label>
-          <Container className="text-muted" style={{fontSize:'0.85rem'}}>
+          <Container className="text-muted" style={{ fontSize: "0.85rem" }}>
             구체적인 행동을 지정해주세요. (i.e. 예비전력 절약을 위해 전기 코드를 뽑아요.)
           </Container>
           <Form.Control
             type="text"
             value={title}
             onChange={handleTitleChange}
+            maxLength={20}
+            placeholder="제목을 입력해주세요 (최대 20자)"
           />
+          {title.length > 20 && (
+            <Alert variant="danger" className="mt-2 p-2">
+              제목은 최대 20자까지 입력 가능합니다.
+            </Alert>
+          )}
         </Form.Group>
         <Form.Group controlId="content">
           <Form.Label>설명</Form.Label>
-          <Container className="text-muted" style={{fontSize:'0.85rem'}}>
+          <Container className="text-muted" style={{ fontSize: "0.85rem" }}>
             이 행동을 하는 방법이나, 환경에 미치는 영향을 알려주세요.
           </Container>
           <Form.Control
             as="textarea"
             value={content}
             onChange={handleContentChange}
+            maxLength={100}
+            placeholder="설명을 입력해주세요 (최대 100자)"
           />
+          {content.length > 100 && (
+            <Alert variant="danger" className="mt-2 p-2">
+              설명은 최대 100자까지 입력 가능합니다.
+            </Alert>
+          )}
         </Form.Group>
         <Form.Group controlId="duration">
           <Form.Label>진행기간</Form.Label>
-          <Container className="text-muted" style={{fontSize:'0.85rem'}}>
+          <Container className="text-muted" style={{ fontSize: "0.85rem" }}>
           </Container>
           <Form.Control
             as="select"
@@ -161,7 +181,7 @@ const ChallengeCreate = () => {
           </Alert>
         </Form.Group>
         <Button type="submit">챌린지 게시</Button>
-      <Button>
+        <Button onClick={onBackToListClick} >
         목록으로
       </Button>
       </Form>

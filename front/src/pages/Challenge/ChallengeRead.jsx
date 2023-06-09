@@ -1,6 +1,15 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Container, Card, Modal, Form, ListGroup, OverlayTrigger, Tooltip } from "react-bootstrap";
+import {
+  Button,
+  Container,
+  Card,
+  Modal,
+  Form,
+  ListGroup,
+  OverlayTrigger,
+  Tooltip,
+} from "react-bootstrap";
 import * as Api from "../../api";
 
 import ChallengeParticipate from "./ChallengeParticipate";
@@ -36,7 +45,6 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
     setShowUpdateModal(false);
   };
 
-
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
@@ -55,7 +63,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
         await Api.delete(`challenges/${challenge._id}`);
         window.location.reload();
       } catch (err) {
-        alert(err.response.data);
+        alert(err.res.data);
       }
     }
   };
@@ -66,13 +74,13 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
     const content = formData.get("content");
 
     try {
-      const response = await Api.post(`challenges/${challenge._id}/comments`, {
+      const res = await Api.post(`challenges/${challenge._id}/comments`, {
         userId: userState.user._id,
         challengeId: challenge._id,
         content,
       });
       const newComment = {
-        ...response.data,
+        ...res.data,
         userId: {
           _id: userState.user._id,
           username: userState.user.username,
@@ -97,7 +105,9 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
         content: editedComment,
       });
       const updatedComments = comments.map((comment) =>
-        comment._id === commentId ? { ...comment, content: editedComment } : comment
+        comment._id === commentId
+          ? { ...comment, content: editedComment }
+          : comment
       );
       setComments(updatedComments);
       setEditingCommentId(null);
@@ -127,8 +137,9 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await Api.get(`challenges/${challenge._id}/comments`);
-        setComments(response.data);
+        const res = await Api.get(`challenges/${challenge._id}/comments`);
+        console.log("코멘트", res.data);
+        setComments(res.data);
       } catch (error) {
         console.log("Error fetching comments:", error);
       }
@@ -160,7 +171,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
               <ListGroup.Item
                 key={comment._id}
                 className="d-flex flex-column justify-content-between align-items-start"
-                >
+              >
                 <div>
                   <strong>{comment.userId.username}</strong>{" "}
                   <span style={{ color: "gray", fontSize: "0.8em" }}>
@@ -173,7 +184,6 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
                       e.preventDefault();
                       handleUpdateComment(comment._id);
                     }}
-                  
                   >
                     <Form.Control
                       name="content"
@@ -181,12 +191,10 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
                       rows={3}
                       placeholder="댓글을 입력하세요."
                       value={editedComment}
-                      onChange={(event) =>
-                        setEditedComment(event.target.value)
-                      }
+                      onChange={(event) => setEditedComment(event.target.value)}
                       required
-                      className='mt-3 mb-2'
-                      style={{width: '282%'}}
+                      className="mt-3 mb-2"
+                      style={{ width: "282%" }}
                     />
                     <div>
                       <Button
@@ -280,7 +288,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
               </Button>
             </a>
           </OverlayTrigger>
-          
+
           <OverlayTrigger
             placement="top"
             overlay={
@@ -288,24 +296,30 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
                 참가자가 있을 시 수정, 삭제할 수 없습니다.
               </Tooltip>
             }
-          ><a>
+          >
+            <a>
               <Button
                 className="mt-3"
                 onClick={handleDeleteClick}
                 disabled={challenge.participantsCount >= 1}
               >
                 삭제하기
-              </Button>
-              </a>
+              </Button>]
+
+              
+            </a>
           </OverlayTrigger>
-          
         </>
       )}
       <Button onClick={onBackToListClick} className="mt-3">
         목록으로
       </Button>
 
-      <Modal show={showModal} onHide={handleCloseModal} style={{zIndex: '9999', marginTop: '200px'}}>
+      <Modal
+        show={showModal}
+        onHide={handleCloseModal}
+        style={{ zIndex: "9999", marginTop: "200px" }}
+      >
         <Modal.Header closeButton>
           <Modal.Title>참가하기</Modal.Title>
         </Modal.Header>
@@ -315,7 +329,12 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
         />
       </Modal>
 
-      <Modal size="lg" show={showUpdateModal} onHide={handleCloseUpdateModal} style={{zIndex: '9998', marginTop: '100px'}}>
+      <Modal
+        size="lg"
+        show={showUpdateModal}
+        onHide={handleCloseUpdateModal}
+        style={{ zIndex: "9998", marginTop: "100px" }}
+      >
         <Modal.Header closeButton>
           <Modal.Title>챌린지 수정</Modal.Title>
         </Modal.Header>
@@ -323,6 +342,19 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
           challenge={challenge}
           onClose={handleCloseUpdateModal}
         />
+        <Modal.Footer>
+          <Button
+            className="mt-4 mb-4"
+            variant="secondary"
+            onClick={handleCloseUpdateModal}
+            style={{
+              width: "100%",
+              borderRadius: "0px",
+            }}
+          >
+            닫기
+          </Button>
+        </Modal.Footer>
       </Modal>
     </Container>
   );
