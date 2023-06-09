@@ -1,8 +1,9 @@
 import { userModel } from "../db/schemas/user.js";
-import { User, District, Challenge, Participation, Comment } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import { User, District, Challenge, ChallengeParticipation, ChallengeComment } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt, { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
 import { updateTimestamps } from "../utils/update-time-stamps.js";
+import { challengeModel } from "../db/schemas/challenge.js";
 
 class userAuthService {
   static async addUser({ username, email, password, districtName }) {
@@ -157,8 +158,8 @@ class userAuthService {
   static async getUserMypage({userId}){
     const user  = await User.findById({userId});
     const challenges = await Challenge.findAllByUserId({ userId: userId });
-    const participations = await Participation.findAllByUserId({ userId: userId });
-    const comments = await Comment.findAllByUserId({ userId: userId });
+    const participations = await ChallengeParticipation.findAllByUserId({ userId: userId });
+    const comments = await ChallengeComment.findAllByUserId({ userId: userId });
     const userInfo = {
       ...user._doc,
       challengeCount: challenges.length,
@@ -184,7 +185,7 @@ class userAuthService {
   static async getUserChallenges({userId}){
     const user  = await User.findById({userId});
     console.log('user: ',user);
-    const challenges = await Comment.findAllByUserId({ userId: userId });
+    const challenges = await Challenge.findAllByUserId({ userId: userId });
     console.log('challenges: ',challenges);
     const userInfo = {
       ...user._doc,
@@ -197,19 +198,21 @@ class userAuthService {
   static async getUserParticipants({userId}){
     const user  = await User.findById({userId});
 
-    const participations = await Participation.findAllByUserId({ userId: userId });
+    const participations = await ChallengeParticipation.findAllByUserId({ userId: userId });
     const userInfo = {
       ...user._doc,
       userParticipantsCount: participations.length,
       participantsList: participations,
     }
+
+
     return userInfo
   }
 
   static async getUserComments({userId}){
     const user  = await User.findById({userId});
 
-    const comments = await Comment.findAllByUserId({ userId: userId });
+    const comments = await ChallengeComment.findAllByUserId({ userId: userId });
     const userInfo = {
       ...user._doc,
       userCommentsCount: comments.length,
