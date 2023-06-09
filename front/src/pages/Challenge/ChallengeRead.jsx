@@ -304,7 +304,9 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
                 disabled={challenge.participantsCount >= 1}
               >
                 삭제하기
-              </Button>
+              </Button>]
+
+              
             </a>
           </OverlayTrigger>
         </>
