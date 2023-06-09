@@ -21,8 +21,6 @@ const Blog = () => {
   const handleOpenEditModal = async (blogId) => {
     try {
       const res = await Api.get(`blog/${blogId}`);
-      // console.log(res); //res 데이터 잘 받아옴.
-      // console.log(res);
       const blog = res.data;
       console.log("받아온 blog: ", blog);
       setSelectedBlog(blog);
@@ -45,9 +43,9 @@ const Blog = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
   const fetchData = async () => {
     try {
       // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
@@ -79,21 +77,9 @@ const Blog = () => {
       console.log("selectedBlog: ", selectedBlog);
       console.log("updatedBlog: ", updatedBlog);
 
-      const updatedProduct = {
-        // ...selectedItem,
-        _id: selectedBlog._id,
-        title: updatedBlog.title,
-        topic: updatedBlog.topic,
-        content: updatedBlog.content
-      };
-      console.log("updatedProduct: ", updatedProduct);
-      ///blog/write에서 blogId===_id인 값 찾아야 함.
-      // const res = await Api.get(`blog`);
-      // const findBlog = res.data;
-      // console.log(findBlog);
-      await Api.put(`blog/write`, updatedProduct);
-
-      // const updatedList = blogList.map(item => {
+      await Api.put(`blog/${selectedBlog._id}/write`, updatedBlog);
+      fetchData();
+      // const updatedBlogList = blogList.map(item => {
       //   if (item._id === selectedBlog._id) {
       //     return { ...selectedBlog,
       //       title: updatedBlog.title,
@@ -103,7 +89,8 @@ const Blog = () => {
       //   }
       //   return item;
       // });
-      // setBlogList(updatedList);
+      // console.log("updatedBlogList: ", updatedBlogList);
+      // setBlogList(updatedBlogList);
       handleCloseEditModal();
 
     } catch (err) {
