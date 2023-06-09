@@ -1,5 +1,6 @@
 import cron from "node-cron";
 import { challengeModel } from "../db/schemas/challenge.js";
+import { participationModel } from "../db/schemas/challenge-participation.js";
 import moment from 'moment-timezone'
 
 // UTC와 한국 표준시(KST)는 9시간 차이로 한국이 9시간 빠르다 
@@ -18,6 +19,9 @@ export async function scheduleChallenge() {
       const show = await challengeModel.updateMany(
         { dueDate: { $lt: now }, isCompleted: false },
         { $set: { isCompleted: true } }
+      );
+      await participationModel.updateMany(
+        { }, { $set: { hasParticipatedToday: false } }
       );
       console.log('---Updated challenges---');
       console.log(now);

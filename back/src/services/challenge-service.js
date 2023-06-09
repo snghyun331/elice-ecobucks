@@ -1,4 +1,5 @@
 import { Challenge } from "../db/models/challenge.js";
+import { User } from "../db/index.js";
 import { updateTimestamps } from "../utils/update-time-stamps.js";
 class ChallengeService {
   
@@ -14,16 +15,23 @@ class ChallengeService {
     if (!title || !content || !icon || !weeks){ 
       throw new Error("제목, 내용, 아이콘, 기간 모두 입력해 주세요."); 
     }
+
     // 테스트용 마감기한 1분뒤로 설정해서 확인  
     //let newDueDate = new Date();
     //const dueDate = newDueDate.setMinutes(newDueDate.getMinutes() + 1);
     const dueDate = this.makeDueDate(weeks)
-    const createdChallenge = await Challenge.create({ userId, title, content, icon, weeks, dueDate });
+    const challenge = await Challenge.create({ userId, title, content, icon, weeks, dueDate });
+    
+    //--- User Update ---
+    // 유저정보 갱신 - 참여자 마일리지 추가
+    const user = await User.findById({ userId: challenge.userId })
+    user.mileage += 1000;
+    await user.save();
     
     // 시간을 한국표준시간으로 변경
-    const updateCreatedChallenge=updateTimestamps(createdChallenge)
+    const updateChallenge=updateTimestamps(challenge)
     
-    return updateCreatedChallenge;
+    return updateChallenge;
   }
 
   static async findChallenges( ) {

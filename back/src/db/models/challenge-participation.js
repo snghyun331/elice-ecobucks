@@ -11,8 +11,8 @@ class ChallengeParticipation {
     return participations;
   } 
 
-  static NoAsyncfindAll({ challenge_id }) {
-    const participations = participationModel.find({ challenge_id });
+  static NoAsyncfindAll({ challengeId }) {
+    const participations = participationModel.find({ challengeId });
     return participations;
   }
   

@@ -6,8 +6,8 @@ const blogCommentRouter = Router();
 
 blogCommentRouter.post("/blog/comment/write", login_required, blogcommentPostWrite);
 
-blogCommentRouter.put("/blog/comment/write", login_required, blogcommentPutWrite)
+blogCommentRouter.put("/blog/comment/:_id/write", login_required, blogcommentPutWrite)
 
-blogCommentRouter.delete("/blog/comment/write", login_required, blogcommentDeleteWrite)
+blogCommentRouter.delete("/blog/comment/:_id", login_required, blogcommentDeleteWrite)
 
 export { blogCommentRouter };
