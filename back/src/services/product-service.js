@@ -1,8 +1,8 @@
 import { Product } from "../db/models/product.js";
 
 class productService {
-  static async addProduct({ seller, sellerName, name, price, place, stock, description }) {
-    const newProduct = { seller, sellerName, name, price, place, stock, description };
+  static async addProduct({ seller, sellerName, name, price, place, stock, location, description }) {
+    const newProduct = { seller, sellerName, name, price, place, stock, location, description };
 
     //db에 저장
     const createdNewProduct = await Product.create({ newProduct });
@@ -68,7 +68,7 @@ class productService {
 
   static async decreaseProductStock(productId) {
     try {
-      const product = await Product.findById({productId});
+      const product = await Product.findById({ productId });
 
       if (!product) {
         throw new Error("상품을 찾을 수 없습니다.");
@@ -80,10 +80,10 @@ class productService {
 
       product.stock -= 1; // 재고 감소
       await product.save();
-      console.log(product.stock)
+
       return product;
     } catch (error) {
-      throw new Error(`상품 재고를 감소시키는 도중 오류가 발생했습니다: ${error.message}`);
+      throw new Error(`상품 재고를 감소시키는 도중 오류가 발생했습니다: ${ error.message }`);
     }
   }
 }

@@ -2,68 +2,80 @@ import { orderService } from "../services/order-service.js";
 import { validateEmptyBody } from "../utils/validators.js";
 import { userAuthService } from "../services/user-service.js";
 import { productService } from "../services/product-service.js";
-import { CREATED } from "../utils/constants.js";
-const orderPostCreate = async function(req, res, next) {
-    try{
-        validateEmptyBody(req)
-        const { productId } = req.body;
-        const buyer = req.currentUserId;
+import { NOT_FOUND, CREATED, OK, NO_CONTENT } from "../utils/constants.js";
 
-        const { username: buyerName, mileage: buyerMileage } = await userAuthService.getUserInfo({ userId: buyer });
-        const { name: productName, price: productPrice, stock: productStock } = await productService.findProduct({ productId });
-        
-        // 마일리지 차감
-        const requiredMileage = productPrice; // 상품 가격만큼 마일리지 차감
-        if (buyerMileage < requiredMileage) {
-            throw new Error("마일리지가 부족합니다.");
-        }
-        await userAuthService.subtractMileage(buyer, requiredMileage);
-        
-        // 상품 재고 감소
-        if (productStock <= 0) {
-        throw new Error("상품 재고가 부족합니다.");
-        }
-        await productService.decreaseProductStock(productId);
-      
-        const newOrder = await orderService.addOrder({ productId, productName, buyer, buyerName })
-        
-        if (newOrder.errorMessage) {
-            throw new Error(newOrder.errorMessage);
-        }
-      
-        return res.status(CREATED).json(newOrder);
-    } catch (error) {
-    next(error);
-    }
-}
+const orderController = {
+    orderPostCreate: async function(req, res, next) {
+        try{
+            validateEmptyBody(req)
+            const { productId } = req.body;
+            const buyer = req.currentUserId;
 
-const orderGetMypage = async function(req, res, next) {
-    try {
-        const userId = req.currentUserId;
-        const orders = await orderService.getUserOrders({ userId });
+            const newOrder = { 
+                productId, 
+                buyer, 
+            }
+            const createdOrder = await orderService.addOrder({ newOrder })
 
-        if (orders.length === 0) {
-            return res.json({ message: '주문 내역이 없습니다.' });
-        }
+            // 상품 가격만큼 마일리지 차감
+            const product = await productService.findProduct({ productId });
+            const requiredMileage = product.price;  
 
-        const orderDetails = [];
+            const buyerInfo = await userAuthService.getUserInfo({ userId: buyer });
+            const { mileage: buyerMileage } = buyerInfo;
 
-        for (const order of orders) {
-            const { productId } = order;
-            const { name, price, place } = await productService.findProduct({ productId });
+            if (buyerMileage < requiredMileage) {
+                throw new Error("마일리지가 부족합니다.");
+            }
+            await userAuthService.subtractMileage(buyer, requiredMileage);
             
-            orderDetails.push({
-                createdAt: order.createdAt,
-                name,
-                price,
-                place,
-            });
-        }
+            // 상품 재고 감소
+            await productService.decreaseProductStock(productId);
+            
+            if (createdOrder.errorMessage) {
+                throw new Error(createdOrder.errorMessage);
+            }
         
-        return res.json(orderDetails);
-    } catch (error) {
+            return res.status(CREATED).json(createdOrder);
+        } catch (error) {
         next(error);
+        }
+    },
+
+    orderGetMypage: async function(req, res, next) {
+        try {
+            const userId = req.currentUserId;
+            const orders = await orderService.getUserOrders({ userId });
+    
+            if (orders.length === 0) {
+                return res.json({ message: '주문 내역이 없습니다.' });
+            }
+    
+            const orderDetails = await Promise.all(
+                orders.map(async (order) => {
+                    const { productId, createdAt } = order;
+                    const product = await productService.findProduct({ productId });
+                    
+                    if (!product) {
+                        // 상품을 찾지 못한 경우에 대한 처리
+                        return { error: '상품을 찾을 수 없습니다.' };
+                      }
+    
+                    const { name, price, place } = product;
+    
+                    return {
+                        date: createdAt,
+                        product: name,
+                        price: price,
+                        location: place,
+                    };
+            }));    
+    
+            return res.status(OK).json(orderDetails);
+        } catch (error) {
+            error.status = NOT_FOUND;
+            next(error);
+        }
     }
 }
-
-export { orderPostCreate, orderGetMypage };
+export { orderController };

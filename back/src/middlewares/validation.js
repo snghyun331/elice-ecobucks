@@ -11,21 +11,39 @@ class Validation {
     likeCount: Joi.number().integer(),
     likeUsers: Joi.array()
   })
-  
+
   static productSchema = Joi.object({
+    name: Joi.string().required(),
+    price: Joi.number().integer().required(),
+    place: Joi.string().required(),
+    stock: Joi.number().integer().required(),
+    description: Joi.string().required(),
+    location: Joi.object({
+      x: Joi.number().required(),
+      y: Joi.number().required()
+    })
+  });
+
+  static productUpdateSchema = Joi.object({
     name: Joi.string(),
     price: Joi.number().integer(),
     place: Joi.string(),
     stock: Joi.number().integer(),
     description: Joi.string(),
-  });
+  })
 
   static userSchema = Joi.object({
+    username: Joi.string().min(USERNAME_MIN).max(USERNAME_MAX).required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().required().regex(new RegExp(`^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*()])[a-zA-Z\\d!@#$%^&*()]{${PWD_MIN},${PWD_MAX}}$`)),
+    districtName: Joi.string().required(), 
+  });
+
+  static userUpdateSchema = Joi.object({
     username: Joi.string().min(USERNAME_MIN).max(USERNAME_MAX),
-    email: Joi.string().email(),
     password: Joi.string().regex(new RegExp(`^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*()])[a-zA-Z\\d!@#$%^&*()]{${PWD_MIN},${PWD_MAX}}$`)),
     districtName: Joi.string(), 
-  });
+  }).or('username', 'password', 'districtName');
 
   static validate(schema) {
     return (req, res, next) => {
