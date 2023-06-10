@@ -4,16 +4,18 @@ import React, { useEffect } from 'react';
 
 const { kakao } = window;
 
-const MapContainer = ({ locations }) => {
+const MapContainer = ({ locations, selectedItemLocate }) => {
 
     useEffect(() => {
+        console.log("맵컨테이너 함수 안: ", selectedItemLocate);
         const container = document.getElementById('myMap');
         const options = {
-            center: new kakao.maps.LatLng(37.5665, 126.9780), // 서울을 중심으로 설정
+            center: new kakao.maps.LatLng(37.5469686000002, 127.05732177903647), // 서울을 중심으로 설정
             level: 4
         };
         const map = new kakao.maps.Map(container, options);
-
+        // var moveLatLng = new kakao.maps.LatLng(33.450580, 126.574942);   
+        // map.panTo(moveLatLng);
         // 마커 생성 및 표시
         locations.forEach((location) => {
             console.log(location)
@@ -32,8 +34,21 @@ const MapContainer = ({ locations }) => {
                 // image: markerImage,
             });
             marker.setMap(map);
+
+            var moveLatLng = new kakao.maps.LatLng(selectedItemLocate.y, selectedItemLocate.x);
+        map.panTo(moveLatLng);
         });
-    }, []);
+    }, [selectedItemLocate]);
+
+    // useEffect(() => {
+    //     const container = document.getElementById('myMap');
+    //     const options = {
+    //         center: new kakao.maps.LatLng(37.5469686000002, 127.05732177903647), // 서울을 중심으로 설정
+    //         level: 4
+    //     };
+    //     const map = new kakao.maps.Map(container, options);
+        
+    // }, [selectedItemLocate])
 
     return (
         <div id='myMap' style={{

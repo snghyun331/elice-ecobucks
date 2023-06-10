@@ -14,6 +14,7 @@ const Mall = () => {
   const navigate = useNavigate();
   const [list, setList] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [itemLocate, setItemLocate] = useState({});
 
   const [sellModalOpen, setSellModalOpen] = useState(false);
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
@@ -113,7 +114,7 @@ const Mall = () => {
         lat: product.location.y,
         lng: product.location.x
       }));
-    console.log(locations);
+    console.log("extractLocations: ", locations);
     return locations;
   };
   const handleConfirmPurchase = async (selectedItem) => {
@@ -197,6 +198,7 @@ const Mall = () => {
           description: item.description,
           seller: item.seller,
           sellerName: item.sellerName,
+          location: item.location,
           _id: item._id //상품 ObjectId
         };
       });
@@ -206,17 +208,13 @@ const Mall = () => {
       console.log("상품 삭제에 실패했습니다.", err);
     }
   }
-
-  // const URL = "https://dapi.kakao.com/v2/maps/sdk.js?appkey=4ae4fac7512ead5c242a019ad3c160f2";
-  // 지도를 표시할 div 요소를 선택합니다.
-  // var container = document.getElementById("map");
-
-  // 지도를 생성하고 특정 위치를 중심으로 설정합니다.
-  // var options = {
-  //   center: new kakao.maps.LatLng(37.5665, 126.9780),
-  //   level: 3,
-  // };
-  // var map = new kakao.maps.Map(container, options);
+  const handleLocate = (selectedItem) => {
+    console.log("handleLocate: ", selectedItem);
+    console.log("x좌표: ", selectedItem.location.x);
+    console.log("y좌표: ", selectedItem.location.y);
+    // setSelectedItem(selectedItem);
+    setItemLocate(selectedItem.location);
+  }
 
   return (
     <div style={{ zIndex: "-1", padding: "60px" }}>
@@ -234,7 +232,7 @@ const Mall = () => {
       <Container className="text-center">
         <img src={Logo} className="w-50 mt-5 mb-5" alt="Logo" />
       </Container>
-      <MapContainer locations={extractLocations()} />
+      <MapContainer locations={extractLocations()} selectedItemLocate={itemLocate} />
       <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenSellModal}>
         판매 상품 등록하기
       </Button>
@@ -273,6 +271,9 @@ const Mall = () => {
                   <Card.Text className="card-text">판매자: {item.sellerName}</Card.Text>
                   <Card.Text className="card-text">재고: {item.stock}</Card.Text>
                   <Card.Text className="card-text">설명: {item.description}</Card.Text>
+                  <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleLocate(item)}>
+                      위치
+                  </Button>
                   {userState.user._id === item.seller && (
                     <>
                       <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item._id)}>
