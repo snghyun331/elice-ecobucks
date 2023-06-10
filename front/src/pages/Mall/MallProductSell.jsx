@@ -19,7 +19,6 @@ const MallProductSell = (props) => {
             price: Number(price),
             place,
             stock: Number(stock),
-            // seller: userState.user._id,
             description,
           });
           console.log(res);
