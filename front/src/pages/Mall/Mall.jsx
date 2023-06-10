@@ -8,6 +8,8 @@ import { UserStateContext } from "../../context/user/UserProvider";
 import MallProductSell from "./MallProductSell";
 import MallProductEdit from "./MallProductEdit";
 const Mall = () => {
+  const userState = useContext(UserStateContext);
+  const navigate = useNavigate();
   const [list, setList] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -15,6 +17,9 @@ const Mall = () => {
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [mapModalOpen, setMapModalOpen] = useState(false);
+
+  const { kakao } = window;
   
   const handleCloseSellModal = () => setSellModalOpen(false);
   const handleOpenSellModal = async (itemId) => {
@@ -63,8 +68,11 @@ const Mall = () => {
     setDeleteModalOpen(true);
   };
 
-  const userState = useContext(UserStateContext);
-  const navigate = useNavigate();
+  const handleCloseMapModal = () => setMapModalOpen(false);
+  const handleOpenMapModal = () => {
+    setMapModalOpen(true);
+  }
+  
   
   useEffect(() => {
     // 만약 전역 상태의 user가 null이거나 탈퇴한 회원이라면, 로그인 페이지로 이동함.
@@ -194,6 +202,17 @@ const Mall = () => {
     }
   }
 
+  // const URL = "https://dapi.kakao.com/v2/maps/sdk.js?appkey=4ae4fac7512ead5c242a019ad3c160f2";
+  // 지도를 표시할 div 요소를 선택합니다.
+  // var container = document.getElementById("map");
+
+  // 지도를 생성하고 특정 위치를 중심으로 설정합니다.
+  // var options = {
+  //   center: new kakao.maps.LatLng(37.5665, 126.9780),
+  //   level: 3,
+  // };
+  // var map = new kakao.maps.Map(container, options);
+
   return (
     <div style={{zIndex: "-1", padding:"60px"}}>
       <div
@@ -210,7 +229,32 @@ const Mall = () => {
       <Container className="text-center">
         <img src={Logo} className="w-50 mt-5 mb-5" alt="Logo" />
       </Container>
+      {/* <div id="map" style="width: 500px; height: 400px;"></div> */}
+      <Button onClick={handleOpenMapModal}>지도보기</Button>
+      <Modal show={mapModalOpen} onHide={handleCloseMapModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>지도</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {/* <MapApi /> */}
+          지도 테스트중입니다.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            className="mt-4 mb-4"
+            variant="secondary"
+            onClick={handleCloseMapModal}
+            style={{
+              width: "100%",
+              borderRadius: "0px",
+            }}
+          >
+            닫기
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
+      
       <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenSellModal}>
           판매 상품 등록하기
       </Button>
