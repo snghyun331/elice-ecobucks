@@ -8,13 +8,13 @@ const productController = {
     try {
       validateEmptyBody(req)
 
-      const { name, price, place, stock, description } = req.body;
+      const { name, price, place, stock, description, location } = req.body;
       const seller = req.currentUserId;
       
       const currentUserInfo = await userAuthService.getUserInfo({ userId: seller });
       const sellerName = currentUserInfo.username;
 
-      const newProduct = await productService.addProduct({ seller, sellerName, name, price, place, stock, description });
+      const newProduct = await productService.addProduct({ seller, sellerName, name, price, place, stock, location, description });
       if (newProduct.errorMessage) {
         throw new Error(newProduct.errorMessage);
       }

@@ -11,13 +11,17 @@ class Validation {
     likeCount: Joi.number().integer(),
     likeUsers: Joi.array()
   })
-  
+
   static productSchema = Joi.object({
     name: Joi.string().required(),
     price: Joi.number().integer().required(),
     place: Joi.string().required(),
     stock: Joi.number().integer().required(),
     description: Joi.string().required(),
+    location: Joi.object({
+      x: Joi.number().required(),
+      y: Joi.number().required()
+    })
   });
 
   static productUpdateSchema = Joi.object({
