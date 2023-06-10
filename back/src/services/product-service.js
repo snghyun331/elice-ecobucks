@@ -53,6 +53,10 @@ class productService {
   static async deleteProduct({ productId, sellerId }) {
     const product = await Product.findById({ productId });
 
+    if (!product) {
+      throw new Error("해당 id를 가진 상품을 찾을 수 없습니다.");
+    }
+
     if(product.seller.toString() !== sellerId) 
       throw new Error("수정 권한이 없습니다.");
 
@@ -60,7 +64,7 @@ class productService {
 
     if (!isDataDeleted) {
       const errorMessage =
-        "해당 id를 가진 상품이 없습니다. 다시 한 번 확인해 주세요.";
+        "해당 id를 가진 상품이 삭제되지 않았습니다.";
       return { errorMessage };
     }
     return { status: "ok" };

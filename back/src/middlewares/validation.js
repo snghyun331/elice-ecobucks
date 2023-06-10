@@ -13,7 +13,7 @@ class Validation {
   })
   
   static productSchema = Joi.object({
-    name: Joi.string().required(),
+    name: Joi.string().required().not(''),
     price: Joi.number().integer().required(),
     place: Joi.string().required(),
     stock: Joi.number().integer().required(),
@@ -45,7 +45,7 @@ class Validation {
     return (req, res, next) => {
       const { error } = schema.validate(req.body);
       if (error) {
-        return res.status(BAD_REQUEST).json({ error: error.details[0].message });
+        return res.status(BAD_REQUEST).json({ "유효성 검사 오류": error.details[0].message });
       }
       next();
     };
