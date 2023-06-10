@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Card, Container, Modal, Row, Col } from "react-bootstrap";
+import { Button, Card, Container, Modal, Row, Col, ListGroup, Form } from "react-bootstrap";
 import * as Api from "../../api";
 import { useEffect } from "react";
 import BlogPost from "./BlogPost";
 import { UserStateContext } from "../../context/user/UserProvider";
 import { useContext } from "react";
 import BlogPostEdit from "./BlogPostEdit";
+import BlogComment from "./BlogComment";
 const Blog = () => {
   // const [blogPosts, setBlogPosts] = useState([]);
   const userState = useContext(UserStateContext);
@@ -15,6 +16,7 @@ const Blog = () => {
   const handleOpenModal = () => setShowModal(true);
   const [blogList, setBlogList] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
+  
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -129,6 +131,7 @@ const Blog = () => {
       console.log("블로그 삭제에 실패했습니다.", err);
     }
   }
+  
 
   return (
     <div style={{ padding: "60px"}}>
@@ -201,6 +204,7 @@ const Blog = () => {
                   <Card.Text className="card-text">likeCount: {item.likeCount}</Card.Text>
                   <Card.Text className="card-text">설명: {item.content}</Card.Text>
                   <Card.Text className="card-text">작성자: {item.username}</Card.Text>
+                  <BlogComment blog={item.blogId} />
                   {userState.user._id === item.userId && (
                     <>
                       <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item.blogId)}>
