@@ -1,7 +1,7 @@
 import { productService } from "../services/product-service.js";
 import { validateEmptyBody } from "../utils/validators.js";
 import { userAuthService } from "../services/user-service.js";
-import { NOT_FOUND, CREATED, OK, NO_CONTENT } from "../utils/constants.js";
+import { CREATED, OK } from "../utils/constants.js";
 
 const productController = {
   productPostCreate: async function (req, res, next) {
@@ -56,11 +56,7 @@ const productController = {
   productGetById: async function (req, res, next) {
     try {
       const productId = req.params._id;
-      const product = await productService.findProduct({ productId });
-
-      if (product.errorMessage) {
-        throw new Error(product.errorMessage);
-      }
+      const product = await productService.findProduct(productId);
       return res.status(OK).send(product);
     } catch (error) {
       next(error);
@@ -77,7 +73,7 @@ const productController = {
         throw new Error("해당 상품을 삭제할 수 없습니다.");
       }
 
-      return res.status(NO_CONTENT).send(result);
+      return res.status(OK).send(result);
     } catch (error) {
       next(error);
     }

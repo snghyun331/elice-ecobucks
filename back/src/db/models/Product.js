@@ -24,7 +24,7 @@ class Product {
     return products
   }
 
-  static async deleteById({ productId }) {
+  static async deleteById(productId) {
     const deleteResult = await productModel.deleteOne({ _id: productId });
     const isDataDeleted = deleteResult.deletedCount === 1;
     return isDataDeleted;

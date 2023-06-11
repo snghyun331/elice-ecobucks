@@ -11,7 +11,7 @@ class productService {
   }
 
   static async updateProduct({ productId, sellerId, toUpdate }) {
-    let product = await Product.findById({ productId });
+    let product = await Product.findById(productId);
     
     // 상품이 없는 경우 오류 메시지
     if (!product) {
@@ -54,7 +54,7 @@ class productService {
   }
 
   static async deleteProduct({ productId, sellerId }) {
-    const product = await Product.findById({ productId });
+    const product = await Product.findById(productId);
 
     if (!product) {
       throw new Error("해당 id를 가진 상품을 찾을 수 없습니다.");
@@ -63,7 +63,7 @@ class productService {
     if(product.seller.toString() !== sellerId) 
       throw new Error("수정 권한이 없습니다.");
 
-    const isDataDeleted = await Product.deleteById({ productId });
+    const isDataDeleted = await Product.deleteById(productId);
 
     if (!isDataDeleted) {
       const errorMessage =
