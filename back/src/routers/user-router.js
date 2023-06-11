@@ -24,7 +24,7 @@ userAuthRouter.get("/users/:_id/participants", login_required, userController.us
 // 유저의 댓글 내역들을 조회 
 userAuthRouter.get("/users/:_id/comments", login_required, userController.userGetComments);
 
-userAuthRouter.put("/mypage/useredit/:_id", login_required, userUpdateValidation, userController.userPutMypage)
+userAuthRouter.put("/mypage/useredit", login_required, userUpdateValidation, userController.userPutMypage)
 
 userAuthRouter.delete("/mypage/withdraw", login_required, userController.userDeleteWithdraw)
 
