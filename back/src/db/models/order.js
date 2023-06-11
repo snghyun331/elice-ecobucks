@@ -6,13 +6,13 @@ class order{
         return order;
     }
 
-    static async create({ newOrder }) {
+    static async create(newOrder) {
         const createdNewOrder = await orderModel.create(newOrder);
         return createdNewOrder;
     }
 
-    static async find({ buyer }) {
-        const orders = await orderModel.find({ buyer });
+    static async find(buyer) {
+        const orders = await orderModel.find(buyer);
         return orders;
     }
 }

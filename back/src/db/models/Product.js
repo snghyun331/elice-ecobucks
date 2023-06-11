@@ -1,7 +1,7 @@
 import { productModel } from "../schemas/product.js";
 
 class Product {
-  static async findById({ productId }) {
+  static async findById(productId) {
     const product = await productModel.findOne({ _id: productId });
     return product;
   }

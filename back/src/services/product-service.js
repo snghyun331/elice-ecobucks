@@ -45,8 +45,11 @@ class productService {
     return products;
   }
 
-  static async findProduct({ productId }) {
-    const product = await Product.findById({ productId })
+  static async findProduct(productId) {
+    const product = await Product.findById(productId)
+    if (!product) {
+      throw new Error("해당 id를 가진 상품을 찾을 수 없습니다.");
+    }
     return product
   }
 
@@ -72,7 +75,7 @@ class productService {
 
   static async decreaseProductStock(productId) {
     try {
-      const product = await Product.findById({ productId });
+      const product = await Product.findById(productId);
 
       if (!product) {
         throw new Error("상품을 찾을 수 없습니다.");
