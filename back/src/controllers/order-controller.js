@@ -1,8 +1,6 @@
 import { orderService } from "../services/order-service.js";
 import { validateEmptyBody } from "../utils/validators.js";
-import { userAuthService } from "../services/user-service.js";
-import { productService } from "../services/product-service.js";
-import { NOT_FOUND, CREATED, OK, NO_CONTENT } from "../utils/constants.js";
+import { NOT_FOUND, CREATED, OK } from "../utils/constants.js";
 
 const orderController = {
     orderPostCreate: async function(req, res, next) {
