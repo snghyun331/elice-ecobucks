@@ -1,11 +1,10 @@
 import { Product } from "../db/models/product.js";
 
 class productService {
-  static async addProduct({ seller, sellerName, name, price, place, stock, description }) {
-    const newProduct = { seller, sellerName, name, price, place, stock, description };
+  static async addProduct(newProduct) {
 
     //db에 저장
-    const createdNewProduct = await Product.create({ newProduct });
+    const createdNewProduct = await Product.create(newProduct);
 
     return createdNewProduct;
   }

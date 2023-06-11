@@ -6,7 +6,7 @@ class Product {
     return product;
   }
 
-  static async create({ newProduct }) {
+  static async create(newProduct) {
     const createdNewProduct = await productModel.create(newProduct);
     return createdNewProduct;
   }

@@ -13,13 +13,14 @@ const productController = {
       
       const currentUserInfo = await userAuthService.getUserInfo({ userId: seller });
       const sellerName = currentUserInfo.username;
+      const newProduct = { seller, sellerName, name, price, place, stock, description }
 
-      const newProduct = await productService.addProduct({ seller, sellerName, name, price, place, stock, description });
+      const createdNewProduct = await productService.addProduct(newProduct);
       if (newProduct.errorMessage) {
         throw new Error(newProduct.errorMessage);
       }
 
-      return res.status(CREATED).json(newProduct);
+      return res.status(CREATED).json(createdNewProduct);
     } catch (error) {
       next(error);
     }
