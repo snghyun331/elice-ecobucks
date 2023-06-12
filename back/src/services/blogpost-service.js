@@ -104,8 +104,8 @@ class blogPostService {
     }
 
 
-    static async getFilteredPosts({topic}) {
-        const posts = await BlogPost.findAllByTopic( {topic} )
+    static async getFilteredPosts(topic) {
+        const posts = await BlogPost.findAllByTopic(topic)
         return posts
     }
 }
