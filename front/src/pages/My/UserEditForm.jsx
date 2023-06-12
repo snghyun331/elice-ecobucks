@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Form, Button, Dropdown, Alert } from "react-bootstrap";
+import districtNames from "../../assets/districtNames";
 
 import {
   UserStateContext,
@@ -18,34 +19,6 @@ const UserEditForm = ({ onClose, user }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
-
-  const districtNames = [
-    "강남구",
-    "강동구",
-    "강북구",
-    "강서구",
-    "관악구",
-    "광진구",
-    "구로구",
-    "금천구",
-    "노원구",
-    "도봉구",
-    "동대문구",
-    "동작구",
-    "마포구",
-    "서대문구",
-    "서초구",
-    "성동구",
-    "성북구",
-    "송파구",
-    "양천구",
-    "영등포구",
-    "용산구",
-    "은평구",
-    "종로구",
-    "중구",
-    "중랑구",
-  ];
 
   const validatePassword = (password) => {
     return password.match(
@@ -257,7 +230,8 @@ const UserEditForm = ({ onClose, user }) => {
         style={{
           width: "100%",
           borderRadius: "0px",
-          backgroundColor: "#00D387",            color: "white",
+          backgroundColor: "#00D387",
+          color: "white",
           fontWeight: "900",
         }}
       >
