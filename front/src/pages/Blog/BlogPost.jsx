@@ -1,12 +1,28 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import * as Api from '../../api'
 const BlogPost = (props) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [topic, setTopic] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await Api.post("blog/write", {
+        title,
+        content,
+        topic
+      });
+      console.log("블로그 작성 res: ", res);
+      window.location.reload()
+    } catch (err) {
+      console.log("블로그 글 작성에 실패했습니다.", err);
+    }
+  }
 
   return (
-    <div style={{ padding: "16px", width: "calc(100% - 32px)" }}>
+    <div style={{ padding: "16px", width: "calc(100% - 32px)", overflow:"auto"}}>
       <div
             style={{
               position: "absolute",
@@ -27,6 +43,7 @@ const BlogPost = (props) => {
         }}
       >
         <div style={{ width: "100%", maxWidth: "720px", padding:"60px" }}>
+          <span>제목</span>
           <textarea
             style={{
               width: "100%",
@@ -41,7 +58,22 @@ const BlogPost = (props) => {
               setTitle(event.target.value);
             }}
           />
-
+          <span>주제</span>
+          <textarea
+            style={{
+              width: "100%",
+              height: "20px",
+              padding: "16px",
+              fontSize: "16px",
+              lineHeight: "20px",
+              marginBottom: "16px",
+            }}
+            value={topic}
+            onChange={(event) => {
+              setTopic(event.target.value);
+            }}
+          />
+          <span>내용</span>
           <textarea
             style={{
               width: "100%",
@@ -65,6 +97,7 @@ const BlogPost = (props) => {
               borderRadius: "8px",
               cursor: "pointer",
             }}
+            onClick={handleSubmit}
           >
             글 작성하기
           </button>

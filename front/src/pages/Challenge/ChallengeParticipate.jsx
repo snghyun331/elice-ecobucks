@@ -1,25 +1,33 @@
-import React, { useState } from "react";
-import { Button, Form, Modal, Image, Alert, Container } from "react-bootstrap";
+import React, { useState, useContext } from "react";
+import { Button, Form, Modal, Image, Alert } from "react-bootstrap";
 
-const ChallengeParticipate = ({ onClose }) => {
+import { UPDATE_USER } from "../../reducer/action";
+
+import {
+  UserStateContext,
+  DispatchContext,
+} from "../../context/user/UserProvider";
+import * as Api from "../../api";
+
+const ChallengeParticipate = ({ show, onClose, challenge }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [previewURL, setPreviewURL] = useState(null);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
+  const dispatch = useContext(DispatchContext);
+  const userState = useContext(UserStateContext);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
     setSelectedFile(file);
     setErrorMessage("");
     setPreviewURL(URL.createObjectURL(file));
   };
 
-  const handleUpload = () => {
+  const handleUpload = async (e) => {
     if (selectedFile) {
-      // Perform your upload logic here
-      // Replace the alert with your actual logic for handling the uploaded photo
-
-      // Show confirmation dialog for valid photo
+      e.preventDefault();
       setShowConfirmation(true);
     } else {
       setErrorMessage("파일을 선택해주세요.");
@@ -30,15 +38,34 @@ const ChallengeParticipate = ({ onClose }) => {
     setShowConfirmation(false);
   };
 
-  const confirmUpload = () => {
-    // Replace with your logic for confirming the photo upload
-    // For now, we'll just simulate a success message
-    alert("인증사진 업로드가 완료되었습니다.");
-    handleConfirmationClose();
-    onClose();
+  const confirmUpload = async () => {
+    try {
+      const res = await Api.post(`challenges/${challenge._id}/participants`, {
+        image: "selectedFile",
+      });
+      console.log(res);
+      alert("인증사진 업로드가 완료되었습니다.");
+
+      const userData = await Api.get("current");
+      const user = userData.data;
+
+      dispatch({
+        type: UPDATE_USER,
+        payload: user,
+      });
+
+      handleConfirmationClose();
+      onClose();
+    } catch (err) {
+      alert(err.response.data);
+    }
   };
 
   return (
+    <Modal show={show} >
+    <Modal.Header closeButton>
+    <Modal.Title>참가하기!</Modal.Title>
+  </Modal.Header>
     <Modal.Body>
       <h4>인증사진 업로드</h4>
       <Alert variant="danger" className="small">
@@ -67,7 +94,11 @@ const ChallengeParticipate = ({ onClose }) => {
         돌아가기
       </Button>
 
-      <Modal show={showConfirmation} onHide={handleConfirmationClose}>
+      <Modal
+        show={showConfirmation}
+        onHide={handleConfirmationClose}
+        style={{ marginTop: "200px", zIndex: 9999 }}
+      >
         <Modal.Header closeButton style={{ backgroundColor: "#fffee3" }}>
           <Modal.Title>반드시 확인해주세요.</Modal.Title>
         </Modal.Header>
@@ -85,6 +116,7 @@ const ChallengeParticipate = ({ onClose }) => {
         </Modal.Footer>
       </Modal>
     </Modal.Body>
+    </Modal>
   );
 };
 

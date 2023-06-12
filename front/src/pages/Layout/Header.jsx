@@ -8,9 +8,9 @@ import RightNav from "./RightNav";
 import { Navbar } from "react-bootstrap";
 import { useContext } from "react";
 import { UserStateContext } from "../../context/user/UserProvider";
+
 const Header = () => {
-  const { user }  = useContext(UserStateContext)
-  console.log('user', user)
+  const { user } = useContext(UserStateContext);
 
   return (
     <Navbar
@@ -21,11 +21,12 @@ const Header = () => {
         left: "0",
         width: "100%",
         backgroundColor: "dark",
+        zIndex: "9990",
       }}
     >
       <div className="container-fluid">
         <LeftNav />
-        <RightNav isLogin={user ? true : false } />
+        <RightNav isLogin={user ? true : false} user={user} />
       </div>
     </Navbar>
   );

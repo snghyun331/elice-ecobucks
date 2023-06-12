@@ -7,20 +7,20 @@ const commentSchema = new Schema(
       ref: 'User',
       required: true
     },
-    challenge_id: {
+    challengeId: {
       type: Schema.Types.ObjectId,
-      ref: 'Chellenge',
+      ref: 'Challenge',
       required: true
     },
     content: {
       type: String, 
       required: true
-    },
+    }
   },
   {
     timestamps: true,    
   }
 );
 
-const commentModel = model('Comment', commentSchema);
+const commentModel = model('ChallengeComment', commentSchema);
 export { commentModel };

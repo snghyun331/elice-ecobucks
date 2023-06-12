@@ -1,15 +1,12 @@
-import { Card, Container, Row } from "react-bootstrap";
+import React, { useState, useContext, useEffect } from "react";
+import { Card, Container, Row, Badge } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 import ChallengeRead from "./ChallengeRead";
-import { useState, useContext, useEffect } from "react";
-import MegaChallengeCarousel from "./MegaChallengeCarousel";
-
+import { DispatchContext, UserStateContext } from "../../context/user/UserProvider";
 import * as Api from "../../api";
-import {
-  DispatchContext,
-  UserStateContext,
-} from "../../context/user/UserProvider";
+import MegaChallengeCarousel from "./MegaChallengeCarousel";
 
 const ChallengeView = () => {
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
@@ -55,18 +52,22 @@ const ChallengeView = () => {
   }
 
   const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
+    return moment(dateString).format("YYYY-MM-DD");
   };
 
-  const sortedChallenges = [...challenges];
-  sortedChallenges.sort((a, b) => {
-    const dateA = new Date(a.dueDate);
-    const dateB = new Date(b.dueDate);
-  
-    return dateA - dateB || a.isCompleted - b.isCompleted;
+  const sortedChallenges = challenges.sort((a, b) => {
+    if (a.isCompleted !== b.isCompleted) {
+      return a.isCompleted ? 1 : -1;
+    }
+    return moment(a.dueDate) - moment(b.dueDate);
   });
-  
+
+  const isToday = (dateString) => {
+    const today = moment().format("YYYY-MM-DD");
+    const date = moment(dateString).format("YYYY-MM-DD");
+    return today === date;
+  };
+
   return (
     <>
       {selectedChallenge ? (
@@ -93,7 +94,7 @@ const ChallengeView = () => {
               key={index}
               className={`m-2 ${challenge.isCompleted ? "text-muted" : ""}`}
               style={{
-                width: "16rem",
+                width: "17rem",
                 position: "relative",
                 cursor: challenge.isCompleted ? "default" : "pointer", // Set cursor style
               }}
@@ -143,16 +144,44 @@ const ChallengeView = () => {
                 {challenge.icon}
               </div>
               <Card.Body>
-                <Card.Title>{challenge.title}</Card.Title>
+                <Card.Title>
+                  {challenge.title}
+                  {isToday(challenge.createdAt) && (
+                    <Badge
+                      pill
+                      bg="warning"
+                      text="dark"
+                      className="ml-2"
+                      style={{ marginLeft: "4px", fontSize: "0.7rem" }}
+                    >
+                      New
+                    </Badge>
+                  )}
+                </Card.Title>
                 <Card.Text>{challenge.content}</Card.Text>
                 <Card.Text>
-                  작성일자: {formatDate(challenge.createdAt)}
+                  <span style={{ fontWeight: "900", fontSize: "0.9em" }}>
+                    마감 일자
+                  </span>{" "}
+                  <span style={{ fontSize: "0.8em" }}>
+                    {formatDate(challenge.dueDate)}
+                  </span>
                   <br />
-                  마감일자: {formatDate(challenge.dueDate)}
+                  <span style={{ fontWeight: "900", fontSize: "0.9em" }}>
+                    참여 인원
+                  </span>{" "}
+                  <span style={{ fontSize: "0.8em" }}>
+                    {challenge.participantsCount.toLocaleString()} 명
+                  </span>
                   <br />
-                  작성자: {challenge.user_id._id}
-                  <br />
-                  참여인원: {challenge.participantsCount.toLocaleString()} 명
+                  <Badge
+                    bg="info"
+                    className="position-absolute bottom-0 end-0 m-3"
+                    style={{ zIndex: 1 }}
+                  >
+                    {challenge.commentsCount > 0 &&
+                      `댓글 ${challenge.commentsCount}`}
+                  </Badge>
                 </Card.Text>
               </Card.Body>
             </Card>

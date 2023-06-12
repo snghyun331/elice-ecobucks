@@ -1,86 +1,196 @@
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { DispatchContext } from "../../context/user/UserProvider";
+import { useNavigate, useLocation, Link, redirect } from "react-router-dom";
+import { UserStateContext, DispatchContext } from "../../context/user/UserProvider";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
-const RightNav = ({ isLogin }) => {
-  // 로그인 여부에 따라 다른 내용을 렌더링
-  console.log(isLogin);
+import { ROUTE } from "../../routes/routes";
+import { LOGOUT } from "../../reducer/action";
+
+const RightNav = ({ isLogin, user }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
-  // const navigate = useNavigate();
+
   const logout = () => {
-    // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
-    sessionStorage.removeItem('userToken');
-    // dispatch 함수를 이용해 로그아웃함.
-    dispatch({ type: 'LOGOUT' });
-    alert('로그아웃하여 홈페이지로 이동합니다.')
-    // 기본 페이지로 돌아감.
-    // navigate('/');
-};
+    sessionStorage.removeItem("userToken");
+    dispatch({ type: LOGOUT });
+    alert("로그아웃하여 홈페이지로 이동합니다.");
+    if (location.pathname !== '/') {
+      window.location.href = '/'
+    }
+  };
+
   const renderNavContent = () => {
     if (isLogin) {
       return (
-        <ul className="navbar-nav">
-          <li className="nav-item">
-            <a className="nav-link" href="/challenge">
+        <ul className="navbar-nav" style={{ whiteSpace: "nowrap" }}>
+          <li className="nav-item" style={{ marginRight: '25px'}}>
+            <Link
+              className="nav-link"
+              to={ROUTE.HOME.link}
+              style={{
+                border: "0px solid grey",
+                borderRadius: "13px",
+                backgroundColor: "#ffe9b0",
+                padding: "2px 14px 2px 14px",
+                margin: "8px 15px 0px 0px",
+                fontSize: "1.2em",
+                fontWeight: "900",
+              }}
+            >
+              🪙
+              <span style={{}}>{user.mileage.toLocaleString()}</span>
+            </Link>
+          </li>
+          <li className="nav-item" style={{ marginRight: '25px'}}>
+            <Link
+              className="nav-link"
+              to={ROUTE.CHALLENGE.link}
+              style={{
+                color: location.pathname === "/challenge" ? "#00D387" : "",
+                fontWeight: location.pathname === "/challenge" ? "900" : "600",
+                fontSize: "1.3em",
+              }}
+            >
               챌린지
-            </a>
+            </Link>
           </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/blog">
+          <li className="nav-item" style={{ marginRight: '25px'}}>
+            <Link
+              className="nav-link"
+              to={ROUTE.BLOG.link}
+              style={{
+                color: location.pathname === "/blog" ? "#00D387" : "",
+                fontWeight: location.pathname === "/blog" ? "900" : "600",
+                fontSize: "1.3em",
+              }}
+            >
               블로그
-            </a>
+            </Link>
           </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/mall">
-              쇼핑몰
-            </a>
+          <li className="nav-item" style={{ marginRight: '25px'}}>
+            <Link
+              className="nav-link"
+              to={ROUTE.MALL.link}
+              style={{
+                color: location.pathname === "/mall" ? "#00D387" : "",
+                fontWeight: location.pathname === "/mall" ? "900" : "600",
+                fontSize: "1.3em",
+              }}
+            >
+              떠리몰
+            </Link>
           </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/my">
+          <li className="nav-item" style={{ marginRight: '25px'}}>
+            <Link
+              className="nav-link"
+              to={ROUTE.MY.link}
+              style={{
+                color: location.pathname === "/my" ? "#00D387" : "",
+                fontWeight: location.pathname === "/my" ? "900" : "600",
+                fontSize: "1.3em",
+              }}
+            >
               마이페이지
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-              <a
-                  className="nav-link"
-                  onClick={logout}
-                  href="/"
-                >로그아웃</a>  
+            <Link
+              className="nav-link"
+              onClick={logout}
+              style={{
+                fontWeight: "600",
+                fontSize: "1.3em",
+              }}
+            >
+              로그아웃
+            </Link>
           </li>
         </ul>
       );
     } else {
       return (
-        <ul className="navbar-nav">
+        <ul className="navbar-nav" style={{ whiteSpace: "nowrap" }}>
           <li className="nav-item">
-            <a className="nav-link" href="/">
+            <Link
+              className="nav-link"
+              to={ROUTE.HOME.link}
+              style={{ fontSize: "1.3em", fontWeight: "600" }}
+            >
               홈
-            </a>
+            </Link>
           </li>
+          <OverlayTrigger
+            placement="bottom"
+            overlay={
+              <Tooltip style={{ zIndex: "9999" }}>
+                로그인 후 이용 가능합니다.
+              </Tooltip>
+            }
+          >
+            <li className="nav-item">
+              <Link
+                className="nav-link disabled"
+                to={ROUTE.CHALLENGE.link}
+                style={{ fontSize: "1.3em", fontWeight: "600" }}
+              >
+                챌린지
+              </Link>
+            </li>
+          </OverlayTrigger>
+          <OverlayTrigger
+            placement="bottom"
+            overlay={
+              <Tooltip style={{ zIndex: "9999" }}>
+                로그인 후 이용 가능합니다.
+              </Tooltip>
+            }
+          >
+            <li className="nav-item">
+              <Link
+                className="nav-link disabled"
+                to={ROUTE.BLOG.link}
+                style={{ fontSize: "1.3em", fontWeight: "600" }}
+              >
+                블로그
+              </Link>
+            </li>
+          </OverlayTrigger>
+          <OverlayTrigger
+            placement="bottom"
+            overlay={
+              <Tooltip style={{ zIndex: "9999" }}>
+                로그인 후 이용 가능합니다.
+              </Tooltip>
+            }
+          >
+            <li className="nav-item">
+              <Link
+                className="nav-link disabled"
+                to={ROUTE.MALL.link}
+                style={{ fontSize: "1.3em", fontWeight: "600" }}
+              >
+                떠리몰
+              </Link>
+            </li>
+          </OverlayTrigger>
           <li className="nav-item">
-            <a className="nav-link" href="/challenge">
-              챌린지
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/blog">
-              블로그
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/mall">
-              쇼핑몰
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/register">
+            <Link
+              className="nav-link"
+              to={ROUTE.REGISTER.link}
+              style={{ fontSize: "1.3em", fontWeight: "600" }}
+            >
               회원가입
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/login">
+            <Link
+              className="nav-link"
+              to={ROUTE.LOGIN.link}
+              style={{ fontSize: "1.3em", fontWeight: "600" }}
+            >
               로그인
-            </a>
+            </Link>
           </li>
         </ul>
       );
@@ -88,14 +198,15 @@ const RightNav = ({ isLogin }) => {
   };
 
   return (
-      <div className="container-fluid">
-        <div
-          className="collapse navbar-collapse justify-content-end"
-          id="collapsibleNavbar"
-        >
-          {renderNavContent()}
-        </div>
+    <div className="container-fluid">
+      <div
+        className="collapse navbar-collapse justify-content-end"
+        id="collapsibleNavbar"
+      >
+        {renderNavContent()}
       </div>
+    </div>
   );
 };
+
 export default RightNav;

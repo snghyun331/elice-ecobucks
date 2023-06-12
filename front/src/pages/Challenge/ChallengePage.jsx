@@ -16,6 +16,11 @@ function ChallengePage() {
     setButtonClicked(true);
   };
 
+  const handleBackToListClick = () => {
+    setShowCreateForm(false);
+    setButtonClicked(false); // Reset buttonClicked state
+  };
+
   return (
     <div>
       <div
@@ -30,11 +35,41 @@ function ChallengePage() {
         }}
       ></div>
 
-      <Container
-        className="mt-5 mb-5 pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
-        style={{ width: "80%", border: "1px solid #c2c2c2", backgroundColor: 'white' }}
+      <div
+        style={{
+          position: "absolute",
+          top: 80,
+          left: "18%",
+          right: 0,
+          zIndex: 1,
+          color: "white",
+          fontSize: "2rem",
+          fontWeight: "900",
+        }}
       >
-        {showCreateForm ? <ChallengeCreate /> : <ChallengeView />}
+        챌린지 :
+        <br />
+        <span style={{ fontSize: "1.3rem", fontWeight: "400" }}>
+          절약 인증하고 마일리지를 모을 수 있어요.
+        </span>
+      </div>
+
+      <Container
+        className="d-flex flex-column align-items-center justify-content-center"
+        style={{
+          marginTop: "200px",
+          paddingTop: "30px",
+          width: "80%",
+          border: "1px solid #c2c2c2",
+          backgroundColor: "white",
+          borderRadius: "10px",
+        }}
+      >
+        {showCreateForm ? (
+          <ChallengeCreate onBackToListClick={handleBackToListClick} />
+        ) : (
+          <ChallengeView />
+        )}
         {buttonClicked ? null : (
           <Button onClick={handleCreateButtonClick}>챌린지 모집</Button>
         )}

@@ -1,54 +1,82 @@
-import { Comment } from "../db/models/challenge-comment.js";
+import { ChallengeComment, Challenge } from "../db/index.js";
 import { challengeModel } from "../db/schemas/challenge.js";
+import { updateTimestamps } from "../utils/update-time-stamps.js";
 class CommentService {
-  static async createComment({ userId, challenge_id, content }) {
+  static async createComment({ userId, challengeId, content }) {
+    if (!content){ 
+      throw new Error("댓글 내용이 없습니다.");  
+    }
+    //--- Challenge Update ---
+    // 신청자수 count 증가, user의 마일리지 1000추가
+    const challenge = await Challenge.findById({ _id:challengeId })
+    // dueDate(마감기한)를 넘을경우 신청x
+    const currentDateTime = new Date();
+    if (challenge.dueDate.getTime() < currentDateTime.getTime()){
+      challenge.isCompleted = true;
+      throw new Error("참여기간이 종료되었습니다")
+    }
+    // 참여자수 카운트      
+    else challenge.commentsCount += 1;
+    await challenge.save();
+    
+    //--- Comment Create ---
+    const createdChallenge = await ChallengeComment.create({ userId, challengeId, content });
+    // 시간을 한국표준시간으로 변경
+    const createdNewChallenge=updateTimestamps(createdChallenge)  
 
-    const createdChallenge = await Comment.create({ userId, challenge_id, content });
-    // Challenge의 participantsCount 1 증가
-    await challengeModel.updateOne({ _id: challenge_id }, { $inc: { commentsCount: 1 } });
-    return createdChallenge;
+    return createdNewChallenge;
   }
 
-  static async findComments({ challenge_id }) {
-    const challenges = await Comment.NoAsyncfindAll({ challenge_id }).populate('userId', 'username guCode guName').exec();
+  static async findComments({ challengeId }) {
+    const comments = await ChallengeComment.NoAsyncfindAll({ challengeId })
+      .populate("userId", "username districtCode districtName")
+      .exec();
 
-    return challenges;
+    return comments;
   }
 
-  static async findComment({ challenge_id, _id }) {
-    const challenge = await Comment.NoAsyncfindById({ _id }).populate('userId', 'username guCode guName').exec();
-    if (!challenge || challenge.challenge_id.toString() !== challenge_id) {
+  static async findComment({ challengeId, _id }) {
+    const comment = await ChallengeComment.NoAsyncfindById({ _id })
+      .populate("userId", "username districtCode districtName")
+      .exec();
+    if (!comment || comment.challengeId.toString() !== challengeId) {
       throw new Error("찾을 수 없습니다.");
     }
 
-    return challenge;
+    return updateTimestamps(comment);
   }
 
   static async updateComment({ _id, currentUserId, content }) {
-    const findIdComment = await Comment.findById({ _id })
-    if ( !findIdComment ){ 
-      throw new Error("해당 id를 가진 데이터는 없습니다.")
+    const findIdComment = await ChallengeComment.findById({ _id });
+    if (!findIdComment) {
+      throw new Error("해당 id를 가진 데이터는 없습니다.");
     }
-    if( findIdComment.userId.toString() !== currentUserId ){
+    if (findIdComment.userId.toString() !== currentUserId) {
       throw new Error("수정 권한이 없습니다.");
     }
-    
-    const updatedChallenge = await Comment.update({ _id, content })
-    
-    return updatedChallenge;
+
+    const updateComment = await ChallengeComment.update({ _id, content });
+
+    return updateTimestamps(updateComment);
   }
 
   static async deleteComment(_id, currentUserId) {
-    const findIdComment = await Comment.findById({ _id })
-    if(findIdComment.userId.toString() !== currentUserId)
+    const findIdComment = await ChallengeComment.findById({ _id });
+    if(!findIdComment){
+      throw new Error("해당 id를 가진 데이터는 없습니다.");
+    }
+    if (findIdComment.userId.toString() !== currentUserId){
       throw new Error("삭제 권한이 없습니다.");
-    const challenge_id = findIdComment.challenge_id.toString()
-    await challengeModel.updateOne({ _id: challenge_id }, { $inc: { commentsCount: -1 } });
+    }
+    const challengeId = findIdComment.challengeId.toString();
+    await challengeModel.updateOne(
+      { _id: challengeId },
+      { $inc: { commentsCount: -1 } }
+    );
 
-    await Comment.deleteById(_id);
+    await ChallengeComment.deleteById(_id);
     return { status: "ok" };
   }
-
 }
- 
+
 export { CommentService };

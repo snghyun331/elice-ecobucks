@@ -1,6 +1,6 @@
 import { commentModel } from "../schemas/challenge-comment.js";
 
-class Comment {
+class ChallengeComment {
   static async create(newChallenge) {
     const createdChallenge = await commentModel.create(newChallenge);
     return createdChallenge;
@@ -11,8 +11,8 @@ class Comment {
     return comments;
   } 
 
-  static NoAsyncfindAll({ challenge_id }) {
-    const comments = commentModel.find({ challenge_id });
+  static NoAsyncfindAll({ challengeId }) {
+    const comments = commentModel.find({ challengeId });
     return comments;
   }
   
@@ -48,4 +48,4 @@ class Comment {
   
 }
 
-export { Comment };
+export { ChallengeComment };

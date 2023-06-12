@@ -1,6 +1,6 @@
 import { participationModel } from "../schemas/challenge-participation.js";
 
-class Participation {
+class ChallengeParticipation {
   static async create(newChallenge) {
     const createdChallenge = await participationModel.create(newChallenge);
     return createdChallenge;
@@ -11,13 +11,23 @@ class Participation {
     return participations;
   } 
 
-  static NoAsyncfindAll({ challenge_id }) {
-    const participations = participationModel.find({ challenge_id });
+  static async find({ _id }) {
+    const participations = await participationModel.find({ _id });
+    return participations;
+  } 
+
+  static NoAsyncfindAll({ challengeId }) {
+    const participations = participationModel.find({ challengeId });
     return participations;
   }
   
   static async findById({ _id }){
     const participation = await participationModel.findById({ _id });
+    return participation
+  }
+
+  static async findOne({ challengeId }){
+    const participation = await participationModel.findOne({ challengeId });
     return participation
   }
 
@@ -48,4 +58,4 @@ class Participation {
   
 }
 
-export { Participation };
+export { ChallengeParticipation };

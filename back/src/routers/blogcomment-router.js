@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { login_required } from "../middlewares/login-required.js";
-import {blogcommentPostWrite, blogcommentPutWrite, blogcommentDeleteWrite} from "../controllers/blogcomment-controller.js"
+import { blogcommentController } from "../controllers/blogcomment-controller.js"
 
 const blogCommentRouter = Router();
 
-blogCommentRouter.post("/blog/comment/write", login_required, blogcommentPostWrite);
+blogCommentRouter.post("/blog/comment/write", login_required, blogcommentController.blogcommentPostWrite);
 
-blogCommentRouter.put("/blog/comment/write", login_required, blogcommentPutWrite)
+blogCommentRouter.put("/blog/comment/:_id/write", login_required, blogcommentController.blogcommentPutWrite)
 
-blogCommentRouter.delete("/blog/comment/write", login_required, blogcommentDeleteWrite)
+blogCommentRouter.delete("/blog/comment/:_id", login_required, blogcommentController.blogcommentDeleteWrite)
 
 export { blogCommentRouter };

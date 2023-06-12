@@ -1,63 +1,33 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Form, Button, Dropdown, Alert } from "react-bootstrap";
+import districtInfo from "../../assets/districtInfo";
 
+import { validatePassword, validateEmail, validateName } from "../../util/common";
+import { UPDATE_USER } from "../../reducer/action";
+
+import {
+  UserStateContext,
+  DispatchContext,
+} from "../../context/user/UserProvider";
 import * as Api from "../../api";
-import { UserStateContext } from "../../context/user/UserProvider";
 
-const UserEditForm = ({ user }) => {
+const UserEditForm = ({ onClose, user }) => {
   const navigate = useNavigate();
+  const dispatch = useContext(DispatchContext);
   const userState = useContext(UserStateContext);
 
   const [name, setName] = useState(user?.username || ""); // user가 null인 경우를 고려하여 기본값 설정
-  const [district, setDistrict] = useState(user?.guName || ""); // user가 null인 경우를 고려하여 기본값 설정
+  const [districtName, setDistrict] = useState(user?.districtName || ""); // user가 null인 경우를 고려하여 기본값 설정
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
-
-  const districts = [
-    "강남구",
-    "강동구",
-    "강북구",
-    "강서구",
-    "관악구",
-    "광진구",
-    "구로구",
-    "금천구",
-    "노원구",
-    "도봉구",
-    "동대문구",
-    "동작구",
-    "마포구",
-    "서대문구",
-    "서초구",
-    "성동구",
-    "성북구",
-    "송파구",
-    "양천구",
-    "영등포구",
-    "용산구",
-    "은평구",
-    "종로구",
-    "중구",
-    "중랑구",
-  ];
-
-  const validatePassword = (password) => {
-    return password.match(
-      /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,18}$/
-    );
-  };
-
-  const validateName = (name) => {
-    return name.match(/^[a-zA-Z가-힣\s]{2,20}$/);
-  };
 
   const isPasswordValid =
     password.length === 0 ? true : validatePassword(password);
   const isPasswordSame = password === confirmPassword;
   const isNameValid = validateName(name);
-  const isDistrictValid = district != null;
+  const isDistrictValid = districtName != null;
 
   const isFormValid =
     isPasswordValid && isPasswordSame && isNameValid && isDistrictValid;
@@ -66,23 +36,37 @@ const UserEditForm = ({ user }) => {
     e.preventDefault();
 
     try {
-      const res = await Api.put(`mypage/useredit/${userState.user._id}`, {
+      const requestData = {
         username: name,
-        guName: district,
-      });
+        districtName,
+      };
+
+      if (password !== "") {
+        requestData.password = password;
+      }
+
+      const res = await Api.put(
+        `mypage/useredit/${userState.user._id}`,
+        requestData
+      );
+
       console.log(res);
       if (res.status === 200) {
-        // Display success alert
         alert("변경된 정보가 저장되었습니다.");
-        window.location.reload()
-        
-        ; // Navigate to '/my' after saving the changes
+
+        const userData = await Api.get("current");
+        const user = userData.data;
+
+        dispatch({
+          type: UPDATE_USER,
+          payload: user,
+        });
+
+        onClose();
       } else {
-        // Display error alert
         alert("정보 변경에 실패했습니다.");
       }
     } catch (error) {
-      // Display error alert
       alert("정보 변경에 실패했습니다.");
       console.error(error);
     }
@@ -140,7 +124,10 @@ const UserEditForm = ({ user }) => {
           style={{ borderRadius: "0px" }}
         />
         {!isNameValid && name.length > 0 && (
-          <Form.Text className="text-success">
+          <Form.Text
+            className="text-success d-block"
+            style={{ textAlign: "left" }}
+          >
             이름은 한글과 알파벳만 사용 가능합니다.
           </Form.Text>
         )}
@@ -207,22 +194,22 @@ const UserEditForm = ({ user }) => {
           <Dropdown.Toggle
             className="text-start d-block"
             variant="light"
-            id="dropdown-district"
+            id="dropdown-districtName"
             style={{
               backgroundColor: "white",
               width: "100%",
               borderRadius: "0px",
             }}
           >
-            {district || "구를 선택해주세요. "}
+            {districtName || "구를 선택해주세요. "}
           </Dropdown.Toggle>
           <Dropdown.Menu style={{ maxHeight: "200px", overflowY: "auto" }}>
-            {districts.map((district) => (
+            {districtInfo.map((districtData) => (
               <Dropdown.Item
-                key={district}
-                onClick={() => setDistrict(district)}
+                key={districtData.name}
+                onClick={() => setDistrict(districtData.name)}
               >
-                {district}
+                {districtData.name}
               </Dropdown.Item>
             ))}
           </Dropdown.Menu>
@@ -237,6 +224,8 @@ const UserEditForm = ({ user }) => {
           width: "100%",
           borderRadius: "0px",
           backgroundColor: "#00D387",
+          color: "white",
+          fontWeight: "900",
         }}
       >
         저장
