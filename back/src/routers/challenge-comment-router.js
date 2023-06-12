@@ -5,14 +5,14 @@ import { commentController } from "../controllers/challenge-comment-controller.j
 
 const commentRouter = Router();
 
-commentRouter.post("/:challengeId/comments", login_required, commentController.commentCreate);
+commentRouter.post("/challenges/:challengeId/comments", login_required, commentController.commentCreate);
 
-commentRouter.get("/:challengeId/comments", login_required, commentController.commentGetAll);
+commentRouter.get("/challenges/:challengeId/comments", login_required, commentController.commentGetAll);
 
-commentRouter.get("/:challengeId/comments/:_id", login_required, commentController.commentGet);
+commentRouter.get("/challenges/:challengeId/comments/:_id", login_required, commentController.commentGet);
 
-commentRouter.put("/:challengeId/comments/:_id", login_required, commentController.commentUpdate);
+commentRouter.put("/challenges/:challengeId/comments/:_id", login_required, commentController.commentUpdate);
 
-commentRouter.delete("/:challengeId/comments/:_id", login_required, commentController.commentDelete);
+commentRouter.delete("/challenges/:challengeId/comments/:_id", login_required, commentController.commentDelete);
 
 export { commentRouter };
