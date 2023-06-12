@@ -15,6 +15,14 @@ class Validation {
     content: Joi.string(),
   })
   
+  static blogcommentSchema = Joi.object({
+    comment: Joi.string().required()
+  })
+
+  static blogcommentUpdateSchema = Joi.object({
+    comment: Joi.string()
+  })
+  
   static productSchema = Joi.object({
     name: Joi.string().required(),
     price: Joi.number().integer().required(),
