@@ -4,12 +4,15 @@ const USERNAME_MIN = 2, USERNAME_MAX = 20, PWD_MIN = 6, PWD_MAX = 18;
 
 class Validation {
   static blogpostSchema = Joi.object({
-    username: Joi.string(),
+    topic: Joi.string().required(),
+    title: Joi.string().required(),
+    content: Joi.string().required(),
+  })
+
+  static blogpostUpdateSchema = Joi.object({
     topic: Joi.string(),
     title: Joi.string(),
     content: Joi.string(),
-    likeCount: Joi.number().integer(),
-    likeUsers: Joi.array()
   })
   
   static productSchema = Joi.object({
