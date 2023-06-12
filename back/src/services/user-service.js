@@ -3,7 +3,7 @@ import { User, District, Challenge, ChallengeParticipation, ChallengeComment } f
 import bcrypt, { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
 import { updateTimestamps } from "../utils/update-time-stamps.js";
-import { challengeModel } from "../db/schemas/challenge.js";
+import { updateTime } from "../utils/update-time.js";
 
 class userAuthService {
   static async addUser({ username, email, password, districtName }) {
@@ -162,8 +162,6 @@ class userAuthService {
     const comments = await ChallengeComment.findAllByUserId({ userId: userId });
     const userInfo = {
       ...user._doc,
-      challengeCount: challenges.length,
-      challengeList: challenges,
       userChallengeCount: challenges.length,
       userChallengeList: challenges,
       userParticipantsCount: participations.length,
@@ -178,47 +176,66 @@ class userAuthService {
     //유저 마일리지 차감 로직
     const user = await User.findById({ userId });
     user.mileage -= amount;
-    console.log(user.mileage)
     await user.save();
   }
 
+  // 유저의 모든 챌린지 게시물 갯수와 게시물 조회
   static async getUserChallenges({userId}){
     const user  = await User.findById({userId});
-    console.log('user: ',user);
     const challenges = await Challenge.findAllByUserId({ userId: userId });
-    console.log('challenges: ',challenges);
     const userInfo = {
-      ...user._doc,
+      //...user._doc,
       userChallengeCount: challenges.length,
       userChallengeList: challenges,
     }
     return userInfo
   }
 
+  // 유저의 모든 챌린지 참여 갯수와 참여 조회
   static async getUserParticipants({userId}){
-    const user  = await User.findById({userId});
+    const participations = await ChallengeParticipation.findAllByUserId({ userId });
+    const populatedParticipations = await Promise.all(
+      participations.map(async (participation) => {  
+        const challenge = await Challenge.findById(participation.challengeId);
+        return { 
+          userParticipantCount: participations.length,
+          ...participation._doc,   
+          challengeTitle: challenge.title,  // title 추가
+          createdAt: updateTime.toKST(challenge.createdAt),
+          updatedAt: updateTime.toKST(challenge.updatedAt)
+        };
+      })
+    );
 
-    const participations = await ChallengeParticipation.findAllByUserId({ userId: userId });
-    const userInfo = {
-      ...user._doc,
-      userParticipantsCount: participations.length,
-      participantsList: participations,
-    }
+    const newParticipations = {
+      userChallengeCount: populatedParticipations.length,
+      userChallengeList: populatedParticipations
+    };
 
-
-    return userInfo
+    return newParticipations;
   }
 
+  // 유저의 모든 댓글 갯수와 댓글 조회
   static async getUserComments({userId}){
-    const user  = await User.findById({userId});
-
     const comments = await ChallengeComment.findAllByUserId({ userId: userId });
-    const userInfo = {
-      ...user._doc,
-      userCommentsCount: comments.length,
-      userCommentsList: comments,
-    }
-    return userInfo
+    const populatedComments = await Promise.all(
+      comments.map(async (Comment) => {  
+        const challenge = await Challenge.findById(Comment.challengeId);
+        return { 
+          userCommentCount: comments.length,
+          ...Comment._doc,   
+          challengeTitle: challenge.title,  // title 추가
+          createdAt: updateTime.toKST(challenge.createdAt),
+          updatedAt: updateTime.toKST(challenge.updatedAt)
+        };
+      })
+    );
+
+    const newComments = {
+      userChallengeCount: populatedComments.length,
+      userChallengeList: populatedComments
+    };
+    return newComments
   }
 }
 

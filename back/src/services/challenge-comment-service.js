@@ -1,5 +1,4 @@
-import { ChallengeComment } from "../db/models/challenge-comment.js";
-import { Challenge } from "../db/models/challenge.js";
+import { ChallengeComment, Challenge } from "../db/index.js";
 import { challengeModel } from "../db/schemas/challenge.js";
 import { updateTimestamps } from "../utils/update-time-stamps.js";
 class CommentService {
@@ -21,11 +20,11 @@ class CommentService {
     await challenge.save();
     
     //--- Comment Create ---
-    const createdComment = await ChallengeComment.create({ userId, challengeId, content, title: challenge.title });
+    const createdChallenge = await ChallengeComment.create({ userId, challengeId, content });
     // 시간을 한국표준시간으로 변경
-    const updateCreatedChallenge=updateTimestamps(createdComment)  
+    const createdNewChallenge=updateTimestamps(createdChallenge)  
 
-    return updateCreatedChallenge;
+    return createdNewChallenge;
   }
 
   static async findComments({ challengeId }) {
@@ -56,13 +55,16 @@ class CommentService {
       throw new Error("수정 권한이 없습니다.");
     }
 
-    const updatedComment = await ChallengeComment.update({ _id, content });
+    const updateComment = await ChallengeComment.update({ _id, content });
 
-    return updateTimestamps(updatedComment);
+    return updateTimestamps(updateComment);
   }
 
   static async deleteComment(_id, currentUserId) {
     const findIdComment = await ChallengeComment.findById({ _id });
+    if(!findIdComment){
+      throw new Error("해당 id를 가진 데이터는 없습니다.");
+    }
     if (findIdComment.userId.toString() !== currentUserId){
       throw new Error("삭제 권한이 없습니다.");
     }

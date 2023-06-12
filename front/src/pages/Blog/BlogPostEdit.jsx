@@ -1,27 +1,25 @@
 import React, { useState } from "react";
-
-const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
-    const [name, setName] = useState("");
-    const [price, setPrice] = useState("");
-    const [place, setPlace] = useState("");
-    const [stock, setStock] = useState("");
-    const [description, setDescription] = useState("");
+// import { UserStateContext } from "../../context/user/UserProvider";
+const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+    const [topic, setTopic] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const updatedItem = {
-            name: name || selectedItem.name, //selectedItem이 하나만 들어오는게 아님
-            price: Number(price) || Number(selectedItem.price),
-            place: place || selectedItem.place,
-            stock: Number(stock) || Number(selectedItem.stock),
-            description: description || selectedItem.description,
+          const updatedBlog = {
+            _id: selectedBlog._id,
+            title: title || selectedBlog.title,
+            content: content || selectedBlog.content,
+            topic: topic || selectedBlog.topic
           };
           // setList(updatedItem);
           // console.log("updatedItem: ", updatedItem);
           // console.log("바뀐 list: ", list);
 
-          await handleEditProduct(selectedItem, updatedItem);
+          await handleEditBlog(selectedBlog, updatedBlog);
+
 
       } catch (err) {
           alert("모든 값을 입력해주세요.")
@@ -51,7 +49,7 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
         }}
       >
         <div style={{ width: "100%", maxWidth: "720px", padding:"60px" }}>
-            <span>상품</span>
+            <span>제목</span>
           <textarea
             style={{
               width: "100%",
@@ -61,13 +59,13 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
               lineHeight: "20px",
               marginBottom: "16px",
             }}
-            placeholder={selectedItem.name}
-            value={name}
+            placeholder={selectedBlog.title}
+            value={title}
             onChange={(event) => {
-                setName(event.target.value);
+                setTitle(event.target.value);
             }}
           />
-          <span>가격</span>
+          <span>주제</span>
           <textarea
             style={{
               width: "100%",
@@ -77,13 +75,13 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
               lineHeight: "20px",
               marginBottom: "16px",
             }}
-            placeholder={selectedItem.price}
-            value={price}
+            placeholder={selectedBlog.topic}
+            value={topic}
             onChange={(event) => {
-              setPrice(event.target.value);
+              setTopic(event.target.value);
             }}
           />
-          <span>위치</span>
+          <span>내용</span>
           <textarea
             style={{
               width: "100%",
@@ -93,45 +91,12 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
               lineHeight: "20px",
               marginBottom: "16px",
             }}
-            placeholder={selectedItem.place}
-            value={place}
+            placeholder={selectedBlog.content}
+            value={content}
             onChange={(event) => {
-              setPlace(event.target.value);
+              setContent(event.target.value);
             }}
           />
-          <span>수량</span>
-          <textarea
-            style={{
-              width: "100%",
-              height: "20px",
-              padding: "16px",
-              fontSize: "16px",
-              lineHeight: "20px",
-              marginBottom: "16px",
-            }}
-            placeholder={selectedItem.stock}
-            value={stock}
-            onChange={(event) => {
-              setStock(event.target.value);
-            }}
-          />
-            <span>설명</span>
-          <textarea
-            style={{
-              width: "100%",
-              height: "100px",
-              padding: "16px",
-              fontSize: "16px",
-              lineHeight: "20px",
-              marginBottom: "16px",
-            }}
-            placeholder={selectedItem.description}
-            value={description}
-            onChange={(event) => {
-              setDescription(event.target.value);
-            }}
-          />
-
           <button
             style={{
               padding: "8px 16px",
@@ -142,7 +107,7 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
             }}
             onClick={handleSubmit}
           >
-            상품 수정하기
+            글 수정하기
           </button>
         </div>
       </div>
@@ -150,4 +115,4 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
   );
 };
 
-export default MallProductEdit;
+export default BlogPostEdit;

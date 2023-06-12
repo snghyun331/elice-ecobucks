@@ -1,11 +1,9 @@
 import { order } from "../db/models/order.js";
 
 class orderService {
-    static async addOrder({ productId, productName, buyer, buyerName }) {
-        const newOrder = { productId, productName, buyer, buyerName }
-        const createdNewOrder = await order.create({ newOrder });
-
-        return createdNewOrder;
+    static async addOrder({ newOrder }) {
+        const createdOrder = await order.create({ newOrder });
+        return createdOrder;
     }
 
     static async getUserOrders({userId}) {
