@@ -3,6 +3,7 @@ import { useNavigate, useLocation, Link, redirect } from "react-router-dom";
 import { UserStateContext, DispatchContext } from "../../context/user/UserProvider";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
+import { ROUTE } from "../../routes/routes";
 
 const RightNav = ({ isLogin, user }) => {
   const location = useLocation();
@@ -25,7 +26,7 @@ const RightNav = ({ isLogin, user }) => {
           <li className="nav-item" style={{ marginRight: '25px'}}>
             <Link
               className="nav-link"
-              to="/my"
+              to={ROUTE.HOME.link}
               style={{
                 border: "0px solid grey",
                 borderRadius: "13px",
@@ -43,7 +44,7 @@ const RightNav = ({ isLogin, user }) => {
           <li className="nav-item" style={{ marginRight: '25px'}}>
             <Link
               className="nav-link"
-              to="/challenge"
+              to={ROUTE.CHALLENGE.link}
               style={{
                 color: location.pathname === "/challenge" ? "#00D387" : "",
                 fontWeight: location.pathname === "/challenge" ? "900" : "600",
@@ -56,7 +57,7 @@ const RightNav = ({ isLogin, user }) => {
           <li className="nav-item" style={{ marginRight: '25px'}}>
             <Link
               className="nav-link"
-              to="/blog"
+              to={ROUTE.BLOG.link}
               style={{
                 color: location.pathname === "/blog" ? "#00D387" : "",
                 fontWeight: location.pathname === "/blog" ? "900" : "600",
@@ -69,7 +70,7 @@ const RightNav = ({ isLogin, user }) => {
           <li className="nav-item" style={{ marginRight: '25px'}}>
             <Link
               className="nav-link"
-              to="/mall"
+              to={ROUTE.MALL.link}
               style={{
                 color: location.pathname === "/mall" ? "#00D387" : "",
                 fontWeight: location.pathname === "/mall" ? "900" : "600",
@@ -82,7 +83,7 @@ const RightNav = ({ isLogin, user }) => {
           <li className="nav-item" style={{ marginRight: '25px'}}>
             <Link
               className="nav-link"
-              to="/my"
+              to={ROUTE.MY.link}
               style={{
                 color: location.pathname === "/my" ? "#00D387" : "",
                 fontWeight: location.pathname === "/my" ? "900" : "600",
@@ -112,7 +113,7 @@ const RightNav = ({ isLogin, user }) => {
           <li className="nav-item">
             <Link
               className="nav-link"
-              to="/"
+              to={ROUTE.HOME.link}
               style={{ fontSize: "1.3em", fontWeight: "600" }}
             >
               홈
@@ -129,7 +130,7 @@ const RightNav = ({ isLogin, user }) => {
             <li className="nav-item">
               <Link
                 className="nav-link disabled"
-                to="/challenge"
+                to={ROUTE.CHALLENGE.link}
                 style={{ fontSize: "1.3em", fontWeight: "600" }}
               >
                 챌린지
@@ -147,7 +148,7 @@ const RightNav = ({ isLogin, user }) => {
             <li className="nav-item">
               <Link
                 className="nav-link disabled"
-                to="/blog"
+                to={ROUTE.BLOG.link}
                 style={{ fontSize: "1.3em", fontWeight: "600" }}
               >
                 블로그
@@ -165,7 +166,7 @@ const RightNav = ({ isLogin, user }) => {
             <li className="nav-item">
               <Link
                 className="nav-link disabled"
-                to="/mall"
+                to={ROUTE.MALL.link}
                 style={{ fontSize: "1.3em", fontWeight: "600" }}
               >
                 떠리몰
@@ -175,7 +176,7 @@ const RightNav = ({ isLogin, user }) => {
           <li className="nav-item">
             <Link
               className="nav-link"
-              to="/register"
+              to={ROUTE.REGISTER.link}
               style={{ fontSize: "1.3em", fontWeight: "600" }}
             >
               회원가입
@@ -184,7 +185,7 @@ const RightNav = ({ isLogin, user }) => {
           <li className="nav-item">
             <Link
               className="nav-link"
-              to="/login"
+              to={ROUTE.LOGIN.link}
               style={{ fontSize: "1.3em", fontWeight: "600" }}
             >
               로그인

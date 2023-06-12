@@ -8,6 +8,7 @@ import RightNav from "./RightNav";
 import { Navbar } from "react-bootstrap";
 import { useContext } from "react";
 import { UserStateContext } from "../../context/user/UserProvider";
+
 const Header = () => {
   const { user } = useContext(UserStateContext);
 
