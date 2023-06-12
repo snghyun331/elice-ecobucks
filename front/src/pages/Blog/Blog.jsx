@@ -6,7 +6,8 @@ import { UserStateContext } from "../../context/user/UserProvider";
 import BlogPost from "./BlogPost";
 import BlogPostEdit from "./BlogPostEdit";
 import BlogComment from "./BlogComment";
-// import BlogLike from "./BlogLike";
+import like from "../../assets/heartfill.png";
+import dislike from "../../assets/heartblank.png";
 const Blog = () => {
   // const [blogPosts, setBlogPosts] = useState([]);
   const userState = useContext(UserStateContext);
@@ -135,22 +136,11 @@ const Blog = () => {
   const handleLike = async (blog) => {
     try {
       // 좋아요 요청을 보내고 업데이트된 블로그 글 정보를 가져옴
-      const updatedBlog = await Api.put(`blog/${blog.blogId}/likes`, {
+      await Api.put(`blog/${blog.blogId}/likes`, {
         pressLikeUserId: userState.user._id
       });
 
-      // 업데이트된 블로그 글을 상태에 반영
-      setBlogList(prevBlogList => {
-        return prevBlogList.map(blog => {
-          if (blog._id === updatedBlog._id) {
-            return {
-              ...blog,
-              likeCount: updatedBlog.likeCount // likeCount 업데이트
-            };
-          }
-          return blog;
-        });
-      });
+      fetchData();
     } catch (error) {
       console.log(error);
     }
@@ -159,19 +149,11 @@ const Blog = () => {
   const handleDislike = async (blog) => {
     try {
       // 좋아요 취소 요청을 보내고 업데이트된 블로그 글 정보를 가져옴
-      const updatedBlog = await Api.put(`blog/${blog.blogId}/dislikes`, {
+      await Api.put(`blog/${blog.blogId}/dislikes`, {
         cancelLikeUserId: userState.user._id
       });
 
-      // 업데이트된 블로그 글을 상태에 반영
-      setBlogList(prevBlogList => {
-        return prevBlogList.map(blog => {
-          if (blog._id === updatedBlog._id) {
-            return updatedBlog;
-          }
-          return blog;
-        });
-      });
+      fetchData();
     } catch (error) {
       console.log(error);
     }
@@ -245,15 +227,16 @@ const Blog = () => {
                   <Card.Title className="card-title"><span>제목:</span> {item.title}</Card.Title>
                   
                   <Card.Text className="card-text">주제: {item.topic}</Card.Text>
-                  {/* <Card.Text className="card-text">likeCount: {item.likeCount}</Card.Text> */}
                   <Card.Text className="card-text">설명: {item.content}</Card.Text>
                   <Card.Text className="card-text">작성자: {item.username}</Card.Text>
-                  {/* <Button variant="primary" onClick={() => handleLike(item)}>좋아요</Button> */}
-                  {/* <BlogLike blog={item}/> */}
                   {item.likeUsers.includes(userState.user._id) ? (
-                    <button onClick={() => handleDislike(item)}>좋아요 취소</button>
+                    <button onClick={() => handleDislike(item)}>
+                      <img src={like} alt="좋아요" />
+                    </button>
                   ) : (
-                    <button onClick={() => handleLike(item)}>좋아요</button>
+                    <button onClick={() => handleLike(item)}>
+                      <img src={dislike} alt="좋아요취소" />
+                    </button>
                   )}
                   <p>좋아요 수: {item.likeCount}</p>
                   <BlogComment blog={item} />
