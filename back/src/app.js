@@ -10,7 +10,7 @@ import { blogPostRouter } from "./routers/blogpost-router.js";
 import { blogCommentRouter } from "./routers/blogcomment-router.js";
 import { scheduleChallenge } from "./utils/cron-schedule.js";
 import { orderRouter } from "./routers/order-router.js";
-
+import { imageRouter } from "./routers/image-router.js";
 
 const app = express();
 
@@ -32,15 +32,17 @@ app.get("/", (req, res) => {
 app.use(userAuthRouter);
 app.use(productRouter);
 
-app.use("/challenges", challengeRouter);
-app.use("/challenges", participationRouter);
-app.use("/challenges", commentRouter);
-app.use("/challenges", participationRouter);
+app.use(challengeRouter);
+app.use(participationRouter);
+app.use(commentRouter);
 
+app.use(blogPostRouter);
+app.use(blogCommentRouter);
 
-app.use(blogPostRouter)
-app.use(blogCommentRouter)
+app.use(imageRouter);
 
+// 'uploads' 디렉토리를 '/uploads' URL 경로로 공개
+app.use('/uploads', express.static('uploads'));
 
 scheduleChallenge();
 app.use(orderRouter);

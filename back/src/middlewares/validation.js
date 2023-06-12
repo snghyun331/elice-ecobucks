@@ -45,7 +45,7 @@ class Validation {
     return (req, res, next) => {
       const { error } = schema.validate(req.body);
       if (error) {
-        return res.status(BAD_REQUEST).json({ error: error.details[0].message });
+        return res.status(BAD_REQUEST).send({ error: error.details[0].message });
       }
       next();
     };

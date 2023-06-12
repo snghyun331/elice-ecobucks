@@ -34,9 +34,9 @@ class ChallengeComment {
   // update
   static async update({ _id, content }) {
     const updateComment = await commentModel.findOneAndUpdate(
-      {_id : _id}
-      ,{content}
-      ,{new: true});
+      { _id : _id }
+      ,{ content }
+      ,{ new: true });
 
     return updateComment               ;
   }

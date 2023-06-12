@@ -44,9 +44,9 @@ class ChallengeParticipation {
   // update
   static async update({ _id, image }) {
     const updateParticipation = await participationModel.findOneAndUpdate(
-      {_id : _id}
-      ,{image}
-      ,{new: true});
+      { _id : _id }
+      ,{ image }
+      ,{ new: true });
 
     return updateParticipation               ;
   }

@@ -12,7 +12,7 @@ const blogpostController = {
             const newPost = await blogPostService.addPost({
                 userId,title,topic, content
             });
-            return res.status(CREATED).json(newPost);
+            return res.status(CREATED).send(newPost);
         } catch (error) {
             next(error);
         }
@@ -32,7 +32,7 @@ const blogpostController = {
                 throw new Error(updatedPost.errorMessage);
             }
     
-            return res.status(OK).json(updatedPost);
+            return res.status(OK).send(updatedPost);
     
         } catch (error) {
             next(error);
@@ -70,7 +70,7 @@ const blogpostController = {
                 throw new Error(AddLike.errorMessage);
             }
     
-            return res.status(OK).json(AddLike)
+            return res.status(OK).send(AddLike)
         } catch(error) {
             next(error);
         }
@@ -89,7 +89,7 @@ const blogpostController = {
                 throw new Error(DeleteLike.errorMessage);
             }
     
-            return res.status(OK).json(DeleteLike);
+            return res.status(OK).send(DeleteLike);
         } catch(error) {
     
         }
@@ -121,7 +121,7 @@ const blogpostController = {
             if (postInfo.errorMessage) {
                 throw new Error(postInfo.errorMessage);
             }
-            return res.status(NO_CONTENT).send(postInfo);
+            return res.status(OK).send(postInfo);
         } catch(error) {
             error.status = NOT_FOUND;
             next(error)

@@ -1,6 +1,7 @@
 import is from "@sindresorhus/is";
+import { setError } from "./customError.js";
 
-export function validateEmptyBody(req){
+function validateEmptyBody(req){
   // headers의 Content-Type이 application/json인지 check
   if (req.headers['content-type'] !== 'application/json') {
     throw new Error(
@@ -14,3 +15,46 @@ export function validateEmptyBody(req){
     );
   }
 }
+
+async function checkData(classFuction, id) {
+  const findModel = await classFuction
+  if (!findModel) {
+    throw setError("해당 id를 가진 데이터는 없습니다.", 404, "NOT_FOUND");
+  }
+  return findModel;
+}
+
+// 공통 함수: 작성자 권한 확인
+function checkAuthor(data, currentUserId) {
+  if (data.userId.toString() !== currentUserId) {
+    throw setError("작성자가 아닙니다, 권한이 없습니다.", 403, "FORBIDDEN");
+  }
+}
+
+async function validatePermission(findModel, currentUserId) {
+  if (!findModel) {
+    throw setError("해당 id를 가진 데이터는 없습니다.", 404, "NOT_FOUND");
+  }
+  if (findModel.userId.toString() !== currentUserId) {
+    throw setError("작성자가 아닙니다, 권한이 없습니다.", 403, "FORBIDDEN");
+  }
+  return findModel
+}
+
+export { validateEmptyBody, checkData, checkAuthor, validatePermission }
+
+/*  validatePermission 사용 예시
+  const participation = await ChallengeParticipation.findById({ _id })
+  if ( !participation ){ 
+    throw setError("참여기록을 찾을 수 없습니다", 404, "NOT_FOUND")
+  }
+  if( participation.userId !== currentUserId ){
+    throw setError("수정 권한이 없습니다.", 403, "FORBIDDEN")
+  }
+
+  => 이렇게 사용
+  const participation = await ChallengeParticipation.findById({ _id });
+  await validatePermission(participation, currentUserId);
+
+*/
+
