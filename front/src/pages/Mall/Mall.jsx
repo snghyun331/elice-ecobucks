@@ -8,6 +8,7 @@ import { UserStateContext } from "../../context/user/UserProvider";
 import MallProductSell from "./MallProductSell";
 import MallProductEdit from "./MallProductEdit";
 import MapContainer from "./MapContainer";
+import placelocate from "../../assets/placeholder.png"
 
 const Mall = () => {
   const userState = useContext(UserStateContext);
@@ -271,21 +272,23 @@ const Mall = () => {
       </Modal>
 
       <Container>
-        <Row>
+        <Row style={{ display:"flex", alignItems:"center"}}>
           {list.map(item => (
             <Col key={item._id}>
               <Card style={{ width: "18rem" }}>
                 <Card.Body className="card-body">
                   <Card.Title className="card-title"><span>상품명:</span> {item.name}</Card.Title>
-
                   <Card.Text className="card-text">가격: {item.price}</Card.Text>
-                  <Card.Text className="card-text">위치: {item.place}</Card.Text>
+                  <Card.Text className="card-text">
+                    {item.place}
+                    <Button variant="primary" style={{ borderColor: 'transparent', backgroundColor: "#fff" }} onClick={() => handleLocate(item)}>
+                      <img src={placelocate} alt="위치찾기"/>
+                    </Button>
+                  </Card.Text>
                   <Card.Text className="card-text">판매자: {item.sellerName}</Card.Text>
                   <Card.Text className="card-text">재고: {item.stock}</Card.Text>
                   <Card.Text className="card-text">설명: {item.description}</Card.Text>
-                  <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleLocate(item)}>
-                      위치
-                  </Button>
+                  
                   {userState.user._id === item.seller && (
                     <>
                       <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item._id)}>
