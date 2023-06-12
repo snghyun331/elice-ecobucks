@@ -4,7 +4,7 @@ import { blogcommentController } from "../controllers/blogcomment-controller.js"
 
 const blogCommentRouter = Router();
 
-blogCommentRouter.post("/blog/comment/write", login_required, blogcommentController.blogcommentPostWrite);
+blogCommentRouter.post("/blog/:_id/comment/write", login_required, blogcommentController.blogcommentPostWrite);
 
 blogCommentRouter.put("/blog/comment/:_id/write", login_required, blogcommentController.blogcommentPutWrite)
 
