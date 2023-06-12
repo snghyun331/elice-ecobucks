@@ -36,7 +36,7 @@ const orderController = {
                 throw new Error(createdOrder.errorMessage);
             }
         
-            return res.status(CREATED).json(createdOrder);
+            return res.status(CREATED).send(createdOrder);
         } catch (error) {
         next(error);
         }
@@ -71,7 +71,7 @@ const orderController = {
                     };
             }));    
     
-            return res.status(OK).json(orderDetails);
+            return res.status(OK).send(orderDetails);
         } catch (error) {
             error.status = NOT_FOUND;
             next(error);

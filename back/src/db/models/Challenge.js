@@ -40,8 +40,8 @@ class Challenge {
   static async update({ chllengeId, title, content, icon, weeks, dueDate }) {
     const updatedEducation = await challengeModel.findOneAndUpdate(
       {_id : chllengeId}
-      ,{title, content, icon, weeks, dueDate}
-      ,{new: true});
+      ,{ title, content, icon, weeks, dueDate }
+      ,{ new: true });
 
     return updatedEducation;
   }

@@ -19,7 +19,7 @@ const productController = {
         throw new Error(newProduct.errorMessage);
       }
 
-      return res.status(CREATED).json(newProduct);
+      return res.status(CREATED).send(newProduct);
     } catch (error) {
       next(error);
     }
@@ -47,7 +47,7 @@ const productController = {
   productGetAll: async function (req, res, next) {
     try {
       const products = await productService.findAllProducts();
-      res.status(OK).json(products);
+      res.status(OK).send(products);
     } catch (error) {
       next(error);
     }
@@ -77,7 +77,7 @@ const productController = {
         throw new Error("해당 상품을 삭제할 수 없습니다.");
       }
 
-      return res.status(NO_CONTENT).send(result);
+      return res.status(OK).send(result);
     } catch (error) {
       next(error);
     }

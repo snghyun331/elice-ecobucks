@@ -4,14 +4,14 @@ import { participationController } from "../controllers/challenge-participation-
 
 const participationRouter = Router();
 
-participationRouter.post("/:challengeId/participants", login_required, participationController.participationCreate);
+participationRouter.post("/challenges/:challengeId/participants", login_required, participationController.participationCreate);
 
-participationRouter.get("/:challengeId/participants", login_required, participationController.participationGetAll);
+participationRouter.get("/challenges/:challengeId/participants", login_required, participationController.participationGetAll);
 
-participationRouter.get("/:challengeId/participants/:_id", login_required, participationController.participationGet);
+participationRouter.get("/challenges/:challengeId/participants/:_id", login_required, participationController.participationGet);
 
-participationRouter.put("/:challengeId/participants/:_id", login_required, participationController.participationUpdate);
+participationRouter.put("/challenges/:challengeId/participants/:_id", login_required, participationController.participationUpdate);
 
-participationRouter.delete("/:challengeId/participants/:_id", login_required, participationController.participationDelete);
+participationRouter.delete("/challenges/:challengeId/participants/:_id", login_required, participationController.participationDelete);
 
 export { participationRouter };
