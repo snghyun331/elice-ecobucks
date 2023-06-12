@@ -39,7 +39,7 @@ class BlogPost {
     }
 
     static async addLike({ post_id, pressLikeUserId }) {
-        const filter = { _id: post_id };
+        const filter = { _id: post_id, likeUsers: { $ne: pressLikeUserId }};
         const update = {
             $inc: { likeCount: 1 },
             $addToSet: { likeUsers: pressLikeUserId },
