@@ -15,7 +15,7 @@ const blogcommentController = {
                 post_id, writer_id, comment
             });
             
-            return res.status(CREATED).json(newComment);
+            return res.status(CREATED).send(newComment);
         } catch (error) {
             next(error);
         }
@@ -35,7 +35,7 @@ const blogcommentController = {
                 throw new Error(updatedComment.errorMessage);
             }
     
-            return res.status(OK).json(updatedComment);
+            return res.status(OK).send(updatedComment);
     
         } catch (error) {
             next(error)

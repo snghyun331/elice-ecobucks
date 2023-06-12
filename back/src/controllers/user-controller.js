@@ -19,7 +19,7 @@ const userController = {
         throw new Error(newUser.errorMessage);
       }
   
-      return res.status(CREATED).json(newUser);
+      return res.status(CREATED).send(newUser);
     } catch (error) {
       next(error);
     }
@@ -121,7 +121,7 @@ const userController = {
       await user.save()
 
       const result = { result : "Successfully withdraw"}
-      return res.status(NO_CONTENT).send(result)
+      return res.status(OK).send(result)
     } catch (error) {
       error.status = NOT_FOUND;
       next(error)
@@ -130,8 +130,8 @@ const userController = {
 
   userPutMypage: async function (req, res, next) {
     try {
-      // URI로부터 사용자 id를 추출함.
-      const userId = req.params._id;
+      // jwt토큰으로부터 사용자 id를 추출함.
+      const userId = req.currentUserId;
 
       // body data 로부터 업데이트할 사용자 정보를 추출함.
       const { username, districtName, password } = req.body ?? null;
@@ -145,7 +145,7 @@ const userController = {
         throw new Error(updatedUser.errorMessage);
       }
 
-      return res.status(OK).json(updatedUser);
+      return res.status(OK).send(updatedUser);
     } catch (error) {
       next(error);
     }                                                      
