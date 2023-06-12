@@ -3,14 +3,14 @@ import { login_required } from "../middlewares/login-required.js";
 import { challengeController } from "../controllers/challenge-controller.js"
 const challengeRouter = Router();
 
-challengeRouter.post("/", login_required, challengeController.challengeCreat);
+challengeRouter.post("/challenges", login_required, challengeController.challengeCreat);
 
-challengeRouter.get("/", login_required, challengeController.challengeGetAll);
+challengeRouter.get("/challenges", login_required, challengeController.challengeGetAll);
 
-challengeRouter.get("/:_id", login_required, challengeController.challengeGet);
+challengeRouter.get("/challenges/:_id", login_required, challengeController.challengeGet);
 
-challengeRouter.put("/:_id", login_required, challengeController.challengeUpdate);
+challengeRouter.put("/challenges/:_id", login_required, challengeController.challengeUpdate);
 
-challengeRouter.delete("/:_id", login_required, challengeController.challengeDelete);
+challengeRouter.delete("/challenges/:_id", login_required, challengeController.challengeDelete);
 
 export { challengeRouter };

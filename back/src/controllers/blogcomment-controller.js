@@ -7,13 +7,15 @@ const blogcommentController = {
     blogcommentPostWrite: async (req, res, next) => {
         try {
             validateEmptyBody(req)
-            const { post_id, writer_id, comment } = req.body;
+            const post_id = req.params._id
+            const writer_id = req.currentUserId;
+            const { comment } = req.body;
 
             const newComment = await blogCommentService.addComment({
                 post_id, writer_id, comment
             });
             
-            return res.status(CREATED).json(newComment);
+            return res.status(CREATED).send(newComment);
         } catch (error) {
             next(error);
         }
@@ -25,7 +27,7 @@ const blogcommentController = {
             const { comment } = req.body;
             const toUpdate = { comment };
             const updatedComment = await blogCommentService.setComment({
-                commentId, 
+                comment_id, 
                 toUpdate
             })
     
@@ -33,7 +35,7 @@ const blogcommentController = {
                 throw new Error(updatedComment.errorMessage);
             }
     
-            return res.status(OK).json(updatedComment);
+            return res.status(OK).send(updatedComment);
     
         } catch (error) {
             next(error)

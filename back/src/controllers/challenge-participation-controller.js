@@ -1,6 +1,6 @@
 import { ParticipationService } from "../services/challenge-participation-service.js";
 import { validateEmptyBody } from "../utils/validators.js"
-import { NOT_FOUND, CREATED, OK, NO_CONTENT } from "../utils/constants.js";
+import { CREATED, OK } from "../utils/constants.js";
 
 const participationController = {
   participationCreate: async function (req, res, next) {
@@ -11,7 +11,7 @@ const participationController = {
       const { image } = req.body;
       
       const challenge = await ParticipationService.createParticipation({ userId, challengeId : challengeId, image });
-      res.status(CREATED).json(challenge);
+      res.status(CREATED).send(challenge);
     } catch (error) {
       next(error);
     }
@@ -20,10 +20,9 @@ const participationController = {
   participationGetAll: async function (req, res, next) {
     try {
       const challengeId = req.params.challengeId
-      const participation = await ParticipationService.findChallenges({ challengeId });
-      res.status(OK).json(participation);
+      const participation = await ParticipationService.findParticipations({ challengeId });
+      res.status(OK).send(participation);
     } catch (error) {
-      error.status = NOT_FOUND;
       next(error);
     }
   },
@@ -32,10 +31,9 @@ const participationController = {
     try {
       const { challengeId, _id } = req.params;
     
-      const participation = await ParticipationService.findChallenge({ challengeId, _id });
-      res.status(OK).json(participation);
+      const participation = await ParticipationService.findParticipation({ challengeId, _id });
+      res.status(OK).send(participation);
     } catch (error) {
-      error.status = NOT_FOUND;
       next(error);
     }
   },
@@ -46,11 +44,11 @@ const participationController = {
       const currentUserId = req.currentUserId;
       const { image } = req.body;  
   
-      const participation = await ParticipationService.updateChallenge({ 
+      const participation = await ParticipationService.updateParticipation({ 
         challengeId, _id, currentUserId, image
       });
       
-      res.status(OK).json(participation);
+      res.status(OK).send(participation);
     } catch (error) {
       next(error);
     }
@@ -61,12 +59,11 @@ const participationController = {
       const { challengeId, _id } = req.params;
       const currentUserId = req.currentUserId;
   
-      await ParticipationService.deleteChallenge(challengeId, _id, currentUserId);
+      await ParticipationService.deleteParticipation(challengeId, _id, currentUserId);
        
-      res.status(NO_CONTENT).json({ message: "challenge 삭제 완료"});
+      res.status(OK).send({ message: "challenge 삭제 완료"});
   
     } catch (error) {
-      error.status = NOT_FOUND;
       next(error);
     }
   }

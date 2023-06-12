@@ -8,7 +8,7 @@ class blogPostService {
             return { errorMessage };
         }
         const user = await User.findById({userId})
-        console.log(user)
+        
         const username = user.username
         const newPost = { userId, username, title, topic, content };
         const createdNewPost = await BlogPost.createPost({newPost})
@@ -31,7 +31,7 @@ class blogPostService {
                 "해당 게시글을 찾을 수 없습니다. 다시 한 번 확인해 주세요.";
             return { errorMessage };
         }
-        // 업데이트 대상에 title이 있다면, 즉 title 값이 null 이 아니라면 업데이트 진행
+        
         if (toUpdate.title) {
             const fieldToUpdate = "title";
             const newValue = toUpdate.title;
@@ -67,6 +67,7 @@ class blogPostService {
 
     static async addLike({ post_id, pressLikeUserId }) {
         const likeInfo = await BlogPost.findOneById({ post_id });
+        
         if (!likeInfo) {
             const errorMessage =
                 "해당 id의 게시글은 존재하지 않습니다. 다시 한 번 확인해 주세요.";
@@ -74,7 +75,11 @@ class blogPostService {
         }
 
         const AddLike = await BlogPost.addLike({ post_id, pressLikeUserId });
-        
+        if (!AddLike) {
+            const errorMessage =
+                "좋아요를 이미 눌렀습니다.";
+            return { errorMessage };
+        }
         return AddLike;
     } 
 
@@ -104,8 +109,8 @@ class blogPostService {
     }
 
 
-    static async getFilteredPosts({topic}) {
-        const posts = await BlogPost.findAllByTopic( {topic} )
+    static async getFilteredPosts(topic) {
+        const posts = await BlogPost.findAllByTopic(topic)
         return posts
     }
 }
