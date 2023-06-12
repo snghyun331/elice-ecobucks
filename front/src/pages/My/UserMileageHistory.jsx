@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import moment from "moment";
 import { Table, Pagination, Container } from "react-bootstrap";
 import * as Api from "../../api";
 
@@ -10,7 +11,7 @@ const UserMileageHistory = ({ user }) => {
   useEffect(() => {
     const fetchOrderHistory = async () => {
       try {
-        const res = await Api.get(`users/${user._id}/challenges`); 
+        const res = await Api.get(`users/${user._id}/challenges`);
         setOrderHistory(res.data.userChallengeList);
       } catch (err) {
         console.error("Failed to fetch mileage history:", err);
@@ -32,8 +33,7 @@ const UserMileageHistory = ({ user }) => {
   };
 
   const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
+    return moment(dateString).format("YYYY-MM-DD");
   };
 
   return (

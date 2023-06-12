@@ -4,6 +4,7 @@ import { UserStateContext, DispatchContext } from "../../context/user/UserProvid
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import { ROUTE } from "../../routes/routes";
+import { LOGOUT } from "../../reducer/action";
 
 const RightNav = ({ isLogin, user }) => {
   const location = useLocation();
@@ -12,7 +13,7 @@ const RightNav = ({ isLogin, user }) => {
 
   const logout = () => {
     sessionStorage.removeItem("userToken");
-    dispatch({ type: "LOGOUT" });
+    dispatch({ type: LOGOUT });
     alert("로그아웃하여 홈페이지로 이동합니다.");
     if (location.pathname !== '/') {
       window.location.href = '/'

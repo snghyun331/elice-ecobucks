@@ -1,13 +1,15 @@
 import React, { useState, useContext } from "react";
 import { Button, Form, Modal, Image, Alert } from "react-bootstrap";
 
+import { UPDATE_USER } from "../../reducer/action";
+
 import {
   UserStateContext,
   DispatchContext,
 } from "../../context/user/UserProvider";
 import * as Api from "../../api";
 
-const ChallengeParticipate = ({ onClose, challenge }) => {
+const ChallengeParticipate = ({ show, onClose, challenge }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -48,7 +50,7 @@ const ChallengeParticipate = ({ onClose, challenge }) => {
       const user = userData.data;
 
       dispatch({
-        type: "UPDATE_USER",
+        type: UPDATE_USER,
         payload: user,
       });
 
@@ -60,6 +62,10 @@ const ChallengeParticipate = ({ onClose, challenge }) => {
   };
 
   return (
+    <Modal show={show} >
+    <Modal.Header closeButton>
+    <Modal.Title>참가하기!</Modal.Title>
+  </Modal.Header>
     <Modal.Body>
       <h4>인증사진 업로드</h4>
       <Alert variant="danger" className="small">
@@ -110,6 +116,7 @@ const ChallengeParticipate = ({ onClose, challenge }) => {
         </Modal.Footer>
       </Modal>
     </Modal.Body>
+    </Modal>
   );
 };
 
