@@ -8,7 +8,7 @@ const productController = {
     try {
       validateEmptyBody(req)
 
-      const { name, price, place, stock, description } = req.body;
+      const { name, price, place, stock, description, location } = req.body;
       const seller = req.currentUserId;
       
       const currentUserInfo = await userAuthService.getUserInfo({ userId: seller });

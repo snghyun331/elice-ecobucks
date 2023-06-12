@@ -22,13 +22,17 @@ class Validation {
   static blogcommentUpdateSchema = Joi.object({
     comment: Joi.string()
   })
-  
+
   static productSchema = Joi.object({
     name: Joi.string().required().not(''),
     price: Joi.number().integer().required(),
     place: Joi.string().required(),
     stock: Joi.number().integer().required(),
     description: Joi.string().required(),
+    location: Joi.object({
+      x: Joi.number().required(),
+      y: Joi.number().required()
+    })
   });
 
   static productUpdateSchema = Joi.object({

@@ -7,15 +7,20 @@ import { useNavigate } from "react-router-dom";
 import { UserStateContext } from "../../context/user/UserProvider";
 import MallProductSell from "./MallProductSell";
 import MallProductEdit from "./MallProductEdit";
+import MapContainer from "./MapContainer";
+import placelocate from "../../assets/placeholder.png"
+
 const Mall = () => {
+  const userState = useContext(UserStateContext);
+  const navigate = useNavigate();
   const [list, setList] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [itemLocate, setItemLocate] = useState({});
 
   const [sellModalOpen, setSellModalOpen] = useState(false);
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  
   const handleCloseSellModal = () => setSellModalOpen(false);
   const handleOpenSellModal = async (itemId) => {
     try {
@@ -44,10 +49,10 @@ const Mall = () => {
       const product = res.data;
       setSelectedItem(product);
       // console.log("selectedItem: ", selectedItem);
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
-    
+
     setEditModalOpen(true);
   };
   const handleCloseDeleteModal = () => setDeleteModalOpen(false);
@@ -62,9 +67,7 @@ const Mall = () => {
     }
     setDeleteModalOpen(true);
   };
-
-  const userState = useContext(UserStateContext);
-  const navigate = useNavigate();
+  
   
   useEffect(() => {
     // 만약 전역 상태의 user가 null이거나 탈퇴한 회원이라면, 로그인 페이지로 이동함.
@@ -82,8 +85,8 @@ const Mall = () => {
     try {
       // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
       const res = await Api.get("products");
-      console.log("db data: ",res.data)
-      
+      console.log("db data: ", res.data)
+
       const newList = res.data.map(item => {
         return {
           name: item.name,
@@ -93,19 +96,30 @@ const Mall = () => {
           description: item.description,
           seller: item.seller,
           sellerName: item.sellerName,
+          location: item.location,
           _id: item._id //상품 ObjectId
         };
       });
       setList(newList);
       // console.log(list.map(item => (console.log(item))));
-    } catch (err){
+    } catch (err) {
       // alert("정보 불러오기를 실패하였습니다.");
       console.log("몰불러오기를 실패하였습니다.", err);
     }
-  }
+  };
 
+  const extractLocations = () => {
+    const locations = list
+      .filter(product => product.location && product.location.y && product.location.x)
+      .map(product => ({
+        lat: product.location.y,
+        lng: product.location.x
+      }));
+    // console.log("extractLocations: ", locations);
+    return locations;
+  };
   const handleConfirmPurchase = async (selectedItem) => {
-// 물건 구매 버튼, stock, user mileage 줄이기
+    // 물건 구매 버튼, stock, user mileage 줄이기
     try {
       // 마일리지 충분한지 확인하기
       // 유효성 검사: 구매할 수 있는 수량인지. (수량이 0 개이면 db 삭제)
@@ -151,7 +165,8 @@ const Mall = () => {
 
       const updatedList = list.map(item => {
         if (item._id === selectedItem._id) {
-          return { ...selectedItem,
+          return {
+            ...selectedItem,
             name: updatedItem.name,
             place: updatedItem.place,
             price: updatedItem.price,
@@ -168,12 +183,12 @@ const Mall = () => {
       console.log("상품 수정에 실패했습니다", err);
     }
   }
-  
+
   const handleDeleteProduct = async (selectedItem) => {
     try {
       console.log("삭제할 상품: ", selectedItem);
       await Api.delete(`products/${selectedItem._id}`);
-      
+
       const res = await Api.get("products");
       const newList = res.data.map(item => {
         return {
@@ -184,6 +199,7 @@ const Mall = () => {
           description: item.description,
           seller: item.seller,
           sellerName: item.sellerName,
+          location: item.location,
           _id: item._id //상품 ObjectId
         };
       });
@@ -193,26 +209,45 @@ const Mall = () => {
       console.log("상품 삭제에 실패했습니다.", err);
     }
   }
+  const handleLocate = (selectedItem) => {
+    // console.log("handleLocate: ", selectedItem);
+    // console.log("x좌표: ", selectedItem.location.x);
+    // console.log("y좌표: ", selectedItem.location.y);
+    // setSelectedItem(selectedItem);
+    setItemLocate(selectedItem.location);
+  }
 
   return (
-    <div style={{zIndex: "-1", padding:"60px"}}>
+    <div style={{ zIndex: "-1", padding: "60px", }}>
       <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: "70%",
-            background: "#4d9e81",
-            zIndex: -1,
-          }}
-        ></div>
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: "70%",
+          background: "#4d9e81",
+          zIndex: -1,
+        }}
+      ></div>
       <Container className="text-center">
         <img src={Logo} className="w-50 mt-5 mb-5" alt="Logo" />
       </Container>
-
-      <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenSellModal}>
-          판매 상품 등록하기
+      <Container
+        className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
+        style={{ marginTop:"28px", paddingTop: '30px', width: "80%", }}
+      >
+        <MapContainer
+        locations={extractLocations()}
+        selectedItemLocate={itemLocate}
+       />
+      </Container>
+      
+      <Button
+        variant="primary"
+        style={{ marginBottom: "10px", top: "5", marginLeft:"10px" }}
+        onClick={handleOpenSellModal}>
+        판매 상품 등록하기
       </Button>
       <Modal show={sellModalOpen} onHide={handleCloseSellModal} centered>
         <Modal.Header closeButton>
@@ -235,20 +270,26 @@ const Mall = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      
-      <Container> 
-        <Row>
-        {list.map(item => (
+
+      <Container>
+        <Row style={{ display:"flex", alignItems:"center"}}>
+          {list.sort((a, b) => (a.stock === 0 ? 1 : -1))
+            .map(item => (
             <Col key={item._id}>
               <Card style={{ width: "18rem" }}>
                 <Card.Body className="card-body">
                   <Card.Title className="card-title"><span>상품명:</span> {item.name}</Card.Title>
-                  
                   <Card.Text className="card-text">가격: {item.price}</Card.Text>
-                  <Card.Text className="card-text">위치: {item.place}</Card.Text>
+                  <Card.Text className="card-text">
+                    {item.place}
+                    <Button variant="primary" style={{ borderColor: 'transparent', backgroundColor: "#fff" }} onClick={() => handleLocate(item)}>
+                      <img src={placelocate} alt="위치찾기"/>
+                    </Button>
+                  </Card.Text>
                   <Card.Text className="card-text">판매자: {item.sellerName}</Card.Text>
                   <Card.Text className="card-text">재고: {item.stock}</Card.Text>
                   <Card.Text className="card-text">설명: {item.description}</Card.Text>
+                  
                   {userState.user._id === item.seller && (
                     <>
                       <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item._id)}>
@@ -286,19 +327,19 @@ const Mall = () => {
                           선택한 상품을 삭제하시겠습니까?
                         </Modal.Body>
                         <Modal.Footer>
-                        <Button variant="secondary" onClick={handleCloseDeleteModal}>취소</Button>
-                        <Button variant="primary" onClick={() => handleDeleteProduct(selectedItem)}>삭제하기</Button> 
+                          <Button variant="secondary" onClick={handleCloseDeleteModal}>취소</Button>
+                          <Button variant="primary" onClick={() => handleDeleteProduct(selectedItem)}>삭제하기</Button>
                         </Modal.Footer>
                       </Modal>
                     </>
                   )}
-                  <Button 
-                    variant="primary" 
-                    style={{ margin: "10px", top: "5" }} 
+                  <Button
+                    variant="primary"
+                    style={{ margin: "10px", top: "5" }}
                     onClick={() => handleOpenPurchaseModal(item)}
                     disabled={item.stock === 0}
                   >
-                      구매
+                    구매
                   </Button>
                 </Card.Body>
               </Card>
@@ -306,25 +347,25 @@ const Mall = () => {
           ))}
         </Row>
 
-        
+
         <Modal show={purchaseModalOpen} onHide={handleClosePurchaseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>구매 확인</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Card.Text className="card-text">상품: {selectedItem && selectedItem.name}</Card.Text>
-          <Card.Text className="card-text">가격: {selectedItem && selectedItem.price}</Card.Text>
-          <Card.Text className="card-text">판매처: {selectedItem && selectedItem.place}</Card.Text>
-          <Card.Text className="card-text">설명: {selectedItem && selectedItem.description}</Card.Text>
-          선택한 상품을 구매하시겠습니까?
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClosePurchaseModal}>취소</Button>
-          <Button variant="primary" onClick={() => handleConfirmPurchase(selectedItem)}>구매하기</Button> 
-          
-        </Modal.Footer>
-      </Modal>
-    </Container>
+          <Modal.Header closeButton>
+            <Modal.Title>구매 확인</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Card.Text className="card-text">상품: {selectedItem && selectedItem.name}</Card.Text>
+            <Card.Text className="card-text">가격: {selectedItem && selectedItem.price}</Card.Text>
+            <Card.Text className="card-text">판매처: {selectedItem && selectedItem.place}</Card.Text>
+            <Card.Text className="card-text">설명: {selectedItem && selectedItem.description}</Card.Text>
+            선택한 상품을 구매하시겠습니까?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClosePurchaseModal}>취소</Button>
+            <Button variant="primary" onClick={() => handleConfirmPurchase(selectedItem)}>구매하기</Button>
+
+          </Modal.Footer>
+        </Modal>
+      </Container>
     </div>
   );
 };
