@@ -9,7 +9,7 @@ import {
 } from "../../context/user/UserProvider";
 import * as Api from "../../api";
 
-const ChallengeParticipate = ({ onClose, challenge }) => {
+const ChallengeParticipate = ({ show, onHide, onClose, challenge }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -62,6 +62,10 @@ const ChallengeParticipate = ({ onClose, challenge }) => {
   };
 
   return (
+    <Modal show={show} onHide={onHide}>
+    <Modal.Header closeButton>
+    <Modal.Title>참가하기!</Modal.Title>
+  </Modal.Header>
     <Modal.Body>
       <h4>인증사진 업로드</h4>
       <Alert variant="danger" className="small">
@@ -112,6 +116,7 @@ const ChallengeParticipate = ({ onClose, challenge }) => {
         </Modal.Footer>
       </Modal>
     </Modal.Body>
+    </Modal>
   );
 };
 

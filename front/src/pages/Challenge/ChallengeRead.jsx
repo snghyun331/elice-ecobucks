@@ -17,7 +17,7 @@ import { UserStateContext } from "../../context/user/UserProvider";
 import ChallengeUpdate from "./ChallengeUpdate";
 
 const ChallengeRead = ({ challenge, onBackToListClick }) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showParticipateModal, setShowParticipateModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [comments, setComments] = useState([]);
   const [editingCommentId, setEditingCommentId] = useState(null);
@@ -27,7 +27,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
   const navigate = useNavigate();
 
   const handleJoinClick = () => {
-    setShowModal(true);
+    setShowParticipateModal(true);
   };
 
   const handleUpdateClick = () => {
@@ -38,7 +38,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
   };
 
   const handleCloseModal = () => {
-    setShowModal(false);
+    setShowParticipateModal(false);
   };
 
   const handleCloseUpdateModal = () => {
@@ -305,8 +305,6 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
               >
                 삭제하기
               </Button>
-
-              
             </a>
           </OverlayTrigger>
         </>
@@ -314,20 +312,13 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
       <Button onClick={onBackToListClick} className="mt-3">
         목록으로
       </Button>
-
-      <Modal
-        show={showModal}
+      
+      <ChallengeParticipate
+        show={showParticipateModal}
         onHide={handleCloseModal}
-        style={{ zIndex: "9999", marginTop: "200px" }}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>참가하기</Modal.Title>
-        </Modal.Header>
-        <ChallengeParticipate
-          onClose={handleCloseModal}
-          challenge={challenge}
-        />
-      </Modal>
+        onClose={handleCloseModal}
+        challenge={challenge}
+      />
 
       <Modal
         size="lg"

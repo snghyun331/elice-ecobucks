@@ -5,6 +5,7 @@ import Logo from "../../assets/logo.png";
 
 import * as Api from '../../api'
 import { DispatchContext, UserStateContext } from '../../context/user/UserProvider'
+import { validateEmail } from "../../util/common";
 
 import { LOGIN_SUCCESS } from "../../reducer/action";
 
