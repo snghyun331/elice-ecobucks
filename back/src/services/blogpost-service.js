@@ -93,6 +93,11 @@ class blogPostService {
         }
     
         const DeleteLike = await BlogPost.deleteLike({ post_id, cancelLikeUserId });
+        if (!DeleteLike) {
+            const errorMessage =
+                "좋아요를 이미 취소했습니다.";
+            return { errorMessage };
+        }
         return DeleteLike;
     }
 
