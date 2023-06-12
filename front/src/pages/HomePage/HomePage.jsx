@@ -14,7 +14,8 @@ import blogIcon from "../../assets/blogIcon.png";
 import challengeIcon from "../../assets/challengeIcon.png";
 import TipCarousel from "./TipCarousel";
 import { useState } from "react";
-
+import districtInfo
+ from "../../assets/districtInfo";
 const HomePage = () => {
   const [currentImg, setCurrentImg] = useState(map);
 
