@@ -1,7 +1,7 @@
 import { productService } from "../services/product-service.js";
 import { validateEmptyBody } from "../utils/validators.js";
 import { userAuthService } from "../services/user-service.js";
-import { NOT_FOUND, CREATED, OK, NO_CONTENT } from "../utils/constants.js";
+import { CREATED, OK } from "../utils/constants.js";
 
 const productController = {
   productPostCreate: async function (req, res, next) {
@@ -13,13 +13,14 @@ const productController = {
       
       const currentUserInfo = await userAuthService.getUserInfo({ userId: seller });
       const sellerName = currentUserInfo.username;
+      const newProduct = { seller, sellerName, name, price, place, stock, description }
 
-      const newProduct = await productService.addProduct({ seller, sellerName, name, price, place, stock, description });
+      const createdNewProduct = await productService.addProduct(newProduct);
       if (newProduct.errorMessage) {
         throw new Error(newProduct.errorMessage);
       }
 
-      return res.status(CREATED).send(newProduct);
+      return res.status(CREATED).json(createdNewProduct);
     } catch (error) {
       next(error);
     }
@@ -56,11 +57,7 @@ const productController = {
   productGetById: async function (req, res, next) {
     try {
       const productId = req.params._id;
-      const product = await productService.findProduct({ productId });
-
-      if (product.errorMessage) {
-        throw new Error(product.errorMessage);
-      }
+      const product = await productService.findProduct(productId);
       return res.status(OK).send(product);
     } catch (error) {
       next(error);

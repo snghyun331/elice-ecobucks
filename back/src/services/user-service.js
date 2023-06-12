@@ -18,7 +18,7 @@ class userAuthService {
     const withdrawnUser = await User.findWithdraw({ email })
     if (withdrawnUser) {
       const hashedPassword = await bcrypt.hash(password, 10);
-      const districtCode = await District.getdistrictCodeByName(districtName)
+      const districtCode = await District.getDistrictCodeByName(districtName)
       // 기존 정보에서 다시 가입할 때 등록한 정보로 업데이트
       const updatedUser = await userModel.findOneAndUpdate(   
         {email: email, is_withdrawed: true},  // 필터링
@@ -32,7 +32,7 @@ class userAuthService {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // 구 코드 변환
-    const districtCode = await District.getdistrictCodeByName(districtName)
+    const districtCode = await District.getDistrictCodeByName(districtName)
 
     const newUser = { username, email, password: hashedPassword, districtCode, districtName };
 
@@ -117,14 +117,12 @@ class userAuthService {
     
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
-      const errorMessage =
-        "가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
+      throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
     }
     
     // districtName을 districtCode로 변환
     if (toUpdate.districtName) {
-      const districtCode = await District.getdistrictCodeByName(toUpdate.districtName);
+      const districtCode = await District.getDistrictCodeByName(toUpdate.districtName);
       toUpdate.districtCode = districtCode;
     }
     if (toUpdate.password) {

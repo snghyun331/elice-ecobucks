@@ -130,8 +130,8 @@ const userController = {
 
   userPutMypage: async function (req, res, next) {
     try {
-      // URI로부터 사용자 id를 추출함.
-      const userId = req.params._id;
+      // jwt토큰으로부터 사용자 id를 추출함.
+      const userId = req.currentUserId;
 
       // body data 로부터 업데이트할 사용자 정보를 추출함.
       const { username, districtName, password } = req.body ?? null;
