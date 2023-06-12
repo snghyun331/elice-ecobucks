@@ -9,7 +9,7 @@ import {
 } from "../../context/user/UserProvider";
 import * as Api from "../../api";
 
-const ChallengeParticipate = ({ show, onHide, onClose, challenge }) => {
+const ChallengeParticipate = ({ show, onClose, challenge }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -62,7 +62,7 @@ const ChallengeParticipate = ({ show, onHide, onClose, challenge }) => {
   };
 
   return (
-    <Modal show={show} onHide={onHide}>
+    <Modal show={show} >
     <Modal.Header closeButton>
     <Modal.Title>참가하기!</Modal.Title>
   </Modal.Header>

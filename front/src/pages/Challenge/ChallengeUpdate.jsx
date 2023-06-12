@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, ButtonGroup, Container, Form, Alert, Modal } from "react-bootstrap";
 import * as Api from "../../api";
 
-const ChallengeUpdate = ({ show, onHide, onClose, challenge }) => {
+const ChallengeUpdate = ({ show, onClose, challenge }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [duration, setDuration] = useState("");
@@ -55,7 +55,7 @@ const ChallengeUpdate = ({ show, onHide, onClose, challenge }) => {
   };
 
   return (
-    <Modal size='lg' show={show} onHide={onHide} style={{ zIndex: "9999", marginTop: "20px" }}>
+    <Modal size='lg' show={show} style={{ zIndex: "9999", marginTop: "20px" }}>
       <div style={{ padding: "20px" }}>
         <Modal.Header closeButton>
           <Modal.Title>챌린지 수정</Modal.Title>
