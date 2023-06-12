@@ -7,7 +7,7 @@ const { kakao } = window;
 const MapContainer = ({ locations, selectedItemLocate }) => {
 
     useEffect(() => {
-        console.log("맵컨테이너 함수 안: ", selectedItemLocate);
+        // console.log("맵컨테이너 함수 안: ", selectedItemLocate);
         const container = document.getElementById('myMap');
         const options = {
             center: new kakao.maps.LatLng(37.5469686000002, 127.05732177903647), // 서울을 중심으로 설정
@@ -18,7 +18,7 @@ const MapContainer = ({ locations, selectedItemLocate }) => {
         // map.panTo(moveLatLng);
         // 마커 생성 및 표시
         locations.forEach((location) => {
-            console.log(location)
+            // console.log(location)
             // const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png'; // 마커 이미지 url, 스프라이트 이미지를 씁니다
             // const imageSize = new kakao.maps.Size(36, 37); // 마커 이미지의 크기
             // const imgOptions = {

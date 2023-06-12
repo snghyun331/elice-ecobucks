@@ -1,10 +1,10 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { ListGroup, Form, Button, Container } from "react-bootstrap";
 import * as Api from "../../api";
 import { UserStateContext } from "../../context/user/UserProvider";
 
 const BlogComment = ({ blog }) => {
-  console.log("블로그 댓글 함수 안: ",blog);
+  // console.log("블로그 댓글 함수 안: ", blog);
     const userState = useContext(UserStateContext);
     const [comments, setComments] = useState([]);
     const [editingCommentId, setEditingCommentId] = useState(null);
@@ -13,15 +13,13 @@ const BlogComment = ({ blog }) => {
     const handleAddComment = async (e) => {
         e.preventDefault();
         console.log("blog: ", blog); //블로그 아이디만 들어옴.
-        const formData = new FormData(event.target);
+        const formData = new FormData(e.target);
         console.log("formData: ", formData);
         const content = formData.get("content");
         console.log("content: ", content);
         try {
-          const res = await Api.post(`blog/comment/write`, {
-            post_id: blog,
-            writer_id: userState.user._id,
-            content,
+          const res = await Api.post(`blog/${blog.blogId}/comment/write`, {
+            comment: content,
           });
           console.log("addcomment res: ", res);
           const newComment = {

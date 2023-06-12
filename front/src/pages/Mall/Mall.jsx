@@ -115,7 +115,7 @@ const Mall = () => {
         lat: product.location.y,
         lng: product.location.x
       }));
-    console.log("extractLocations: ", locations);
+    // console.log("extractLocations: ", locations);
     return locations;
   };
   const handleConfirmPurchase = async (selectedItem) => {
@@ -210,9 +210,9 @@ const Mall = () => {
     }
   }
   const handleLocate = (selectedItem) => {
-    console.log("handleLocate: ", selectedItem);
-    console.log("x좌표: ", selectedItem.location.x);
-    console.log("y좌표: ", selectedItem.location.y);
+    // console.log("handleLocate: ", selectedItem);
+    // console.log("x좌표: ", selectedItem.location.x);
+    // console.log("y좌표: ", selectedItem.location.y);
     // setSelectedItem(selectedItem);
     setItemLocate(selectedItem.location);
   }
