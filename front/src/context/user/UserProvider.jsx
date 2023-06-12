@@ -2,9 +2,9 @@ import React, { useState, useEffect, useReducer, createContext } from "react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { loginReducer } from "../../reducer";
+import { loginReducer } from "../../reducer/reducer";
 import * as Api from '../../api'
-
+import { LOGIN_SUCCESS } from "../../reducer/action";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -25,7 +25,7 @@ const UserProvider = ({ children }) => {
       const currentUser = res.data;
       // dispatch 함수를 통해 로그인 성공 상태로 만듦.
       dispatch({
-        type: "LOGIN_SUCCESS",
+        type: LOGIN_SUCCESS,
         payload: currentUser,
       });
 
