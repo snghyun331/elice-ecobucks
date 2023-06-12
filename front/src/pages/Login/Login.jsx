@@ -6,6 +6,8 @@ import Logo from "../../assets/logo.png";
 import * as Api from '../../api'
 import { DispatchContext, UserStateContext } from '../../context/user/UserProvider'
 
+import { LOGIN_SUCCESS } from "../../reducer/action";
+
 function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext)
@@ -15,15 +17,6 @@ function LoginForm() {
   const [email, setEmail] = useState("");
   //useState로 password 상태를 생성함.
   const [password, setPassword] = useState("");
-
-  //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
-  const validateEmail = (email) => {
-    return email
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
 
   //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
   const isEmailValid = validateEmail(email);
@@ -49,7 +42,7 @@ function LoginForm() {
       sessionStorage.setItem("userToken", jwtToken);
       // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
       dispatch({
-        type: "LOGIN_SUCCESS",
+        type: LOGIN_SUCCESS,
         payload: user,
       });
       // 기본 페이지로 이동함.

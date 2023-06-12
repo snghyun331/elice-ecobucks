@@ -1,7 +1,10 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Form, Button, Dropdown, Alert } from "react-bootstrap";
-import districtNames from "../../assets/districtNames";
+import districtInfo from "../../assets/districtInfo";
+
+import { validatePassword, validateEmail, validateName } from "../../util/common";
+import { UPDATE_USER } from "../../reducer/action";
 
 import {
   UserStateContext,
@@ -19,16 +22,6 @@ const UserEditForm = ({ onClose, user }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
-
-  const validatePassword = (password) => {
-    return password.match(
-      /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,18}$/
-    );
-  };
-
-  const validateName = (name) => {
-    return name.match(/^[a-zA-Z가-힣\s]{2,20}$/);
-  };
 
   const isPasswordValid =
     password.length === 0 ? true : validatePassword(password);
@@ -65,7 +58,7 @@ const UserEditForm = ({ onClose, user }) => {
         const user = userData.data;
 
         dispatch({
-          type: "UPDATE_USER",
+          type: UPDATE_USER,
           payload: user,
         });
 
@@ -211,12 +204,12 @@ const UserEditForm = ({ onClose, user }) => {
             {districtName || "구를 선택해주세요. "}
           </Dropdown.Toggle>
           <Dropdown.Menu style={{ maxHeight: "200px", overflowY: "auto" }}>
-            {districtNames.map((districtName) => (
+            {districtInfo.map((districtData) => (
               <Dropdown.Item
-                key={districtName}
-                onClick={() => setDistrict(districtName)}
+                key={districtData.name}
+                onClick={() => setDistrict(districtData.name)}
               >
-                {districtName}
+                {districtData.name}
               </Dropdown.Item>
             ))}
           </Dropdown.Menu>

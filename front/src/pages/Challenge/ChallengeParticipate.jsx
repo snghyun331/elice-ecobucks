@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
 import { Button, Form, Modal, Image, Alert } from "react-bootstrap";
 
+import { UPDATE_USER } from "../../reducer/action";
+
 import {
   UserStateContext,
   DispatchContext,
@@ -48,7 +50,7 @@ const ChallengeParticipate = ({ onClose, challenge }) => {
       const user = userData.data;
 
       dispatch({
-        type: "UPDATE_USER",
+        type: UPDATE_USER,
         payload: user,
       });
 

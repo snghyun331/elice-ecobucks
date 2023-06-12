@@ -8,6 +8,7 @@ import UserSummary from "./UserSummary";
 
 import * as Api from "../../api";
 import { UserStateContext, DispatchContext } from "../../context/user/UserProvider";
+import { LOGOUT } from "../../reducer/action";
 
 function MyPage() {
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
@@ -37,7 +38,7 @@ function MyPage() {
     // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
     sessionStorage.removeItem('userToken');
     // dispatch 함수를 이용해 로그아웃함.
-    dispatch({ type: 'LOGOUT' });
+    dispatch({ type: LOGOUT });
     alert('로그아웃하여 홈페이지로 이동합니다.')
     // 기본 페이지로 돌아감.
     navigate('/');

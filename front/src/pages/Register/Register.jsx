@@ -11,7 +11,9 @@ import {
 } from "react-bootstrap";
 
 import Logo from "../../assets/logo.png";
-import districtNames from "../../assets/districtNames";
+import districtInfo from "../../assets/districtInfo";
+import { validatePassword, validateEmail, validateName } from "../../util/common";
+import { LOGIN_SUCCESS } from "../../reducer/action";
 
 import * as Api from "../../api";
 import { DispatchContext, UserStateContext } from '../../context/user/UserProvider'
@@ -27,24 +29,6 @@ function RegisterForm() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
   const [districtName, setDistrict] = useState(null);
-
-  const validateEmail = (email) => {
-    return email
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
-
-  const validatePassword = (password) => {
-    return password.match(
-      /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,18}$/
-    );
-  };
-
-  const validateName = (name) => {
-    return name.match(/^[a-zA-Z가-힣\s]{2,20}$/);
-  };
 
   const isEmailValid = validateEmail(email);
   const isPasswordValid = validatePassword(password);
@@ -84,7 +68,7 @@ function RegisterForm() {
       sessionStorage.setItem("userToken", jwtToken);
       // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
       dispatch({
-        type: "LOGIN_SUCCESS",
+        type: LOGIN_SUCCESS,
         payload: user,
       });
 
@@ -221,12 +205,12 @@ function RegisterForm() {
                 {districtName || "구를 선택해주세요. "}
               </Dropdown.Toggle>
               <Dropdown.Menu style={{ maxHeight: "200px", overflowY: "auto" }}>
-                {districtNames.map((districtName) => (
+                {districtInfo.map((districtData) => (
                   <Dropdown.Item
-                    key={districtName}
-                    onClick={() => setDistrict(districtName)}
+                    key={districtData.name}
+                    onClick={() => setDistrict(districtData.name)}
                   >
-                    {districtName}
+                    {districtData.name}
                   </Dropdown.Item>
                 ))}
               </Dropdown.Menu>
