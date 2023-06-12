@@ -217,7 +217,7 @@ const Mall = () => {
   }
 
   return (
-    <div style={{ zIndex: "-1", padding: "60px" }}>
+    <div style={{ zIndex: "-1", padding: "60px", }}>
       <div
         style={{
           position: "absolute",
@@ -232,8 +232,20 @@ const Mall = () => {
       <Container className="text-center">
         <img src={Logo} className="w-50 mt-5 mb-5" alt="Logo" />
       </Container>
-      <MapContainer locations={extractLocations()} selectedItemLocate={itemLocate} />
-      <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenSellModal}>
+      <Container
+        className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
+        style={{ marginTop: '200px', paddingTop: '30px', width: "80%", border: "1px solid #c2c2c2", backgroundColor: 'white', borderRadius: '10px' }}
+      >
+        <MapContainer
+        locations={extractLocations()}
+        selectedItemLocate={itemLocate}
+       />
+      </Container>
+      
+      <Button
+        variant="primary"
+        style={{ marginBottom: "10px", top: "5", marginLeft:"10px" }}
+        onClick={handleOpenSellModal}>
         판매 상품 등록하기
       </Button>
       <Modal show={sellModalOpen} onHide={handleCloseSellModal} centered>
