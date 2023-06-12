@@ -4,13 +4,14 @@ import * as Api from "../../api";
 import { UserStateContext } from "../../context/user/UserProvider";
 
 const BlogComment = ({ blog }) => {
+  console.log("블로그 댓글 함수 안: ",blog);
     const userState = useContext(UserStateContext);
     const [comments, setComments] = useState([]);
     const [editingCommentId, setEditingCommentId] = useState(null);
     const [editedComment, setEditedComment] = useState("");
 
-    const handleAddComment = async (event) => {
-        event.preventDefault();
+    const handleAddComment = async (e) => {
+        e.preventDefault();
         console.log("blog: ", blog); //블로그 아이디만 들어옴.
         const formData = new FormData(event.target);
         console.log("formData: ", formData);
@@ -35,7 +36,7 @@ const BlogComment = ({ blog }) => {
           console.log("Error adding comment:", error);
         }
     
-        event.target.reset();
+        e.target.reset();
       };
     
       const formatDate = (dateString) => {
