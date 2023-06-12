@@ -4,7 +4,6 @@ import {
   Button,
   Container,
   Card,
-  Modal,
   Form,
   ListGroup,
   OverlayTrigger,
@@ -37,7 +36,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
     setShowUpdateModal(true);
   };
 
-  const handleCloseModal = () => {
+  const handleCloseParticipateModal = () => {
     setShowParticipateModal(false);
   };
 
@@ -312,41 +311,20 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
       <Button onClick={onBackToListClick} className="mt-3">
         목록으로
       </Button>
-      
+
       <ChallengeParticipate
         show={showParticipateModal}
-        onHide={handleCloseModal}
-        onClose={handleCloseModal}
+        onHide={handleCloseParticipateModal}
+        onClose={handleCloseParticipateModal}
         challenge={challenge}
       />
 
-      <Modal
-        size="lg"
+      <ChallengeUpdate
         show={showUpdateModal}
         onHide={handleCloseUpdateModal}
-        style={{ zIndex: "9999", marginTop: "20px" }}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>챌린지 수정</Modal.Title>
-        </Modal.Header>
-        <ChallengeUpdate
-          challenge={challenge}
-          onClose={handleCloseUpdateModal}
-        />
-        <Modal.Footer>
-          <Button
-            className="mt-4 mb-4"
-            variant="secondary"
-            onClick={handleCloseUpdateModal}
-            style={{
-              width: "100%",
-              borderRadius: "0px",
-            }}
-          >
-            닫기
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        onClose={handleCloseUpdateModal}
+        challenge={challenge}
+      />
     </Container>
   );
 };
