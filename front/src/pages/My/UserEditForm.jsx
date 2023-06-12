@@ -1,6 +1,10 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Form, Button, Dropdown, Alert } from "react-bootstrap";
+import districtInfo from "../../assets/districtInfo";
+
+import { validatePassword, validateEmail, validateName } from "../../util/common";
+import { UPDATE_USER } from "../../reducer/action";
 
 import {
   UserStateContext,
@@ -18,44 +22,6 @@ const UserEditForm = ({ onClose, user }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
-
-  const districtNames = [
-    "강남구",
-    "강동구",
-    "강북구",
-    "강서구",
-    "관악구",
-    "광진구",
-    "구로구",
-    "금천구",
-    "노원구",
-    "도봉구",
-    "동대문구",
-    "동작구",
-    "마포구",
-    "서대문구",
-    "서초구",
-    "성동구",
-    "성북구",
-    "송파구",
-    "양천구",
-    "영등포구",
-    "용산구",
-    "은평구",
-    "종로구",
-    "중구",
-    "중랑구",
-  ];
-
-  const validatePassword = (password) => {
-    return password.match(
-      /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,18}$/
-    );
-  };
-
-  const validateName = (name) => {
-    return name.match(/^[a-zA-Z가-힣\s]{2,20}$/);
-  };
 
   const isPasswordValid =
     password.length === 0 ? true : validatePassword(password);
@@ -92,7 +58,7 @@ const UserEditForm = ({ onClose, user }) => {
         const user = userData.data;
 
         dispatch({
-          type: "UPDATE_USER",
+          type: UPDATE_USER,
           payload: user,
         });
 
@@ -238,12 +204,12 @@ const UserEditForm = ({ onClose, user }) => {
             {districtName || "구를 선택해주세요. "}
           </Dropdown.Toggle>
           <Dropdown.Menu style={{ maxHeight: "200px", overflowY: "auto" }}>
-            {districtNames.map((districtName) => (
+            {districtInfo.map((districtData) => (
               <Dropdown.Item
-                key={districtName}
-                onClick={() => setDistrict(districtName)}
+                key={districtData.name}
+                onClick={() => setDistrict(districtData.name)}
               >
-                {districtName}
+                {districtData.name}
               </Dropdown.Item>
             ))}
           </Dropdown.Menu>
@@ -258,6 +224,8 @@ const UserEditForm = ({ onClose, user }) => {
           width: "100%",
           borderRadius: "0px",
           backgroundColor: "#00D387",
+          color: "white",
+          fontWeight: "900",
         }}
       >
         저장

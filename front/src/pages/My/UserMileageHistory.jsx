@@ -1,29 +1,29 @@
 import React, { useState, useEffect } from "react";
+import moment from "moment";
 import { Table, Pagination, Container } from "react-bootstrap";
 import * as Api from "../../api";
 
 const UserMileageHistory = ({ user }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const ordersPerPage = 5;
-  const [orderHistory, setOrderHistory] = useState([]);
+  const mileagesPerPage = 5;
+  const [mileageHistory, setOrderHistory] = useState([]);
 
   useEffect(() => {
     const fetchOrderHistory = async () => {
       try {
-        const res = await Api.get(`users/${user._id}/participants`);
-        setOrderHistory(res.data.participantsList);
-        console.log('마일리지히스토리', res.data);
+        const res = await Api.get(`users/${user._id}/challenges`);
+        setOrderHistory(res.data.userChallengeList);
       } catch (err) {
-        console.error("Failed to fetch order history:", err);
+        console.error("Failed to fetch mileage history:", err);
       }
     };
 
     fetchOrderHistory();
   }, [user]);
 
-  const indexOfLastMileage = currentPage * ordersPerPage;
-  const indexOfFirstMileage = indexOfLastMileage - ordersPerPage;
-  const currentMileages = orderHistory.slice(
+  const indexOfLastMileage = currentPage * mileagesPerPage;
+  const indexOfFirstMileage = indexOfLastMileage - mileagesPerPage;
+  const currentMileages = mileageHistory.slice(
     indexOfFirstMileage,
     indexOfLastMileage
   );
@@ -33,8 +33,7 @@ const UserMileageHistory = ({ user }) => {
   };
 
   const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
+    return moment(dateString).format("YYYY-MM-DD");
   };
 
   return (
@@ -48,21 +47,21 @@ const UserMileageHistory = ({ user }) => {
           </tr>
         </thead>
         <tbody>
-          {currentMileages.map((order, index) => (
+          {currentMileages.map((mileage, index) => (
             <tr key={index} style={{ fontSize: "0.8rem" }}>
-              <td style={{ width: "25%" }}>{formatDate(order.updatedAt)}</td>
+              <td style={{ width: "25%" }}>{formatDate(mileage.updatedAt)}</td>
               <td style={{ width: "25%" }}>1,000</td>
-              <td style={{ width: "50%" }}>{order.challenge_id}</td>
+              <td style={{ width: "50%" }}>{mileage.challenge_id}</td>
             </tr>
           ))}
         </tbody>
       </Table>
 
-      {orderHistory.length > ordersPerPage && (
+      {mileageHistory.length > mileagesPerPage && (
         <Container className="d-flex justify-content-center">
           <Pagination size="sm">
             {Array.from({
-              length: Math.ceil(orderHistory.length / ordersPerPage),
+              length: Math.ceil(mileageHistory.length / mileagesPerPage),
             }).map((_, index) => (
               <Pagination.Item
                 key={index + 1}
