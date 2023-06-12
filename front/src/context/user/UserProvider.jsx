@@ -2,7 +2,7 @@ import React, { useState, useEffect, useReducer, createContext } from "react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { loginReducer } from "../../reducer";
+import { loginReducer } from "../../reducer/reducer";
 import * as Api from '../../api'
 
 
