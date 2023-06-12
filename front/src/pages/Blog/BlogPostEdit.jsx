@@ -1,15 +1,17 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 // import { UserStateContext } from "../../context/user/UserProvider";
 const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [topic, setTopic] = useState("");
-
+    useEffect(() => {
+      console.log("선택된 블로그: ",selectedBlog);
+    }, []);
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
           const updatedBlog = {
-            _id: selectedBlog._id,
             title: title || selectedBlog.title,
             content: content || selectedBlog.content,
             topic: topic || selectedBlog.topic

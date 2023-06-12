@@ -2,7 +2,6 @@ import { userModel } from "../db/schemas/user.js";
 import { User, District, Challenge, ChallengeParticipation, ChallengeComment } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt, { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
-import { updateTimestamps } from "../utils/update-time-stamps.js";
 import { updateTime } from "../utils/update-time.js";
 
 class userAuthService {
@@ -41,7 +40,7 @@ class userAuthService {
     const createdNewUser = await User.create({ newUser });
     createdNewUser.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
-    return updateTimestamps(createdNewUser);
+    return updateTime.toTimestamps(createdNewUser);
   }
 
 
@@ -109,7 +108,7 @@ class userAuthService {
       return { errorMessage };
     }
 
-    return updateTimestamps(user);
+    return updateTime.toTimestamps(user);
   }
 
   static async updateUser({ userId, toUpdate }) {
