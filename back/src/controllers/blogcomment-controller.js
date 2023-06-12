@@ -7,7 +7,9 @@ const blogcommentController = {
     blogcommentPostWrite: async (req, res, next) => {
         try {
             validateEmptyBody(req)
-            const { post_id, writer_id, comment } = req.body;
+            const post_id = req.params._id
+            const writer_id = req.currentUserId;
+            const { comment } = req.body;
 
             const newComment = await blogCommentService.addComment({
                 post_id, writer_id, comment
@@ -25,7 +27,7 @@ const blogcommentController = {
             const { comment } = req.body;
             const toUpdate = { comment };
             const updatedComment = await blogCommentService.setComment({
-                commentId, 
+                comment_id, 
                 toUpdate
             })
     
