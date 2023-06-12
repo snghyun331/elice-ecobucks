@@ -91,7 +91,7 @@ const Blog = () => {
       console.log("selectedBlog: ", selectedBlog);
       console.log("updatedBlog: ", updatedBlog);
 
-      await Api.put(`blog/${selectedBlog.userId}/write`, updatedBlog);
+      await Api.put(`blog/${selectedBlog._id}/write`, updatedBlog);
       fetchData();
       // const updatedBlogList = blogList.map(item => {
       //   if (item._id === selectedBlog._id) {
