@@ -235,7 +235,7 @@ const Mall = () => {
       </Container>
       <Container
         className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
-        style={{ marginTop: '200px', paddingTop: '30px', width: "80%", border: "1px solid #c2c2c2", backgroundColor: 'white', borderRadius: '10px' }}
+        style={{ marginTop:"28px", paddingTop: '30px', width: "80%", }}
       >
         <MapContainer
         locations={extractLocations()}
@@ -273,7 +273,8 @@ const Mall = () => {
 
       <Container>
         <Row style={{ display:"flex", alignItems:"center"}}>
-          {list.map(item => (
+          {list.sort((a, b) => (a.stock === 0 ? 1 : -1))
+            .map(item => (
             <Col key={item._id}>
               <Card style={{ width: "18rem" }}>
                 <Card.Body className="card-body">
