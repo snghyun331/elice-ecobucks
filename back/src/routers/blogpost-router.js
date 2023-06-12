@@ -7,20 +7,20 @@ const blogpostCreateValidation = Validation.validate(Validation.blogpostSchema);
 const blogpostUpdateValidation = Validation.validate(Validation.blogpostUpdateSchema);
 
 const blogPostRouter = Router();
-blogPostRouter.use(login_required);
+// blogPostRouter.use(login_required);
 
-blogPostRouter.post("/blog/write", blogpostCreateValidation, blogpostController.blogpostPostWrite);
+blogPostRouter.post("/blog/write", login_required, blogpostCreateValidation, blogpostController.blogpostPostWrite);
 
-blogPostRouter.put("/blog/:_id/write", blogpostUpdateValidation, blogpostController.blogpostPutWrite)
+blogPostRouter.put("/blog/:_id/write", login_required, blogpostUpdateValidation, blogpostController.blogpostPutWrite)
 
-blogPostRouter.delete("/blog/:_id", blogpostController.blogpostDeleteWrite)
+blogPostRouter.delete("/blog/:_id",  login_required, blogpostController.blogpostDeleteWrite)
 
-blogPostRouter.put("/blog/:_id/likes", blogpostUpdateValidation, blogpostController.blogpostPutLikes)
+blogPostRouter.put("/blog/:_id/likes", login_required, blogpostController.blogpostPutLikes)
 
-blogPostRouter.put("/blog/:_id/dislikes", blogpostUpdateValidation, blogpostController.blogpostPutDislikes)
+blogPostRouter.put("/blog/:_id/dislikes", login_required, blogpostController.blogpostPutDislikes)
 
 blogPostRouter.get("/blog", blogpostController.blogpostGetAll)
 
-blogPostRouter.get("/blog/:_id", blogpostController.blogpostGetDetail)
+blogPostRouter.get("/blog/:_id", login_required, blogpostController.blogpostGetDetail)
 
 export { blogPostRouter };
