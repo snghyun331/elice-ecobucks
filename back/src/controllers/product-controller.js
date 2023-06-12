@@ -13,7 +13,7 @@ const productController = {
       
       const currentUserInfo = await userAuthService.getUserInfo({ userId: seller });
       const sellerName = currentUserInfo.username;
-      const newProduct = { seller, sellerName, name, price, place, stock, description }
+      const newProduct = { seller, sellerName, name, location, price, place, stock, description }
 
       const createdNewProduct = await productService.addProduct(newProduct);
       if (newProduct.errorMessage) {
