@@ -8,6 +8,7 @@ import { UserStateContext } from "../../context/user/UserProvider";
 import { useContext } from "react";
 import BlogPostEdit from "./BlogPostEdit";
 import BlogComment from "./BlogComment";
+import BlogLike from "./BlogLike";
 const Blog = () => {
   // const [blogPosts, setBlogPosts] = useState([]);
   const userState = useContext(UserStateContext);
@@ -132,6 +133,11 @@ const Blog = () => {
     }
   }
   
+  const handleLike = async (selectedBlog) => {
+    console.log(selectedBlog);
+    // selectedBlog.blogId 경로로 
+    //Api.put("blog/${selectedBlog.blogId}/likes}")
+  }
 
   return (
     <div style={{ padding: "60px"}}>
@@ -204,6 +210,8 @@ const Blog = () => {
                   <Card.Text className="card-text">likeCount: {item.likeCount}</Card.Text>
                   <Card.Text className="card-text">설명: {item.content}</Card.Text>
                   <Card.Text className="card-text">작성자: {item.username}</Card.Text>
+                  {/* <Button variant="primary" onClick={() => handleLike(item)}>좋아요</Button> */}
+                  <BlogLike blog={item}/>
                   <BlogComment blog={item.blogId} />
                   {userState.user._id === item.userId && (
                     <>
