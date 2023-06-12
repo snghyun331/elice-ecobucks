@@ -11,6 +11,7 @@ import { blogCommentRouter } from "./routers/blogcomment-router.js";
 import { scheduleChallenge } from "./utils/cron-schedule.js";
 import { orderRouter } from "./routers/order-router.js";
 import { imageRouter } from "./routers/image-router.js";
+import { dataRouter } from "./routers/data-router.js";
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.use(blogPostRouter);
 app.use(blogCommentRouter);
 
 app.use(imageRouter);
+app.use(dataRouter);
 
 // 'uploads' 디렉토리를 '/uploads' URL 경로로 공개
 app.use('/uploads', express.static('uploads'));
