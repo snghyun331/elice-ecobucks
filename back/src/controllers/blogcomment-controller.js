@@ -25,7 +25,7 @@ const blogcommentController = {
             const { comment } = req.body;
             const toUpdate = { comment };
             const updatedComment = await blogCommentService.setComment({
-                commentId, 
+                comment_id, 
                 toUpdate
             })
     

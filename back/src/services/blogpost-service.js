@@ -8,7 +8,7 @@ class blogPostService {
             return { errorMessage };
         }
         const user = await User.findById({userId})
-        console.log(user)
+        
         const username = user.username
         const newPost = { userId, username, title, topic, content };
         const createdNewPost = await BlogPost.createPost({newPost})
@@ -31,7 +31,7 @@ class blogPostService {
                 "해당 게시글을 찾을 수 없습니다. 다시 한 번 확인해 주세요.";
             return { errorMessage };
         }
-        // 업데이트 대상에 title이 있다면, 즉 title 값이 null 이 아니라면 업데이트 진행
+        
         if (toUpdate.title) {
             const fieldToUpdate = "title";
             const newValue = toUpdate.title;

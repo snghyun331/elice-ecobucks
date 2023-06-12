@@ -91,7 +91,7 @@ const blogpostController = {
     
             return res.status(OK).json(DeleteLike);
         } catch(error) {
-    
+            next(error)
         }
     },
     
