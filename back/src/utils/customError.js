@@ -5,6 +5,7 @@ const forbiddenError = setError("Forbidden", 403, 'FORBIDDEN');
 const notFoundError = setError("Not Found", 404, 'NOT_FOUND');
 const internalServerError = setError("Internal Server Error", 500, 'INTERNAL_SERVER_ERROR');
 */
+
 function setError(message, status, errorCode) {
   const error = new Error(message);
   error.status = status;
@@ -29,3 +30,4 @@ function handleError(error){
 }
 
 export { setError, handleError }
+
