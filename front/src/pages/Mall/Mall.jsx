@@ -272,7 +272,8 @@ const Mall = () => {
 
       <Container>
         <Row style={{ display: "flex", alignItems: "center" }}>
-          {currentList.sort((a, b) => (a.stock === 0 ? 1 : -1))
+          {currentList
+            .sort((a, b) => (a.stock === 0 ? 1 : -1))
             .map(item => (
               <Col key={item._id}>
                 <Card style={{ width: "18rem" }}>
