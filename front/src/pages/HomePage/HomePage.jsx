@@ -14,10 +14,12 @@ import blogIcon from "../../assets/blogIcon.png";
 import challengeIcon from "../../assets/challengeIcon.png";
 import TipCarousel from "./TipCarousel";
 import { useState } from "react";
-import districtInfo
- from "../../assets/districtInfo";
+import SeoulDistrictsData from "./Data/SeoulDistrictGraph";
+import SeoulUsageChart from "./Data/SeoulUsageGraph";
+import DistrictChart from "./Data/districtUsageGraph";
+import districtInfo from "../../assets/districtInfo";
 const HomePage = () => {
-  const [currentImg, setCurrentImg] = useState(map);
+  // const [currentImg, setCurrentImg] = useState(map);
 
   const handleButtonClick = (img) => {
     setCurrentImg(img);
@@ -174,16 +176,20 @@ const HomePage = () => {
             }}
           >
             {" "}
-            　
+
           </div>
 
-          <img src={currentImg} style={{ width: "50%", height: "100%" }} />
+          {/* <img src={currentImg} style={{ width: "50%", height: "100%" }} /> */}
           <div
             className="btn-toolbar justify-content-md-end"
             role="toolbar"
             aria-label="Toolbar with button groups"
           >
             <div className="d-grid gap-2 mx-auto justify-content-md-end">
+              {/* <SeoulUsageChart /> */}
+              <SeoulDistrictsData />
+
+
               <DropdownButton title="구 별 전력 사용량 보기">
                 <Dropdown.Item
                   eventKey="seoul"
@@ -270,7 +276,7 @@ const HomePage = () => {
             }}
           >
             {" "}
-            　
+
           </div>
         </Container>
 
@@ -298,7 +304,7 @@ const HomePage = () => {
             }}
           >
             {" "}
-            　
+
           </div>
         </Container>
       </div>
@@ -334,7 +340,7 @@ const HomePage = () => {
             이메일 상담 ecobucks@ecobucks.com
             <br />
             유선 상담 9999-9999
-            <br /><a style={{fontWeight: '900'}}>© ecobucks Co., Ltd.</a>
+            <br /><a style={{ fontWeight: '900' }}>© ecobucks Co., Ltd.</a>
           </div>
         </div>
         <div

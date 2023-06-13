@@ -8,6 +8,7 @@ import { UserStateContext } from "../../context/user/UserProvider";
 import MallProductSell from "./MallProductSell";
 import MallProductEdit from "./MallProductEdit";
 import MapContainer from "./MapContainer";
+import Pagination1 from "../Modal/Pagination";
 import placelocate from "../../assets/placeholder.png"
 
 const Mall = () => {
@@ -16,6 +17,16 @@ const Mall = () => {
   const [list, setList] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [itemLocate, setItemLocate] = useState({});
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(8);
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+  const currentList = list.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const [sellModalOpen, setSellModalOpen] = useState(false);
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
@@ -78,14 +89,11 @@ const Mall = () => {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
   const fetchData = async () => {
     try {
       // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
       const res = await Api.get("products");
-      console.log("db data: ", res.data)
+      // console.log("db data: ", res.data)
 
       const newList = res.data.map(item => {
         return {
@@ -110,11 +118,11 @@ const Mall = () => {
 
   const extractLocations = () => {
     const locations = list
-      .filter(product => product.location && product.location.y && product.location.x)
       .map(product => ({
         lat: product.location.y,
         lng: product.location.x,
-        name: product.name
+        name: product.name,
+        stock: product.stock
       }));
     // console.log("extractLocations: ", locations);
     return locations;
@@ -128,18 +136,7 @@ const Mall = () => {
       await Api.post(`orders/`, {
         productId: selectedItem._id,
       });
-
-      const newRes = await Api.get(`products/${selectedItem._id}`);
-      const newProduct = newRes.data;
-      // console.log(newProduct);
-      const updatedList = list.map(item => {
-        if (item._id === newProduct._id) {
-          return { ...newProduct };
-        }
-        return item;
-      })
-      // console.log("updatedList: ", updatedList);
-      setList(updatedList);
+      fetchData();
       handleClosePurchaseModal();
     } catch (err) {
       console.log("상품 구매에 실패하였습니다.", err);
@@ -219,6 +216,7 @@ const Mall = () => {
   }
 
   return (
+    <>
     <div style={{ zIndex: "-1", padding: "60px", }}>
       <div
         style={{
@@ -274,7 +272,8 @@ const Mall = () => {
 
       <Container>
         <Row style={{ display: "flex", alignItems: "center" }}>
-          {list.sort((a, b) => (a.stock === 0 ? 1 : -1))
+          {currentList
+            .sort((a, b) => (a.stock === 0 ? 1 : -1))
             .map(item => (
               <Col key={item._id}>
                 <Card style={{ width: "18rem" }}>
@@ -363,11 +362,18 @@ const Mall = () => {
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClosePurchaseModal}>취소</Button>
             <Button variant="primary" onClick={() => handleConfirmPurchase(selectedItem)}>구매하기</Button>
-
           </Modal.Footer>
         </Modal>
       </Container>
+    
+    <Pagination1 
+      content={list}
+      itemsPerPage={itemsPerPage}
+      handlePageChange={handlePageChange}
+      currentPage={currentPage}
+    />
     </div>
+    </>
   );
 };
 

@@ -32,6 +32,12 @@ class BlogComment {
         const isCompleteDeleted = deletedComment.deletedCount === 1;
         return isCompleteDeleted;
     }
+
+    static async findAll() {
+        const comments = await BlogCommentModel.find();
+        console.log('g')
+        return comments;
+    }
 }
 
 export { BlogComment };
