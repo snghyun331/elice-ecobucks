@@ -1,63 +1,80 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Pagination, Container } from "react-bootstrap";
+import * as Api from "../../api";
 
-const UserOrderHistory = () => {
+
+const UserOrderHistory = ({ user }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 5;
+  const [orderHistory, setOrderHistory] = useState([]);
+
+  useEffect(() => {
+    const fetchOrderHistory = async () => {
+      try {
+        const res = await Api.get("mypage/orders");
+        console.log(res, "!!")
+        setOrderHistory(res.data);
+      } catch (err) {
+        console.error("Failed to fetch order history:", err);
+      }
+    };
+
+    fetchOrderHistory();
+  }, [user]);
 
   // 더미 데이터 주문 내역
-  const orderHistory = [
-    {
-      date: "2023. 05. 15.",
-      product: "Product A",
-      price: 100,
-      location: "Location A",
-    },
-    {
-      date: "2023. 05. 16.",
-      product: "Product B",
-      price: 200,
-      location: "Location B",
-    },
-    {
-      date: "2023. 05. 16.",
-      product: "Product C",
-      price: 200,
-      location: "Location C",
-    },
-    {
-      date: "2023. 05. 16.",
-      product: "Product D",
-      price: 200,
-      location: "Location D",
-    },
-    {
-      date: "2023. 05. 16.",
-      product: "Product E",
-      price: 200,
-      location: "Location E",
-    },
-    {
-      date: "2023. 05. 16.",
-      product: "Product E",
-      price: 200,
-      location: "Location E",
-    },
-    {
-      date: "2023. 05. 16.",
-      product: "Product E",
-      price: 200,
-      location: "Location E",
-    },
-    {
-      date: "2023. 05. 16.",
-      product: "Product E",
-      price: 200,
-      location: "Location E",
-    },
+  // const orderHistory = [
+  //   {
+  //     date: "2023. 05. 15.",
+  //     product: "Product A",
+  //     price: 100,
+  //     location: "Location A",
+  //   },
+  //   {
+  //     date: "2023. 05. 16.",
+  //     product: "Product B",
+  //     price: 200,
+  //     location: "Location B",
+  //   },
+  //   {
+  //     date: "2023. 05. 16.",
+  //     product: "Product C",
+  //     price: 200,
+  //     location: "Location C",
+  //   },
+  //   {
+  //     date: "2023. 05. 16.",
+  //     product: "Product D",
+  //     price: 200,
+  //     location: "Location D",
+  //   },
+  //   {
+  //     date: "2023. 05. 16.",
+  //     product: "Product E",
+  //     price: 200,
+  //     location: "Location E",
+  //   },
+  //   {
+  //     date: "2023. 05. 16.",
+  //     product: "Product E",
+  //     price: 200,
+  //     location: "Location E",
+  //   },
+  //   {
+  //     date: "2023. 05. 16.",
+  //     product: "Product E",
+  //     price: 200,
+  //     location: "Location E",
+  //   },
+  //   {
+  //     date: "2023. 05. 16.",
+  //     product: "Product E",
+  //     price: 200,
+  //     location: "Location E",
+  //   },
 
-    // 더 많은 주문 내역 데이터...
-  ];
+  //   // 더 많은 주문 내역 데이터...
+  // ];
 
   // 현재 페이지에 해당하는 주문 내역 가져오기
   const indexOfLastOrder = currentPage * ordersPerPage;
@@ -73,7 +90,7 @@ const UserOrderHistory = () => {
     <Container className="mb-5">
       <Table striped>
         <thead>
-          <tr style={{fontSize:'0.9rem'}}>
+          <tr style={{ fontSize: '0.9rem' }}>
             <th>주문 날짜</th>
             <th>상품명</th>
             <th>가격</th>
@@ -82,7 +99,7 @@ const UserOrderHistory = () => {
         </thead>
         <tbody>
           {currentOrders.map((order, index) => (
-            <tr key={index}  style={{fontSize:'0.8rem'}}>
+            <tr key={index} style={{ fontSize: '0.8rem' }}>
               <td style={{ width: '25%' }}>{order.date}</td>
               <td style={{ width: '25%' }}>{order.product}</td>
               <td style={{ width: '25%' }}>{order.price}</td>
@@ -94,19 +111,19 @@ const UserOrderHistory = () => {
 
       {orderHistory.length > ordersPerPage && (
         <Container className="d-flex justify-content-center">
-  <Pagination size='sm'>
-    {Array.from({ length: Math.ceil(orderHistory.length / ordersPerPage) }).map((_, index) => (
-      <Pagination.Item
-        key={index + 1}
-        active={index + 1 === currentPage}
-        onClick={() => handlePageChange(index + 1)}
-      >
-        {index + 1}
-      </Pagination.Item>
-    ))}
-  </Pagination>
-</Container>
-)}
+          <Pagination size='sm'>
+            {Array.from({ length: Math.ceil(orderHistory.length / ordersPerPage) }).map((_, index) => (
+              <Pagination.Item
+                key={index + 1}
+                active={index + 1 === currentPage}
+                onClick={() => handlePageChange(index + 1)}
+              >
+                {index + 1}
+              </Pagination.Item>
+            ))}
+          </Pagination>
+        </Container>
+      )}
 
     </Container>
   );
