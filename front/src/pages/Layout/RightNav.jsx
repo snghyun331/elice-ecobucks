@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { useNavigate, useLocation, Link, redirect } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { UserStateContext, DispatchContext } from "../../context/user/UserProvider";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { OverlayTrigger, Tooltip, Button } from "react-bootstrap";
 
 import { ROUTE } from "../../routes/routes";
 import { LOGOUT } from "../../reducer/action";
@@ -15,9 +15,7 @@ const RightNav = ({ isLogin, user }) => {
     sessionStorage.removeItem("userToken");
     dispatch({ type: LOGOUT });
     alert("로그아웃하여 홈페이지로 이동합니다.");
-    if (location.pathname !== '/') {
-      window.location.href = '/'
-    }
+    navigate('/')
   };
 
   const renderNavContent = () => {
@@ -95,16 +93,17 @@ const RightNav = ({ isLogin, user }) => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link
+            <a
               className="nav-link"
               onClick={logout}
               style={{
                 fontWeight: "600",
                 fontSize: "1.3em",
+                cursor: 'pointer'
               }}
             >
               로그아웃
-            </Link>
+            </a>
           </li>
         </ul>
       );
