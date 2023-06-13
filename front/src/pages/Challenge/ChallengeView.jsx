@@ -50,7 +50,8 @@ const ChallengeView = () => {
 
   if (!isFetchCompleted) {
     return "loading...";
-  
+  }
+
 
   const sortedChallenges = challenges.sort((a, b) => {
     if (a.isCompleted !== b.isCompleted) {
