@@ -5,13 +5,33 @@ import DaumPostcode from "react-daum-postcode";
 import { useEffect } from "react";
 
 const MallProductSell = (props) => {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [place, setPlace] = useState("");
+  // const [name, setName] = useState("");
+  // const [price, setPrice] = useState("");
+  // const [place, setPlace] = useState("");
+  // const [stock, setStock] = useState("");
+  // const [description, setDescription] = useState("");
   const [location, setLocation] = useState({});
-  const [stock, setStock] = useState("");
-  const [description, setDescription] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);    
+
+  const [form, setForm] = React.useState({
+    name: '',
+    price: '',
+    place: '',
+    stock: '',
+    description: '',
+    });
+
+    const { name, price, place, stock, description } = form;
+
+    const onChange = (e) => {
+      const { name, value} = e.target; 
+      setForm(prevForm => ({
+      ...prevForm,
+      [name]: value
+      }))
+      }
+      
+    
 
   const navigate = useNavigate();
 
@@ -27,7 +47,10 @@ const MallProductSell = (props) => {
     const { address, roadAddress, zonecode } = data;
 
     // 사용자가 선택한 주소 정보를 처리하는 로직 작성
-    setPlace(address);
+    setForm(prevForm => ({
+      ...prevForm,
+      place: address
+    }));
 
     setShowModal(false);
   };
@@ -97,10 +120,9 @@ const MallProductSell = (props) => {
               lineHeight: "20px",
               marginBottom: "16px",
             }}
+            name="name"
             value={name}
-            onChange={(event) => {
-              setName(event.target.value);
-            }}
+            onChange={onChange}
           />
           <span>가격</span>
           <textarea
@@ -112,10 +134,9 @@ const MallProductSell = (props) => {
               lineHeight: "20px",
               marginBottom: "16px",
             }}
+            name="price"
             value={price}
-            onChange={(event) => {
-              setPrice(event.target.value);
-            }}
+            onChange={onChange}
           />
           <span>위치</span>
           <div style={{ display: "flex", marginBottom: "16px" }}>
@@ -127,10 +148,9 @@ const MallProductSell = (props) => {
                 fontSize: "16px",
                 lineHeight: "20px",
               }}
+              name="place"
               value={place}
-              onChange={(event) => {
-                setPlace(event.target.value);
-              }}
+              onChange={onChange}
             />
             <button
               style={{
@@ -156,10 +176,9 @@ const MallProductSell = (props) => {
               lineHeight: "20px",
               marginBottom: "16px",
             }}
+            name="stock"
             value={stock}
-            onChange={(event) => {
-              setStock(event.target.value);
-            }}
+            onChange={onChange}
           />
           <span>설명</span>
           <textarea
@@ -171,10 +190,9 @@ const MallProductSell = (props) => {
               lineHeight: "20px",
               marginBottom: "16px",
             }}
+            name="description"
             value={description}
-            onChange={(event) => {
-              setDescription(event.target.value);
-            }}
+            onChange={onChange}
           />
 
           <button
