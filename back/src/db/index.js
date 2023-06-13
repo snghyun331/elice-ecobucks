@@ -9,6 +9,7 @@ import { order } from "./models/order.js";
 import { ChallengeParticipation } from "./models/challenge-participation.js";
 import { ChallengeComment } from "./models/challenge-comment.js";
 import { imageModel } from "./schemas/image.js";
+import { seoulUsageModel } from "./schemas/seoulUsage.js";
 
 const DB_URL =
   process.env.MONGODB_URL ||
@@ -26,4 +27,4 @@ db.on("error", (error) =>
 
 
 export {User, District, Product, Challenge, BlogPost, BlogComment, order, 
-  ChallengeParticipation, ChallengeComment, imageModel};
+  ChallengeParticipation, ChallengeComment, imageModel, seoulUsageModel};

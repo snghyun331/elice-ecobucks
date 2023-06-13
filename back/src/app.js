@@ -11,6 +11,7 @@ import { blogCommentRouter } from "./routers/blogcomment-router.js";
 import { scheduleChallenge } from "./utils/cron-schedule.js";
 import { orderRouter } from "./routers/order-router.js";
 import { imageRouter } from "./routers/image-router.js";
+import { dataRouter } from "./routers/data-router.js";
 
 const app = express();
 
@@ -27,7 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 app.get("/", (req, res) => {
   res.send("안녕하세요, 레이서 프로젝트 API 입니다.");
 });
-
+app.use(dataRouter);
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
 app.use(userAuthRouter);
 app.use(productRouter);

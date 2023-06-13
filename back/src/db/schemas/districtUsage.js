@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const guUsageSchema = new Schema({
+const districtUsageSchema = new Schema({
     year: {
         type: Number,
         required: true,
@@ -19,6 +19,6 @@ const guUsageSchema = new Schema({
     },
 });
 
-const guUsageModel = model('GuUsage', guUsageSchema, 'gu_usage');
+const districtUsageModel = model('DistrictUsage', districtUsageSchema, 'district_usage');
 
-export { guUsageModel }
+export { districtUsageModel }
