@@ -40,19 +40,20 @@ const ChallengeParticipate = ({ show, onClose, challenge }) => {
 
   const confirmUpload = async () => {
     try {
+
+      //이미지 전송 통신
       const formData = new FormData();
       formData.append('image', selectedFile)
       console.log('폼데이터', formData)
       const imageRes = await Api.postFile(('images/challenges/upload'), formData);
       console.log(imageRes)
 
+      //참가 통신
       const res = await Api.post(`challenges/${challenge._id}/participants`, {
         image: "selectedFile",
       });
       console.log(res);
       alert("인증사진 업로드가 완료되었습니다.");
-
-
 
       const userData = await Api.get("current");
       const user = userData.data;
