@@ -14,10 +14,12 @@ import blogIcon from "../../assets/blogIcon.png";
 import challengeIcon from "../../assets/challengeIcon.png";
 import TipCarousel from "./TipCarousel";
 import { useState } from "react";
-import SeoulDistricts from "./svg/seoul_sig";
+import SeoulDistrictsData from "./Data/SeoulDistrictGraph";
+import SeoulUsageChart from "./Data/SeoulUsageGraph";
+import DistrictChart from "./Data/districtUsageGraph";
 import districtInfo from "../../assets/districtInfo";
 const HomePage = () => {
-  const [currentImg, setCurrentImg] = useState(map);
+  // const [currentImg, setCurrentImg] = useState(map);
 
   const handleButtonClick = (img) => {
     setCurrentImg(img);
@@ -184,7 +186,10 @@ const HomePage = () => {
             aria-label="Toolbar with button groups"
           >
             <div className="d-grid gap-2 mx-auto justify-content-md-end">
-              <SeoulDistricts className="w-[1rem] h-[1rem]" />
+              {/* <SeoulUsageChart /> */}
+              <SeoulDistrictsData />
+
+
               <DropdownButton title="구 별 전력 사용량 보기">
                 <Dropdown.Item
                   eventKey="seoul"

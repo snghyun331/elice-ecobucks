@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 app.get("/", (req, res) => {
   res.send("안녕하세요, 레이서 프로젝트 API 입니다.");
 });
-
+app.use(dataRouter);
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
 app.use(userAuthRouter);
 app.use(productRouter);
@@ -41,7 +41,6 @@ app.use(blogPostRouter);
 app.use(blogCommentRouter);
 
 app.use(imageRouter);
-app.use(dataRouter);
 
 // 'uploads' 디렉토리를 '/uploads' URL 경로로 공개
 app.use('/uploads', express.static('uploads'));
