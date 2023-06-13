@@ -1,3 +1,7 @@
+//파일 업로드 사이즈
+export const MAX_FILE_SIZE = 3 // 단위: MB
+
+// 에러 상태 코드
 //--- 2xx: 성공 (Success) ---
 export const OK = 200;         // 요청이 성공적으로 처리, 주로 GET 또는 PUT 요청에 사용
 export const CREATED = 201;    // 요청이 성공적으로 처리되어 새로운 리소스가 생성, 주로 POST 요청에 사용
