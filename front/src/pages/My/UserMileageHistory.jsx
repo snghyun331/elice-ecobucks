@@ -11,7 +11,7 @@ const UserMileageHistory = ({ user }) => {
   useEffect(() => {
     const fetchOrderHistory = async () => {
       try {
-        const res = await Api.get(`users/${user._id}/challenges`);
+        const res = await Api.get(`users/${user._id}/participants`);
         setOrderHistory(res.data.userChallengeList);
       } catch (err) {
         console.error("Failed to fetch mileage history:", err);
