@@ -107,7 +107,7 @@ class blogPostService {
         const comments = await BlogComment.findAllByPostId({ post_id });
 
         const info = {
-            ...post._doc,
+            ...post,
             commentList: comments,
         }
         return info
