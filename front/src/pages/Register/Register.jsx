@@ -12,17 +12,23 @@ import {
 
 import Logo from "../../assets/logo.png";
 import districtInfo from "../../assets/districtInfo";
-import { validatePassword, validateEmail, validateName } from "../../util/common";
+import {
+  validatePassword,
+  validateEmail,
+  validateName,
+} from "../../util/common";
 import { LOGIN_SUCCESS } from "../../reducer/action";
 
 import * as Api from "../../api";
-import { DispatchContext, UserStateContext } from '../../context/user/UserProvider'
-
+import {
+  DispatchContext,
+  UserStateContext,
+} from "../../context/user/UserProvider";
 
 function RegisterForm() {
   const navigate = useNavigate();
-  const dispatch = useContext(DispatchContext)
-  const userState = useContext(UserStateContext)
+  const dispatch = useContext(DispatchContext);
+  const userState = useContext(UserStateContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -74,12 +80,8 @@ function RegisterForm() {
 
       // 기본 페이지로 이동함.
       navigate("/", { replace: true });
-      
     } catch (err) {
-      if (err.response.status === 400) {
-        alert(err.response.data);
-    }
-      console.log("회원가입에 실패하였습니다.", err);
+      alert(err.response.data.message);
     }
   };
 

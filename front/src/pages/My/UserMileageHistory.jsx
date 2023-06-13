@@ -6,19 +6,20 @@ import * as Api from "../../api";
 const UserMileageHistory = ({ user }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const mileagesPerPage = 5;
-  const [mileageHistory, setOrderHistory] = useState([]);
+  const [mileageHistory, setMileageHistory] = useState([]);
 
   useEffect(() => {
-    const fetchOrderHistory = async () => {
+    const fetchMileageHistory = async () => {
       try {
-        const res = await Api.get(`users/${user._id}/challenges`);
-        setOrderHistory(res.data.userChallengeList);
+        const res = await Api.get(`users/${user._id}/participants`);
+        console.log(res)
+        setMileageHistory(res.data.userChallengeList);
       } catch (err) {
         console.error("Failed to fetch mileage history:", err);
       }
     };
 
-    fetchOrderHistory();
+    fetchMileageHistory();
   }, [user]);
 
   const indexOfLastMileage = currentPage * mileagesPerPage;
@@ -51,7 +52,7 @@ const UserMileageHistory = ({ user }) => {
             <tr key={index} style={{ fontSize: "0.8rem" }}>
               <td style={{ width: "25%" }}>{formatDate(mileage.updatedAt)}</td>
               <td style={{ width: "25%" }}>1,000</td>
-              <td style={{ width: "50%" }}>{mileage.challenge_id}</td>
+              <td style={{ width: "50%" }}>{mileage.challengeTitle}</td>
             </tr>
           ))}
         </tbody>
