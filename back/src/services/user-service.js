@@ -190,7 +190,7 @@ class userAuthService {
     return userInfo
   }
 
-  // 유저의 모든 챌린지 참여 갯수와 참여 조회
+  // 유저의 모든 챌린지 참여 갯수와 참여 조회 
   static async getUserParticipants({userId}){
     const participations = await ChallengeParticipation.findAllByUserId({ userId });
     const populatedParticipations = await Promise.all(
@@ -202,9 +202,9 @@ class userAuthService {
           challengeTitle: challenge.title,  // title 추가
           createdAt: updateTime.toKST(challenge.createdAt),
           updatedAt: updateTime.toKST(challenge.updatedAt)
-        };
-      })
-    );
+        }; 
+      }) 
+    );  
 
     const newParticipations = {
       userChallengeCount: populatedParticipations.length,
@@ -212,7 +212,7 @@ class userAuthService {
     };
 
     return newParticipations;
-  }
+  } 
 
   // 유저의 모든 댓글 갯수와 댓글 조회
   static async getUserComments({userId}){

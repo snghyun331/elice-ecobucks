@@ -3,10 +3,10 @@ import { Schema, model } from 'mongoose';
 const imageSchema = new Schema(
   {
     userId: {
-      type:String,
-      required: true,
+      type: Schema.Types.ObjectId, 
+      ref: 'User',
     },
-    objectId: {
+    object: {
       type:String,
       required: false,
     },

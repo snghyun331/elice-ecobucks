@@ -1,3 +1,17 @@
+/*  validatePermission 사용 예시
+  const participation = await ChallengeParticipation.findById({ _id })
+  if ( !participation ){ 
+    throw setError("참여기록을 찾을 수 없습니다", 404, "NOT_FOUND")
+  }
+  if( participation.userId !== currentUserId ){
+    throw setError("수정 권한이 없습니다.", 403, "FORBIDDEN")
+  }
+
+  => 이렇게 사용
+  const participation = await ChallengeParticipation.findById({ _id });
+  await validatePermission(participation, currentUserId);
+*/
+
 import is from "@sindresorhus/is";
 import { setError } from "./customError.js";
 
@@ -43,18 +57,4 @@ async function validatePermission(findModel, currentUserId) {
 
 export { validateEmptyBody, checkData, checkAuthor, validatePermission }
 
-/*  validatePermission 사용 예시
-  const participation = await ChallengeParticipation.findById({ _id })
-  if ( !participation ){ 
-    throw setError("참여기록을 찾을 수 없습니다", 404, "NOT_FOUND")
-  }
-  if( participation.userId !== currentUserId ){
-    throw setError("수정 권한이 없습니다.", 403, "FORBIDDEN")
-  }
-
-  => 이렇게 사용
-  const participation = await ChallengeParticipation.findById({ _id });
-  await validatePermission(participation, currentUserId);
-
-*/
 
