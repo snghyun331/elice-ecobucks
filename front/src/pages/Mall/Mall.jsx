@@ -25,7 +25,8 @@ const Mall = () => {
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
-  const currentList = list.slice(
+  const sortedList = list.sort((a, b) => (a.stock === 0 ? 1 : -1)); //전부다 sort
+  const currentList = sortedList.slice( //8개만 보여주는 
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -226,6 +227,8 @@ const Mall = () => {
     setItemLocate(selectedItem.location);
   }
 
+  
+
   return (
     <>
     <div style={{ zIndex: "-1", padding: "60px", }}>
@@ -284,7 +287,6 @@ const Mall = () => {
       <Container>
         <Row style={{ display: "flex", alignItems: "center" }}>
           {currentList
-            .sort((a, b) => (a.stock === 0 ? 1 : -1))
             .map(item => (
               <Col key={item._id}>
                 <Card style={{ width: "18rem" }}>
