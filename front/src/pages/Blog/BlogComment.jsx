@@ -55,7 +55,7 @@ const BlogComment = ({ blog }) => {
     };
 
     getComments();
-  }, []);
+  }, [blog]);
 
   const handleUpdateComment = async (commentId) => {
     try {
