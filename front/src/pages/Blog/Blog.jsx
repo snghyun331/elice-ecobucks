@@ -6,6 +6,7 @@ import { UserStateContext } from "../../context/user/UserProvider";
 import BlogPost from "./BlogPost";
 import BlogPostEdit from "./BlogPostEdit";
 import BlogComment from "./BlogComment";
+import Pagination1 from "../Modal/Pagination";
 import like from "../../assets/heartfill.png";
 import dislike from "../../assets/heartblank.png";
 const Blog = () => {
@@ -17,6 +18,15 @@ const Blog = () => {
   const [blogList, setBlogList] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
   // const [isLiked, setIsLiked] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(8);
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+  const currentList = blogList.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -220,7 +230,9 @@ const Blog = () => {
 
           <Container>
         <Row>
-        {blogList.map(item => (
+        {currentList
+          .sort((a, b) => b.likeCount - a.likeCount)
+          .map(item => (
             <Col key={item._id}>
               <Card style={{ width: "18rem" }}>
                 <Card.Body className="card-body">
@@ -290,6 +302,12 @@ const Blog = () => {
         </Row>
       </Container>
       </Container>
+      <Pagination1
+      content={blogList}
+      itemsPerPage={itemsPerPage}
+      handlePageChange={handlePageChange}
+      currentPage={currentPage}
+      />
     </div>
   );
 };
