@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@nivo/bar": "^0.83.0",
+    "@nivo/core": "^0.83.0",
+    "@nivo/line": "^0.83.0",
     "axios": "^1.4.0",
     "bootstrap": "^5.3.0",
     "emoji-picker-react": "^4.4.9",
