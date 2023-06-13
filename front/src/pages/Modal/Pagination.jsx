@@ -1,14 +1,11 @@
 import React from 'react';
-import Pagination from 'react-bootstrap/Pagination';
+import {Pagination} from 'react-bootstrap';
 
-const Pagination1 = (
-    content,
-    handlePageChange,
-    itemsPerPage,
-    currentPage,
+const Pagination1 = ( { content, itemsPerPage, handlePageChange, currentPage }
 ) => {
     // 페이지네이션 아이템 생성 함수
   const renderPaginationItems = () => {
+    // console.log(currentPage);
     const totalPages = Math.ceil(content.length / itemsPerPage);
     const paginationItems = [];
 
@@ -23,9 +20,10 @@ const Pagination1 = (
         </Pagination.Item>
       );
     }
-
+    console.log(paginationItems);
     return paginationItems;
   };
+  
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
       {/* 페이지네이션 컴포넌트 */}

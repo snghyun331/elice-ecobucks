@@ -18,6 +18,16 @@ const Mall = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [itemLocate, setItemLocate] = useState({});
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(8);
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+  const currentList = list.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   const [sellModalOpen, setSellModalOpen] = useState(false);
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -83,7 +93,7 @@ const Mall = () => {
     try {
       // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
       const res = await Api.get("products");
-      console.log("db data: ", res.data)
+      // console.log("db data: ", res.data)
 
       const newList = res.data.map(item => {
         return {
@@ -262,7 +272,7 @@ const Mall = () => {
 
       <Container>
         <Row style={{ display: "flex", alignItems: "center" }}>
-          {list.sort((a, b) => (a.stock === 0 ? 1 : -1))
+          {currentList.sort((a, b) => (a.stock === 0 ? 1 : -1))
             .map(item => (
               <Col key={item._id}>
                 <Card style={{ width: "18rem" }}>
@@ -354,8 +364,14 @@ const Mall = () => {
           </Modal.Footer>
         </Modal>
       </Container>
+    
+    <Pagination1 
+      content={list}
+      itemsPerPage={itemsPerPage}
+      handlePageChange={handlePageChange}
+      currentPage={currentPage}
+    />
     </div>
-    <Pagination1  />
     </>
   );
 };
