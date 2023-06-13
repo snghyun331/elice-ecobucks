@@ -1,20 +1,20 @@
 import { Link } from "react-router-dom";
 import { Container, Button, Dropdown, DropdownButton } from "react-bootstrap";
-import map from "../../../../data/seoul_map/seoulMap.png";
-import DomesticAverage from "../../../../data/DomesticAverage.png";
-import DomesticDistrict from "../../../../data/DomesticDistrict.png";
-import district1 from "../../../../data/seoul_map/district1.png";
-import district2 from "../../../../data/seoul_map/district2.png";
-import district3 from "../../../../data/seoul_map/district3.png";
-import district4 from "../../../../data/seoul_map/district4.png";
-import district5 from "../../../../data/seoul_map/district5.png";
-import Industry from "../../../../data/Industry.png";
+// import map from "../../../../data/seoul_map/seoulMap.png";
+// import DomesticAverage from "../../../../data/DomesticAverage.png";
+// import DomesticDistrict from "../../../../data/DomesticDistrict.png";
+// import district1 from "../../../../data/seoul_map/district1.png";
+// import district2 from "../../../../data/seoul_map/district2.png";
+// import district3 from "../../../../data/seoul_map/district3.png";
+// import district4 from "../../../../data/seoul_map/district4.png";
+// import district5 from "../../../../data/seoul_map/district5.png";
+// import Industry from "../../../../data/Industry.png";
 import mallIcon from "../../assets/mallIcon.png";
 import blogIcon from "../../assets/blogIcon.png";
 import challengeIcon from "../../assets/challengeIcon.png";
 import TipCarousel from "./TipCarousel";
 import { useState } from "react";
-import SeoulDistrictsData from "./Data/SeoulDistrictGraph";
+import SeoulDistrictsGraph from "./Data/SeoulDistrictGraph";
 import SeoulUsageChart from "./Data/SeoulUsageGraph";
 import DistrictChart from "./Data/districtUsageGraph";
 import districtInfo from "../../assets/districtInfo";
@@ -158,11 +158,8 @@ const HomePage = () => {
             border: "1px solid #d6d6d6",
             borderRadius: "10px",
             boxShadow: "3px 3px 4px #ebebeb",
-            padding: "10px",
+            padding: "20px",
             marginTop: "50px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
           }}
         >
           <h3>전력통계</h3>
@@ -185,12 +182,11 @@ const HomePage = () => {
             role="toolbar"
             aria-label="Toolbar with button groups"
           >
-            <div className="d-grid gap-2 mx-auto justify-content-md-end">
+            <div className="d-flex gap-2 mx-auto justify-content-md-end">
+              <SeoulDistrictsGraph />
               {/* <SeoulUsageChart /> */}
-              <SeoulDistrictsData />
 
-
-              <DropdownButton title="구 별 전력 사용량 보기">
+              {/* <DropdownButton title="구 별 전력 사용량 보기">
                 <Dropdown.Item
                   eventKey="seoul"
                   onClick={() => handleButtonClick(map)}
@@ -248,9 +244,9 @@ const HomePage = () => {
                 onClick={() => handleButtonClick(DomesticDistrict)}
               >
                 구 별 사용량(가정용)
-              </button>
+              </button> */}
             </div>
-          </div>
+          </div> 
         </Container>
 
         <Container
