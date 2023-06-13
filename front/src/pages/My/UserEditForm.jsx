@@ -1,9 +1,13 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Row, Form, Button, Dropdown, Alert } from "react-bootstrap";
+import { Row, Form, Button, Dropdown, Alert, Image } from "react-bootstrap";
 import districtInfo from "../../assets/districtInfo";
 
-import { validatePassword, validateEmail, validateName } from "../../util/common";
+import {
+  validatePassword,
+  validateEmail,
+  validateName,
+} from "../../util/common";
 import { UPDATE_USER } from "../../reducer/action";
 
 import {
@@ -16,6 +20,17 @@ const UserEditForm = ({ onClose, user }) => {
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
   const userState = useContext(UserStateContext);
+
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewURL, setPreviewURL] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+    setErrorMessage("");
+    setPreviewURL(URL.createObjectURL(file));
+  };
 
   const [name, setName] = useState(user?.username || ""); // user가 null인 경우를 고려하여 기본값 설정
   const [districtName, setDistrict] = useState(user?.districtName || ""); // user가 null인 경우를 고려하여 기본값 설정
@@ -36,6 +51,19 @@ const UserEditForm = ({ onClose, user }) => {
     e.preventDefault();
 
     try {
+      //이미지 전송 통신
+      if (selectedFile) {
+        const formData = new FormData();
+        formData.append("image", selectedFile);
+        console.log("폼데이터", formData);
+        const imageRes = await Api.postFile(
+          "images/profiles/upload",
+          formData
+        );
+        console.log('이미지레스', imageRes);
+      }
+
+      //그 외 정보 전송 통신
       const requestData = {
         username: name,
         districtName,
@@ -46,7 +74,7 @@ const UserEditForm = ({ onClose, user }) => {
       }
 
       const res = await Api.put(
-        `mypage/useredit/${userState.user._id}`,
+        `mypage/useredit`,
         requestData
       );
 
@@ -107,8 +135,19 @@ const UserEditForm = ({ onClose, user }) => {
         >
           프로필 사진
         </Form.Label>
-        <Form.Control type="file" style={{ borderRadius: "0px" }} />
+        <Form.Control
+          type="file"
+          onChange={handleFileChange}
+          style={{ borderRadius: "0px" }}
+        />
+        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
       </Form.Group>
+      {selectedFile && (
+        <div className="mt-3">
+          <h6>미리보기</h6>
+          <Image src={previewURL} alt="Selected Image" thumbnail />
+        </div>
+      )}
       <Form.Group controlId="registerName" className="mt-4">
         <Form.Label
           className="text-right d-block"

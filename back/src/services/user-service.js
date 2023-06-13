@@ -232,8 +232,14 @@ class userAuthService {
       userChallengeCount: populatedComments.length,
       userChallengeList: populatedComments
     };
+    
     return newComments
   }
+
+
+
+
+
 }
 
 export { userAuthService };
