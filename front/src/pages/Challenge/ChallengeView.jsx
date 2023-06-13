@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Card, Container, Row, Badge } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import { formatDate } from "../../util/common";
 
 import ChallengeRead from "./ChallengeRead";
 import { DispatchContext, UserStateContext } from "../../context/user/UserProvider";
@@ -49,11 +50,7 @@ const ChallengeView = () => {
 
   if (!isFetchCompleted) {
     return "loading...";
-  }
-
-  const formatDate = (dateString) => {
-    return moment(dateString).format("YYYY-MM-DD");
-  };
+  
 
   const sortedChallenges = challenges.sort((a, b) => {
     if (a.isCompleted !== b.isCompleted) {

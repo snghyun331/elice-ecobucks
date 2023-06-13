@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { Table, Pagination, Container } from "react-bootstrap";
 import * as Api from "../../api";
+import { formatDate } from "../../util/common";
+
 
 const UserMileageHistory = ({ user }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,9 +34,6 @@ const UserMileageHistory = ({ user }) => {
     setCurrentPage(pageNumber);
   };
 
-  const formatDate = (dateString) => {
-    return moment(dateString).format("YYYY-MM-DD");
-  };
 
   return (
     <Container className="mb-5">

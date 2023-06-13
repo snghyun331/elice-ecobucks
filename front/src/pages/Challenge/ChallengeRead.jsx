@@ -41,11 +41,6 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
     setShowUpdateModal(false);
   };
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
-  };
-
   const isCurrentUserAuthor = userState.user._id === challenge.userId._id;
 
   const handleDeleteClick = async () => {
