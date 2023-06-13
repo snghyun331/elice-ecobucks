@@ -3,8 +3,8 @@ import { login_required } from "../middlewares/login-required.js";
 import { participationController } from "../controllers/challenge-participation-controller.js"
 import { Validation } from "../middlewares/validation.js";
 
-const participationCreateValidation = Validation.validate(Validation.participationCommentCreateSchema);
-const participationUpdateValidation = Validation.validate(Validation.participationCommentUpdateSchema);
+const participationCreateValidation = Validation.validate(Validation.participationCreateSchema);
+const participationUpdateValidation = Validation.validate(Validation.participationUpdateSchema);
 
 const participationRouter = Router();
 participationRouter.use(login_required)
