@@ -118,12 +118,10 @@ class imageService {
     await validatePermission(image, currentUserId);
 
     const createImage = await imageService.uploadImage({ userId: image.userId, object: image.object, file });
-    console.log('createImage: ',createImage);
     // 이전 이미지 삭제
-  
     fs.unlinkSync(image.path);
     
-    return updateTime.toTimestamps(createImage);
+    return createImage;
   }
 
   
