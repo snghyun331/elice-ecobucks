@@ -87,12 +87,13 @@ function RegisterForm() {
 
   return (
     <Container
-      className="position-absolute top-50 start-50 translate-middle pt-3 pb-3"
+      className="position-relative pt-3 pb-3"
       style={{
         width: "40%",
         backgroundColor: "#F3F3F3",
-        transform: "translate(-50%, -50%)",
         borderRadius: "5px",
+        marginBottom: "20px",
+        marginTop: '90px'
       }}
     >
       <Container className="text-center">
