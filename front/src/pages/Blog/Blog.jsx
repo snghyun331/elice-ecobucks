@@ -115,7 +115,7 @@ const Blog = () => {
     try {
       console.log("삭제할 블로그: ", selectedBlog);
       await Api.delete(`blog/${selectedBlog._id}`);
-      
+
       fetchData();
       handleCloseDeleteModal();
     } catch (err) {

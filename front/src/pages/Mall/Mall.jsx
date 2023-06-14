@@ -367,14 +367,16 @@ const Mall = () => {
                           </Modal>
                         </>
                       )}
-                      <Button
-                        variant="primary"
-                        style={{ margin: "10px", top: "5" }}
-                        onClick={() => handleOpenPurchaseModal(item)}
-                        disabled={item.stock === 0}
-                      >
-                        구매
-                      </Button>
+                      {item.seller !== userState.user._id && (
+                        <Button
+                          variant="primary"
+                          style={{ margin: "10px", top: "5" }}
+                          onClick={() => handleOpenPurchaseModal(item)}
+                          disabled={item.stock === 0}
+                        >
+                          구매
+                        </Button>
+                      )}
                     </Card.Body>
                   </Card>
                 </Col>
