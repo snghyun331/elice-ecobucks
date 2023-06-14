@@ -10,12 +10,12 @@ const TrendingBlogs = () => {
     const fetchData = async () => {
       try {
         const res = await Api.get("blog");
+        console.log(res.data)
         setBlogs(res.data);
       } catch (error) {
         console.error(error);
       }
     };
-
     fetchData();
   }, []);
 
@@ -31,36 +31,66 @@ const TrendingBlogs = () => {
   }, []);
 
   return (
-    <div className="trending-blogs-container">
-<Carousel
-  nextIcon={<span className="carousel-icon carousel-icon-next">&#8250;</span>}
-  prevIcon={<span className="carousel-icon carousel-icon-prev">&#8249;</span>}
->
-
-        {groupedBlogs.map((group, i) => (
-          <Carousel.Item key={`group-${i}`}>
-            <Container fluid className="carousel-container">
-              <Row className="d-flex justify-content-center">
-                {group.map((blog) => (
-                  <Col key={blog.id} xs={4} className="blog-item">
-                    <Card className="blog-card">
-                      <Card.Body>
-                        <Card.Title>{blog.title}</Card.Title>
-                        <Card.Text>
-                          {blog.content.length > 30
-                            ? `${blog.content.slice(0, 30)}...`
-                            : blog.content}
-                        </Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                ))}
-              </Row>
-            </Container>
-          </Carousel.Item>
-        ))}
-      </Carousel>
-    </div>
+    <Container
+      style={{
+        width: "100%",
+        backgroundColor: "#fff",
+        border: "1px solid #d6d6d6",
+        boxShadow: "3px 3px 4px #ebebeb",
+        borderRadius: "10px",
+        padding: "20px",
+        marginTop: "50px",
+      }}
+    >
+      <div className="trending-blogs-container">
+        <h3 style={{ marginLeft: '20px' }}>요즘 뜨는 절약 팁</h3>
+        <div
+          style={{
+            marginTop: "18px",
+            marginBottom: "18px",
+            marginLeft: '20px',
+            height: "5.5px",
+            width: "120px",
+            backgroundColor: "#FF6B00",
+            borderRadius: "10px",
+          }}
+        ></div>
+        <Carousel
+          nextIcon={<span className="carousel-icon carousel-icon-next">&#8250;</span>}
+          prevIcon={<span className="carousel-icon carousel-icon-prev">&#8249;</span>}
+        >
+          {groupedBlogs.map((group, i) => (
+            <Carousel.Item key={`group-${i}`}>
+              <Container fluid className="carousel-container">
+                <Row className="d-flex justify-content-center">
+                  {group.map((blog) => (
+                    <Col key={blog.id} xs={4} className="blog-item">
+                      <Card className="blog-card">
+                        <Card.Body>
+                          <Card.Title>{blog.title}</Card.Title>
+                          <Card.Text className="pt-3 pb-3">
+                            {blog.content.length > 30
+                              ? `${blog.content.slice(0, 30)}...`
+                              : blog.content}
+                          </Card.Text>
+                          <div className="by-author muted-text" style={{fontSize: '0.8em'}}>by {blog.username}</div>
+                          <div className="like-count">
+                            <span role="img" aria-label="heart">
+                              ❤️
+                            </span>{" "}
+                            {blog.likeCount}
+                          </div>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  ))}
+                </Row>
+              </Container>
+            </Carousel.Item>
+          ))}
+        </Carousel>
+      </div>
+    </Container>
   );
 };
 

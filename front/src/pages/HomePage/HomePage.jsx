@@ -154,7 +154,6 @@ const HomePage = () => {
         <Container
           style={{
             width: "100%",
-            height: "50vh",
             backgroundColor: "#fff",
             border: "1px solid #d6d6d6",
             borderRadius: "10px",
@@ -250,33 +249,8 @@ const HomePage = () => {
           </div> 
         </Container>
 
-        <Container
-          style={{
-            width: "100%",
-            height: "30vh",
-            border: "1px solid #d6d6d6",
-            boxShadow: "3px 3px 4px #ebebeb",
-            borderRadius: "10px",
-            padding: "20px",
-            marginTop: "50px",
-          }}
-        >
-          {" "}
-          <h3>요즘 뜨는 절약 팁</h3>
-          <div
-            style={{
-              marginTop: "18px",
-              height: "5.5px",
-              width: "120px",
-              backgroundColor: "#FF6B00",
-              borderRadius: "10px",
-            }}
-          >
-            
+            <TrendingBlogs />
 
-          </div>
-          <TrendingBlogs />
-        </Container>
 
         <Container
           style={{

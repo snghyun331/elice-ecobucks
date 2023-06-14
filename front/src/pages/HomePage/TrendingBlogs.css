@@ -36,10 +36,29 @@
 
 .blog-item {
   flex: 1;
-  margin-right: 16px;
-  margin-left: 16px;
+  margin-right: 8px;
+  margin-left: 8px;
 }
 
 .blog-card {
+  height: 100%;
+}
+.like-count {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 14px;
+  color: black;
+  font-weight: bold;
+}
+.by-author {
+  position: absolute;
+  top: 78%;
+  right: 6%;
+  font-size: 14px;
+  color: grey;
+}
+.trending-blogs-container {
+  overflow: auto;
   height: 100%;
 }
