@@ -24,7 +24,7 @@ imageRouter.get('/images', imageController.imageGetAll);
 
 imageRouter.get('/images/:_id', imageController.imageGet);
 
-imageRouter.get('/images/:object', imageController.imageObjectGetAll);
+imageRouter.get('/images?object=value', imageController.imageObjectGetAll);
 
 imageRouter.put('/images/:_id', imageUpdateValidation, upload.single('image'), imageController.imageUpdate);
 

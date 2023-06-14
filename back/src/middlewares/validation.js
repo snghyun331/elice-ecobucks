@@ -74,11 +74,11 @@ class Validation {
   });
 
   static participationCreateSchema = Joi.object({
-    image: Joi.string().required(),
+    imageId: Joi.string().required(),
   });
 
   static participationUpdateSchema = Joi.object({
-    image: Joi.string().required(),
+    imageId: Joi.string().required(),
   });
 
   static userSchema = Joi.object({
