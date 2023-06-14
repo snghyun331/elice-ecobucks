@@ -8,9 +8,9 @@ const participationController = {
       validateEmptyBody(req)
       const challengeId = req.params.challengeId
       const userId = req.currentUserId;
-      const { image } = req.body;
-      
-      const challenge = await ParticipationService.createParticipation({ userId, challengeId : challengeId, image });
+      const { imageId } = req.body;
+
+      const challenge = await ParticipationService.createParticipation({ userId, challengeId : challengeId, imageId });
       res.status(CREATED).send(challenge);
     } catch (error) {
       next(error);
@@ -42,10 +42,10 @@ const participationController = {
     try {
       const { challengeId, _id } = req.params;
       const currentUserId = req.currentUserId;
-      const { image } = req.body;  
+      const { imageId } = req.body;  
   
       const participation = await ParticipationService.updateParticipation({ 
-        challengeId, _id, currentUserId, image
+        challengeId, _id, currentUserId, imageId
       });
       
       res.status(OK).send(participation);

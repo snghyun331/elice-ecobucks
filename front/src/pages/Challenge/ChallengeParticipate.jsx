@@ -1,13 +1,15 @@
 import React, { useState, useContext } from "react";
 import { Button, Form, Modal, Image, Alert } from "react-bootstrap";
 
+import { UPDATE_USER } from "../../reducer/action";
+
 import {
   UserStateContext,
   DispatchContext,
 } from "../../context/user/UserProvider";
 import * as Api from "../../api";
 
-const ChallengeParticipate = ({ onClose, challenge }) => {
+const ChallengeParticipate = ({ show, onClose, challenge }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -38,28 +40,42 @@ const ChallengeParticipate = ({ onClose, challenge }) => {
 
   const confirmUpload = async () => {
     try {
+
+      //이미지 전송 통신
+      const formData = new FormData();
+      formData.append('image', selectedFile)
+      console.log('폼데이터', formData)
+      const imageRes = await Api.postFile(('images/challenges/upload'), formData);
+      console.log('이미지레스', imageRes)
+
+      //참가 통신
+      console.log('이미지아이디', imageRes.data._id)
       const res = await Api.post(`challenges/${challenge._id}/participants`, {
-        image: "selectedFile",
+        imageId: imageRes.data._id,
       });
-      console.log(res);
+      console.log('파티시펀트', res);
       alert("인증사진 업로드가 완료되었습니다.");
 
       const userData = await Api.get("current");
       const user = userData.data;
 
       dispatch({
-        type: "UPDATE_USER",
+        type: UPDATE_USER,
         payload: user,
       });
 
       handleConfirmationClose();
       onClose();
     } catch (err) {
-      alert(err.response.data);
+      alert(err.response.data.message);
     }
   };
 
   return (
+    <Modal show={show} >
+    <Modal.Header closeButton>
+    <Modal.Title>참가하기!</Modal.Title>
+  </Modal.Header>
     <Modal.Body>
       <h4>인증사진 업로드</h4>
       <Alert variant="danger" className="small">
@@ -110,6 +126,7 @@ const ChallengeParticipate = ({ onClose, challenge }) => {
         </Modal.Footer>
       </Modal>
     </Modal.Body>
+    </Modal>
   );
 };
 

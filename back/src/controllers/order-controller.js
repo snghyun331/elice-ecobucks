@@ -25,12 +25,13 @@ const orderController = {
             if (orderDetails.length === 0) {
                 return res.json({ message: '주문 내역이 없습니다.' });
             }
-    
+
             return res.status(OK).json(orderDetails);
         } catch (error) {
             error.status = NOT_FOUND;
             next(error);
         }
-    }
+    },
+    
 }
 export { orderController };

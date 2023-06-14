@@ -1,6 +1,14 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Row, Form, Button, Dropdown, Alert } from "react-bootstrap";
+import { Row, Form, Button, Dropdown, Alert, Image } from "react-bootstrap";
+import districtInfo from "../../assets/districtInfo";
+
+import {
+  validatePassword,
+  validateEmail,
+  validateName,
+} from "../../util/common";
+import { UPDATE_USER } from "../../reducer/action";
 
 import {
   UserStateContext,
@@ -13,49 +21,22 @@ const UserEditForm = ({ onClose, user }) => {
   const dispatch = useContext(DispatchContext);
   const userState = useContext(UserStateContext);
 
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewURL, setPreviewURL] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+    setErrorMessage("");
+    setPreviewURL(URL.createObjectURL(file));
+  };
+
   const [name, setName] = useState(user?.username || ""); // user가 null인 경우를 고려하여 기본값 설정
   const [districtName, setDistrict] = useState(user?.districtName || ""); // user가 null인 경우를 고려하여 기본값 설정
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
-
-  const districtNames = [
-    "강남구",
-    "강동구",
-    "강북구",
-    "강서구",
-    "관악구",
-    "광진구",
-    "구로구",
-    "금천구",
-    "노원구",
-    "도봉구",
-    "동대문구",
-    "동작구",
-    "마포구",
-    "서대문구",
-    "서초구",
-    "성동구",
-    "성북구",
-    "송파구",
-    "양천구",
-    "영등포구",
-    "용산구",
-    "은평구",
-    "종로구",
-    "중구",
-    "중랑구",
-  ];
-
-  const validatePassword = (password) => {
-    return password.match(
-      /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,18}$/
-    );
-  };
-
-  const validateName = (name) => {
-    return name.match(/^[a-zA-Z가-힣\s]{2,20}$/);
-  };
 
   const isPasswordValid =
     password.length === 0 ? true : validatePassword(password);
@@ -70,6 +51,19 @@ const UserEditForm = ({ onClose, user }) => {
     e.preventDefault();
 
     try {
+      //이미지 전송 통신
+      if (selectedFile) {
+        const formData = new FormData();
+        formData.append("image", selectedFile);
+        console.log("폼데이터", formData);
+        const imageRes = await Api.postFile(
+          "images/profiles/upload",
+          formData
+        );
+        console.log('이미지레스', imageRes);
+      }
+
+      //그 외 정보 전송 통신
       const requestData = {
         username: name,
         districtName,
@@ -80,7 +74,7 @@ const UserEditForm = ({ onClose, user }) => {
       }
 
       const res = await Api.put(
-        `mypage/useredit/${userState.user._id}`,
+        `mypage/useredit`,
         requestData
       );
 
@@ -92,7 +86,7 @@ const UserEditForm = ({ onClose, user }) => {
         const user = userData.data;
 
         dispatch({
-          type: "UPDATE_USER",
+          type: UPDATE_USER,
           payload: user,
         });
 
@@ -141,8 +135,19 @@ const UserEditForm = ({ onClose, user }) => {
         >
           프로필 사진
         </Form.Label>
-        <Form.Control type="file" style={{ borderRadius: "0px" }} />
+        <Form.Control
+          type="file"
+          onChange={handleFileChange}
+          style={{ borderRadius: "0px" }}
+        />
+        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
       </Form.Group>
+      {selectedFile && (
+        <div className="mt-3">
+          <h6>미리보기</h6>
+          <Image src={previewURL} alt="Selected Image" thumbnail />
+        </div>
+      )}
       <Form.Group controlId="registerName" className="mt-4">
         <Form.Label
           className="text-right d-block"
@@ -238,12 +243,12 @@ const UserEditForm = ({ onClose, user }) => {
             {districtName || "구를 선택해주세요. "}
           </Dropdown.Toggle>
           <Dropdown.Menu style={{ maxHeight: "200px", overflowY: "auto" }}>
-            {districtNames.map((districtName) => (
+            {districtInfo.map((districtData) => (
               <Dropdown.Item
-                key={districtName}
-                onClick={() => setDistrict(districtName)}
+                key={districtData.name}
+                onClick={() => setDistrict(districtData.name)}
               >
-                {districtName}
+                {districtData.name}
               </Dropdown.Item>
             ))}
           </Dropdown.Menu>
@@ -258,6 +263,8 @@ const UserEditForm = ({ onClose, user }) => {
           width: "100%",
           borderRadius: "0px",
           backgroundColor: "#00D387",
+          color: "white",
+          fontWeight: "900",
         }}
       >
         저장

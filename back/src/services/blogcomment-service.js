@@ -46,6 +46,23 @@ class blogCommentService {
         }
         return { result: "Success" };
     }   
+
+    static async findComments({ blogId }) {
+        const comments = await BlogComment.NoAsyncfindAll({ challengeId })
+          .populate("userId", "username districtCode districtName")
+          .exec();
+        if (!comments) {
+          throw setError("댓글을 찾을 수 없습니다.", 404, "NOT_FOUND")
+        }
+    
+        return comments;
+      }
+
+    static async findAllComments() {
+        const comments = await BlogComment.findAll();
+        console.log(comments);
+        return comments;
+    }
 }
 
 export { blogCommentService };

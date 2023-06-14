@@ -5,6 +5,11 @@ class Image {
     const createdImage = await imageModel.create(newImage);
     return createdImage;
   }
+
+  static async find( object ) {
+    const images = await imageModel.find( object );
+    return images;
+  }
   
   static async findAll( ) {
     const images = await imageModel.find( );
@@ -12,18 +17,19 @@ class Image {
   }
   
   static async findById( _id ){
-    const image = await imageModel.findById( _id );
-    return image
+    const imageId = await imageModel.findById( _id );
+    return imageId
   }
 
-  static async findOne( imageId ){
-    const image = await imageModel.findOne( imageId );
-    return image
-  }
-
-  static async findAllByUserId({ userId }){
-    const userImages = await imageModel.find({ userId });;
+  static async findAllByUserId( objectId ){
+    const userImages = await imageModel.find( objectId );
     return userImages
+  }
+
+  static async findByDataId({ _id }) {
+    // dataId로 사진 조회
+    const dataImage = await imageModel.findOne({ dataId:_id });
+    return dataImage;
   }
 
   // update

@@ -24,6 +24,16 @@ class Product {
     return products
   }
 
+  static async findAndCountAll(skip, limit) {
+    const products = await productModel.find()
+                      .sort({ stock: 0, createdAt: 1 })     
+                      .skip(skip)
+                      .limit(limit)
+                      .exec();
+    const count = await productModel.countDocuments();
+    return { products, count };
+  }
+
   static async deleteById(productId) {
     const deleteResult = await productModel.deleteOne({ _id: productId });
     const isDataDeleted = deleteResult.deletedCount === 1;

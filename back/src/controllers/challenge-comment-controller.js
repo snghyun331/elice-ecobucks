@@ -5,12 +5,14 @@ import { CREATED, OK } from "../utils/constants.js";
 const commentController = {
   commentCreate: async function (req, res, next) {
     try {
+      console.log("오고있니")
       validateEmptyBody(req)
       const challengeId = req.params.challengeId
       const userId = req.currentUserId;
       const { content } = req.body;
-      
+      console.log(challengeId)
       const challenge = await CommentService.createComment({ userId, challengeId : challengeId, content });
+
       res.status(CREATED).send(challenge);
     } catch (error) {
       next(error);

@@ -57,7 +57,18 @@ const blogcommentController = {
             error.status = NOT_FOUND;
             next(error)
         }
-    }    
+    },
+
+    blogcommentGetAll: async function(req, res, next) {
+        try {
+            console.log('letgo')
+            const comments = await blogCommentService.findAllComments();
+
+            res.status(OK).send(comments);
+          } catch (error) {
+            next(error);
+          }
+    }
 }
 
 export { blogcommentController };

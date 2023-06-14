@@ -1,5 +1,5 @@
 import { userModel } from "../db/schemas/user.js";
-import { User, District, Challenge, ChallengeParticipation, ChallengeComment } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import { User, District, Challenge, ChallengeParticipation, ChallengeComment, order } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt, { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
 import { updateTime } from "../utils/update-time.js";
@@ -156,6 +156,7 @@ class userAuthService {
     const user  = await User.findById({userId});
     const challenges = await Challenge.findAllByUserId({ userId: userId });
     const participations = await ChallengeParticipation.findAllByUserId({ userId: userId });
+    const orders = await order.findAll({buyer: userId});
     const comments = await ChallengeComment.findAllByUserId({ userId: userId });
     const userInfo = {
       ...user._doc,
@@ -165,7 +166,9 @@ class userAuthService {
       participantsList: participations,
       userCommentsCount: comments.length,
       userCommentsList: comments,
+      orderCount: orders.length,
     }
+
     return userInfo
   }
 
@@ -188,7 +191,7 @@ class userAuthService {
     return userInfo
   }
 
-  // 유저의 모든 챌린지 참여 갯수와 참여 조회
+  // 유저의 모든 챌린지 참여 갯수와 참여 조회 
   static async getUserParticipants({userId}){
     const participations = await ChallengeParticipation.findAllByUserId({ userId });
     const populatedParticipations = await Promise.all(
@@ -200,9 +203,9 @@ class userAuthService {
           challengeTitle: challenge.title,  // title 추가
           createdAt: updateTime.toKST(challenge.createdAt),
           updatedAt: updateTime.toKST(challenge.updatedAt)
-        };
-      })
-    );
+        }; 
+      }) 
+    );  
 
     const newParticipations = {
       userChallengeCount: populatedParticipations.length,
@@ -210,7 +213,7 @@ class userAuthService {
     };
 
     return newParticipations;
-  }
+  } 
 
   // 유저의 모든 댓글 갯수와 댓글 조회
   static async getUserComments({userId}){
@@ -232,8 +235,14 @@ class userAuthService {
       userChallengeCount: populatedComments.length,
       userChallengeList: populatedComments
     };
+    
     return newComments
   }
+
+
+
+
+
 }
 
 export { userAuthService };

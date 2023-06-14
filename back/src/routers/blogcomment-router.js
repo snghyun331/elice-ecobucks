@@ -15,4 +15,6 @@ blogCommentRouter.put("/blog/comment/:_id/write", blogcommentUpdateValidation, b
 
 blogCommentRouter.delete("/blog/comment/:_id", blogcommentController.blogcommentDeleteWrite)
 
+blogCommentRouter.get("/blogs/comments", blogcommentController.blogcommentGetAll);
+
 export { blogCommentRouter };

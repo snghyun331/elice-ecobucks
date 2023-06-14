@@ -39,7 +39,7 @@ class BlogPost {
     }
 
     static async addLike({ post_id, pressLikeUserId }) {
-        const filter = { _id: post_id };
+        const filter = { _id: post_id, likeUsers: { $ne: pressLikeUserId }};
         const update = {
             $inc: { likeCount: 1 },
             $addToSet: { likeUsers: pressLikeUserId },
@@ -55,7 +55,7 @@ class BlogPost {
 
 
     static async deleteLike({ post_id, cancelLikeUserId }) {
-        const filter = { _id: post_id, likeCount: { $gt: 0 } };  // likeCount가 0보다 큰 경우에만 업데이트
+        const filter = { _id: post_id, likeCount: { $gt: 0 }, likeUsers: cancelLikeUserId };  // likeCount가 0보다 크고 likeUsers에 cancelLikeUserId가 있는 경우에만 업데이트
         const update = {
             $inc: { likeCount: -1 },
             $pull: { likeUsers: cancelLikeUserId },

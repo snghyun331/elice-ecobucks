@@ -7,13 +7,14 @@ const participationSchema = new Schema(
       ref: 'User', 
       required: true 
     },
+    imageId: { 
+      type: Schema.Types.ObjectId, 
+      ref: 'Image',
+      required: true 
+    },
     challengeId: { 
       type: Schema.Types.ObjectId, 
       ref: 'Challenge', 
-      required: true 
-    },
-    image: { 
-      type: String, 
       required: true 
     },
     hasParticipatedToday: {

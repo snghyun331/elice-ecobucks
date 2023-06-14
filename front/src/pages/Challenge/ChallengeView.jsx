@@ -1,15 +1,13 @@
+import React, { useState, useContext, useEffect } from "react";
 import { Card, Container, Row, Badge } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
+import { formatDate } from "../../util/common";
 
 import ChallengeRead from "./ChallengeRead";
-import { useState, useContext, useEffect } from "react";
-import MegaChallengeCarousel from "./MegaChallengeCarousel";
-
+import { DispatchContext, UserStateContext } from "../../context/user/UserProvider";
 import * as Api from "../../api";
-import {
-  DispatchContext,
-  UserStateContext,
-} from "../../context/user/UserProvider";
+import MegaChallengeCarousel from "./MegaChallengeCarousel";
 
 const ChallengeView = () => {
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
@@ -54,21 +52,17 @@ const ChallengeView = () => {
     return "loading...";
   }
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
-  };
 
   const sortedChallenges = challenges.sort((a, b) => {
     if (a.isCompleted !== b.isCompleted) {
       return a.isCompleted ? 1 : -1;
     }
-    return new Date(a.dueDate) - new Date(b.dueDate);
+    return moment(a.dueDate) - moment(b.dueDate);
   });
 
   const isToday = (dateString) => {
-    const today = new Date().toLocaleDateString();
-    const date = new Date(dateString).toLocaleDateString();
+    const today = moment().format("YYYY-MM-DD");
+    const date = moment(dateString).format("YYYY-MM-DD");
     return today === date;
   };
 

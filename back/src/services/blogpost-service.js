@@ -67,6 +67,7 @@ class blogPostService {
 
     static async addLike({ post_id, pressLikeUserId }) {
         const likeInfo = await BlogPost.findOneById({ post_id });
+        
         if (!likeInfo) {
             const errorMessage =
                 "해당 id의 게시글은 존재하지 않습니다. 다시 한 번 확인해 주세요.";
@@ -74,7 +75,11 @@ class blogPostService {
         }
 
         const AddLike = await BlogPost.addLike({ post_id, pressLikeUserId });
-        
+        if (!AddLike) {
+            const errorMessage =
+                "좋아요를 이미 눌렀습니다.";
+            return { errorMessage };
+        }
         return AddLike;
     } 
 
@@ -88,6 +93,11 @@ class blogPostService {
         }
     
         const DeleteLike = await BlogPost.deleteLike({ post_id, cancelLikeUserId });
+        if (!DeleteLike) {
+            const errorMessage =
+                "좋아요를 이미 취소했습니다.";
+            return { errorMessage };
+        }
         return DeleteLike;
     }
 

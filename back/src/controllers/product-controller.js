@@ -13,7 +13,7 @@ const productController = {
       
       const currentUserInfo = await userAuthService.getUserInfo({ userId: seller });
       const sellerName = currentUserInfo.username;
-      const newProduct = { seller, sellerName, name, price, place, stock, description }
+      const newProduct = { seller, sellerName, name, location, price, place, stock, description }
 
       const createdNewProduct = await productService.addProduct(newProduct);
       if (newProduct.errorMessage) {
@@ -45,10 +45,29 @@ const productController = {
     }
   },
 
+  // productGetAll: async function (req, res, next) {
+  //   try {
+  //     const products = await productService.findAllProducts();
+  //     res.status(OK).send(products);
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // },
+
   productGetAll: async function (req, res, next) {
     try {
-      const products = await productService.findAllProducts();
-      res.status(OK).send(products);
+      const page = parseInt(req.query.page || 1);
+      const limit = 8;
+      const skip = (page - 1) * limit;
+      console.log("page : ", page);
+      console.log("skip : ", skip);
+
+      const { products, count } = await productService.findAllProducts(skip, limit);
+      res.status(OK).send({
+        currentPage: page,
+        totalPages: Math.ceil(count / limit),
+        products,
+      });
     } catch (error) {
       next(error);
     }
