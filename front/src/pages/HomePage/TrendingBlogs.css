@@ -62,3 +62,12 @@
   overflow: auto;
   height: 100%;
 }
+.more-link {
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  font-size: 14px;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}

@@ -280,7 +280,7 @@ const Blog = () => {
           </Row>
         </Container>
       </Container>
-      <Pagination1
+      <PaginationBar
         content={blogList}
         itemsPerPage={itemsPerPage}
         handlePageChange={handlePageChange}
