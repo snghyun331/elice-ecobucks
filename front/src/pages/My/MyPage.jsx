@@ -106,7 +106,7 @@ function MyPage() {
     top: 80,
     left: '18%',
     right: 0,
-    zIndex: 9998,
+    zIndex: 10,
     color: 'white',
     fontSize: '2rem',
     fontWeight: '900'
