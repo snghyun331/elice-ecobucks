@@ -168,6 +168,7 @@ class userAuthService {
       userCommentsList: comments,
       orderCount: orders.length,
     }
+
     return userInfo
   }
 

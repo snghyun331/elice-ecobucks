@@ -15,6 +15,15 @@ class Challenge {
     const challenges = challengeModel.find( );
     return challenges;
   }
+
+  static async findAndCountAll(skip, limit) {
+    const challenges = await UserModel.find()
+                      .skip(skip)
+                      .limit(limit)
+                      .exec();
+    const count = await challengeModel.countDocuments();
+    return { challenges, count };
+  }
   
   static async findById( _id ){
     const challenge = await challengeModel.findById( _id );
