@@ -1,18 +1,5 @@
-.trending-blogs-container {
-  overflow: hidden;
-}
-
-.carousel-icon {
-  color: #ff6b00;
-  font-size: 1.5rem;
-}
-
 .carousel-indicators {
   bottom: 10px;
-}
-
-.trending-blogs-container {
-  overflow: hidden;
 }
 
 .carousel-icon {
@@ -61,4 +48,13 @@
 .trending-blogs-container {
   overflow: auto;
   height: 100%;
+}
+.more-link {
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  font-size: 14px;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
 }

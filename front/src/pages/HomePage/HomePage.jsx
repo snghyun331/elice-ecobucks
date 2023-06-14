@@ -14,6 +14,7 @@ import blogIcon from "../../assets/blogIcon.png";
 import challengeIcon from "../../assets/challengeIcon.png";
 import TipCarousel from "./TipCarousel";
 import TrendingBlogs from "./TrendingBlogs";
+import TrendingChallenges from "./TrendingChallenges";
 import { useState } from "react";
 import SeoulDistrictsGraph from "./Data/SeoulDistrictGraph";
 import SeoulUsageChart from "./Data/SeoulUsageGraph";
@@ -155,36 +156,8 @@ const HomePage = () => {
           </div> 
         </Container>
 
-            <TrendingBlogs />
-
-
-        <Container
-          style={{
-            width: "100%",
-            height: "30vh",
-            backgroundColor: "#fff",
-            border: "1px solid #d6d6d6",
-            boxShadow: "3px 3px 4px #ebebeb",
-            borderRadius: "10px",
-            padding: "20px",
-            marginTop: "50px",
-          }}
-        >
-          {" "}
-          <h3>요즘 뜨는 챌린지</h3>
-          <div
-            style={{
-              marginTop: "18px",
-              height: "5.5px",
-              width: "120px",
-              backgroundColor: "#FF6B00",
-              borderRadius: "10px",
-            }}
-          >
-            {" "}
-
-          </div>
-        </Container>
+        <TrendingBlogs />
+        <TrendingChallenges />
       </div>
       
     </div>

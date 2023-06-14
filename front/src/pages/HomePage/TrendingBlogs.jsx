@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, Container, Row, Col, Carousel } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import * as Api from "../../api";
 import "./TrendingBlogs.css";
 
@@ -40,6 +41,7 @@ const TrendingBlogs = () => {
         borderRadius: "10px",
         padding: "20px",
         marginTop: "50px",
+        position: "relative",
       }}
     >
       <div className="trending-blogs-container">
@@ -55,6 +57,9 @@ const TrendingBlogs = () => {
             borderRadius: "10px",
           }}
         ></div>
+        <Link to="/blog" className="more-link">
+          더보기
+        </Link>
         <Carousel
           nextIcon={<span className="carousel-icon carousel-icon-next">&#8250;</span>}
           prevIcon={<span className="carousel-icon carousel-icon-prev">&#8249;</span>}
@@ -73,7 +78,9 @@ const TrendingBlogs = () => {
                               ? `${blog.content.slice(0, 30)}...`
                               : blog.content}
                           </Card.Text>
-                          <div className="by-author muted-text" style={{fontSize: '0.8em'}}>by {blog.username}</div>
+                          <div className="by-author muted-text" style={{ fontSize: '0.8em' }}>
+                            by {blog.username}
+                          </div>
                           <div className="like-count">
                             <span role="img" aria-label="heart">
                               ❤️
