@@ -221,7 +221,7 @@ const Mall = () => {
       await Api.delete(`products/${selectedItem._id}`);
 
       const res = await Api.get("products");
-      const newList = res.data.map(item => {
+      const newList = res.data.products.map(item => {
         return {
           name: item.name,
           price: item.price,
@@ -235,6 +235,7 @@ const Mall = () => {
         };
       });
       setList(newList);
+      setTotalPages(res.data.totalPages)
       handleCloseDeleteModal();
     } catch (err) {
       console.log("상품 삭제에 실패했습니다.", err);
