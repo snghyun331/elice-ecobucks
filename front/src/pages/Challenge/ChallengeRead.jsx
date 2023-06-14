@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from "react-bootstrap";
 import * as Api from "../../api";
-
+import { formatDate } from "../../util/common";
 import ChallengeParticipate from "./ChallengeParticipate";
 import { UserStateContext } from "../../context/user/UserProvider";
 import ChallengeUpdate from "./ChallengeUpdate";
