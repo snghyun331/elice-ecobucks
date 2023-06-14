@@ -150,6 +150,7 @@ const HomePage = () => {
           >
             <div className="d-flex gap-2 mx-auto justify-content-md-end">
               <SeoulDistrictsGraph />
+              {/* <DistrictChart /> */}
             </div>
           </div> 
         </Container>
