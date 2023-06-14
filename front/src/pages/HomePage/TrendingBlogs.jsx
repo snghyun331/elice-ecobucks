@@ -28,7 +28,7 @@ const TrendingBlogs = () => {
       <Container ref={containerRef} className="scrollable-container">
         <Row style={{ flexWrap: "nowrap" }}>
           {trendingBlogs.map((blog) => (
-            <Col key={blog.id} xs={4} className="blog-item">
+            <Col key={blog.id} xs={4} className="blog-item" style={{ minWidth: '33.3333%' }}>
               <Card style={{ height: "100%" }}>
                 <Card.Body>
                   <Card.Title>{blog.title}</Card.Title>
