@@ -45,8 +45,6 @@ class productService {
   // }
   static async findAllProducts(skip, limit) {
     const { products, count } = await Product.findAndCountAll(skip, limit);
-    // console.log('count: ',count);
-    // console.log('products: ',products);
     return { products, count };
   }
 
