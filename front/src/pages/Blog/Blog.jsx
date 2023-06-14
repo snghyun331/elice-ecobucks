@@ -6,7 +6,7 @@ import { UserStateContext } from "../../context/user/UserProvider";
 import BlogPost from "./BlogPost";
 import BlogPostEdit from "./BlogPostEdit";
 import BlogComment from "./BlogComment";
-import Pagination1 from "../Modal/Pagination";
+import PaginationBar from "../Modal/PaginationBar";
 import like from "../../assets/heartfill.png";
 import dislike from "../../assets/heartblank.png";
 const Blog = () => {
