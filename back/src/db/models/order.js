@@ -11,8 +11,8 @@ class order{
         return createdNewOrder;
     }
 
-    static async find(buyer) {
-        const orders = await orderModel.find(buyer);
+    static async findAll({buyer}) {
+        const orders = await orderModel.find({buyer});
         return orders;
     }
 }

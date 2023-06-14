@@ -44,7 +44,7 @@ const orderService = {
     },
 
     getOrdersByBuyer: async function(buyer) {
-        const orders = await order.find({ buyer: buyer });
+        const orders = await order.findAll({ buyer: buyer });
         
         const orderDetails = await Promise.all(
             orders.map(async (order) => {
