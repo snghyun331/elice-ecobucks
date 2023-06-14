@@ -14,8 +14,10 @@ const UserMileageHistory = ({ user }) => {
     const fetchMileageHistory = async () => {
       try {
         const res = await Api.get(`users/${user._id}/participants`);
-        console.log(res)
-        setMileageHistory(res.data.userChallengeList);
+        if (res.data.message) {
+          setMileageHistory([])
+        } else {
+        setMileageHistory(res.data.userChallengeList);}
       } catch (err) {
         console.error("Failed to fetch mileage history:", err);
       }

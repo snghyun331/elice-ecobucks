@@ -28,6 +28,10 @@ function MyPage() {
       console.log("통신결과", res.data);
       setUser(res.data);
       setIsFetchCompleted(true);
+
+      //유저의 프로필 사진 조회
+      const imageRes = await Api.get('images')
+      console.log(imageRes)
     } catch (err) {
       alert("User 정보 불러오기를 실패하였습니다.");
       console.log("User 정보 불러오기를 실패하였습니다.", err);
