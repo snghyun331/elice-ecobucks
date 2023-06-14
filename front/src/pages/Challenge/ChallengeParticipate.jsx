@@ -46,13 +46,14 @@ const ChallengeParticipate = ({ show, onClose, challenge }) => {
       formData.append('image', selectedFile)
       console.log('폼데이터', formData)
       const imageRes = await Api.postFile(('images/challenges/upload'), formData);
-      console.log(imageRes)
+      console.log('이미지레스', imageRes)
 
       //참가 통신
+      console.log('이미지아이디', imageRes.data._id)
       const res = await Api.post(`challenges/${challenge._id}/participants`, {
-        image: "selectedFile",
+        imageId: imageRes.data._id,
       });
-      console.log(res);
+      console.log('파티시펀트', res);
       alert("인증사진 업로드가 완료되었습니다.");
 
       const userData = await Api.get("current");
@@ -66,7 +67,7 @@ const ChallengeParticipate = ({ show, onClose, challenge }) => {
       handleConfirmationClose();
       onClose();
     } catch (err) {
-      alert(err.response.data);
+      alert(err.response.data.message);
     }
   };
 

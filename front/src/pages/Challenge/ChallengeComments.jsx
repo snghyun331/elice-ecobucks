@@ -27,8 +27,6 @@ const ChallengeComments = ({ challenge }) => {
 
     try {
       const res = await Api.post(`challenges/${challenge._id}/comments`, {
-        userId: userState.user._id,
-        challengeId: challenge._id,
         content,
       });
       const newComment = {
