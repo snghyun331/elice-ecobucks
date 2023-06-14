@@ -39,7 +39,7 @@ const SeoulUsageChart = () => {
         x: item.year,
         y: item.powerUsage
     }));
-    console.log("transformedData: ", transformedData);
+    // console.log("transformedData: ", transformedData);
 
 
 

@@ -15,8 +15,9 @@ const DistrictChart = () => {
     const fetchData = async () => {
         try {
             const response = await Api.get('data/districtUsage');
+            // console.log("res: ", response);
             // const data = await response.json();
-            // console.log('data: ', response);
+            // console.log('data: ', data);
 
             // 도시 이름으로 나누기
             const dataByCity = {};
@@ -42,10 +43,10 @@ const DistrictChart = () => {
             // if (!cityData || !cityData.length || !cityData[0].hasOwnProperty('city')) {
             //     return; // 건너뛰기
             //   }
-            console.log('cityDDD', cityData[0].city)
+            // console.log('cityDDD', cityData[0].city)
             const { city } = cityData[0];
 
-            console.log("차트데이터안 폴이치: ", city);
+            // console.log("차트데이터안 폴이치: ", city);
             const monthlyAvgs = {};
 
             cityData.forEach(data => {
@@ -99,14 +100,20 @@ const DistrictChart = () => {
         };
     });
 
-    console.log('ggg', transformedData);
+    console.log('transformedData: ', transformedData[0]);
+    // console.log('data: ', transformedData[0].data);
+    const { id } = transformedData[3];
+    const { data } = transformedData[3];
+    // console.log(id, data);
+    // const { id, data } = transformedData[1];
     return (
         <div style={{ width: 500, height: 450, marginLeft: "20px" }}>
             <ResponsiveLine
-                data={transformedData}
+                data={[{ id: id, data: data }]}
+                // data={transformedData}
                 margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
                 xScale={{ type: 'point' }}
-                yScale={{ type: 'linear', min: 220, max: 400, stacked: true, reverse: false }}
+                yScale={{ type: 'linear', min: 150, max: 400, stacked: true, reverse: false }}
                 yFormat=" >-.2f"
                 axisTop={null}
                 axisRight={null}
