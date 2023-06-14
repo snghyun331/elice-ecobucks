@@ -53,7 +53,7 @@ const ChallengeParticipate = ({ show, onClose, challenge }) => {
       const res = await Api.post(`challenges/${challenge._id}/participants`, {
         imageId: imageRes.data._id,
       });
-      console.log('파티시펀트', res);
+      
       alert("인증사진 업로드가 완료되었습니다.");
 
       const userData = await Api.get("current");

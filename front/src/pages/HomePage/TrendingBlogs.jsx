@@ -1,49 +1,96 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Card, Container, Row, Col } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Card, Container, Row, Col, Carousel } from "react-bootstrap";
 import * as Api from "../../api";
+import "./TrendingBlogs.css";
 
 const TrendingBlogs = () => {
   const [blogs, setBlogs] = useState([]);
-  const containerRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await Api.get("blog");
+        console.log(res.data)
         setBlogs(res.data);
       } catch (error) {
         console.error(error);
       }
     };
-
     fetchData();
   }, []);
 
   const trendingBlogs = blogs
     .sort((a, b) => b.likeCount - a.likeCount)
-    .slice(0, 5);
+    .slice(0, 6);
+
+  const groupedBlogs = trendingBlogs.reduce((result, value, index) => {
+    if (index % 3 === 0) {
+      result.push(trendingBlogs.slice(index, index + 3));
+    }
+    return result;
+  }, []);
 
   return (
-    <div style={{ overflowX: "scroll" }}>
-      <Container ref={containerRef} className="scrollable-container">
-        <Row style={{ flexWrap: "nowrap" }}>
-          {trendingBlogs.map((blog) => (
-            <Col key={blog.id} xs={4} className="blog-item" style={{ minWidth: '33.3333%' }}>
-              <Card style={{ height: "100%" }}>
-                <Card.Body>
-                  <Card.Title>{blog.title}</Card.Title>
-                  <Card.Text>
-                    {blog.content.length > 15
-                      ? `${blog.content.slice(0, 15)}...`
-                      : blog.content}
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
+    <Container
+      style={{
+        width: "100%",
+        backgroundColor: "#fff",
+        border: "1px solid #d6d6d6",
+        boxShadow: "3px 3px 4px #ebebeb",
+        borderRadius: "10px",
+        padding: "20px",
+        marginTop: "50px",
+      }}
+    >
+      <div className="trending-blogs-container">
+        <h3 style={{ marginLeft: '20px' }}>요즘 뜨는 절약 팁</h3>
+        <div
+          style={{
+            marginTop: "18px",
+            marginBottom: "18px",
+            marginLeft: '20px',
+            height: "5.5px",
+            width: "120px",
+            backgroundColor: "#FF6B00",
+            borderRadius: "10px",
+          }}
+        ></div>
+        <Carousel
+          nextIcon={<span className="carousel-icon carousel-icon-next">&#8250;</span>}
+          prevIcon={<span className="carousel-icon carousel-icon-prev">&#8249;</span>}
+        >
+          {groupedBlogs.map((group, i) => (
+            <Carousel.Item key={`group-${i}`}>
+              <Container fluid className="carousel-container">
+                <Row className="d-flex justify-content-center">
+                  {group.map((blog) => (
+                    <Col key={blog.id} xs={4} className="blog-item">
+                      <Card className="blog-card">
+                        <Card.Body>
+                          <Card.Title>{blog.title}</Card.Title>
+                          <Card.Text className="pt-3 pb-3">
+                            {blog.content.length > 30
+                              ? `${blog.content.slice(0, 30)}...`
+                              : blog.content}
+                          </Card.Text>
+                          <div className="by-author muted-text" style={{fontSize: '0.8em'}}>by {blog.username}</div>
+                          <div className="like-count">
+                            <span role="img" aria-label="heart">
+                              ❤️
+                            </span>{" "}
+                            {blog.likeCount}
+                          </div>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  ))}
+                </Row>
+              </Container>
+            </Carousel.Item>
           ))}
-        </Row>
-      </Container>
-    </div>
+        </Carousel>
+      </div>
+    </Container>
   );
 };
 

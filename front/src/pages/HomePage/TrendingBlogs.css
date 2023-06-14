@@ -1,0 +1,64 @@
+.trending-blogs-container {
+  overflow: hidden;
+}
+
+.carousel-icon {
+  color: #ff6b00;
+  font-size: 1.5rem;
+}
+
+.carousel-indicators {
+  bottom: 10px;
+}
+
+.trending-blogs-container {
+  overflow: hidden;
+}
+
+.carousel-icon {
+  color: #ff6b00;
+  font-size: 2rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.carousel-icon-prev {
+  left: 0;
+}
+
+.carousel-icon-next {
+  right: 0;
+}
+.carousel-container {
+  display: flex;
+  align-items: stretch;
+}
+
+.blog-item {
+  flex: 1;
+  margin-right: 8px;
+  margin-left: 8px;
+}
+
+.blog-card {
+  height: 100%;
+}
+.like-count {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 14px;
+  color: black;
+  font-weight: bold;
+}
+.by-author {
+  position: absolute;
+  top: 78%;
+  right: 6%;
+  font-size: 14px;
+  color: grey;
+}
+.trending-blogs-container {
+  overflow: auto;
+  height: 100%;
+}
