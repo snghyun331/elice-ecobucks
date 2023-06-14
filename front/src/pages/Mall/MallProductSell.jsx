@@ -81,7 +81,7 @@ const MallProductSell = (props) => {
         description,
       });
       console.log(res);
-      window.location.reload();
+      // window.location.reload();
     } catch (err) {
       alert("모든 값을 입력해주세요.");
       console.log("상품 등록에 실패하였습니다.", err);

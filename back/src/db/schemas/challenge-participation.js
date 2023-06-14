@@ -10,7 +10,6 @@ const participationSchema = new Schema(
     imageId: { 
       type: Schema.Types.ObjectId, 
       ref: 'Image',
-      required: true 
     },
     challengeId: { 
       type: Schema.Types.ObjectId, 

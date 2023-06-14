@@ -25,10 +25,26 @@ class Product {
   }
 
   static async findAndCountAll(skip, limit) {
-    const products = await productModel.find()
-                      .skip(skip)
-                      .limit(limit)
-                      .exec();
+    const products = await productModel.aggregate([
+      {
+        $addFields: {
+          isZeroStock: { $cond: [{ $eq: ["$stock", 0] }, 1, 0] }
+        }
+      },
+      {
+        $sort: {
+          isZeroStock: 1,
+          createdAt: 1
+        }
+      },
+      {
+        $skip: skip
+      },
+      {
+        $limit: limit
+      }
+    ]);
+    
     const count = await productModel.countDocuments();
     return { products, count }
   }
