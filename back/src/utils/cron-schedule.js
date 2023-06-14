@@ -29,16 +29,17 @@ export async function scheduleChallenge() {
       const expiredChallenges = await challengeModel.find({ dueDate: { $lt: now } });
       //console.log('expiredChallenges: ',expiredChallenges);
       const challengeIds = expiredChallenges.map(challenge => challenge._id);
-      console.log('challengeIds: ',challengeIds);
+      //console.log('challengeIds: ',challengeIds);
       const participations = await participationModel.find({ challengeId: { $in: challengeIds } });
-      console.log('participations: ',participations);
+      //console.log('participations: ',participations);
       for (let participation of participations) {
         //await imageModel.findByIdAndRemove(participation.imageId);
-        console.log('participation.imageId: ',participation.imageId); 
+        console.log('이미지 삭제: ',participation.imageId); 
         const image = await Image.findById({_id: participation.imageId})  
         if(image){
           console.log('image: ',image);
-          fs.unlinkSync(image.path);
+          if (image.path)
+            fs.unlinkSync(image.path);
           await Image.deleteImage( participation.imageId ) 
         }
         await participationModel.findByIdAndRemove(participation._id); 
