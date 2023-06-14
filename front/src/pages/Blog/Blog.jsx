@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Card, Container, Modal, Row, Col, ListGroup, Form } from "react-bootstrap";
 import * as Api from "../../api";
 import { UserStateContext } from "../../context/user/UserProvider";
+import BlogModal from "../Modal/BlogModal";
 import BlogPost from "./BlogPost";
 import BlogPostEdit from "./BlogPostEdit";
 import BlogComment from "./BlogComment";
@@ -186,27 +187,9 @@ const Blog = () => {
         <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
           팁 작성하기
         </Button>
-        <Modal show={showModal} onHide={handleCloseModal} centered>
-          <Modal.Header closeButton>
-            <Modal.Title>팁 작성하기</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="text-center">
-            <BlogPost />
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              className="mt-4 mb-4"
-              variant="secondary"
-              onClick={handleCloseModal}
-              style={{
-                width: "100%",
-                borderRadius: "0px",
-              }}
-            >
-              닫기
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        <BlogModal show={showModal} onHide={handleCloseModal} title="팁 작성하기" handleClose={handleCloseModal}>
+          <BlogPost />
+        </BlogModal>
 
         <Container>
           <Row>
@@ -235,27 +218,16 @@ const Blog = () => {
                           <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item.blogId)}>
                             수정
                           </Button>
-                          <Modal show={editModalOpen} onHide={handleCloseEditModal} centered>
-                            <Modal.Header closeButton>
-                              <Modal.Title>글 수정</Modal.Title>
-                            </Modal.Header>
+                          <BlogModal
+                            show={editModalOpen}
+                            onHide={handleCloseEditModal}
+                            title="글 수정" 
+                            handleClose={handleCloseEditModal}>
                             <Modal.Body className="text-center">
                               <BlogPostEdit handleEditBlog={handleEditBlog} selectedBlog={selectedBlog} />
                             </Modal.Body>
-                            <Modal.Footer>
-                              <Button
-                                className="mt-4 mb-4"
-                                variant="secondary"
-                                onClick={handleCloseEditModal}
-                                style={{
-                                  width: "100%",
-                                  borderRadius: "0px",
-                                }}
-                              >
-                                닫기
-                              </Button>
-                            </Modal.Footer>
-                          </Modal>
+                          </BlogModal>
+
                           <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenDeleteModal(item.blogId)}>
                             삭제
                           </Button>
@@ -263,9 +235,9 @@ const Blog = () => {
                             <Modal.Header closeButton>
                               <Modal.Title>팁 삭제</Modal.Title>
                             </Modal.Header>
-                            <Modal.Body className="text-center">
-                              선택한 팁을 삭제하시겠습니까?
-                            </Modal.Body>
+                              <Modal.Body className="text-center">
+                                선택한 팁을 삭제하시겠습니까?
+                              </Modal.Body>
                             <Modal.Footer>
                               <Button variant="secondary" onClick={handleCloseDeleteModal}>취소</Button>
                               <Button variant="primary" onClick={() => handleDeleteBlog(selectedBlog)}>삭제하기</Button>
