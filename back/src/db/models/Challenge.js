@@ -17,10 +17,10 @@ class Challenge {
   }
 
   static async findAndCountAll(skip, limit) {
-    const challenges = await UserModel.find()
+    const challenges = await challengeModel.find().populate('userId', 'username districtCode districtName')
                       .skip(skip)
                       .limit(limit)
-                      .exec();
+                      .exec()
     const count = await challengeModel.countDocuments();
     return { challenges, count };
   }
