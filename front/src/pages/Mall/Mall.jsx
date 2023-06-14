@@ -4,7 +4,8 @@ import Logo from "../../assets/logo.png";
 import * as Api from "../../api";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserStateContext } from "../../context/user/UserProvider";
+import { UserStateContext, DispatchContext } from "../../context/user/UserProvider";
+import { UPDATE_USER } from "../../reducer/action";
 import MallProductSell from "./MallProductSell";
 import MallProductEdit from "./MallProductEdit";
 import MapContainer from "./MapContainer";
@@ -13,6 +14,7 @@ import placelocate from "../../assets/placeholder.png"
 
 const Mall = () => {
   const userState = useContext(UserStateContext);
+  const dispatch = useContext(DispatchContext);
   const navigate = useNavigate();
   const [list, setList] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -23,7 +25,8 @@ const Mall = () => {
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
-  const currentList = list.slice(
+  const sortedList = list.sort((a, b) => (a.stock === 0 ? 1 : -1)); //전부다 sort
+  const currentList = sortedList.slice( //8개만 보여주는 
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -137,6 +140,15 @@ const Mall = () => {
         productId: selectedItem._id,
       });
       fetchData();
+
+      const userData = await Api.get("current");
+      const user = userData.data;
+
+      dispatch({
+        type: UPDATE_USER,
+        payload: user,
+      });
+
       handleClosePurchaseModal();
     } catch (err) {
       console.log("상품 구매에 실패하였습니다.", err);
@@ -215,6 +227,8 @@ const Mall = () => {
     setItemLocate(selectedItem.location);
   }
 
+  
+
   return (
     <>
     <div style={{ zIndex: "-1", padding: "60px", }}>
@@ -273,7 +287,6 @@ const Mall = () => {
       <Container>
         <Row style={{ display: "flex", alignItems: "center" }}>
           {currentList
-            .sort((a, b) => (a.stock === 0 ? 1 : -1))
             .map(item => (
               <Col key={item._id}>
                 <Card style={{ width: "18rem" }}>
