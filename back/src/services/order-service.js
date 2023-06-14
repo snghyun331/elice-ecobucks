@@ -93,7 +93,7 @@ const orderService = {
                 };
             })
         );
-        console.log('orderDetails: ',orderDetails);
+        // console.log('orderDetails: ',orderDetails);
 
         return { orderDetails, count };
     },
