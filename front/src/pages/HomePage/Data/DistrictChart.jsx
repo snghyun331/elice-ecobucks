@@ -3,47 +3,41 @@ import { ResponsiveLine } from '@nivo/line';
 import * as Api from "../../../api";
 
 //구별 월평균 데이터
-const DistrictChart = () => {
+const DistrictChart = (idx) => {
     const [chartData, setChartData] = useState([]);
-
+    // console.log(idx);
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await Api.get('data/districtUsage');
+                console.log("res: ", response);
+            
+                // 도시 이름으로 나누기
+                const dataByCity = {};
+                response.data.forEach(item => {
+                    const cityName = item.city;
+                    if (!dataByCity.hasOwnProperty(cityName)) {
+                        dataByCity[cityName] = [];
+                    }
+                    dataByCity[cityName].push(item);
+                });
+                const cityData = Object.values(dataByCity);
+                // console.log("cityData: ", cityData);
+                setChartData(cityData);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
         // 데이터를 가져오는 비동기 함수 (예: API 호출)를 이곳에서 실행하고,
         // 가져온 데이터를 setChartData를 통해 상태로 설정합니다.
         fetchData();
     }, []);
 
-    const fetchData = async () => {
-        try {
-            const response = await Api.get('data/districtUsage');
-            // console.log("res: ", response);
-            // const data = await response.json();
-            // console.log('data: ', data);
-
-            // 도시 이름으로 나누기
-            const dataByCity = {};
-            response.data.forEach(item => {
-                const cityName = item.city;
-                if (!dataByCity.hasOwnProperty(cityName)) {
-                    dataByCity[cityName] = [];
-                }
-                dataByCity[cityName].push(item);
-            });
-            const cityData = Object.values(dataByCity);
-            // console.log("cityData: ", cityData);
-            setChartData(cityData);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
-    // console.log("chartData: ", chartData);
     const calculateAvgPowerUsage = () => {
         const avgPowerUsageByCity = [];
 
         chartData.forEach(cityData => {
-            // if (!cityData || !cityData.length || !cityData[0].hasOwnProperty('city')) {
-            //     return; // 건너뛰기
-            //   }
-            // console.log('cityDDD', cityData[0].city)
+            console.log('cityDDD', cityData[0].city)
             const { city } = cityData[0];
 
             // console.log("차트데이터안 폴이치: ", city);
@@ -76,17 +70,8 @@ const DistrictChart = () => {
 
         return avgPowerUsageByCity;
     }
+
     const avgPowerUsageByCity = calculateAvgPowerUsage();
-    // console.log(avgPowerUsageByCity);
-    // console.log(avgPowerUsageByCity[0].monthlyAvgs);
-    // const transformedData = [];
-    // const transformedData = avgPowerUsageByCity.map(item => ({
-    //     x: item.monthlyAvgs[0].month,
-    //     y: item.avgPowerUsage
-    //   }));
-    // console.log("transformedData: ", transformedData);
-    console.log('a', avgPowerUsageByCity[0]);
-    // console.log(avgPowerUsageByCity[0].monthlyAvgs[0].month);
 
     const transformedData = avgPowerUsageByCity.map(item => {
         const monthlyAvgs = item.monthlyAvgs.map(monthlyData => ({
@@ -100,12 +85,12 @@ const DistrictChart = () => {
         };
     });
 
-    console.log('transformedData: ', transformedData[0]);
+    console.log('transformedData: ', transformedData[idx-1]);
     // console.log('data: ', transformedData[0].data);
-    const { id } = transformedData[3];
-    const { data } = transformedData[3];
     // console.log(id, data);
-    // const { id, data } = transformedData[1];
+    const { id, data } = transformedData[idx - 1];
+    // console.log("id: ", id);
+    // console.log("data: ", data);
     return (
         <div style={{ width: 500, height: 450, marginLeft: "20px" }}>
             <ResponsiveLine
