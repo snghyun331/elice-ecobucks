@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Button, Form, ListGroup, Container } from "react-bootstrap";
 import { UserStateContext } from "../../context/user/UserProvider";
 import * as Api from "../../api";
+import { formatDate } from "../../util/common";
 
 const ChallengeComments = ({ challenge }) => {
   const [comments, setComments] = useState([]);
@@ -9,10 +10,6 @@ const ChallengeComments = ({ challenge }) => {
   const [editedComment, setEditedComment] = useState("");
   const userState = useContext(UserStateContext);
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
-  };
 
   const fetchComments = async () => {
     try {
@@ -30,8 +27,6 @@ const ChallengeComments = ({ challenge }) => {
 
     try {
       const res = await Api.post(`challenges/${challenge._id}/comments`, {
-        userId: userState.user._id,
-        challengeId: challenge._id,
         content,
       });
       const newComment = {

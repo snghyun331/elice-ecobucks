@@ -16,7 +16,7 @@ function setError(message, status, errorCode) {
 // handleError defalt 값 : "Internal Server Error", 500, "INTERNAL_SERVER_ERROR"
 // error.status, error.errorCode가 있으면 그 값으로 갱신해서 error를 생성
 function handleError(error){  
-  let message = "Internal Server Error"
+  let message = error.message
   let status = 500
   let errorCode = "INTERNAL_SERVER_ERROR"
   // 다른 status, errorCode들 있을때 그 값으로 갱신

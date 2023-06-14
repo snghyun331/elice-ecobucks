@@ -19,7 +19,7 @@ const updateTime = {
   },
   
   toTimestamps: function (preQuery) {
-    const updateQuery = {
+    let updateQuery = {
       ...preQuery._doc,
       createdAt: updateTime.toKST(preQuery.createdAt),
       updatedAt: updateTime.toKST(preQuery.updatedAt), 

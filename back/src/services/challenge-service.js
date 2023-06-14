@@ -15,8 +15,9 @@ class ChallengeService {
     if (!title || !content || !icon || !weeks){ 
       throw setError("제목, 내용, 아이콘, 기간 모두 입력해 주세요.", 400, "BAD_REQUEST")
     }
-
-    const dueDate = this.makeDueDate(weeks)
+    let newDueDate = new Date();
+    const dueDate = newDueDate.setMinutes(newDueDate.getMinutes() + 3);
+    //const dueDate = this.makeDueDate(weeks)
     const createdChallenge = await Challenge.create({ userId, title, content, icon, weeks, dueDate });
     if (!createdChallenge)  
       throw setError("챌린지 게시물 생성 실패", 500, "CREATE_FAILED")
@@ -33,10 +34,11 @@ class ChallengeService {
 
   static async findChallenges( ) {
     const challenges = await Challenge.NoAsyncfindAll( ).populate('userId', 'username districtCode districtName').exec();
+  
     if (!challenges) {
       throw setError("챌린지 게시물을 찾을 수 없습니다.", 404, "NOT_FOUND")
     }
-    return challenges;
+    return challenges
   }
 
   static async findChallenge({ chllengeId }) {

@@ -15,3 +15,8 @@ export const validateEmail = (email) => {
 export const validateName = (name) => {
   return name.match(/^[a-zA-Z가-힣\s]{2,20}$/);
 };
+
+export const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
+};

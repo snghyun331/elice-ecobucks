@@ -17,8 +17,8 @@ class Image {
   }
   
   static async findById( _id ){
-    const image = await imageModel.findById( _id );
-    return image
+    const imageId = await imageModel.findById( _id );
+    return imageId
   }
 
   static async findAllByUserId( objectId ){

@@ -1,5 +1,5 @@
 import { userModel } from "../db/schemas/user.js";
-import { User, District, Challenge, ChallengeParticipation, ChallengeComment } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import { User, District, Challenge, ChallengeParticipation, ChallengeComment, order } from "../db/index.js"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt, { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
 import { updateTime } from "../utils/update-time.js";
@@ -156,6 +156,7 @@ class userAuthService {
     const user  = await User.findById({userId});
     const challenges = await Challenge.findAllByUserId({ userId: userId });
     const participations = await ChallengeParticipation.findAllByUserId({ userId: userId });
+    const orders = await order.findAll({buyer: userId});
     const comments = await ChallengeComment.findAllByUserId({ userId: userId });
     const userInfo = {
       ...user._doc,
@@ -165,7 +166,9 @@ class userAuthService {
       participantsList: participations,
       userCommentsCount: comments.length,
       userCommentsList: comments,
+      orderCount: orders.length,
     }
+
     return userInfo
   }
 

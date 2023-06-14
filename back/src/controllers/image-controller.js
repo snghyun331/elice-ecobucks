@@ -35,7 +35,7 @@ const imageController = {
 
   imageObjectGetAll: async function(req, res, next) {
     try {
-      const object = req.params.object
+      const object = req.query.object
       const image = await imageService.getObjectImages({ object });
       res.status(OK).send(image);
     } catch (error) {

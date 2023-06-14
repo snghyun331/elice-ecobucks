@@ -74,11 +74,11 @@ class Validation {
   });
 
   static participationCreateSchema = Joi.object({
-    image: Joi.string().required(),
+    imageId: Joi.string().required(),
   });
 
   static participationUpdateSchema = Joi.object({
-    image: Joi.string().required(),
+    imageId: Joi.string().required(),
   });
 
   static userSchema = Joi.object({
@@ -89,7 +89,7 @@ class Validation {
   });
 
   static userUpdateSchema = Joi.object({
-    username: Joi.string().min(USERNAME_MIN).max(USERNAME_MAX),
+    username: Joi.string().min(USERNAME_MIN).max(USERNAME_MAX).pattern(/^(?=.*[가-힣a-zA-Z])[가-힣a-zA-Z]+$/),
     password: Joi.string().regex(new RegExp(`^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*()])[a-zA-Z\\d!@#$%^&*()]{${PWD_MIN},${PWD_MAX}}$`)),
     districtName: Joi.string(), 
   }).or('username', 'password', 'districtName');

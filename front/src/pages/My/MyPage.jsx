@@ -11,15 +11,34 @@ import { UserStateContext, DispatchContext } from "../../context/user/UserProvid
 import { LOGOUT } from "../../reducer/action";
 
 function MyPage() {
+  
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
   const navigate = useNavigate();
 
+  const [profileImage, setProfileImage] = useState(null)
   const [user, setUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => setShowModal(false);
   const handleOpenModal = () => setShowModal(true);
+
+  function getLatestProfileImage(imageRes, userState) {
+    let latestProfileImage = null;
+    let latestUpdatedAt = null;
+  
+    for (const image of imageRes) {
+      if (image.object === 'profiles' && image.userId === userState.user._id) {
+        if (!latestUpdatedAt || image.updatedAt > latestUpdatedAt) {
+          latestProfileImage = image;
+          latestUpdatedAt = image.updatedAt;
+        }
+      }
+    }
+  
+    return latestProfileImage;
+  }
+  
 
   const fetchData = async () => {
     try {
@@ -28,11 +47,20 @@ function MyPage() {
       console.log("통신결과", res.data);
       setUser(res.data);
       setIsFetchCompleted(true);
+      console.log(userState.user._id);
+  
+      //유저의 프로필 사진 조회
+      const imageRes = await Api.get('images');
+      const latestProfileImage = getLatestProfileImage(imageRes.data, userState);
+      console.log(latestProfileImage);
+      setProfileImage(latestProfileImage);
     } catch (err) {
       alert("User 정보 불러오기를 실패하였습니다.");
       console.log("User 정보 불러오기를 실패하였습니다.", err);
     }
   };
+  
+  
 
   const logout = () => {
     // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
@@ -78,7 +106,7 @@ function MyPage() {
     top: 80,
     left: '18%',
     right: 0,
-    zIndex: 9998,
+    zIndex: 10,
     color: 'white',
     fontSize: '2rem',
     fontWeight: '900'
@@ -103,18 +131,20 @@ function MyPage() {
                 borderBottomLeftRadius: '10px'
               }}
             >
-              <Container
-                className="pt-5"
-                style={{
-                  borderRadius: "50%",
-                  width: "7rem",
-                  height: "7rem",
-                  objectFit: "cover",
-                  border: "1px solid grey",
-                }}
-              >
-                사진
-              </Container>
+<Container
+  className="pt-5"
+  style={{
+    borderRadius: "50%",
+    width: "7rem",
+    height: "7rem",
+    objectFit: "cover",
+    border: "1px solid grey",
+    backgroundImage: `url(${profileImage && profileImage.path})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  }}
+></Container>
+
               <Container className="mt-3">
                 <a style={{ fontWeight: "bold" }}>{userState.user.username}</a>{" "}
                 님
