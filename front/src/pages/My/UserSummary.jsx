@@ -23,7 +23,7 @@ const UserSummary = ({ user }) => {
           <Card.Body className="text-center d-flex flex-column align-items-center">
             <Card.Subtitle className="mb-2 text-muted">주문</Card.Subtitle>
             <Card.Title className="my-auto">
-              <span style={{ fontWeight: "bold", fontSize: "1.5rem" }}>8</span>
+              <span style={{ fontWeight: "bold", fontSize: "1.5rem" }}>{user.orderCount}</span>
               <span className="text-muted" style={{ fontSize: "0.9rem" }}>
                 {" "}
                 건
