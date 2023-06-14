@@ -13,6 +13,7 @@ import mallIcon from "../../assets/mallIcon.png";
 import blogIcon from "../../assets/blogIcon.png";
 import challengeIcon from "../../assets/challengeIcon.png";
 import TipCarousel from "./TipCarousel";
+import TrendingBlogs from "./TrendingBlogs";
 import { useState } from "react";
 import SeoulDistrictsGraph from "./Data/SeoulDistrictGraph";
 import SeoulUsageChart from "./Data/SeoulUsageGraph";
@@ -271,9 +272,10 @@ const HomePage = () => {
               borderRadius: "10px",
             }}
           >
-            {" "}
+            
 
           </div>
+          <TrendingBlogs />
         </Container>
 
         <Container
