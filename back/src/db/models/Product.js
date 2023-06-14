@@ -30,7 +30,7 @@ class Product {
                       .limit(limit)
                       .exec();
     const count = await productModel.countDocuments();
-    return { products, count };
+    return { products, count }
   }
 
   static async deleteById(productId) {

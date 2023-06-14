@@ -20,13 +20,24 @@ const orderController = {
     orderGetMypage: async function(req, res, next) {
         try {
             const buyer = req.currentUserId;
-            const orderDetails = await orderService.getOrdersByBuyer(buyer);
-    
+            //const orderDetails = await orderService.getOrdersByBuyer(buyer);
+            const page = parseInt(req.query.page || 1);
+            const limit = 8;
+            const skip = (page - 1) * limit;
+            console.log("page : ", page);
+            console.log("skip : ", skip);
+            const { orderDetails, count } = await orderService.getOrdersByBuyer({ buyer, skip, limit });
+
+
             if (orderDetails.length === 0) {
                 return res.json({ message: '주문 내역이 없습니다.' });
             }
 
-            return res.status(OK).json(orderDetails);
+            return res.status(OK).json({
+                currentPage: page,
+                totalPages: Math.ceil(count / limit),
+                orderDetails,
+              });
         } catch (error) {
             error.status = NOT_FOUND;
             next(error);

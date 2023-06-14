@@ -9,21 +9,20 @@ class ParticipationService {
     try{
       let createNewParticipation;
       const image = await Image.findById({ _id: imageId });
-      console.log('image: ',image);
         if (!image){
           throw setError("imageId가 존재하지 않습니다.", 400, "BAD_REQUEST")
       }
 
       const participation = await ChallengeParticipation.findOne({ challengeId });
       const challenge = await Challenge.findById({ _id: challengeId })
-      console.log('participation: ',participation);
+  
       //--- 1. Check ---
       // 1) challenge 참여기간 종료 Check, dueDate를 넘을경우 신청x
-      // const currentDateTime = new Date();
-      // if (challenge.dueDate.getTime() < currentDateTime.getTime()){
-      //   challenge.isCompleted = true;
-      //   throw setError("참여기간이 종료되었습니다", 409, "CONFLICT")
-      // }
+      const currentDateTime = new Date();
+      if (challenge.dueDate.getTime() < currentDateTime.getTime()){
+        challenge.isCompleted = true;
+        throw setError("참여기간이 종료되었습니다", 409, "CONFLICT")
+      }
       // 2) participation 하루에 한번 참여했는지 check
 
       //--- 2. Create ---
@@ -41,8 +40,8 @@ class ParticipationService {
         if (participation.hasParticipatedToday == true){
           throw setError("같은 챌린지에는 하루에 한번 참여 할 수 있습니다.", 409, "CONFLICT")
         }
+        console.log('participation: ',participation);
         participation.hasParticipatedToday = true
-        await participation.save();
         const createInput = { userId, challengeId, imageId, hasParticipatedToday: true }
         const createParticipation = await ChallengeParticipation.create(createInput);
         createNewParticipation=updateTime.toTimestamps(createParticipation);
@@ -54,7 +53,6 @@ class ParticipationService {
       //1) Challenge Update      
       // challenge 신청자 count 증가
       challenge.participantsCount += 1; 
-      await challenge.save();
 
       //2) User Update
       // 유저정보 갱신 - 참여자 마일리지 1000추가
@@ -62,6 +60,9 @@ class ParticipationService {
       user.mileage += 1000;
       await user.save();
 
+      await participation.save();
+      await challenge.save();
+      
       return createNewParticipation;
     } catch (error) {
       throw handleError(error)
@@ -76,9 +77,7 @@ class ParticipationService {
     }
     // 포스트마다 이미지 가져오기 
     const newParticipations = await Promise.all(participations.map(async (participation) => {
-      console.log('participation.imageId: ',participation.imageId);
       const image = await Image.findById({ _id: participation.imageId });
-      console.log('image: ',image);
       if (image) {
         return {
           ...participation._doc, 
