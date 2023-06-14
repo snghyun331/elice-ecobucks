@@ -6,29 +6,48 @@ import { UserStateContext } from "../../context/user/UserProvider";
 const BlogComment = ({ blog }) => {
   const userState = useContext(UserStateContext);
   const [comments, setComments] = useState([]);
+  const [commentContent, setCommentContent] = useState("");
+  const [isContentValid, setContentValid] = useState(true);
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editedComment, setEditedComment] = useState("");
 
   const handleAddComment = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const content = formData.get("content");
-    try {
-      const res = await Api.post(`blog/${blog.blogId}/comment/write`, {
-        comment: content,
-      });
-      const newComment = {
-        ...res.data,
-        userId: {
-          _id: userState.user._id,
-          username: userState.user.username,
-        },
-      };
-      setComments([...comments, newComment]);
-    } catch (error) {
-      console.log("Error adding comment:", error);
+    // const formData = new FormData(e.target);
+    // const content = formData.get("content");
+    const content = commentContent.trim();
+    if (content.length <= 20) {
+      try {
+        const res = await Api.post(`blog/${blog.blogId}/comment/write`, {
+          comment: content,
+        });
+        const newComment = {
+          ...res.data,
+          userId: {
+            _id: userState.user._id,
+            username: userState.user.username,
+          },
+        };
+        setComments([...comments, newComment]);
+      } catch (error) {
+        console.log("Error adding comment:", error);
+      }
+      
+    } else {
+      alert("댓글은 20글자 이하여야 합니다.");
     }
     e.target.reset();
+  };
+  const handleCommentChange = (e) => {
+    const content = e.target.value;
+    console.log(content.length);
+    setCommentContent(content);
+  
+    if (content.length > 20) {
+      setContentValid(false);
+    } else {
+      setContentValid(true);
+    }
   };
 
   const formatDate = (dateString) => {
@@ -67,7 +86,6 @@ const BlogComment = ({ blog }) => {
           ? { ...comment1, comment: editedComment }
           : comment1
       );
-      console.log(updatedComments, 'a')
       setComments(updatedComments);
       setEditingCommentId(null);
       setEditedComment("");
@@ -130,7 +148,6 @@ const BlogComment = ({ blog }) => {
                   onChange={(event) => setEditedComment(event.target.value)}
                   required
                   className="mt-3 mb-2"
-                  style={{ width: "282%" }}
                 />
                 <div>
                   <Button
@@ -183,7 +200,7 @@ const BlogComment = ({ blog }) => {
           </ListGroup.Item>
         ))}
       </ListGroup>
-      <Form onSubmit={handleAddComment} className="mt-3 mb-3">
+      <Form onSubmit={handleAddComment} className="mt-3 mb-3 border-color:red">
         <Form.Group controlId="content">
           <Form.Control
             name="content"
@@ -191,7 +208,11 @@ const BlogComment = ({ blog }) => {
             rows={3}
             placeholder="댓글을 입력하세요."
             required
+            value={commentContent}
+            onChange={handleCommentChange}
+            style={!isContentValid ? {borderWidth:"2px", borderColor: "red"} : {}}
           />
+          <span>{commentContent.length}/20</span>
         </Form.Group>
         <Button type="submit" className="mt-3">
           댓글 추가
