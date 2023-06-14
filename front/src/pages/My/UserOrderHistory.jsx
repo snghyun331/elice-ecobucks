@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Table, Pagination, Container } from "react-bootstrap";
 import moment from "moment";
 import * as Api from "../../api";
-
+import { formatDate } from "../../util/common";
 
 const UserOrderHistory = ({ user }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -13,8 +13,9 @@ const UserOrderHistory = ({ user }) => {
     const fetchOrderHistory = async () => {
       try {
         const res = await Api.get("mypage/orders");
-        console.log(res, "!!")
-        setOrderHistory(res.data);
+        if (res.data.message) {
+          setOrderHistory([])
+        } else { setOrderHistory(res.data) };
       } catch (err) {
         console.error("Failed to fetch order history:", err);
       }
@@ -22,10 +23,6 @@ const UserOrderHistory = ({ user }) => {
 
     fetchOrderHistory();
   }, [user]);
-
-  const formatDate = (dateString) => {
-    return moment(dateString).format("YYYY-MM-DD");
-  };
 
   // 현재 페이지에 해당하는 주문 내역 가져오기
   const indexOfLastOrder = currentPage * ordersPerPage;
@@ -56,8 +53,8 @@ const UserOrderHistory = ({ user }) => {
               <tr key={index} style={{ fontSize: '0.8rem' }}>
                 <td style={{ width: '25%' }}>{formatDate(order.date)}</td>
                 <td style={{ width: '25%' }}>{order.product}</td>
-                <td style={{ width: '25%' }}>{order.price}</td>
-                <td style={{ width: '25%' }}>{order.location}</td>
+                <td style={{ width: '20%' }}>{order.price.toLocaleString()}</td>
+                <td style={{ width: '30%' }}>{order.location}</td>
               </tr>
             ))}
         </tbody>

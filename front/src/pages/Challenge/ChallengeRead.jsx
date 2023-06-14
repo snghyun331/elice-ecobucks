@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from "react-bootstrap";
 import * as Api from "../../api";
-
+import { formatDate } from "../../util/common";
 import ChallengeParticipate from "./ChallengeParticipate";
 import { UserStateContext } from "../../context/user/UserProvider";
 import ChallengeUpdate from "./ChallengeUpdate";
@@ -39,11 +39,6 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
 
   const handleCloseUpdateModal = () => {
     setShowUpdateModal(false);
-  };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
   };
 
   const isCurrentUserAuthor = userState.user._id === challenge.userId._id;
