@@ -15,7 +15,7 @@ const UserOrderHistory = ({ user }) => {
         const res = await Api.get("mypage/orders");
         if (res.data.message) {
           setOrderHistory([])
-        } else { setOrderHistory(res.data) };
+        } else { setOrderHistory(res.data.orderDetails) };
       } catch (err) {
         console.error("Failed to fetch order history:", err);
       }
