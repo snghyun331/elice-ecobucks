@@ -12,21 +12,18 @@ class ParticipationService {
         if (!image){
           throw setError("imageId가 존재하지 않습니다.", 400, "BAD_REQUEST")
       }
-
       const participation = await ChallengeParticipation.findOne({ challengeId });
       const challenge = await Challenge.findById({ _id: challengeId })
-  
-      //--- 1. Check ---
+
+      //--- Check ---
       // 1) challenge 참여기간 종료 Check, dueDate를 넘을경우 신청x
       const currentDateTime = new Date();
       if (challenge.dueDate.getTime() < currentDateTime.getTime()){
         challenge.isCompleted = true;
         throw setError("참여기간이 종료되었습니다", 409, "CONFLICT")
       }
-      // 2) participation 하루에 한번 참여했는지 check
 
-      //--- 2. Create ---
-      // participation가 처음 생성일 때 create
+      // participation가 처음 생성일 때 
       if (participation == null){
         // 생성된 이미지들의 아이디가 아닐경우
         const data = { userId, challengeId, imageId, hasParticipatedToday: true }
@@ -34,9 +31,8 @@ class ParticipationService {
         // 시간을 한국표준시간으로 변경
         createNewParticipation=updateTime.toTimestamps(createParticipation);
       }
-      // participation이 존재 할 때, hasParticipatedToday: false -> true
       else {
-
+        // 2) participation 존재할때, 하루에 한번 참여 hasParticipatedToday: false -> true
         if (participation.hasParticipatedToday == true){
           throw setError("같은 챌린지에는 하루에 한번 참여 할 수 있습니다.", 409, "CONFLICT")
         }
@@ -48,8 +44,8 @@ class ParticipationService {
       }
       if (!createNewParticipation)  
         throw setError("참여 신청 실패", 500, "CREATE_FAILED")
-
-      //--- 3. Update ---  
+        
+      //--- Update ---  
       //1) Challenge Update      
       // challenge 신청자 count 증가
       challenge.participantsCount += 1; 
@@ -59,7 +55,6 @@ class ParticipationService {
       const user = await User.findById({ userId });
       user.mileage += 1000;
       await user.save();
-
       await participation.save();
       await challenge.save();
       
