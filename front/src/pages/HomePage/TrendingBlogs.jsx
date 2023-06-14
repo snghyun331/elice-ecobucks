@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Card, Container, Row, Col } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Card, Container, Row, Col, Carousel } from "react-bootstrap";
 import * as Api from "../../api";
+import "./TrendingBlogs.css";
 
 const TrendingBlogs = () => {
   const [blogs, setBlogs] = useState([]);
-  const containerRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,28 +21,45 @@ const TrendingBlogs = () => {
 
   const trendingBlogs = blogs
     .sort((a, b) => b.likeCount - a.likeCount)
-    .slice(0, 5);
+    .slice(0, 6);
+
+  const groupedBlogs = trendingBlogs.reduce((result, value, index) => {
+    if (index % 3 === 0) {
+      result.push(trendingBlogs.slice(index, index + 3));
+    }
+    return result;
+  }, []);
 
   return (
-    <div style={{ overflowX: "scroll" }}>
-      <Container ref={containerRef} className="scrollable-container">
-        <Row style={{ flexWrap: "nowrap" }}>
-          {trendingBlogs.map((blog) => (
-            <Col key={blog.id} xs={4} className="blog-item" style={{ minWidth: '33.3333%' }}>
-              <Card style={{ height: "100%" }}>
-                <Card.Body>
-                  <Card.Title>{blog.title}</Card.Title>
-                  <Card.Text>
-                    {blog.content.length > 15
-                      ? `${blog.content.slice(0, 15)}...`
-                      : blog.content}
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </Container>
+    <div className="trending-blogs-container">
+<Carousel
+  nextIcon={<span className="carousel-icon carousel-icon-next">&#8250;</span>}
+  prevIcon={<span className="carousel-icon carousel-icon-prev">&#8249;</span>}
+>
+
+        {groupedBlogs.map((group, i) => (
+          <Carousel.Item key={`group-${i}`}>
+            <Container fluid className="carousel-container">
+              <Row className="d-flex justify-content-center">
+                {group.map((blog) => (
+                  <Col key={blog.id} xs={4} className="blog-item">
+                    <Card className="blog-card">
+                      <Card.Body>
+                        <Card.Title>{blog.title}</Card.Title>
+                        <Card.Text>
+                          {blog.content.length > 30
+                            ? `${blog.content.slice(0, 30)}...`
+                            : blog.content}
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </Container>
+          </Carousel.Item>
+        ))}
+      </Carousel>
     </div>
   );
 };
