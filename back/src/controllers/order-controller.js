@@ -22,12 +22,12 @@ const orderController = {
             const buyer = req.currentUserId;
             //const orderDetails = await orderService.getOrdersByBuyer(buyer);
             const page = parseInt(req.query.page || 1);
-            const limit = 8;
+            const limit = 5;
             const skip = (page - 1) * limit;
-            console.log("page : ", page);
-            console.log("skip : ", skip);
+            // console.log("page : ", page);
+            // console.log("skip : ", skip);
             const { orderDetails, count } = await orderService.getOrdersByBuyer({ buyer, skip, limit });
-
+            // console.log('count',count)
 
             if (orderDetails.length === 0) {
                 return res.json({ message: '주문 내역이 없습니다.' });

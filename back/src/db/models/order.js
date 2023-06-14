@@ -21,7 +21,7 @@ class order{
                           .skip(skip)
                           .limit(limit)
                           .exec();
-        const count = await orderModel.countDocuments();
+        const count = await orderModel.countDocuments({buyer});
         return { orders, count };
       }
 }
