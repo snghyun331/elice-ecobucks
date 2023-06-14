@@ -19,11 +19,12 @@ const Blog = () => {
   const [selectedBlog, setSelectedBlog] = useState(null);
   // const [isLiked, setIsLiked] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(8);
+  const [itemsPerPage] = useState(6);
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
-  const currentList = blogList.slice(
+  const sortedList = blogList.sort((a, b) => b.likeCount - a.likeCount)
+  const currentList = sortedList.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -33,11 +34,11 @@ const Blog = () => {
   const handleCloseEditModal = () => setEditModalOpen(false);
   const handleOpenEditModal = async (blogId) => {
     try {
-      console.log("blogId: ", blogId);
+      // console.log("blogId: ", blogId);
       const res = await Api.get(`blog/${blogId}`);
       const blog = res.data;
-      console.log("받아온 blog: ", blog);
-      console.log("res", res);
+      // console.log("받아온 blog: ", blog);
+      // console.log("res", res);
       setSelectedBlog(blog);
       // console.log("selectedItem: ", selectedItem);
     } catch (err) {
@@ -74,7 +75,7 @@ const Blog = () => {
     try {
       // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
       const res = await Api.get("blog");
-      console.log("db data: ", res.data)
+      // console.log("db data: ", res.data)
 
       const newList = res.data.map(item => {
         return {
@@ -104,18 +105,6 @@ const Blog = () => {
 
       await Api.put(`blog/${selectedBlog._id}/write`, updatedBlog);
       fetchData();
-      // const updatedBlogList = blogList.map(item => {
-      //   if (item._id === selectedBlog._id) {
-      //     return { ...selectedBlog,
-      //       title: updatedBlog.title,
-      //       topic: updatedBlog.topic,
-      //       content: updatedBlog.content,
-      //     };
-      //   }
-      //   return item;
-      // });
-      // console.log("updatedBlogList: ", updatedBlogList);
-      // setBlogList(updatedBlogList);
       handleCloseEditModal();
 
     } catch (err) {
@@ -126,16 +115,8 @@ const Blog = () => {
     try {
       console.log("삭제할 블로그: ", selectedBlog);
       await Api.delete(`blog/${selectedBlog._id}`);
+      
       fetchData();
-      // const res = await Api.get("products");
-      // const newList = res.data.map(item => {
-      //   return { ...selectedBlog,
-      //       title: updatedBlog.title,
-      //       topic: updatedBlog.topic,
-      //       content: updatedBlog.content,
-      //   };
-      // });
-      // setBlogList(newList);
       handleCloseDeleteModal();
     } catch (err) {
       console.log("블로그 삭제에 실패했습니다.", err);
@@ -227,17 +208,14 @@ const Blog = () => {
           </Modal.Footer>
         </Modal>
 
-
         <Container>
           <Row>
             {currentList
-              .sort((a, b) => b.likeCount - a.likeCount)
               .map(item => (
                 <Col key={item._id}>
                   <Card style={{ width: "18rem" }}>
                     <Card.Body className="card-body">
                       <Card.Title className="card-title"><span>제목:</span> {item.title}</Card.Title>
-
                       <Card.Text className="card-text">주제: {item.topic}</Card.Text>
                       <Card.Text className="card-text">설명: {item.content}</Card.Text>
                       <Card.Text className="card-text">작성자: {item.username}</Card.Text>
