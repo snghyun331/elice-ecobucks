@@ -11,7 +11,8 @@ import MallProductEdit from "./MallProductEdit";
 import MapContainer from "./MapContainer";
 import PaginationBar from "../Modal/PaginationBar";
 import placelocate from "../../assets/placeholder.png"
-
+import { ShoppingBagIcon } from "@heroicons/react/20/solid"
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline"
 const Mall = () => {
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
@@ -23,24 +24,14 @@ const Mall = () => {
 
   ///pagination////
   const [currentPage, setCurrentPage] = useState(1);
-  // const [perPage, setPerPage] = useState(8);/
   const [totalPages, setTotalPages] = useState(1);
   /////////////////
 
-
-  // const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(8);
   const handlePageChange = (newPage) => {
-    // console.log("newPage: ", newPage); 
     if (newPage <= totalPages) {
       setCurrentPage(newPage)
     };
   };
-  // const sortedList = list.sort((a, b) => (a.stock === 0 ? 1 : -1)); //전부다 sort
-  // const currentList = sortedList.slice( //8개만 보여주는 
-  //   (currentPage - 1) * itemsPerPage,
-  //   currentPage * itemsPerPage
-  // );
 
   const [sellModalOpen, setSellModalOpen] = useState(false);
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
@@ -327,9 +318,12 @@ const Mall = () => {
 
                       {userState.user._id === item.seller && (
                         <>
-                          <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item._id)}>
+                          {/* <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item._id)}>
                             수정
-                          </Button>
+                          </Button> */}
+                          <PencilSquareIcon color="#00D387"
+                            onClick={() => handleOpenEditModal(item._id)}
+                            style={{ width: "30px", height: "30px", cursor: "pointer" }} />
                           <Modal show={editModalOpen} onHide={handleCloseEditModal} centered>
                             <Modal.Header closeButton>
                               <Modal.Title>상품 수정</Modal.Title>
@@ -351,9 +345,13 @@ const Mall = () => {
                               </Button>
                             </Modal.Footer>
                           </Modal>
-                          <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenDeleteModal(item._id)}>
+                          {/* <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenDeleteModal(item._id)}>
                             삭제
-                          </Button>
+                          </Button> */}
+                          <TrashIcon
+                            color="#00D387"
+                            style={{ width: "30px", height: "30px", cursor: "pointer", marginLeft: "10px" }}
+                            onClick={() => handleOpenDeleteModal(item._id)} />
                           <Modal show={deleteModalOpen} onHide={handleCloseDeleteModal} centered>
                             <Modal.Header closeButton>
                               <Modal.Title>상품 삭제</Modal.Title>
@@ -369,14 +367,19 @@ const Mall = () => {
                         </>
                       )}
                       {item.seller !== userState.user._id && (
-                        <Button
-                          variant="primary"
-                          style={{ margin: "10px", top: "5" }}
+                        // <Button
+                        //   variant="primary"
+                        //   style={{ margin: "10px", top: "5", width: "50px", height: "40px" }}
+                        //   onClick={() => handleOpenPurchaseModal(item)}
+                        //   disabled={item.stock === 0}
+                        // >
+                        //   <ShoppingBagIcon className="h-6 w-6 text-blue-500" />
+                        // </Button>
+                        <ShoppingBagIcon
+                          color="#00D387"
+                          style={{ width: "30px", height: "30px", cursor: "pointer" }}
                           onClick={() => handleOpenPurchaseModal(item)}
-                          disabled={item.stock === 0}
-                        >
-                          구매
-                        </Button>
+                          disabled={item.stock === 0} />
                       )}
                     </Card.Body>
                   </Card>
