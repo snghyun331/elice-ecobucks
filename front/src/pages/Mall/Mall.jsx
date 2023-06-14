@@ -11,7 +11,7 @@ import MallProductEdit from "./MallProductEdit";
 import MapContainer from "./MapContainer";
 import PaginationBar from "../Modal/PaginationBar";
 import placelocate from "../../assets/placeholder.png"
-import { ShoppingBagIcon } from "@heroicons/react/20/solid"
+import { ShoppingBagIcon, MapPinIcon } from "@heroicons/react/20/solid"
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline"
 const Mall = () => {
   const userState = useContext(UserStateContext);
@@ -307,10 +307,16 @@ const Mall = () => {
                       <Card.Title className="card-title"><span>상품명:</span> {item.name}</Card.Title>
                       <Card.Text className="card-text">가격: {item.price}</Card.Text>
                       <Card.Text className="card-text">
+                        {/* <Button variant="primary" style={{ borderColor: 'transparent', backgroundColor: "#fff" }} onClick={() => handleLocate(item)}> */}
+                        <MapPinIcon
+                          onClick={() => handleLocate(item)}
+                          alt="위치찾기"
+                          color="#009960"
+                          style={{ width: "25px", marginRight: "5px", marginBottom: "3px", height: "30px", cursor: "pointer" }} />
+                        {/* <img src={placelocate} alt="위치찾기" /> */}
+                        {/* </Button> */}
                         {item.place}
-                        <Button variant="primary" style={{ borderColor: 'transparent', backgroundColor: "#fff" }} onClick={() => handleLocate(item)}>
-                          <img src={placelocate} alt="위치찾기" />
-                        </Button>
+
                       </Card.Text>
                       <Card.Text className="card-text">판매자: {item.sellerName}</Card.Text>
                       <Card.Text className="card-text">재고: {item.stock}</Card.Text>
