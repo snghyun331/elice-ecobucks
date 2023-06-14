@@ -43,7 +43,7 @@ const SeoulUsageChart = () => {
 
 
     return (
-        <div style={{ width: 400, height: 300 }}>
+        <div style={{ width: 500, height: 450, marginLeft:"20px" }}>
             <p />
             <ResponsiveLine
                 data={[{ id: 'Seoul Usage', data: transformedData }]}

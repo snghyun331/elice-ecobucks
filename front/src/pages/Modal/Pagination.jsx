@@ -20,7 +20,7 @@ const Pagination1 = ( { content, itemsPerPage, handlePageChange, currentPage }
         </Pagination.Item>
       );
     }
-    console.log(paginationItems);
+    // console.log(paginationItems);
     return paginationItems;
   };
   

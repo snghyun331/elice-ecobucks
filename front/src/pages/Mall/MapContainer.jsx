@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 
 const { kakao } = window;
 
+
 const MapContainer = ({ locations, selectedItemLocate }) => {
 
     useEffect(() => {
@@ -36,7 +37,11 @@ const MapContainer = ({ locations, selectedItemLocate }) => {
 
             var infowindow = new kakao.maps.InfoWindow({
                 // content: location.name, // 인포윈도우에 표시할 내용
-                content: `${location.name}<br />${location.name}`
+                content: `<div style="text-align: center;">
+                    <strong style="color:red">${location.name}</strong>
+                    <br />
+                    남은 갯수:${location.stock}
+                </div>`
             });
 
             // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
@@ -70,7 +75,7 @@ const MapContainer = ({ locations, selectedItemLocate }) => {
             marker.setMap(map);
 
             var moveLatLng = new kakao.maps.LatLng(selectedItemLocate.y, selectedItemLocate.x);
-            map.panTo(moveLatLng);
+        map.panTo(moveLatLng);
         });
     }, [selectedItemLocate]);
 
@@ -81,7 +86,7 @@ const MapContainer = ({ locations, selectedItemLocate }) => {
     //         level: 4
     //     };
     //     const map = new kakao.maps.Map(container, options);
-
+        
     // }, [selectedItemLocate])
 
     return (
