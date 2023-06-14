@@ -44,7 +44,7 @@ class productService {
   //   return products;
   // }
   static async findAllProducts(skip, limit) {
-    const { products, count } = Product.findAndCountAll(skip, limit);
+    const { products, count } = await Product.findAndCountAll(skip, limit);
     return { products, count };
   }
 

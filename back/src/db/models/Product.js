@@ -26,6 +26,7 @@ class Product {
 
   static async findAndCountAll(skip, limit) {
     const products = await productModel.find()
+                      .sort({ stock: 0, createdAt: 1 })     
                       .skip(skip)
                       .limit(limit)
                       .exec();
