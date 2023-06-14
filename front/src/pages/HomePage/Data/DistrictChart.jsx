@@ -17,7 +17,7 @@ const DistrictChart = () => {
             const response = await Api.get('data/districtUsage');
             // const data = await response.json();
             // console.log('data: ', response);
-            
+
             // 도시 이름으로 나누기
             const dataByCity = {};
             response.data.forEach(item => {
@@ -42,7 +42,9 @@ const DistrictChart = () => {
             // if (!cityData || !cityData.length || !cityData[0].hasOwnProperty('city')) {
             //     return; // 건너뛰기
             //   }
-            const { city } = cityData;
+            console.log('cityDDD', cityData[0].city)
+            const { city } = cityData[0];
+
             console.log("차트데이터안 폴이치: ", city);
             const monthlyAvgs = {};
 
@@ -57,10 +59,10 @@ const DistrictChart = () => {
                 }
 
                 monthlyAvgs[month].totalPowerUsage += powerUsage;
-                monthlyAvgs[month].count++; 
+                monthlyAvgs[month].count++;
             });
 
-            const monthlyAvgsArray = Object.entries(monthlyAvgs).map(([month, { totalPowerUsage , count }]) => ({
+            const monthlyAvgsArray = Object.entries(monthlyAvgs).map(([month, { totalPowerUsage, count }]) => ({
                 month,
                 avgPowerUsage: totalPowerUsage / count
             }));
@@ -82,7 +84,7 @@ const DistrictChart = () => {
     //     y: item.avgPowerUsage
     //   }));
     // console.log("transformedData: ", transformedData);
-    console.log(avgPowerUsageByCity[0]);
+    console.log('a', avgPowerUsageByCity[0]);
     // console.log(avgPowerUsageByCity[0].monthlyAvgs[0].month);
 
     const transformedData = avgPowerUsageByCity.map(item => {
@@ -92,17 +94,19 @@ const DistrictChart = () => {
         }));
 
         return {
+            id: item.city,
             data: monthlyAvgs
         };
     });
-    console.log(transformedData);
+
+    console.log('ggg', transformedData);
     return (
-        <div style={{ width: 500, height: 450, marginLeft:"20px" }}>
+        <div style={{ width: 500, height: 450, marginLeft: "20px" }}>
             <ResponsiveLine
-                data={[{ data: transformedData }]}
+                data={transformedData}
                 margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
                 xScale={{ type: 'point' }}
-                yScale={{ type: 'linear', min: 220, max: 250, stacked: true, reverse: false }}
+                yScale={{ type: 'linear', min: 220, max: 400, stacked: true, reverse: false }}
                 yFormat=" >-.2f"
                 axisTop={null}
                 axisRight={null}

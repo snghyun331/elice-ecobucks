@@ -1,10 +1,10 @@
 import { useState } from "react";
 import SeoulDistricts from "../svg/seoulDistricts";
 import SeoulUsageChart from "./SeoulUsageGraph";
-
+import DistrictChart from "./DistrictChart";
 const SeoulDistrictsGraph = () => {
     const [hoveredPath, setHoveredPath] = useState(null);
-
+    const [dist, setDist] = useState(false);
     const handleMouseEnter = (id) => {
         setHoveredPath(id);
     };
@@ -13,6 +13,7 @@ const SeoulDistrictsGraph = () => {
         setHoveredPath(null);
     };
     const handleMouseClick = (id) => {
+        setDist(true);
         // console.log("Clicked:", id);
         // ID에 따라 다른 동작을 수행할 수 있습니다.
         switch (id) {
@@ -106,7 +107,9 @@ const SeoulDistrictsGraph = () => {
                 handleMouseLeave={handleMouseLeave}
                 handleMouseClick={handleMouseClick}
             />
-            <SeoulUsageChart />
+            
+            {dist ? <DistrictChart /> : <SeoulUsageChart />}
+            {/* <SeoulUsageChart /> */}
         </>
     )
 }
