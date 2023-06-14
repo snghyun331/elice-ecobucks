@@ -83,7 +83,7 @@ const DistrictChart = () => {
     //   }));
     // console.log("transformedData: ", transformedData);
     console.log(avgPowerUsageByCity[0]);
-    console.log(avgPowerUsageByCity[0].monthlyAvgs[0].month);
+    // console.log(avgPowerUsageByCity[0].monthlyAvgs[0].month);
 
     const transformedData = avgPowerUsageByCity.map(item => {
         const monthlyAvgs = item.monthlyAvgs.map(monthlyData => ({
