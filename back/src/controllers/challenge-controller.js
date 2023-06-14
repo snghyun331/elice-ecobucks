@@ -18,8 +18,19 @@ const challengeController = {
 
   challengeGetAll: async function (req, res, next) {
     try {
-      const challenge = await ChallengeService.findChallenges( );
-      res.status(OK).send(challenge);
+      const page = parseInt(req.query.page || 1);
+      const limit = 8;
+      const skip = (page - 1) * limit;
+      console.log("page : ", page);
+      console.log("skip : ", skip);
+
+      const challenges = await ChallengeService.findChallenges( );
+      //const { challenges, count } = await ChallengeService.findChallenges(skip, limit);
+      res.status(OK).send({
+        currentPage: page,
+        totalPages: Math.ceil(count / limit),
+        challenges,
+      });
     } catch (error) {
       next(error);
     }

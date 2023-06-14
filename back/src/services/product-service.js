@@ -39,9 +39,13 @@ class productService {
     return product;
   }
 
-  static async findAllProducts() {
-    const products = await Product.findAll();
-    return products;
+  // static async findAllProducts() {
+  //   const products = await Product.findAll();
+  //   return products;
+  // }
+  static async findAllProducts(skip, limit) {
+    const { products, count } = Product.findAndCountAll(skip, limit);
+    return { products, count };
   }
 
   static async findProduct(productId) {
