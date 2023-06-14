@@ -288,7 +288,7 @@ const Mall = () => {
             <Modal.Title>상품 등록</Modal.Title>
           </Modal.Header>
           <Modal.Body className="text-center">
-            <MallProductSell />
+            <MallProductSell onClose={handleCloseSellModal} />
           </Modal.Body>
           <Modal.Footer>
             <Button
