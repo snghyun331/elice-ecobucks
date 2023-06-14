@@ -9,7 +9,7 @@ import { UPDATE_USER } from "../../reducer/action";
 import MallProductSell from "./MallProductSell";
 import MallProductEdit from "./MallProductEdit";
 import MapContainer from "./MapContainer";
-import Pagination1 from "../Modal/Pagination";
+import PaginationBar from "../Modal/PaginationBar";
 import placelocate from "../../assets/placeholder.png"
 
 const Mall = () => {
@@ -31,8 +31,10 @@ const Mall = () => {
   // const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(8);
   const handlePageChange = (newPage) => {
-    console.log(newPage)
-    setCurrentPage(newPage);
+    // console.log("newPage: ", newPage); 
+    if (newPage <= totalPages) {
+      setCurrentPage(newPage)
+    };
   };
   // const sortedList = list.sort((a, b) => (a.stock === 0 ? 1 : -1)); //전부다 sort
   // const currentList = sortedList.slice( //8개만 보여주는 
@@ -398,7 +400,7 @@ const Mall = () => {
           </Modal>
         </Container>
 
-        <Pagination1
+        <PaginationBar
           content={list}
           totalPages={totalPages}
           handlePageChange={handlePageChange}

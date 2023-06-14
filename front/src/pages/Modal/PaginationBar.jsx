@@ -1,9 +1,10 @@
 import React from 'react';
 import { Pagination } from 'react-bootstrap';
 
-const Pagination1 = ({ content, totalPages, handlePageChange, currentPage }
+const PagenationBar = ({ content, totalPages, handlePageChange, currentPage }
 ) => {
   // 페이지네이션 아이템 생성 함수
+  console.log("totalPages")
   const renderPaginationItems = () => {
     // console.log(currentPage);
     // const totalPages = totalPages2;
@@ -38,4 +39,4 @@ const Pagination1 = ({ content, totalPages, handlePageChange, currentPage }
   );
 };
 
-export default Pagination1;
+export default PagenationBar;

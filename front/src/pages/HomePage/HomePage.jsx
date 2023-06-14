@@ -17,42 +17,9 @@ import TrendingBlogs from "./TrendingBlogs";
 import { useState } from "react";
 import SeoulDistrictsGraph from "./Data/SeoulDistrictGraph";
 import SeoulUsageChart from "./Data/SeoulUsageGraph";
-import DistrictChart from "./Data/districtUsageGraph";
+import DistrictChart from "./Data/DistrictChart";
 import districtInfo from "../../assets/districtInfo";
 const HomePage = () => {
-  // const [currentImg, setCurrentImg] = useState(map);
-
-  const handleButtonClick = (img) => {
-    setCurrentImg(img);
-  };
-
-  const districts = [
-    "강남구",
-    "강동구",
-    "강북구",
-    "강서구",
-    "관악구",
-    // 6: "광진구",
-    // 7: "구로구",
-    // 8: "금천구",
-    // 9: "노원구",
-    // 10: "도봉구",
-    // 11: "동대문구",
-    // 12: "동작구",
-    // 13: "마포구",
-    // 14: "서대문구",
-    // 15: "서초구",
-    // 16: "성동구",
-    // 17: "성북구",
-    // 18: "송파구",
-    // 19: "양천구",
-    // 20: "영등포구",
-    // 21: "용산구",
-    // 22: "은평구",
-    // 23: "종로구",
-    // 24: "중구",
-    // 25: "중랑구"
-  ];
 
   return (
     <div
@@ -177,7 +144,6 @@ const HomePage = () => {
 
           </div>
 
-          {/* <img src={currentImg} style={{ width: "50%", height: "100%" }} /> */}
           <div
             className="btn-toolbar justify-content-md-end"
             role="toolbar"
@@ -185,67 +151,7 @@ const HomePage = () => {
           >
             <div className="d-flex gap-2 mx-auto justify-content-md-end">
               <SeoulDistrictsGraph />
-              {/* <SeoulUsageChart /> */}
-
-              {/* <DropdownButton title="구 별 전력 사용량 보기">
-                <Dropdown.Item
-                  eventKey="seoul"
-                  onClick={() => handleButtonClick(map)}
-                >
-                  서울시 전체
-                </Dropdown.Item>
-                <Dropdown.Item
-                  eventKey="Gangnam"
-                  onClick={() => handleButtonClick(district1)}
-                >
-                  {districts[0]}
-                </Dropdown.Item>
-                <Dropdown.Item
-                  eventKey="something"
-                  onClick={() => handleButtonClick(district2)}
-                >
-                  {districts[1]}
-                </Dropdown.Item>
-                <Dropdown.Item
-                  eventKey="something"
-                  onClick={() => handleButtonClick(district3)}
-                >
-                  {districts[2]}
-                </Dropdown.Item>
-                <Dropdown.Item
-                  eventKey="something"
-                  onClick={() => handleButtonClick(district4)}
-                >
-                  {districts[3]}
-                </Dropdown.Item>
-                <Dropdown.Item
-                  eventKey="something"
-                  onClick={() => handleButtonClick(district5)}
-                >
-                  {districts[4]}
-                </Dropdown.Item>
-              </DropdownButton>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => handleButtonClick(Industry)}
-              >
-                산업용
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => handleButtonClick(DomesticAverage)}
-              >
-                서울시 평균 사용량(가정용)
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => handleButtonClick(DomesticDistrict)}
-              >
-                구 별 사용량(가정용)
-              </button> */}
+              {/* <DistrictChart /> */}
             </div>
           </div> 
         </Container>
