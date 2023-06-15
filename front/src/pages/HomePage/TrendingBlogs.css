@@ -58,3 +58,12 @@
   font-weight: bold;
   text-decoration: none;
 }
+
+.carousel-container {
+  display: flex;
+  justify-content: center;
+}
+
+.blog-item {
+  flex: 1;
+}
