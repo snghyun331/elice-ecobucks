@@ -165,6 +165,7 @@ const Mall = () => {
 
       handleClosePurchaseModal();
     } catch (err) {
+      alert(err.response.data.message);
       console.log("상품 구매에 실패하였습니다.", err);
     }
   }
@@ -254,16 +255,28 @@ const Mall = () => {
             left: 0,
             right: 0,
             bottom: "70%",
-            background: "#4d9e81",
+            background: "#00D387",
             zIndex: -1,
           }}
         ></div>
-        <Container className="text-center">
-          <img src={Logo} className="w-50 mt-5 mb-5" alt="Logo" />
-        </Container>
+         <div
+        style={{
+          position: "absolute",
+          top: 80,
+          left: '18%',
+          right: 0,
+          zIndex: 1,
+          color: 'white',
+          fontSize: '2rem',
+          fontWeight: '900',
+        }}
+      >떠리 몰 :
+        <br />
+        <span style={{ fontSize: '1.3rem', fontWeight: '400' }}>절약 꿀팁을 공유해요.</span>
+      </div>
         <Container
           className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
-          style={{ marginTop: "28px", paddingTop: '30px', width: "80%", }}
+          style={{ marginTop: "200px", paddingTop: '30px', width: "80%", }}
         >
           <MapContainer
             locations={extractLocations()}
@@ -272,11 +285,11 @@ const Mall = () => {
         </Container>
 
         <Container
-          className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
+          className="pb-5 d-flex flex-column align-items-center justify-content-center"
         >
         <Button
           variant="primary"
-          style={{ marginBottom: "10px", top: "5", marginLeft: "10px" }}
+          style={{ marginBottom: "10px", top: "5" }}
           onClick={handleOpenSellModal}>
           판매 상품 등록하기
         </Button>
@@ -301,6 +314,8 @@ const Mall = () => {
             </Button>
           </Modal.Footer>
         </Modal>
+        </Container>
+        <Container>
           <Row style={{ display: "flex", alignItems: "center" }}>
             {list
               .map(item => (
