@@ -309,40 +309,6 @@ const Mall = () => {
   />
 </Container>
 
-<<<<<<< HEAD
-        <Container
-          className="pb-5 d-flex flex-column align-items-center justify-content-center"
-        >
-        <Button
-          variant="primary"
-          style={{ marginBottom: "10px", top: "5" }}
-          onClick={handleOpenSellModal}>
-          판매 상품 등록하기
-        </Button>
-        <Modal show={sellModalOpen} onHide={handleCloseSellModal} centered>
-          <Modal.Header closeButton>
-            <Modal.Title>상품 등록</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="text-center">
-            <MallProductSell onClose={handleCloseSellModal} />
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              className="mt-4 mb-4"
-              variant="secondary"
-              onClick={handleCloseSellModal}
-              style={{
-                width: "100%",
-                borderRadius: "0px",
-              }}
-            >
-              닫기
-            </Button>
-          </Modal.Footer>
-        </Modal>
-        </Container>
-        <Container>
-=======
 
         <Container className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center">
           <Button
@@ -379,7 +345,6 @@ const Mall = () => {
               </Button>
             </Modal.Footer>
           </Modal>
->>>>>>> c6a7ce1268493b29390a031ca37e6bc025b38546
           <Row style={{ display: "flex", alignItems: "center" }}>
             {list.map((item) => (
               <Col key={item._id}>

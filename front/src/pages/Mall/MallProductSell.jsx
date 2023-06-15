@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import * as Api from "../../api";
 import DaumPostcode from "react-daum-postcode";
 import { useEffect } from "react";
-import { Button, ButtonGroup, Container, Form, Alert } from "react-bootstrap";
+import { Button, ButtonGroup, Container, Form, Alert, Image } from "react-bootstrap";
 
 const MallProductSell = ({ onClose }) => {
   // const [name, setName] = useState("");
@@ -31,6 +31,22 @@ const MallProductSell = ({ onClose }) => {
       [name]: value,
     }));
   };
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewURL, setPreviewURL] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+    setErrorMessage("");
+    setPreviewURL(URL.createObjectURL(file));
+  };
+
+  useEffect(() => {
+    console.log("selectedFile: ", selectedFile);
+    console.log("errorMessage: ", errorMessage);
+    console.log("previewURL: ", previewURL);
+  }, [handleFileChange]);
 
   const navigate = useNavigate();
 
@@ -71,6 +87,17 @@ const MallProductSell = ({ onClose }) => {
     e.preventDefault();
 
     try {
+      // 이미지 전송 하기
+      if (selectedFile) {
+        const formData = new FormData();
+        formData.append("image", selectedFile);
+
+        const imageRes = await Api.postFile(
+          "images/products/upload",
+          formData
+        );
+      }
+      console.log(imageRes);
       const res = await Api.post("products", {
         name,
         price: Number(price),
@@ -78,6 +105,7 @@ const MallProductSell = ({ onClose }) => {
         location,
         stock: Number(stock),
         description,
+        imageId: imageRes._id
       });
       console.log(res);
       // window.location.reload();
@@ -89,19 +117,27 @@ const MallProductSell = ({ onClose }) => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "720px",
-          padding: "10px",
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-          background: "#fff",
-          borderRadius: '10px',
-        }}
-      >
+    <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formFile" className="mb-3">
+        <Form.Label
+          className="d-block"
+          style={{ fontWeight: "bold", textAlign: "left" }}
+        >
+          상품 사진
+        </Form.Label>
+        <Form.Control
+          type="file"
+          onChange={handleFileChange}
+          style={{ borderRadius: "0px" }}
+        />
+        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+      </Form.Group>
+      {selectedFile && (
+        <div className="mt-3">
+          <h6>미리보기</h6>
+          <Image src={previewURL} alt="Selected Image" thumbnail />
+        </div>
+      )}
         <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold'}}>상품명</Form.Label>
         <Container
           className="text-muted mb-2"
@@ -151,7 +187,7 @@ const MallProductSell = ({ onClose }) => {
         >
 구매자가 상품을 수령할 수 있는 위치를 지정해주세요.
         </Container>
-        <div style={{ display: "flex", marginBottom: "16px", width: '100%' }}>
+        <Container style={{ display: "flex", marginBottom: "16px", width: '100%' }}>
           <Form.Control
             style={{
               width: "100%",
@@ -180,7 +216,7 @@ const MallProductSell = ({ onClose }) => {
           >
             검색
           </button>
-        </div>
+        </Container>
         <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold'}}>수량</Form.Label>
         <Container
           className="text-muted mb-2"
@@ -238,7 +274,7 @@ const MallProductSell = ({ onClose }) => {
         >
           등록하기
         </button>
-      </div>
+      
 
       {showModal && (
         <div
@@ -255,7 +291,7 @@ const MallProductSell = ({ onClose }) => {
           />
         </div>
       )}
-    </div>
+    </Form>
   );
 
 };
