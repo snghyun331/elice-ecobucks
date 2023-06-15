@@ -72,9 +72,8 @@ const ChallengeParticipate = ({ show, onClose, challenge }) => {
   };
 
   return (
-    <Modal show={show} >
-    <Modal.Header closeButton>
-    <Modal.Title>참가하기!</Modal.Title>
+    <Modal show={show} style={{ zIndex: "9999", marginTop: "20px" }}>
+        <Modal.Header closeButton onHide={onClose} >    <Modal.Title>참가하기!</Modal.Title>
   </Modal.Header>
     <Modal.Body>
       <h4>인증사진 업로드</h4>
