@@ -35,9 +35,13 @@ const UserOrderHistory = ({ user }) => {
 
   // 페이지네이션 클릭 시 페이지 변경
   const handlePageChange = (newPage) => {
-    if (newPage <= totalPages) {
+    if (newPage < 1) {
+      setCurrentPage(1)
+    } else if (newPage > totalPages) {
+      setCurrentPage(totalPages)
+    } else {
       setCurrentPage(newPage);
-    };
+    }
   };
 
   return (
@@ -81,7 +85,6 @@ const UserOrderHistory = ({ user }) => {
           </Pagination> */}
 
           <PagenationBar
-            content={orderHistory}
             totalPages={totalPages}
             handlePageChange={handlePageChange}
             currentPage={currentPage}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pagination } from 'react-bootstrap';
 
-const PagenationBar = ({ content, totalPages, handlePageChange, currentPage }
+const PagenationBar = ({ totalPages, handlePageChange, currentPage }
 ) => {
   // 페이지네이션 아이템 생성 함수
   const renderPaginationItems = () => {
