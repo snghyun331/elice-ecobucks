@@ -11,7 +11,7 @@ const TrendingBlogs = () => {
     const fetchData = async () => {
       try {
         const res = await Api.get("blog");
-        console.log(res.data)
+        console.log(res.data.posts)
         setBlogs(res.data);
       } catch (error) {
         console.error(error);
@@ -79,7 +79,7 @@ const TrendingBlogs = () => {
                               : blog.content}
                           </Card.Text>
                           <div className="by-author muted-text" style={{ fontSize: '0.8em' }}>
-                            by {blog.username}
+                            {blog.username}
                           </div>
                           <div className="like-count">
                             <span role="img" aria-label="heart">
