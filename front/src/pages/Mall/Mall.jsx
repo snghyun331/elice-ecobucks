@@ -537,7 +537,6 @@ const Mall = () => {
         </Container>
 
         <PaginationBar
-          content={list}
           totalPages={totalPages}
           handlePageChange={handlePageChange}
           currentPage={currentPage}

@@ -85,7 +85,6 @@ const UserOrderHistory = ({ user }) => {
           </Pagination> */}
 
           <PagenationBar
-            content={orderHistory}
             totalPages={totalPages}
             handlePageChange={handlePageChange}
             currentPage={currentPage}

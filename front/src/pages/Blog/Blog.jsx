@@ -302,7 +302,6 @@ const Blog = () => {
             </Row>
           </Container>
           <PaginationBar
-            content={blogList}
             totalPages={totalPages}
             handlePageChange={handlePageChange}
             currentPage={currentPage}
