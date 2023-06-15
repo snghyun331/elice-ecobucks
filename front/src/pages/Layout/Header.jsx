@@ -21,7 +21,7 @@ const Header = () => {
         left: "0",
         width: "100%",
         backgroundColor: "dark",
-        zIndex: "9990",
+        zIndex: "1000",
       }}
     >
       <div className="container-fluid">

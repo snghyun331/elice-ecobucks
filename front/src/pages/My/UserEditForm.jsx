@@ -15,6 +15,7 @@ import {
   DispatchContext,
 } from "../../context/user/UserProvider";
 import * as Api from "../../api";
+import { showAlert, showSuccess } from "../../assets/alert";
 
 const UserEditForm = ({ onClose, user }) => {
   const navigate = useNavigate();
@@ -80,7 +81,7 @@ const UserEditForm = ({ onClose, user }) => {
 
       console.log(res);
       if (res.status === 200) {
-        alert("변경된 정보가 저장되었습니다.");
+        showSuccess("변경된 정보가 저장되었습니다.");
 
         const userData = await Api.get("current");
         const user = userData.data;
@@ -92,10 +93,10 @@ const UserEditForm = ({ onClose, user }) => {
 
         onClose();
       } else {
-        alert("정보 변경에 실패했습니다.");
+        showAlert("정보 변경에 실패했습니다.");
       }
     } catch (error) {
-      alert("정보 변경에 실패했습니다.");
+      alshowAlertert("정보 변경에 실패했습니다.");
       console.error(error);
     }
   };
@@ -113,15 +114,15 @@ const UserEditForm = ({ onClose, user }) => {
       if (res.status === 200) {
         setShowConfirm(false);
         // Display success alert and navigate to login page
-        alert("에코벅스를 이용해주셔서 감사합니다. 로그인 창으로 이동합니다.");
+        showSuccess("에코벅스를 이용해주셔서 감사합니다. 로그인 창으로 이동합니다.");
         navigate("/login");
       } else {
         // Display error alert
-        alert("탈퇴 과정에 오류가 발생했습니다.");
+        showAlert("탈퇴 과정에 오류가 발생했습니다.");
       }
     } catch (error) {
       // Display error alert
-      alert("탈퇴 과정에 오류가 발생했습니다.");
+      showAlert("탈퇴 과정에 오류가 발생했습니다.");
       console.error(error);
     }
   };

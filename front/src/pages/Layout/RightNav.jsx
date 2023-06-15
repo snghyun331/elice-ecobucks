@@ -5,6 +5,7 @@ import { OverlayTrigger, Tooltip, Button } from "react-bootstrap";
 
 import { ROUTE } from "../../routes/routes";
 import { LOGOUT } from "../../reducer/action";
+import { showSuccess } from "../../assets/alert";
 
 const RightNav = ({ isLogin, user }) => {
   const location = useLocation();
@@ -14,7 +15,7 @@ const RightNav = ({ isLogin, user }) => {
   const logout = () => {
     sessionStorage.removeItem("userToken");
     dispatch({ type: LOGOUT });
-    alert("로그아웃하여 홈페이지로 이동합니다.");
+    showSuccess("로그아웃하여 홈페이지로 이동합니다.");
     navigate('/')
   };
 

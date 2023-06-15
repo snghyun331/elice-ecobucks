@@ -13,6 +13,7 @@ import ChallengeParticipate from "./ChallengeParticipate";
 import { UserStateContext } from "../../context/user/UserProvider";
 import ChallengeUpdate from "./ChallengeUpdate";
 import ChallengeComments from "./ChallengeComments";
+import { showAlert } from "../../assets/alert";
 
 const ChallengeRead = ({ challenge, onBackToListClick }) => {
   const [showParticipateModal, setShowParticipateModal] = useState(false);
@@ -45,7 +46,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
 
   const handleDeleteClick = async () => {
     if (challenge.participantsCount >= 1) {
-      alert("참가자가 1명 이상이므로 수정, 삭제할 수 없습니다");
+      showAlert("참가자가 1명 이상이므로 수정, 삭제할 수 없습니다");
       return;
     }
     const confirmDelete = window.confirm("챌린지를 삭제하시겠습니까?");
@@ -54,7 +55,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
         await Api.delete(`challenges/${challenge._id}`);
         window.location.reload();
       } catch (err) {
-        alert(err.res.data);
+        showAlert(err.res.data);
       }
     }
   };
