@@ -63,7 +63,7 @@ class productService {
         };
       }
       }));
-    return { newProducts, count };
+    return { newProducts, totalPages };
   }
 
   static async findProduct(productId) {

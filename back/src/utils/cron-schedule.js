@@ -38,7 +38,7 @@ export async function scheduleChallenge() {
         }
         await participationModel.findByIdAndRemove(participation._id); 
       }
-
+      
       // 챌린지 참여 할 수 있는 권한 다시 부여
       await participationModel.updateMany(
         { }, { $set: { hasParticipatedToday: false } }

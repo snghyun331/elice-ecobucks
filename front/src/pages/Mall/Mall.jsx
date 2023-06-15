@@ -212,10 +212,7 @@ const Mall = () => {
     }
   };
   const handleLocate = (selectedItem) => {
-<<<<<<< HEAD
     window.scrollTo(100,100);
-=======
->>>>>>> 0825207c8b1fb992e3b17599d6914f2669987ceb
     setItemLocate(selectedItem.location);
   };
 
