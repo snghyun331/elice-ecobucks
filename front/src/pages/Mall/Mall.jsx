@@ -14,7 +14,7 @@ import MallProductEdit from "./MallProductEdit";
 import MapContainer from "./MapContainer";
 import PaginationBar from "../Modal/PaginationBar";
 import placelocate from "../../assets/placeholder.png";
-import { ShoppingBagIcon, MapPinIcon } from "@heroicons/react/20/solid";
+import { ShoppingBagIcon, MapPinIcon, PencilIcon, GiftIcon } from "@heroicons/react/20/solid";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { formatDateTime } from "../../util/common";
 const Mall = () => {
@@ -212,7 +212,7 @@ const Mall = () => {
     }
   };
   const handleLocate = (selectedItem) => {
-    window.scrollTo(100,100);
+    window.scrollTo(100, 100);
     setItemLocate(selectedItem.location);
   };
 
@@ -288,16 +288,13 @@ const Mall = () => {
         <Container className="pt-2 pb-10 d-flex flex-column align-items-center justify-content-center">
           <Button
             variant="light"
-            style={{
-              width: "30%",
-              borderRadius: "0px",
-              backgroundColor: "#00D387",
-              color: "white",
-              fontWeight: "900",
-              marginBottom: "10px"
-            }}
+            className="btn-post"
             onClick={handleOpenSellModal}
-          >
+          ><GiftIcon
+              variant="light"
+              color="#FFF"
+              style={{ width: "30px", height: "30px", cursor: "pointer", marginRight: "10px" }}
+            />
             상품 등록
           </Button>
           <Modal size='lg' show={sellModalOpen} onHide={handleCloseSellModal} centered>
@@ -325,11 +322,11 @@ const Mall = () => {
             {list.map((item) => (
               <Col key={item._id}>
                 <Card
-                  style={{ width: "20rem", height: "32rem", marginBottom: 20 }}
+                  style={{ width: "20rem", height: "32rem", marginBottom: 20, backgroundColor: "#DDF7E3", border: "3px solid #DDF7E3", boxShadow: "0px 1px 2px #5D9C59", }}
                 >
                   <Card.Body className="card-body">
                     <img src={item.path} width="200rem" height="200rem"
-                    style={{ marginBottom:"10px" }} />
+                      style={{ marginBottom: "10px" }} />
                     <Card.Title className="card-title">
                       {item.name}
                     </Card.Title>
@@ -358,7 +355,7 @@ const Mall = () => {
                       />
                       {item.place}
                     </Card.Text>
-                  
+
                     <Card.Text className="card-text">
                       재고: {item.stock}
                     </Card.Text>

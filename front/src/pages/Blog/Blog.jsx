@@ -53,14 +53,10 @@ const Blog = () => {
       console.log("blogId: ", blogId);
       const res = await Api.get(`blog/${blogId}`);
       const blog = res.data;
-      // console.log("받아온 blog: ", blog);
-      // console.log("res", res);
       setSelectedUpdateBlog(blog);
-      // console.log("selectedItem: ", selectedItem);
     } catch (err) {
       console.log("수정 모달 열 때 에러 ", err);
     }
-    // setSelectedItem(item);
     setEditModalOpen(true);
   };
   const handleCloseDeleteModal = () => setDeleteModalOpen(false);
@@ -68,7 +64,6 @@ const Blog = () => {
     try {
       const res = await Api.get(`blog/${blogId}`);
       const blog = res.data;
-      // console.log("삭제 blog: ", blog);
       setSelectedUpdateBlog(blog);
     } catch (err) {
       console.log(err);
@@ -102,9 +97,11 @@ const Blog = () => {
           topic: item.topic,
           username: item.username,
           userId: item.userId, //작성자 아아디
-          blogId: item._id //절약 팁 고유 아이디
+          blogId: item._id, //절약 팁 고유 아이디
+          createdAt: item.createdAt
         };
       });
+      console.log(newList, 'new')
       // console.log(newList);
       setBlogList(newList);
       setTotalPages(res.data.totalPage)
@@ -215,7 +212,7 @@ const Blog = () => {
               marginBottom: "30px",
               color: 'white',
               fontWeight: 'bold',
-              fontSize: '20px',
+              fontSize: '15px',
               borderRadius: "10px",
               width: '10rem',
               backgroundColor: "#00D387",
@@ -230,7 +227,7 @@ const Blog = () => {
             작성하기
           </Button>
           <BlogModal size='1g' show={showModal} onHide={handleCloseModal} title="팁 작성하기" handleClose={handleCloseModal}>
-            <BlogPost onClose={handleCloseModal}/>
+            <BlogPost onClose={handleCloseModal} />
           </BlogModal>
           {/* BlogRead 에 해당하는 영역 */}
           <Container>
@@ -238,7 +235,7 @@ const Blog = () => {
               {blogList.map(item => (
                 <Col key={item._id}>
                   <Card
-                    style={{ width: "20rem", height: "20rem", marginBottom: 20, border: "3px solid #DDF7E3", boxShadow: "0px 1px 2px #5D9C59", }} >
+                    style={{ width: "20rem", height: "20rem", marginBottom: 20, backgroundColor: "#DDF7E3", border: "3px solid #DDF7E3", boxShadow: "0px 1px 2px #5D9C59", }} >
                     <Card.Body className="card-body">
                       <div className="d-flex align-items-center">
                         <Card.Title className="card-title flex-grow-1">
