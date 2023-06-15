@@ -9,7 +9,7 @@ function MegaChallengeCarousel() {
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
   const [megaChallenge, setMegaChallenge] = useState(null);
   const [showChallengeRead, setShowChallengeRead] = useState(false);
-  const megaChallengeId = "6481f13423b4714735855046";
+  const megaChallengeId = "648ab962822996bf1c839be4";
 
   useEffect(() => {
     if (isFetchCompleted) {
@@ -20,11 +20,11 @@ function MegaChallengeCarousel() {
   const fetchMegaChallengeData = async () => {
     try {
       const res = await Api.get(`challenges/${megaChallengeId}`);
-      console.log("메가 챌린지 통신결과", res.data);
+
       setMegaChallenge(res.data);
       setIsFetchCompleted(true);
     } catch (err) {
-      console.log("메가 챌린지 정보 불러오기를 실패하였습니다.", err);
+
     }
   };
 

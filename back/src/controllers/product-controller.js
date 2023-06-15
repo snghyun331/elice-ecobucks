@@ -8,12 +8,12 @@ const productController = {
     try {
       validateEmptyBody(req)
 
-      const { name, price, place, stock, description, location } = req.body;
+      const { name, price, place, stock, description, location, imageId } = req.body;
       const seller = req.currentUserId;
       
       const currentUserInfo = await userAuthService.getUserInfo({ userId: seller });
       const sellerName = currentUserInfo.username;
-      const newProduct = { seller, sellerName, name, location, price, place, stock, description }
+      const newProduct = { seller, sellerName, name, location, price, place, stock, description, imageId }
 
       const createdNewProduct = await productService.addProduct(newProduct);
       if (newProduct.errorMessage) {
@@ -31,10 +31,10 @@ const productController = {
       const productId = req.params._id;
       const sellerId = req.currentUserId;
 
-      const { name, price, place, stock, description } = req.body ?? null;
-      const toUpdate = { name, price, place, stock, description };
+      const { name, price, place, stock, description, imageId } = req.body ?? null;
+      const toUpdate = { name, price, place, stock, description, imageId };
 
-      const product = await productService.updateProduct({ productId, sellerId, toUpdate });
+      const product = await productService.updateProduct({ productId, sellerId, toUpdate, imageId });
 
       if (product.errorMessage) {
         throw new Error(product.errorMessage);

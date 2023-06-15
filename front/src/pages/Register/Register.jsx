@@ -24,6 +24,7 @@ import {
   DispatchContext,
   UserStateContext,
 } from "../../context/user/UserProvider";
+import { showAlert } from "../../assets/alert";
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -81,7 +82,7 @@ function RegisterForm() {
       // 기본 페이지로 이동함.
       navigate("/", { replace: true });
     } catch (err) {
-      alert(err.response.data.message);
+      showAlert(err.response.data.message);
     }
   };
 

@@ -42,6 +42,10 @@ const productSchema = new Schema(
       default: "상품 상세 설명이 없습니다.",
       required: true,
     },
+    imageId: { 
+      type: Schema.Types.ObjectId, 
+      ref: 'Image',
+    },
   },
   {
     timestamps: true,

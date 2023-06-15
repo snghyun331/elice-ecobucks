@@ -8,6 +8,7 @@ import {
   DispatchContext,
 } from "../../context/user/UserProvider";
 import * as Api from "../../api";
+import { showAlert, showSuccess } from "../../assets/alert";
 
 const ChallengeParticipate = ({ show, onClose, challenge }) => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -54,7 +55,7 @@ const ChallengeParticipate = ({ show, onClose, challenge }) => {
         imageId: imageRes.data._id,
       });
       
-      alert("인증사진 업로드가 완료되었습니다.");
+      showSuccess("인증사진 업로드가 완료되었습니다.");
 
       const userData = await Api.get("current");
       const user = userData.data;
@@ -67,13 +68,13 @@ const ChallengeParticipate = ({ show, onClose, challenge }) => {
       handleConfirmationClose();
       onClose();
     } catch (err) {
-      alert(err.response.data.message);
+      showAlert(err.response.data.message);
     }
   };
 
   return (
-    <Modal show={show} style={{ zIndex: "9999", marginTop: "20px" }}>
-        <Modal.Header closeButton onHide={onClose} >    <Modal.Title>참가하기!</Modal.Title>
+    <Modal show={show} style={{ zIndex: "1050", marginTop: "50px" }}>
+        <Modal.Header closeButton onHide={onClose} >    <Modal.Title>참가하기</Modal.Title>
   </Modal.Header>
     <Modal.Body>
       <h4>인증사진 업로드</h4>
@@ -106,9 +107,9 @@ const ChallengeParticipate = ({ show, onClose, challenge }) => {
       <Modal
         show={showConfirmation}
         onHide={handleConfirmationClose}
-        style={{ marginTop: "200px", zIndex: 9999 }}
+        style={{ marginTop: "200px", zIndex: 1050 }}
       >
-        <Modal.Header closeButton style={{ backgroundColor: "#fffee3" }}>
+        <Modal.Header style={{ backgroundColor: "#fffee3" }}>
           <Modal.Title>반드시 확인해주세요.</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ backgroundColor: "#fffee3" }}>

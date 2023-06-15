@@ -9,6 +9,7 @@ import UserSummary from "./UserSummary";
 import * as Api from "../../api";
 import { UserStateContext, DispatchContext } from "../../context/user/UserProvider";
 import { LOGOUT } from "../../reducer/action";
+import { showAlert, showSuccess } from "../../assets/alert";
 
 function MyPage() {
   
@@ -44,19 +45,19 @@ function MyPage() {
     try {
       // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
       const res = await Api.get("mypage");
-      console.log("통신결과", res.data);
+
       setUser(res.data);
       setIsFetchCompleted(true);
-      console.log(userState.user._id);
+
   
       //유저의 프로필 사진 조회
       const imageRes = await Api.get('images');
       const latestProfileImage = getLatestProfileImage(imageRes.data, userState);
-      console.log(latestProfileImage);
+
       setProfileImage(latestProfileImage);
     } catch (err) {
-      alert("User 정보 불러오기를 실패하였습니다.");
-      console.log("User 정보 불러오기를 실패하였습니다.", err);
+      showAlert("User 정보 불러오기를 실패하였습니다.");
+
     }
   };
   
@@ -67,7 +68,7 @@ function MyPage() {
     sessionStorage.removeItem('userToken');
     // dispatch 함수를 이용해 로그아웃함.
     dispatch({ type: LOGOUT });
-    alert('로그아웃하여 홈페이지로 이동합니다.')
+    showSuccess('로그아웃하여 홈페이지로 이동합니다.')
     // 기본 페이지로 돌아감.
     navigate('/');
 };
@@ -196,7 +197,7 @@ function MyPage() {
         </Row>
       </Container>
 
-      <Modal show={showModal} onHide={handleCloseModal} centered style={{zIndex: '9999'}}>
+      <Modal show={showModal} onHide={handleCloseModal} centered style={{zIndex: '1050'}}>
         <Modal.Header closeButton>
           <Modal.Title>내 정보 수정</Modal.Title>
         </Modal.Header>
