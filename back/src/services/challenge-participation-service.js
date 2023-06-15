@@ -26,7 +26,7 @@ class ParticipationService {
       // participation가 처음 생성일 때 
       if (participation == null){
         // 생성된 이미지들의 아이디가 아닐경우
-        const data = { userId, challengeId, imageId, hasParticipatedToday: false } // true
+        const data = { userId, challengeId, imageId, hasParticipatedToday: true } 
         const createParticipation = await ChallengeParticipation.create(data);
         // 시간을 한국표준시간으로 변경
         createNewParticipation=updateTime.toTimestamps(createParticipation);
@@ -37,7 +37,7 @@ class ParticipationService {
           throw setError("같은 챌린지에는 하루에 한번 참여 할 수 있습니다.", 409, "CONFLICT")
         }
         participation.hasParticipatedToday = true
-        const createInput = { userId, challengeId, imageId, hasParticipatedToday: false } // true
+        const createInput = { userId, challengeId, imageId, hasParticipatedToday: true } 
         const createParticipation = await ChallengeParticipation.create(createInput);
         createNewParticipation=updateTime.toTimestamps(createParticipation);
         await participation.save();
