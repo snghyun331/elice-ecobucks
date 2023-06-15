@@ -295,11 +295,16 @@ const Mall = () => {
 
         <Container className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center">
           <Button
-            variant="primary"
-            style={{ marginBottom: "10px", top: "5", marginLeft: "10px" }}
-            onClick={handleOpenSellModal}
+            variant="light"
+            style={{
+              width: "30%",
+              borderRadius: "0px",
+              backgroundColor: "#00D387",
+              color: "white",
+              fontWeight: "900",
+            }}            onClick={handleOpenSellModal}
           >
-            판매 상품 등록하기
+            상품 등록
           </Button>
           <Modal show={sellModalOpen} onHide={handleCloseSellModal} centered>
             <Modal.Header closeButton>
