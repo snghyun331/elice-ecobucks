@@ -284,8 +284,15 @@ const Mall = () => {
             borderRadius: "10px",
           }}
         >
-          <Container style={{alignSelf: 'flex-start', paddingLeft: '50px', fontSize: '1.8em', paddingBottom: '20px'}}>
-          매장 위치 안내
+          <Container
+            style={{
+              alignSelf: "flex-start",
+              paddingLeft: "50px",
+              fontSize: "1.8em",
+              paddingBottom: "20px",
+            }}
+          >
+            매장 위치 안내
           </Container>
           <MapContainer
             locations={extractLocations()}
@@ -302,11 +309,12 @@ const Mall = () => {
               backgroundColor: "#00D387",
               color: "white",
               fontWeight: "900",
-            }}            onClick={handleOpenSellModal}
+            }}
+            onClick={handleOpenSellModal}
           >
             상품 등록
           </Button>
-          <Modal show={sellModalOpen} onHide={handleCloseSellModal} centered>
+          <Modal size='lg' show={sellModalOpen} onHide={handleCloseSellModal} centered>
             <Modal.Header closeButton>
               <Modal.Title>상품 등록</Modal.Title>
             </Modal.Header>
