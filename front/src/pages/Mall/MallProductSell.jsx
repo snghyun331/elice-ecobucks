@@ -89,7 +89,7 @@ const MallProductSell = ({ onClose }) => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div
         style={{
           width: "100%",
@@ -102,10 +102,10 @@ const MallProductSell = ({ onClose }) => {
           borderRadius: '10px',
         }}
       >
-        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold'}}>상품명</Form.Label>
+        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>상품명</Form.Label>
         <Container
           className="text-muted mb-2"
-          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0  }}
+          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
         >
           상품명을 적어주세요.
         </Container>
@@ -123,10 +123,10 @@ const MallProductSell = ({ onClose }) => {
           value={name}
           onChange={onChange}
         />
-        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold'}}>가격</Form.Label>
+        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>가격</Form.Label>
         <Container
           className="text-muted mb-2"
-          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0  }}
+          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
         >
           판매가격을 적어주세요. 추후에 1마일 : N원으로 교환할 수 있습니다.
         </Container>
@@ -144,12 +144,12 @@ const MallProductSell = ({ onClose }) => {
           value={price}
           onChange={onChange}
         />
-        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold'}}>위치</Form.Label>
+        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>위치</Form.Label>
         <Container
           className="text-muted mb-2"
-          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0  }}
+          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
         >
-구매자가 상품을 수령할 수 있는 위치를 지정해주세요.
+          구매자가 상품을 수령할 수 있는 위치를 지정해주세요.
         </Container>
         <div style={{ display: "flex", marginBottom: "16px", width: '100%' }}>
           <Form.Control
@@ -181,12 +181,12 @@ const MallProductSell = ({ onClose }) => {
             검색
           </button>
         </div>
-        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold'}}>수량</Form.Label>
+        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>수량</Form.Label>
         <Container
           className="text-muted mb-2"
-          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0  }}
+          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
         >
-판매 가능한 최대 수량을 적어주세요. 수량이 0에 도달하면 판매가 종료됩니다.
+          판매 가능한 최대 수량을 적어주세요. 수량이 0에 도달하면 판매가 종료됩니다.
         </Container>
         <Form.Control
           style={{
@@ -202,12 +202,12 @@ const MallProductSell = ({ onClose }) => {
           value={stock}
           onChange={onChange}
         />
-        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold'}}>설명</Form.Label>
+        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>설명</Form.Label>
         <Container
           className="text-muted mb-2"
-          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0  }}
+          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
         >
-상품에 대한 구체적인 설명을 적어주세요. 유통기한 임박 상품이라면, 유통기한을 함께 기재해주세요.
+          상품에 대한 구체적인 설명을 적어주세요. 유통기한 임박 상품이라면, 유통기한을 함께 기재해주세요.
         </Container>
         <Form.Control
           style={{
