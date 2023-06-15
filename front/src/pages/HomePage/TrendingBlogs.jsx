@@ -11,8 +11,8 @@ const TrendingBlogs = () => {
     const fetchData = async () => {
       try {
         const res = await Api.get("blog");
-        console.log(res.data)
-        setBlogs(res.data);
+        console.log(res.data.posts)
+        setBlogs(res.data.posts);
       } catch (error) {
         console.error(error);
       }

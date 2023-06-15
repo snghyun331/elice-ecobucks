@@ -23,14 +23,15 @@ const Blog = () => {
   // const [isLiked, setIsLiked] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(6);
+  const [totalPages, setTotalPages] = useState(1);
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
-  const sortedList = blogList.sort((a, b) => b.likeCount - a.likeCount)
-  const currentList = sortedList.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  // const sortedList = blogList.sort((a, b) => b.likeCount - a.likeCount)
+  // const currentList = sortedList.slice(
+  //   (currentPage - 1) * itemsPerPage,
+  //   currentPage * itemsPerPage
+  // );
   const handleReadMoreClick = (blog) => {
     setSelectedBlog(blog);
   };
@@ -78,15 +79,15 @@ const Blog = () => {
       return;
     }
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   const fetchData = async () => {
     try {
       // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
-      const res = await Api.get("blog");
+      const res = await Api.get(`blog?page=${currentPage}`);
       // console.log("db data: ", res.data)
 
-      const newList = res.data.map(item => {
+      const newList = res.data.posts.map(item => {
         return {
           content: item.content,
           likeCount: item.likeCount,
@@ -100,6 +101,7 @@ const Blog = () => {
       });
       // console.log(newList);
       setBlogList(newList);
+      setTotalPages(res.data.totalPage)
       // console.log(blogList.map(item => (console.log(item))));
     } catch (err) {
       // alert("정보 불러오기를 실패하였습니다.");
@@ -194,62 +196,62 @@ const Blog = () => {
           onBackToListClick={handleBackToListClick}
         />
       ) : (
-      <Container
-        className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
-        style={{ marginTop: '200px', paddingTop: '30px', width: "80%", border: "1px solid #c2c2c2", backgroundColor: 'white', borderRadius: '10px' }}
-      >
-        <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
-          팁 작성하기
-        </Button>
-        <BlogModal show={showModal} onHide={handleCloseModal} title="팁 작성하기" handleClose={handleCloseModal}>
-          <BlogPost />
-        </BlogModal>
-        {/* BlogRead 에 해당하는 영역 */}
-        <Container>
-          <Row>
-          {currentList.map(item => (
-        <Col key={item._id}>
-          <Card 
-            style={{ width: "18rem" }}
-            onClick={() => handleReadMoreClick(item)} >
-            <Card.Body className="card-body">
-            <div className="d-flex align-items-center">
-              <Card.Title className="card-title flex-grow-1">
-                <span>제목:</span> {item.title}
-              </Card.Title>
-              <img src="" alt="수정" />
-            </div>
-              <Card.Text className="card-text">주제: {item.topic}</Card.Text>
-              <Card.Text className="card-text">설명: {item.content}</Card.Text>
-              <Card.Text className="card-text">작성자: {item.username}</Card.Text>
-              {item.likeUsers.includes(userState.user._id) ? (
-                <button onClick={() => handleDislike(item)}>
-                  <img src={like} alt="좋아요" />
-                </button>
-              ) : (
-                <button onClick={() => handleLike(item)}>
-                  <img src={dislike} alt="좋아요취소" />
-                </button>
-              )}
-              <Badge
-                    bg="info"
-                    className="position-absolute bottom-0 end-0 m-3"
-                    style={{ zIndex: 1 }}
-                  >
-                    {item.likeCount > 0 &&
-                      `좋아요 ${item.likeCount}`}
-                  </Badge>
-            </Card.Body>
-          </Card>
-        </Col>
-      ))}
-          </Row>
+        <Container
+          className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
+          style={{ marginTop: '200px', paddingTop: '30px', width: "80%", border: "1px solid #c2c2c2", backgroundColor: 'white', borderRadius: '10px' }}
+        >
+          <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
+            팁 작성하기
+          </Button>
+          <BlogModal show={showModal} onHide={handleCloseModal} title="팁 작성하기" handleClose={handleCloseModal}>
+            <BlogPost />
+          </BlogModal>
+          {/* BlogRead 에 해당하는 영역 */}
+          <Container>
+            <Row>
+              {blogList.map(item => (
+                <Col key={item._id}>
+                  <Card
+                    style={{ width: "18rem" }}
+                    onClick={() => handleReadMoreClick(item)} >
+                    <Card.Body className="card-body">
+                      <div className="d-flex align-items-center">
+                        <Card.Title className="card-title flex-grow-1">
+                          <span>제목:</span> {item.title}
+                        </Card.Title>
+                        <img src="" alt="수정" />
+                      </div>
+                      <Card.Text className="card-text">주제: {item.topic}</Card.Text>
+                      <Card.Text className="card-text">설명: {item.content}</Card.Text>
+                      <Card.Text className="card-text">작성자: {item.username}</Card.Text>
+                      {item.likeUsers.includes(userState.user._id) ? (
+                        <button onClick={() => handleDislike(item)}>
+                          <img src={like} alt="좋아요" />
+                        </button>
+                      ) : (
+                        <button onClick={() => handleLike(item)}>
+                          <img src={dislike} alt="좋아요취소" />
+                        </button>
+                      )}
+                      <Badge
+                        bg="info"
+                        className="position-absolute bottom-0 end-0 m-3"
+                        style={{ zIndex: 1 }}
+                      >
+                        {item.likeCount > 0 &&
+                          `좋아요 ${item.likeCount}`}
+                      </Badge>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </Container>
         </Container>
-      </Container>
       )}
       <PaginationBar
         content={blogList}
-        itemsPerPage={itemsPerPage}
+        totalPages={totalPages}
         handlePageChange={handlePageChange}
         currentPage={currentPage}
       />
