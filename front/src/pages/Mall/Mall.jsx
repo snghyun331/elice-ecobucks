@@ -110,9 +110,10 @@ const Mall = () => {
     try {
       // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
       const res = await Api.get(`products?page=${currentPage}`);
+      // const imageRes = await Api.get(`images/${res.data.products._id}`);
 
-      // console.log("db data: ", res)
-      const newList = res.data.products.map((item) => {
+      console.log("db data: ", res.data.newProducts);
+      const newList = res.data.newProducts.map((item) => {
         return {
           name: item.name,
           price: item.price,
@@ -122,9 +123,11 @@ const Mall = () => {
           seller: item.seller,
           sellerName: item.sellerName,
           location: item.location,
+          path: item.path,
           _id: item._id, //상품 ObjectId
         };
       });
+      console.log("newList: ", newList);
       const totalpage = res.data.totalPages;
       setTotalPages(totalpage);
       setList(newList);
@@ -166,6 +169,7 @@ const Mall = () => {
 
       handleClosePurchaseModal();
     } catch (err) {
+      alert(err.response.data.message);
       console.log("상품 구매에 실패하였습니다.", err);
     }
   };
@@ -212,23 +216,23 @@ const Mall = () => {
     try {
       console.log("삭제할 상품: ", selectedItem);
       await Api.delete(`products/${selectedItem._id}`);
-
-      const res = await Api.get("products");
-      const newList = res.data.products.map((item) => {
-        return {
-          name: item.name,
-          price: item.price,
-          place: item.place,
-          stock: item.stock,
-          description: item.description,
-          seller: item.seller,
-          sellerName: item.sellerName,
-          location: item.location,
-          _id: item._id, //상품 ObjectId
-        };
-      });
-      setList(newList);
-      setTotalPages(res.data.totalPages);
+      fetchData();
+      // const res = await Api.get("products");
+      // const newList = res.data.products.map((item) => {
+      //   return {
+      //     name: item.name,
+      //     price: item.price,
+      //     place: item.place,
+      //     stock: item.stock,
+      //     description: item.description,
+      //     seller: item.seller,
+      //     sellerName: item.sellerName,
+      //     location: item.location,
+      //     _id: item._id, //상품 ObjectId
+      //   };
+      // });
+      // setList(newList);
+      // setTotalPages(res.data.totalPages);
       handleCloseDeleteModal();
     } catch (err) {
       console.log("상품 삭제에 실패했습니다.", err);
@@ -255,7 +259,8 @@ const Mall = () => {
             background: "#00D387",
             zIndex: -1,
           }}
-        ></div>
+        >
+        </div>
         <div
           style={{
             position: "absolute",
@@ -352,6 +357,7 @@ const Mall = () => {
                   style={{ width: "20rem", height: "20rem", marginBottom: 20 }}
                 >
                   <Card.Body className="card-body">
+                    <img src={item.path} width="300" height="200" />
                     <Card.Title className="card-title">
                       <span>상품명:</span> {item.name}
                     </Card.Title>
