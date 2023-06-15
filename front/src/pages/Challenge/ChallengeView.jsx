@@ -84,7 +84,7 @@ const ChallengeView = () => {
               overflow: "hidden",
             }}
           >
-            <MegaChallengeCarousel />
+            <MegaChallengeCarousel challenges={challenges} />
           </Row>
 
           {sortedChallenges.map((challenge, index) => (
