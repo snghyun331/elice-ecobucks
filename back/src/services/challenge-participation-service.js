@@ -12,7 +12,8 @@ class ParticipationService {
         if (!image){
           throw setError("imageId가 존재하지 않습니다.", 400, "BAD_REQUEST")
       }
-      const participation = await ChallengeParticipation.findOne({ challengeId });
+
+      const participation = await ChallengeParticipation.findById({ _id: challengeId });
       const challenge = await Challenge.findById({ _id: challengeId })
 
       //---1. Check ---
