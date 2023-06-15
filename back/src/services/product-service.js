@@ -1,4 +1,6 @@
-import { Product } from "../db/models/product.js";
+import { Image, Product } from "../db/index.js";
+import { updateTime } from "../utils/update-time.js";
+import { imageService } from "./image-service.js";
 
 class productService {
   static async addProduct(newProduct) {
@@ -28,6 +30,7 @@ class productService {
       place: "place",
       stock: "stock",
       description: "description",
+      imageId: "imageId"
     };
 
     for (const [field, fieldToUpdate] of Object.entries(fieldsToUpdate)) {
@@ -45,14 +48,41 @@ class productService {
   // }
   static async findAllProducts(skip, limit) {
     const { products, count } = await Product.findAndCountAll(skip, limit);
-    return { products, count };
+    const newProducts = await Promise.all(products.map(async (product) => {
+      const image = await Image.findById({ _id: product.imageId });
+      console.log('image: ',image);
+      if (image) {
+        return {
+          ...product._doc, 
+          imageId: image._id,
+          path: image.path,
+          createdAt: updateTime.toKST(product.createdAt),
+          updatedAt: updateTime.toKST(product.updatedAt),  
+        };
+      } 
+      
+      }));
+
+    return { newProducts, count };
   }
 
   static async findProduct(productId) {
-    const product = await Product.findById(productId)
+    let product = await Product.findById(productId)
     if (!product) {
       throw new Error("해당 id를 가진 상품을 찾을 수 없습니다.");
     }
+    const image = await Image.findById({ _id: product.imageId });
+    if (image) {
+      product = {
+        ...product._doc,   
+        imageId: image._id,
+        path: image.path,
+        createdAt: updateTime.toKST(product.createdAt),
+        updatedAt: updateTime.toKST(product.updatedAt)
+      };
+    }
+
+
     return product
   }
 
@@ -67,6 +97,9 @@ class productService {
       throw new Error("수정 권한이 없습니다.");
 
     const isDataDeleted = await Product.deleteById(productId);
+
+    // 업로드 이미지 삭제
+    await imageService.deleteImage( product.imageId );
 
     if (!isDataDeleted) {
       const errorMessage =

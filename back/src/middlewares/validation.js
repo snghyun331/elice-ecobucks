@@ -32,7 +32,8 @@ class Validation {
     location: Joi.object({
       x: Joi.number().required(),
       y: Joi.number().required()
-    })
+    }),
+    imageId: Joi.string().required()
   });
 
   static productUpdateSchema = Joi.object({
@@ -41,6 +42,7 @@ class Validation {
     place: Joi.string(),
     stock: Joi.number().integer(),
     description: Joi.string(),
+    imageId: Joi.string().required()
   })
 
   static imageCreateSchema = Joi.object({
