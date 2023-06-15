@@ -20,6 +20,7 @@ const Blog = () => {
   const handleOpenModal = () => setShowModal(true);
   const [blogList, setBlogList] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
+  const [selectedUpdateBlog, setSelectedUpdateBlog] = useState(null);
   // const [isLiked, setIsLiked] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(6);
@@ -48,7 +49,7 @@ const Blog = () => {
       const blog = res.data;
       // console.log("받아온 blog: ", blog);
       // console.log("res", res);
-      setSelectedBlog(blog);
+      setSelectedUpdateBlog(blog);
       // console.log("selectedItem: ", selectedItem);
     } catch (err) {
       console.log("수정 모달 열 때 에러 ", err);
@@ -216,34 +217,16 @@ const Blog = () => {
               <Card.Title className="card-title flex-grow-1">
                 <span>제목:</span> {item.title}
               </Card.Title>
-              {userState.user._id === item.userId ? 
-              <>
-               <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item.blogId)}>
-                        수정
-                      </Button>
-                      <Modal show={editModalOpen} onHide={handleCloseEditModal} centered>
-                        <Modal.Header closeButton>
-                          <Modal.Title>글 수정</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body className="text-center">
-                          <BlogPostEdit handleEditBlog={handleEditBlog} selectedBlog={selectedBlog} />
-                        </Modal.Body>
-                        <Modal.Footer>
-                          <Button
-                            className="mt-4 mb-4"
-                            variant="secondary"
-                            onClick={handleCloseEditModal}
-                            style={{
-                              width: "100%",
-                              borderRadius: "0px",
-                            }}
-                          >
-                            닫기
-                          </Button>
-                        </Modal.Footer>
-                      </Modal>
-
-              </>: null}
+              {userState.user._id === item.userId ? (
+                <>
+                  <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item.blogId)}>
+                    수정
+                  </Button>
+                  <BlogModal show={editModalOpen} onHide={handleCloseEditModal} title="팁 작성하기" handleClose={handleCloseEditModal}>
+                    <BlogPostEdit handleEditBlog={handleEditBlog} selectedBlog={selectedUpdateBlog} />
+                  </BlogModal>
+                </>
+              ) : null}
               
             </div>
               <Card.Text className="card-text">주제: {item.topic}</Card.Text>
