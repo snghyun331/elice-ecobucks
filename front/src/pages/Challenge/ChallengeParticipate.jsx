@@ -108,7 +108,7 @@ const ChallengeParticipate = ({ show, onClose, challenge }) => {
         onHide={handleConfirmationClose}
         style={{ marginTop: "200px", zIndex: 9999 }}
       >
-        <Modal.Header closeButton style={{ backgroundColor: "#fffee3" }}>
+        <Modal.Header style={{ backgroundColor: "#fffee3" }}>
           <Modal.Title>반드시 확인해주세요.</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ backgroundColor: "#fffee3" }}>
