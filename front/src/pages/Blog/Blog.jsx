@@ -43,7 +43,7 @@ const Blog = () => {
   const handleCloseEditModal = () => setEditModalOpen(false);
   const handleOpenEditModal = async (blogId) => {
     try {
-      // console.log("blogId: ", blogId);
+      console.log("blogId: ", blogId);
       const res = await Api.get(`blog/${blogId}`);
       const blog = res.data;
       // console.log("받아온 blog: ", blog);
@@ -210,18 +210,46 @@ const Blog = () => {
           {currentList.map(item => (
         <Col key={item._id}>
           <Card 
-            style={{ width: "18rem" }}
-            onClick={() => handleReadMoreClick(item)} >
+            style={{ width: "18rem" }} >
             <Card.Body className="card-body">
             <div className="d-flex align-items-center">
               <Card.Title className="card-title flex-grow-1">
                 <span>제목:</span> {item.title}
               </Card.Title>
-              <img src="" alt="수정" />
+              {userState.user._id === item.userId ? 
+              <>
+               <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item.blogId)}>
+                        수정
+                      </Button>
+                      <Modal show={editModalOpen} onHide={handleCloseEditModal} centered>
+                        <Modal.Header closeButton>
+                          <Modal.Title>글 수정</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body className="text-center">
+                          <BlogPostEdit handleEditBlog={handleEditBlog} selectedBlog={selectedBlog} />
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <Button
+                            className="mt-4 mb-4"
+                            variant="secondary"
+                            onClick={handleCloseEditModal}
+                            style={{
+                              width: "100%",
+                              borderRadius: "0px",
+                            }}
+                          >
+                            닫기
+                          </Button>
+                        </Modal.Footer>
+                      </Modal>
+
+              </>: null}
+              
             </div>
               <Card.Text className="card-text">주제: {item.topic}</Card.Text>
               <Card.Text className="card-text">설명: {item.content}</Card.Text>
               <Card.Text className="card-text">작성자: {item.username}</Card.Text>
+              <Card.Text className="card-text" onClick={() => handleReadMoreClick(item)}>자세히보기</Card.Text>
               {item.likeUsers.includes(userState.user._id) ? (
                 <button onClick={() => handleDislike(item)}>
                   <img src={like} alt="좋아요" />
@@ -245,14 +273,15 @@ const Blog = () => {
       ))}
           </Row>
         </Container>
-      </Container>
-      )}
-      <PaginationBar
+        <PaginationBar
         content={blogList}
         itemsPerPage={itemsPerPage}
         handlePageChange={handlePageChange}
         currentPage={currentPage}
       />
+      </Container>
+      )}
+      
     </div>
   );
 };
