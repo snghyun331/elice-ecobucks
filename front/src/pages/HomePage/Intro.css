@@ -1,11 +1,16 @@
-.section {
+/* Intro.css */
+::-webkit-scrollbar {
+  display: none;
+}
+
+.container {
+  margin: 0;
+  padding: 0;
+}
+
+.page {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 32px;
-  color: white;
-}
-
-.fp-watermark {
-  display: none;
+  text-align: center;
 }
