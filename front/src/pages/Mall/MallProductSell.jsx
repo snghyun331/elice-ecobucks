@@ -6,11 +6,7 @@ import { useEffect } from "react";
 import { Button, ButtonGroup, Container, Form, Alert, Image } from "react-bootstrap";
 
 const MallProductSell = ({ onClose }) => {
-  // const [name, setName] = useState("");
-  // const [price, setPrice] = useState("");
-  // const [place, setPlace] = useState("");
-  // const [stock, setStock] = useState("");
-  // const [description, setDescription] = useState("");
+
   const [location, setLocation] = useState({});
   const [showModal, setShowModal] = useState(false);
 
