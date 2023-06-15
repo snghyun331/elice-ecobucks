@@ -29,7 +29,13 @@ const Blog = () => {
   const [itemsPerPage] = useState(6);
   const [totalPages, setTotalPages] = useState(1);
   const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
+    if (newPage < 1) {
+      setCurrentPage(1)
+    } else if (newPage > totalPages) {
+      setCurrentPage(totalPages)
+    } else {
+      setCurrentPage(newPage);
+    }
   };
   // const sortedList = blogList.sort((a, b) => b.likeCount - a.likeCount)
   // const currentList = sortedList.slice(
@@ -204,7 +210,7 @@ const Blog = () => {
           className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
           style={{ marginTop: '120px', paddingTop: '30px' }}
         >
-          <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
+          <Button variant="success" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
             팁 작성하기
           </Button>
           <BlogModal show={showModal} onHide={handleCloseModal} title="팁 작성하기" handleClose={handleCloseModal}>
@@ -265,7 +271,7 @@ const Blog = () => {
                         //     <img src={dislike} alt="좋아요취소" />
                         //   </button>
                         <HeartSolid
-                          color="#00D387"
+                          color="#FF5722"
                           onClick={() => handleDislike(item)}
                           style={{ width: "40px", height: "40px", cursor: "pointer", position: "absolute", bottom: 75, right: 25 }} />
                         // <button onClick={() => handleDislike(item)}>
@@ -274,7 +280,7 @@ const Blog = () => {
                         // </button>
                       ) : (
                         <HeartOutline
-                          color="#00D387"
+                          color="#FF5722"
                           onClick={() => handleLike(item)}
                           style={{ width: "40px", height: "40px", cursor: "pointer", position: "absolute", bottom: 75, right: 25 }} />
                         // <button onClick={() => handleLike(item)}>
@@ -282,7 +288,7 @@ const Blog = () => {
                         // </button>
                       )}
                       <Badge
-                        bg="success"
+                        bg="danger"
                         className="position-absolute end-0 m-3 bg-opacity-50"
                         style={{ zIndex: 1 }}
                       >
