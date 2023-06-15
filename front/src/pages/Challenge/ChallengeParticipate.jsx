@@ -53,7 +53,6 @@ const ChallengeParticipate = ({ show, onClose, challenge }) => {
       const res = await Api.post(`challenges/${challenge._id}/participants`, {
         imageId: imageRes.data._id,
       });
-
       showSuccess("인증사진 업로드가 완료되었습니다.");
 
       const userData = await Api.get("current");
@@ -93,7 +92,7 @@ const ChallengeParticipate = ({ show, onClose, challenge }) => {
           {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
         </Form.Group>
         {selectedFile && (
-          <div style={{paddingBottom: '10px'}}>
+          <div style={{ paddingBottom: '10px' }}>
             <h6>미리보기</h6>
             <Image src={previewURL} alt="Selected Image" thumbnail />
           </div>
@@ -110,11 +109,11 @@ const ChallengeParticipate = ({ show, onClose, challenge }) => {
         >
           인증 완료하기
         </Button>
-        <Button variant="light" onClick={onClose}           style={{
-            marginBottom: "30px",
-            borderRadius: "0px",
-            marginLeft: '10px'
-          }}>
+        <Button variant="light" onClick={onClose} style={{
+          marginBottom: "30px",
+          borderRadius: "0px",
+          marginLeft: '10px'
+        }}>
           돌아가기
         </Button>
 

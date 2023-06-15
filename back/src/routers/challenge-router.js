@@ -11,9 +11,9 @@ challengeRouter.use(login_required)
 
 challengeRouter.post("/challenges", challengeCreateValidation, challengeController.challengeCreat);
 
-challengeRouter.get("/challenges", login_required, challengeController.challengeGetAll);
+challengeRouter.get("/challenges", challengeController.challengeGetAll);
 
-challengeRouter.get("/challenges/:_id", login_required, challengeController.challengeGet);
+challengeRouter.get("/challenges/:_id", challengeController.challengeGet);
 
 challengeRouter.put("/challenges/:_id", challengeUpdateValidation, challengeController.challengeUpdate);
 

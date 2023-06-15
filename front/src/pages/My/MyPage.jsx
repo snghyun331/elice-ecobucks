@@ -12,7 +12,7 @@ import { LOGOUT } from "../../reducer/action";
 import { showAlert, showSuccess } from "../../assets/alert";
 
 function MyPage() {
-  
+
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
@@ -27,7 +27,7 @@ function MyPage() {
   function getLatestProfileImage(imageRes, userState) {
     let latestProfileImage = null;
     let latestUpdatedAt = null;
-  
+
     for (const image of imageRes) {
       if (image.object === 'profiles' && image.userId === userState.user._id) {
         if (!latestUpdatedAt || image.updatedAt > latestUpdatedAt) {
@@ -36,10 +36,10 @@ function MyPage() {
         }
       }
     }
-  
+
     return latestProfileImage;
   }
-  
+
 
   const fetchData = async () => {
     try {
@@ -49,7 +49,7 @@ function MyPage() {
       setUser(res.data);
       setIsFetchCompleted(true);
 
-  
+
       //유저의 프로필 사진 조회
       const imageRes = await Api.get('images');
       const latestProfileImage = getLatestProfileImage(imageRes.data, userState);
@@ -60,8 +60,8 @@ function MyPage() {
 
     }
   };
-  
-  
+
+
 
   const logout = () => {
     // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
@@ -71,7 +71,7 @@ function MyPage() {
     showSuccess('로그아웃하여 홈페이지로 이동합니다.')
     // 기본 페이지로 돌아감.
     navigate('/');
-};
+  };
 
   useEffect(() => {
     // 만약 전역 상태의 user가 null이거나 탈퇴한 회원이라면, 로그인 페이지로 이동함.
@@ -101,25 +101,25 @@ function MyPage() {
         }}
       ></div>
 
-<div
-  style={{
-    position: "absolute",
-    top: 80,
-    left: '18%',
-    right: 0,
-    zIndex: 10,
-    color: 'white',
-    fontSize: '2rem',
-    fontWeight: '900'
-  }}
->마이페이지 :
-<br />
-<span style={{fontSize: '1.3rem', fontWeight: '400' }}>내 정보를 수정하고 내 활동을 확인할 수 있어요.</span>
-</div>
+      <div
+        style={{
+          position: "absolute",
+          top: 80,
+          left: '18%',
+          right: 0,
+          zIndex: 10,
+          color: 'white',
+          fontSize: '2rem',
+          fontWeight: '900'
+        }}
+      >마이페이지 :
+        <br />
+        <span style={{ fontSize: '1.3rem', fontWeight: '400' }}>내 정보를 수정하고 내 활동을 확인할 수 있어요.</span>
+      </div>
 
       <Container className="mt-5 pt-5 ps-0 pb-5" style={{ width: "80%" }}>
         <Row>
-          <Col xs={3} className="ps-0" style={{marginTop: '100px'}}>
+          <Col xs={3} className="ps-0" style={{ marginTop: '100px' }}>
             {/* 왼쪽 컬럼 */}
             <Container
               className="p-4"
@@ -132,19 +132,19 @@ function MyPage() {
                 borderBottomLeftRadius: '10px'
               }}
             >
-<Container
-  className="pt-5"
-  style={{
-    borderRadius: "50%",
-    width: "7rem",
-    height: "7rem",
-    objectFit: "cover",
-    border: "1px solid grey",
-    backgroundImage: `url(${profileImage && profileImage.path})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  }}
-></Container>
+              <Container
+                className="pt-5"
+                style={{
+                  borderRadius: "50%",
+                  width: "7rem",
+                  height: "7rem",
+                  objectFit: "cover",
+                  border: "1px solid grey",
+                  backgroundImage: `url(${profileImage && profileImage.path})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              ></Container>
 
               <Container className="mt-3">
                 <a style={{ fontWeight: "bold" }}>{userState.user.username}</a>{" "}
@@ -166,7 +166,7 @@ function MyPage() {
               </Container>
             </Container>
           </Col>
-          <Col className="ps-0" xs={9} style={{marginTop: '100px'}}>
+          <Col className="ps-0" xs={9} style={{ marginTop: '100px' }}>
             {/* 오른쪽 컬럼 */}
             <Container
               className="p-5"
@@ -182,7 +182,7 @@ function MyPage() {
             >
               <Row>
                 <h5 style={{ fontWeight: "bold" }}>나의 활동</h5>
-                <UserSummary user = {user} />
+                <UserSummary user={user} />
               </Row>
               <Row>
                 <h5 style={{ fontWeight: "bold" }}>주문 이력</h5>
@@ -197,7 +197,7 @@ function MyPage() {
         </Row>
       </Container>
 
-      <Modal show={showModal} onHide={handleCloseModal} centered style={{zIndex: '1050'}}>
+      <Modal show={showModal} onHide={handleCloseModal} centered style={{ zIndex: '1050' }}>
         <Modal.Header closeButton>
           <Modal.Title>내 정보 수정</Modal.Title>
         </Modal.Header>

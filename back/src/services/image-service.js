@@ -28,7 +28,7 @@ class imageService {
       }
       
       // 확장자 타입 검사
-      const allowedTypes = ['image/jpeg', 'image/png', 'image/bmp', 'image/gif'];
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/bmp', 'image/gif', 'image/webp'];
       if (!allowedTypes.includes(file.mimetype)) {
         throw setError("Invalid file type", 400, "INVALID_TYPE");
       }
@@ -64,7 +64,6 @@ class imageService {
     }
   }
   
-
   static async getImages( ) {
     try {
       const images = await Image.findAll( );

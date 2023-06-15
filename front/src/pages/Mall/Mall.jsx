@@ -68,10 +68,8 @@ const Mall = () => {
   const handleOpenEditModal = async (itemId) => {
     try {
       const res = await Api.get(`products/${itemId}`);
-      // console.log(res); //res 데이터 잘 받아옴.
       const product = res.data;
       setSelectedItem(product);
-      // console.log("selectedItem: ", selectedItem);
     } catch (err) {
       console.log(err);
     }
@@ -91,14 +89,7 @@ const Mall = () => {
     setDeleteModalOpen(true);
   };
 
-  // useEffect(() => {
-  //   // 만약 전역 상태의 user가 null이거나 탈퇴한 회원이라면, 로그인 페이지로 이동함.
-  //   if (!userState.user || !userState.user.is_withdrawed == false) {
-  //     navigate("/login", { replace: true });
-  //     return;
-  //   }
-  //   fetchData();
-  // }, []);
+
   useEffect(() => {
     if (!userState.user || !userState.user.is_withdrawed == false) {
       navigate("/login", { replace: true });
@@ -111,7 +102,6 @@ const Mall = () => {
     try {
       // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
       const res = await Api.get(`products?page=${currentPage}`);
-      // const imageRes = await Api.get(`images/${res.data.products._id}`);
 
       console.log("db data: ", res.data.newProducts);
       const newList = res.data.newProducts.map((item) => {
@@ -133,9 +123,7 @@ const Mall = () => {
       const totalpage = res.data.totalPages;
       setTotalPages(totalpage);
       setList(newList);
-      // console.log(list.map(item => (console.log(item))));
     } catch (err) {
-      // alert("정보 불러오기를 실패하였습니다.");
       console.log("몰불러오기를 실패하였습니다.", err);
     }
   };
@@ -147,7 +135,6 @@ const Mall = () => {
       name: product.name,
       stock: product.stock,
     }));
-    // console.log("extractLocations: ", locations);
     return locations;
   };
   const handleConfirmPurchase = async (selectedItem) => {
@@ -225,7 +212,10 @@ const Mall = () => {
     }
   };
   const handleLocate = (selectedItem) => {
+<<<<<<< HEAD
     window.scrollTo(100,100);
+=======
+>>>>>>> 0825207c8b1fb992e3b17599d6914f2669987ceb
     setItemLocate(selectedItem.location);
   };
 
@@ -357,7 +347,6 @@ const Mall = () => {
                         whiteSpace: "nowrap",
                       }}
                     >
-                      {/* <Button variant="primary" style={{ borderColor: 'transparent', backgroundColor: "#fff" }} onClick={() => handleLocate(item)}> */}
                       <MapPinIcon
                         onClick={() => handleLocate(item)}
                         alt="위치찾기"
@@ -385,9 +374,6 @@ const Mall = () => {
 
                     {userState.user._id === item.seller && (
                       <>
-                        {/* <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item._id)}>
-                            수정
-                          </Button> */}
                         <PencilSquareIcon
                           color="#00D387"
                           onClick={() => handleOpenEditModal(item._id)}
@@ -425,9 +411,6 @@ const Mall = () => {
                             </Button>
                           </Modal.Footer>
                         </Modal>
-                        {/* <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenDeleteModal(item._id)}>
-                            삭제
-                          </Button> */}
                         <TrashIcon
                           color="#00D387"
                           style={{
@@ -467,14 +450,6 @@ const Mall = () => {
                       </>
                     )}
                     {item.seller !== userState.user._id && (
-                      // <Button
-                      //   variant="primary"
-                      //   style={{ margin: "10px", top: "5", width: "50px", height: "40px" }}
-                      //   onClick={() => handleOpenPurchaseModal(item)}
-                      //   disabled={item.stock === 0}
-                      // >
-                      //   <ShoppingBagIcon className="h-6 w-6 text-blue-500" />
-                      // </Button>
                       <ShoppingBagIcon
                         color="#00D387"
                         style={{

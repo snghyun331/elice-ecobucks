@@ -8,15 +8,17 @@ const userUpdateValidation = Validation.validate(Validation.userUpdateSchema);
 
 const userAuthRouter = Router();
 
-userAuthRouter.post("/register", userRegisterValidation, userController.PostUser_register);
+userAuthRouter.post("/register", userRegisterValidation, userController.postUserRegister);
 
-userAuthRouter.post("/login", userController.PostUser_login);
+userAuthRouter.post("/login", userController.postUserLogin);
 
 userAuthRouter.get("/current",login_required, userController.userGetcurrent);
 
-userAuthRouter.get("/mypage", login_required, userController.GetUser_myPage);
+userAuthRouter.get("/mypage", login_required, userController.getUserMyPage);
 
-userAuthRouter.get("/users/:_id", login_required, userController.GetUser_err_yellow);
+userAuthRouter.get("/mypage/challenges", login_required, userController.getUserMyPageChallenges);
+
+userAuthRouter.get("/users/:_id", login_required, userController.getUserErrYellow);
 // 유저의 작성한 챌린지 내역들 조회
 userAuthRouter.get("/users/:_id/challenges", login_required, userController.userGetChallenges);
 // 유저의 챌린지 참가신청 내역들을 조회 

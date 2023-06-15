@@ -20,14 +20,8 @@ const orderController = {
     orderGetMypage: async function(req, res, next) {
         try {
             const buyer = req.currentUserId;
-            //const orderDetails = await orderService.getOrdersByBuyer(buyer);
             const page = parseInt(req.query.page || 1);
-            const limit = 5;
-            const skip = (page - 1) * limit;
-            // console.log("page : ", page);
-            // console.log("skip : ", skip);
-            const { orderDetails, count } = await orderService.getOrdersByBuyer({ buyer, skip, limit });
-            // console.log('count',count)
+            const { orderDetails, totalPages } = await orderService.getOrdersByBuyer({ buyer, page });
 
             if (orderDetails.length === 0) {
                 return res.json({ message: '주문 내역이 없습니다.' });
@@ -35,7 +29,7 @@ const orderController = {
 
             return res.status(OK).json({
                 currentPage: page,
-                totalPages: Math.ceil(count / limit),
+                totalPages: totalPages,
                 orderDetails,
               });
         } catch (error) {

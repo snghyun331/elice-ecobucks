@@ -25,7 +25,7 @@ class CommentService {
     if (!content){ 
       throw setError("댓글을 찾을 수 없습니다.", 404, "NOT_FOUND")
     }
-    // 시간을 한국표준시간으로 변경
+    // 한국표준시로 변경
     const createdNewChallenge=updateTime.toTimestamps(createdChallenge)  
 
     return createdNewChallenge;

@@ -17,9 +17,12 @@ class blogPostService {
         return createdNewPost
     }
 
-    static async getPosts(skip, limit) {
+    static async getPosts(page) {
+        const limit = 6;
+        const skip = (page - 1) * limit;
         const { posts, count } = await BlogPost.findAndCountAll(skip, limit);
-        return { posts, count }
+        const totalPage = Math.ceil(count / limit)
+        return { posts, totalPage }
     }
 
 
