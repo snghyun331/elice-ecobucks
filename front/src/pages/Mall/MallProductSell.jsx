@@ -4,7 +4,7 @@ import * as Api from "../../api";
 import DaumPostcode from "react-daum-postcode";
 import { useEffect } from "react";
 
-const MallProductSell = (props) => {
+const MallProductSell = ({ onClose }) => {
   // const [name, setName] = useState("");
   // const [price, setPrice] = useState("");
   // const [place, setPlace] = useState("");
@@ -82,8 +82,9 @@ const MallProductSell = (props) => {
       });
       console.log(res);
       // window.location.reload();
+      onClose();
     } catch (err) {
-      alert("모든 값을 입력해주세요.");
+      alert("모든 값을 입력해주세요.", err);
       console.log("상품 등록에 실패하였습니다.", err);
     }
   };

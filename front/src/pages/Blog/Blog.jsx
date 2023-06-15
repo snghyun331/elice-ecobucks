@@ -1,14 +1,17 @@
 import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Card, Container, Modal, Row, Col, ListGroup, Form } from "react-bootstrap";
+import { Button, Card, Container, Modal, Row, Col, ListGroup, Form, Badge } from "react-bootstrap";
 import * as Api from "../../api";
 import { UserStateContext } from "../../context/user/UserProvider";
+import BlogModal from "../Modal/BlogModal";
 import BlogPost from "./BlogPost";
 import BlogPostEdit from "./BlogPostEdit";
 import BlogComment from "./BlogComment";
+import BlogRead from "./BlogRead";
 import PaginationBar from "../Modal/PaginationBar";
 import like from "../../assets/heartfill.png";
 import dislike from "../../assets/heartblank.png";
+
 const Blog = () => {
   // const [blogPosts, setBlogPosts] = useState([]);
   const userState = useContext(UserStateContext);
@@ -28,6 +31,12 @@ const Blog = () => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+  const handleReadMoreClick = (blog) => {
+    setSelectedBlog(blog);
+  };
+  const handleBackToListClick = () => {
+    setSelectedBlog(null);
+  };
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -151,7 +160,7 @@ const Blog = () => {
   };
 
   return (
-    <div style={{ padding: "60px" }}>
+    <div style={{ padding: "100px" }}>
       <div
         style={{
           position: "absolute",
@@ -179,6 +188,12 @@ const Blog = () => {
         <br />
         <span style={{ fontSize: '1.3rem', fontWeight: '400' }}>절약 꿀팁 공유해요</span>
       </div>
+      {selectedBlog ? (
+        <BlogRead
+          blog={selectedBlog}
+          onBackToListClick={handleBackToListClick}
+        />
+      ) : (
       <Container
         className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
         style={{ marginTop: '200px', paddingTop: '30px', width: "80%", border: "1px solid #c2c2c2", backgroundColor: 'white', borderRadius: '10px' }}
@@ -186,100 +201,52 @@ const Blog = () => {
         <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
           팁 작성하기
         </Button>
-        <Modal show={showModal} onHide={handleCloseModal} centered>
-          <Modal.Header closeButton>
-            <Modal.Title>팁 작성하기</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="text-center">
-            <BlogPost />
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              className="mt-4 mb-4"
-              variant="secondary"
-              onClick={handleCloseModal}
-              style={{
-                width: "100%",
-                borderRadius: "0px",
-              }}
-            >
-              닫기
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
+        <BlogModal show={showModal} onHide={handleCloseModal} title="팁 작성하기" handleClose={handleCloseModal}>
+          <BlogPost />
+        </BlogModal>
+        {/* BlogRead 에 해당하는 영역 */}
         <Container>
           <Row>
-            {currentList
-              .map(item => (
-                <Col key={item._id}>
-                  <Card style={{ width: "18rem" }}>
-                    <Card.Body className="card-body">
-                      <Card.Title className="card-title"><span>제목:</span> {item.title}</Card.Title>
-                      <Card.Text className="card-text">주제: {item.topic}</Card.Text>
-                      <Card.Text className="card-text">설명: {item.content}</Card.Text>
-                      <Card.Text className="card-text">작성자: {item.username}</Card.Text>
-                      {item.likeUsers.includes(userState.user._id) ? (
-                        <button onClick={() => handleDislike(item)}>
-                          <img src={like} alt="좋아요" />
-                        </button>
-                      ) : (
-                        <button onClick={() => handleLike(item)}>
-                          <img src={dislike} alt="좋아요취소" />
-                        </button>
-                      )}
-                      <p>좋아요 수: {item.likeCount}</p>
-                      <BlogComment blog={item} />
-                      {userState.user._id === item.userId && (
-                        <>
-                          <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item.blogId)}>
-                            수정
-                          </Button>
-                          <Modal show={editModalOpen} onHide={handleCloseEditModal} centered>
-                            <Modal.Header closeButton>
-                              <Modal.Title>글 수정</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body className="text-center">
-                              <BlogPostEdit handleEditBlog={handleEditBlog} selectedBlog={selectedBlog} />
-                            </Modal.Body>
-                            <Modal.Footer>
-                              <Button
-                                className="mt-4 mb-4"
-                                variant="secondary"
-                                onClick={handleCloseEditModal}
-                                style={{
-                                  width: "100%",
-                                  borderRadius: "0px",
-                                }}
-                              >
-                                닫기
-                              </Button>
-                            </Modal.Footer>
-                          </Modal>
-                          <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenDeleteModal(item.blogId)}>
-                            삭제
-                          </Button>
-                          <Modal show={deleteModalOpen} onHide={handleCloseDeleteModal} centered>
-                            <Modal.Header closeButton>
-                              <Modal.Title>팁 삭제</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body className="text-center">
-                              선택한 팁을 삭제하시겠습니까?
-                            </Modal.Body>
-                            <Modal.Footer>
-                              <Button variant="secondary" onClick={handleCloseDeleteModal}>취소</Button>
-                              <Button variant="primary" onClick={() => handleDeleteBlog(selectedBlog)}>삭제하기</Button>
-                            </Modal.Footer>
-                          </Modal>
-                        </>
-                      )}
-                    </Card.Body>
-                  </Card>
-                </Col>
-              ))}
+          {currentList.map(item => (
+        <Col key={item._id}>
+          <Card 
+            style={{ width: "18rem" }}
+            onClick={() => handleReadMoreClick(item)} >
+            <Card.Body className="card-body">
+            <div className="d-flex align-items-center">
+              <Card.Title className="card-title flex-grow-1">
+                <span>제목:</span> {item.title}
+              </Card.Title>
+              <img src="" alt="수정" />
+            </div>
+              <Card.Text className="card-text">주제: {item.topic}</Card.Text>
+              <Card.Text className="card-text">설명: {item.content}</Card.Text>
+              <Card.Text className="card-text">작성자: {item.username}</Card.Text>
+              {item.likeUsers.includes(userState.user._id) ? (
+                <button onClick={() => handleDislike(item)}>
+                  <img src={like} alt="좋아요" />
+                </button>
+              ) : (
+                <button onClick={() => handleLike(item)}>
+                  <img src={dislike} alt="좋아요취소" />
+                </button>
+              )}
+              <Badge
+                    bg="info"
+                    className="position-absolute bottom-0 end-0 m-3"
+                    style={{ zIndex: 1 }}
+                  >
+                    {item.likeCount > 0 &&
+                      `좋아요 ${item.likeCount}`}
+                  </Badge>
+            </Card.Body>
+          </Card>
+        </Col>
+      ))}
           </Row>
         </Container>
       </Container>
+      )}
       <PaginationBar
         content={blogList}
         itemsPerPage={itemsPerPage}
