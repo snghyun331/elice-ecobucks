@@ -86,7 +86,7 @@ const Intro = () => {
             style={{
               width: "17rem",
               position: "relative",
-              boxShadow: "8px 8px 15px 1px #7a7a7a",
+              boxShadow: "8px 8px 15px 1px rgba(122, 122, 122, 0.5)",
             }}
           >
             <div
@@ -137,7 +137,7 @@ const Intro = () => {
             style={{
               width: "17rem",
               position: "relative",
-              boxShadow: "8px 8px 15px 1px #7a7a7a",
+              boxShadow: "8px 8px 15px 1px rgba(122, 122, 122, 0.5)",
             }}
           >
             <div
@@ -188,7 +188,7 @@ const Intro = () => {
             style={{
               width: "16.5rem",
               position: "relative",
-              boxShadow: "8px 8px 15px 1px #7a7a7a",
+              boxShadow: "8px 8px 15px 1px rgba(122, 122, 122, 0.5)",
               marginLeft: "-25%",
             }}
           >
@@ -238,8 +238,8 @@ const Intro = () => {
         </Container>
       </div>
 
-      <div className="page" style={{ ...style, backgroundColor: "#00D387" }}>
-        <h1 data-aos="fade-up">ECOBUCKS : 절약하고 쇼핑해요</h1>
+      <div className="page" style={{ ...style, backgroundColor: "#60FFAA " }}>
+        <h1 data-aos="fade-up">마일리지로 저렴하게 쇼핑하세요</h1>
       </div>
     </Container>
   );
