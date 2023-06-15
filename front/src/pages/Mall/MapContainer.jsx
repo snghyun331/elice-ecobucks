@@ -92,7 +92,8 @@ const MapContainer = ({ locations, selectedItemLocate }) => {
     return (
         <div id='myMap' style={{
             width: '1000px',
-            height: '500px'
+            height: '500px',
+            borderRadius: '15px'
         }}></div>
     );
 }
