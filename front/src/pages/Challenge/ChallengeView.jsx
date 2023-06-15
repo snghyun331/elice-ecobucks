@@ -8,6 +8,7 @@ import ChallengeRead from "./ChallengeRead";
 import { DispatchContext, UserStateContext } from "../../context/user/UserProvider";
 import * as Api from "../../api";
 import MegaChallengeCarousel from "./MegaChallengeCarousel";
+import { showAlert } from "../../assets/alert";
 
 const ChallengeView = () => {
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
@@ -18,11 +19,10 @@ const ChallengeView = () => {
   const fetchData = async () => {
     try {
       const res = await Api.get("challenges");
-      console.log("통신결과", res.data);
       setChallenges(res.data);
       setIsFetchCompleted(true);
     } catch (err) {
-      console.log("챌린지 정보 불러오기를 실패하였습니다.", err);
+      showAlert("챌린지 정보 불러오기를 실패하였습니다.")
     }
   };
 
