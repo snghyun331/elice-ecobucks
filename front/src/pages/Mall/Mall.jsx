@@ -385,7 +385,7 @@ const Mall = () => {
                         // </Button>
                         <ShoppingBagIcon
                           color="#00D387"
-                          style={{ width: "30px", height: "30px", cursor: "pointer" }}
+                          style={{ width: "30px", height: "30px", cursor: "pointer", position: "absolute", bottom: 10, right: 10 }}
                           onClick={() => handleOpenPurchaseModal(item)}
                           disabled={item.stock === 0} />
                       )}
