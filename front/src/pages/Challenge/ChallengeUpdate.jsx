@@ -56,10 +56,10 @@ const ChallengeUpdate = ({ show, onClose, challenge }) => {
 
   return (
     <Modal size='lg' show={show} style={{ zIndex: "9999", marginTop: "20px" }}>
-      <div style={{ padding: "20px" }}>
-        <Modal.Header closeButton>
-          <Modal.Title>챌린지 수정</Modal.Title>
-        </Modal.Header>
+    <div style={{ padding: "20px" }}>
+      <Modal.Header closeButton onHide={onClose}>
+        <Modal.Title>챌린지 수정</Modal.Title>
+      </Modal.Header>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="title">
             <Form.Label>제목</Form.Label>
