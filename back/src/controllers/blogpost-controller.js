@@ -104,8 +104,16 @@ const blogpostController = {
                 res.status(OK).send(posts);
             }
             else {
-                posts = await blogPostService.getPosts();   
-                res.status(OK).send(posts);
+                const page = parseInt(req.query.page || 1);
+                const limit = 6;
+                const skip = (page - 1) * limit;
+                const { posts, count } = await blogPostService.getPosts(skip, limit);
+                // posts = await blogPostService.getPosts(); 
+                res.status(OK).send({
+                    currentPage: page,
+                    totalPage: Math.ceil(count / limit ),
+                    posts,
+                });
             }
         } catch(error) {
             error.status = NOT_FOUND;

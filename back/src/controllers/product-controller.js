@@ -57,7 +57,7 @@ const productController = {
   productGetAll: async function (req, res, next) {
     try {
       const page = parseInt(req.query.page || 1);
-      const limit = 8;
+      const limit = 6;
       const skip = (page - 1) * limit;
       console.log("page : ", page);
       console.log("skip : ", skip);
