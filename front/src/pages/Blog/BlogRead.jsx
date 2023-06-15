@@ -17,7 +17,7 @@ const BlogRead = ({ blog, onBackToListClick }) => {
   return (
     <div style={{ padding: "60px" }}>
         <Container className="mt-5">
-        <h2>절약 팁 내용 확인</h2>
+        <h2>절약팁 내용 확인</h2>
         <Card className="m-2">
                 <Card.Body className="card-body">
                 <Card.Title className="card-title"><span>제목:</span> {blog.title}</Card.Title>

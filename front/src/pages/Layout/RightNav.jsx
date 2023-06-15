@@ -63,7 +63,7 @@ const RightNav = ({ isLogin, user }) => {
                 fontSize: "1.3em",
               }}
             >
-              절약 팁
+              절약팁
             </Link>
           </li>
           <li className="nav-item" style={{ marginRight: '25px'}}>
@@ -151,7 +151,7 @@ const RightNav = ({ isLogin, user }) => {
                 to={ROUTE.BLOG.link}
                 style={{ fontSize: "1.3em", fontWeight: "600" }}
               >
-                절약 팁
+                절약팁
               </Link>
             </li>
           </OverlayTrigger>
