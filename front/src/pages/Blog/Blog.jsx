@@ -12,6 +12,8 @@ import PaginationBar from "../Modal/PaginationBar";
 import like from "../../assets/heartfill.png";
 import dislike from "../../assets/heartblank.png";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline"
+import { HeartIcon as HeartSolid } from "@heroicons/react/20/solid";
+import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
 
 const Blog = () => {
   // const [blogPosts, setBlogPosts] = useState([]);
@@ -200,7 +202,7 @@ const Blog = () => {
       ) : (
         <Container
           className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
-          style={{ marginTop: '120px', paddingTop: '30px'}}
+          style={{ marginTop: '120px', paddingTop: '30px' }}
         >
           <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
             팁 작성하기
@@ -214,38 +216,38 @@ const Blog = () => {
               {blogList.map(item => (
                 <Col key={item._id}>
                   <Card
-                    style={{ width: "20rem", height: "20rem", marginBottom:10 }} >
+                    style={{ width: "20rem", height: "20rem", marginBottom: 10 }} >
                     <Card.Body className="card-body">
                       <div className="d-flex align-items-center">
                         <Card.Title className="card-title flex-grow-1">
                           <span>제목:</span> {item.title}
                         </Card.Title>
                         {userState.user._id === item.userId ?
-                        <>
-                          <PencilSquareIcon color="#00D387"
-                            onClick={() => handleOpenEditModal(item.blogId)}
-                            style={{ width: "30px", height: "30px", cursor: "pointer" }} />
-                          <BlogModal show={editModalOpen} onHide={handleCloseEditModal} handleClose={handleCloseEditModal} >
-                            <BlogPostEdit handleEditBlog={handleEditBlog} selectedBlog={selectedUpdateBlog} />
-                          </BlogModal>
+                          <>
+                            <PencilSquareIcon color="#00D387"
+                              onClick={() => handleOpenEditModal(item.blogId)}
+                              style={{ width: "30px", height: "30px", cursor: "pointer" }} />
+                            <BlogModal show={editModalOpen} onHide={handleCloseEditModal} handleClose={handleCloseEditModal} >
+                              <BlogPostEdit handleEditBlog={handleEditBlog} selectedBlog={selectedUpdateBlog} />
+                            </BlogModal>
 
-                          <TrashIcon
-                            color="#00D387"
-                            style={{ width: "30px", height: "30px", cursor: "pointer", marginLeft: "10px" }}
-                            onClick={() => handleOpenDeleteModal(item.blogId)} />
-                          <Modal show={deleteModalOpen} onHide={handleCloseDeleteModal} centered>
-                            <Modal.Header closeButton>
-                              <Modal.Title>글 삭제</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body className="text-center">
-                              선택한 블로그를 삭제하시겠습니까?
-                            </Modal.Body>
-                            <Modal.Footer>
-                              <Button variant="secondary" onClick={handleCloseDeleteModal}>취소</Button>
-                              <Button variant="primary" onClick={() => handleDeleteBlog(selectedUpdateBlog)}>삭제하기</Button>
-                            </Modal.Footer>
-                          </Modal>
-                        </> : null}
+                            <TrashIcon
+                              color="#00D387"
+                              style={{ width: "30px", height: "30px", cursor: "pointer", marginLeft: "10px" }}
+                              onClick={() => handleOpenDeleteModal(item.blogId)} />
+                            <Modal show={deleteModalOpen} onHide={handleCloseDeleteModal} centered>
+                              <Modal.Header closeButton>
+                                <Modal.Title>글 삭제</Modal.Title>
+                              </Modal.Header>
+                              <Modal.Body className="text-center">
+                                선택한 블로그를 삭제하시겠습니까?
+                              </Modal.Body>
+                              <Modal.Footer>
+                                <Button variant="secondary" onClick={handleCloseDeleteModal}>취소</Button>
+                                <Button variant="primary" onClick={() => handleDeleteBlog(selectedUpdateBlog)}>삭제하기</Button>
+                              </Modal.Footer>
+                            </Modal>
+                          </> : null}
 
                       </div>
                       <Card.Text className="card-text">주제: {item.topic}</Card.Text>
@@ -253,19 +255,35 @@ const Blog = () => {
                         className="card-text"
                         style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>설명: {item.content}</Card.Text>
                       <Card.Text className="card-text">작성자: {item.username}</Card.Text>
-                      <Card.Text className="card-text" onClick={() => handleReadMoreClick(item)}>자세히보기</Card.Text> <br />
+                      <Card.Text className="card-text" onClick={() => handleReadMoreClick(item)} style={{ cursor: "pointer", color: "#2E8B57", fontWeight: 'bold' }}>자세히보기</Card.Text> <br />
                       {item.likeUsers.includes(userState.user._id) ? (
-                        <button onClick={() => handleDislike(item)}>
-                          <img src={like} alt="좋아요" />
-                        </button>
+                        //   <button onClick={() => handleDislike(item)}>
+                        //     <img src={like} alt="좋아요" />
+                        //   </button>
+                        // ) : (
+                        //   <button onClick={() => handleLike(item)}>
+                        //     <img src={dislike} alt="좋아요취소" />
+                        //   </button>
+                        <HeartSolid
+                          color="#00D387"
+                          onClick={() => handleDislike(item)}
+                          style={{ width: "40px", height: "40px", cursor: "pointer", position: "absolute", bottom: 75, right: 25 }} />
+                        // <button onClick={() => handleDislike(item)}>
+                        //   {/* <img src={like} alt="좋아요" /> */}
+                        //   <HeartSolid />
+                        // </button>
                       ) : (
-                        <button onClick={() => handleLike(item)}>
-                          <img src={dislike} alt="좋아요취소" />
-                        </button>
+                        <HeartOutline
+                          color="#00D387"
+                          onClick={() => handleLike(item)}
+                          style={{ width: "40px", height: "40px", cursor: "pointer", position: "absolute", bottom: 75, right: 25 }} />
+                        // <button onClick={() => handleLike(item)}>
+                        //   <img src={dislike} alt="좋아요취소" />
+                        // </button>
                       )}
                       <Badge
-                        bg="info"
-                        className="position-absolute end-0 m-3"
+                        bg="success"
+                        className="position-absolute end-0 m-3 bg-opacity-50"
                         style={{ zIndex: 1 }}
                       >
                         {item.likeCount > 0 &&
