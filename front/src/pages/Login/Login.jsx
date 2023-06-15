@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import Logo from "../../assets/logo.png";
+import { showAlert } from '../../assets/alert';
 
 import * as Api from '../../api'
 import { DispatchContext, UserStateContext } from '../../context/user/UserProvider'
@@ -36,8 +37,7 @@ function LoginForm() {
       });
       navigate("/", { replace: true });
     } catch (err) {
-        alert(err.response.data.message);
-
+        showAlert(err.response.data.message)
     }
   };
 
