@@ -6,7 +6,7 @@ const LeftNav = () => {
   return (
 
     <Navbar.Brand href="/" className="navbar-brand">
-          <Link to = {ROUTE.HOME}>
+          <Link to = {ROUTE.HOME.link}>
       <img style={{width: '9rem', paddingLeft: '10px', marginBottom: '5px' }} src={logo} />
       </Link>
     </Navbar.Brand>
