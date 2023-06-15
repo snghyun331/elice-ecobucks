@@ -83,7 +83,12 @@ const Intro = () => {
           <button className="intro-button" data-aos="fade-up">
             <Link
               to={ROUTE.REGISTER.link}
-              style={{textDecoration: "none", color: "black", paddingLeft: 10, paddingRight: 10 }}
+              style={{
+                textDecoration: "none",
+                color: "black",
+                paddingLeft: 10,
+                paddingRight: 10,
+              }}
             >
               회원가입
             </Link>{" "}
@@ -91,7 +96,12 @@ const Intro = () => {
           <button className="intro-button" data-aos="fade-up">
             <Link
               to={ROUTE.LOGIN.link}
-              style={{textDecoration: "none", color: "black", paddingLeft: 17, paddingRight: 17 }}
+              style={{
+                textDecoration: "none",
+                color: "black",
+                paddingLeft: 17,
+                paddingRight: 17,
+              }}
             >
               로그인
             </Link>
@@ -133,12 +143,19 @@ const Intro = () => {
               fontSize: "4em",
               textAlign: "left",
               marginBottom: "50px",
-              lineHeight: "150%",
+              lineHeight: "140%",
             }}
           >
             절약 인증하고
             <br />
             마일리지를 모아요
+            <br />
+            <Container className="mt-4">
+              <h5 style={{ lineHeight: "150%" }}>
+                다른 사람들이 만든 절약 챌린지에 참가하거나, <br /> 나만의
+                챌린지를 만들어 보세요.
+              </h5>
+            </Container>
           </h1>
         </Container>
         {/* 카드예시데이터 */}
@@ -505,6 +522,11 @@ const Intro = () => {
             마일리지로
             <br />
             저렴하게 쇼핑해요
+            <Container className="mt-4">
+              <h5 style={{ lineHeight: "150%" }}>
+                소상공인이 판매하는 유통기한 임박 상품을 <br /> 저렴하게 만나보세요.
+              </h5>
+            </Container>
           </h1>
         </Container>
       </div>
