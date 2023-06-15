@@ -189,7 +189,7 @@ const ChallengeComments = ({ challenge }) => {
             backgroundColor: "#00D387",
           }}
         >
-          댓글 추가
+          댓글추가
         </Button>
       </Form>
     </>
