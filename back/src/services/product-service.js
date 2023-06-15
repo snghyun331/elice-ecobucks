@@ -1,4 +1,5 @@
 import { Image, Product } from "../db/index.js";
+import { PRODUCT_PAGE_LIMIT } from "../utils/constants.js";
 import { updateTime } from "../utils/update-time.js";
 import { imageService } from "./image-service.js";
 
@@ -42,13 +43,15 @@ class productService {
     return product;
   }
 
-  // static async findAllProducts() {
-  //   const products = await Product.findAll();
-  //   return products;
-  // }
-  static async findAllProducts(skip, limit) {
+  static async findAllProducts(page) {
+    const limit = PRODUCT_PAGE_LIMIT; // 6
+    const skip = (page - 1) * limit;
+    
     const { products, count } = await Product.findAndCountAll(skip, limit);
+    const totalPages = Math.ceil(count / limit)
+    let test ={}
     const newProducts = await Promise.all(products.map(async (product) => {
+      console.log('product: ',product);
       const image = await Image.findById({ _id: product.imageId });
       // console.log('image: ',image);
       console.log('product: ',product);
@@ -58,7 +61,7 @@ class productService {
           imageId: image._id,
           path: image.path,
           createdAt: updateTime.toKST(product.createdAt),
-          updatedAt: updateTime.toKST(product.updatedAt),  
+          updatedAt: updateTime.toKST(product.updatedAt),   
         };
       }
       }));

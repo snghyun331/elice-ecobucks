@@ -1,3 +1,6 @@
+//
+export const PRODUCT_PAGE_LIMIT = 6 
+
 //파일 업로드 사이즈
 export const MAX_FILE_SIZE = 3 // 단위: MB
 

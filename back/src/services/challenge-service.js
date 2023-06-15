@@ -25,7 +25,7 @@ class ChallengeService {
     user.mileage += 1000;
     await user.save();
     
-    // 시간을 한국표준시간으로 변경
+    // 한국표준시로 변경
     const createdNewChallenge=updateTime.toTimestamps(createdChallenge)
     
     return createdNewChallenge;
@@ -45,16 +45,16 @@ class ChallengeService {
     if (!challenge) {
       throw setError("챌린지 게시물을 찾을 수 없습니다.", 404, "NOT_FOUND")
     }
-    // 시간을 한국표준시간으로 변경
+    // 한국표준시로 변경
     return updateTime.toTimestamps(challenge);
   }
 
   static async updateChallenge({ chllengeId, currentUserId, title, content, icon, weeks }) {
     const challenge = await Challenge.findById({ _id: chllengeId })
     try{
-      if(!challenge) 
+      if (!challenge) 
         throw setError("해당 id를 가진 데이터는 없습니다.", 404, "NOT_FOUND")
-      if(challenge.userId.toString() !== currentUserId) 
+      if (challenge.userId.toString() !== currentUserId) 
         throw setError("수정 권한이 없습니다.", 403, "FORBIDDEN")
       if (challenge.commentsCount != 0)
         throw setError("참여자가 존재하여 수정 할 수 없습니다.", 409, "CONFLICT")
@@ -62,9 +62,9 @@ class ChallengeService {
         throw setError("챌린지 기간이 끝났습니다, 참여 할 수 없습니다.", 409, "CONFLICT")
 
       const updateChallenge = await Challenge.update({ chllengeId, title, content, icon, weeks, dueDate: this.makeDueDate(weeks) })
-        if(!updateChallenge)   
+        if (!updateChallenge)   
           throw setError("업데이트에 실패했습니다.", 404, "NOT_FOUND")
-      // 시간을 한국표준시간으로 변경
+      // 한국표준시간으로 변경
       return updateTime.toTimestamps(updateChallenge);
     } catch (error) {
       throw handleError(error)

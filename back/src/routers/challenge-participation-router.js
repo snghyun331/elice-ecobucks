@@ -20,3 +20,5 @@ participationRouter.put("/challenges/:challengeId/participants/:_id", participat
 participationRouter.delete("/challenges/:challengeId/participants/:_id", participationController.participationDelete);
 
 export { participationRouter };
+
+

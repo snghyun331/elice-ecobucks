@@ -7,13 +7,18 @@
 
 # 기술 스택
 
-## 개발언어
+## Languages and Tools
 
-- HTML
+<p align="left"> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/></a>
+<a href="https://www.w3.org/html/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="40" height="40"/></a> <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="40" height="40"/></a> </p>
+
 - JavaScript
+- HTML
 - CSS
 
 ## FrontEnd
+
+<a href="https://reactjs.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40"/> </a>
 
 - Vite(React.js)
 - Axios
@@ -21,15 +26,21 @@
 
 ## BackEnd
 
+<a href="https://expressjs.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="express" width="40" height="40"/></a> <a href="https://nodejs.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="40" height="40"/></a>
+
 - JavaScript
 - Node.js
 - express.js
 
 ## DataBase
 
+<a href="https://www.mongodb.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="mongodb" width="40" height="40"/></a>
+
 - MongoDB
 
 ## Data Analysis
+
+<p align="left">  <a href="https://www.python.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="40" height="40"/> </a>    <a href="https://pandas.pydata.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/2ae2a900d2f041da66e950e4d48052658d850630/icons/pandas/pandas-original.svg" alt="pandas" width="40" height="40"/></a> </p>
 
 - Numpy
 - Pandas
@@ -62,6 +73,8 @@
 
 ## 4. 프로젝트 구성도
 
+![](./uploads/InfomationArchitecture.png)
+
 - 와이어프레임/스토리보드 추가
 
 ## 5. 프로젝트 팀원 역할 분담
@@ -83,3 +96,212 @@
 ---
 
 > .
+
+## 폴더 트리
+
+```
+📦새 폴더
+ ┣ 📂back
+ ┃ ┣ 📂src
+ ┃ ┃ ┣ 📂controllers
+ ┃ ┃ ┃ ┣ 📜blogcomment-controller.js
+ ┃ ┃ ┃ ┣ 📜blogpost-controller.js
+ ┃ ┃ ┃ ┣ 📜challenge-comment-controller.js
+ ┃ ┃ ┃ ┣ 📜challenge-controller.js
+ ┃ ┃ ┃ ┣ 📜challenge-participation-controller.js
+ ┃ ┃ ┃ ┣ 📜data-controller.js
+ ┃ ┃ ┃ ┣ 📜image-controller.js
+ ┃ ┃ ┃ ┣ 📜order-controller.js
+ ┃ ┃ ┃ ┣ 📜product-controller.js
+ ┃ ┃ ┃ ┗ 📜user-controller.js
+ ┃ ┃ ┣ 📂db
+ ┃ ┃ ┃ ┣ 📂models
+ ┃ ┃ ┃ ┃ ┣ 📜BlogComment.js
+ ┃ ┃ ┃ ┃ ┣ 📜BlogPost.js
+ ┃ ┃ ┃ ┃ ┣ 📜challenge-comment.js
+ ┃ ┃ ┃ ┃ ┣ 📜challenge-participation.js
+ ┃ ┃ ┃ ┃ ┣ 📜Challenge.js
+ ┃ ┃ ┃ ┃ ┣ 📜district.js
+ ┃ ┃ ┃ ┃ ┣ 📜image.js
+ ┃ ┃ ┃ ┃ ┣ 📜order.js
+ ┃ ┃ ┃ ┃ ┣ 📜Product.js
+ ┃ ┃ ┃ ┃ ┗ 📜User.js
+ ┃ ┃ ┃ ┣ 📂schemas
+ ┃ ┃ ┃ ┃ ┣ 📜blogComment.js
+ ┃ ┃ ┃ ┃ ┣ 📜blogPost.js
+ ┃ ┃ ┃ ┃ ┣ 📜challenge-comment.js
+ ┃ ┃ ┃ ┃ ┣ 📜challenge-participation.js
+ ┃ ┃ ┃ ┃ ┣ 📜challenge.js
+ ┃ ┃ ┃ ┃ ┣ 📜district.js
+ ┃ ┃ ┃ ┃ ┣ 📜districtUsage.js
+ ┃ ┃ ┃ ┃ ┣ 📜image.js
+ ┃ ┃ ┃ ┃ ┣ 📜order.js
+ ┃ ┃ ┃ ┃ ┣ 📜product.js
+ ┃ ┃ ┃ ┃ ┣ 📜seasonalUsage.js
+ ┃ ┃ ┃ ┃ ┣ 📜seoulUsage.js
+ ┃ ┃ ┃ ┃ ┗ 📜user.js
+ ┃ ┃ ┃ ┗ 📜index.js
+ ┃ ┃ ┣ 📂middlewares
+ ┃ ┃ ┃ ┣ 📜error-middleware.js
+ ┃ ┃ ┃ ┣ 📜login-required.js
+ ┃ ┃ ┃ ┗ 📜validation.js
+ ┃ ┃ ┣ 📂routers
+ ┃ ┃ ┃ ┣ 📜blogcomment-router.js
+ ┃ ┃ ┃ ┣ 📜blogpost-router.js
+ ┃ ┃ ┃ ┣ 📜challenge-comment-router.js
+ ┃ ┃ ┃ ┣ 📜challenge-participation-router.js
+ ┃ ┃ ┃ ┣ 📜challenge-router.js
+ ┃ ┃ ┃ ┣ 📜data-router.js
+ ┃ ┃ ┃ ┣ 📜image-router.js
+ ┃ ┃ ┃ ┣ 📜order-router.js
+ ┃ ┃ ┃ ┣ 📜product-router.js
+ ┃ ┃ ┃ ┗ 📜user-router.js
+ ┃ ┃ ┣ 📂services
+ ┃ ┃ ┃ ┣ 📜blogcomment-service.js
+ ┃ ┃ ┃ ┣ 📜blogpost-service.js
+ ┃ ┃ ┃ ┣ 📜challenge-comment-service.js
+ ┃ ┃ ┃ ┣ 📜challenge-participation-service.js
+ ┃ ┃ ┃ ┣ 📜challenge-service.js
+ ┃ ┃ ┃ ┣ 📜data-service.js
+ ┃ ┃ ┃ ┣ 📜image-local-save-service.js
+ ┃ ┃ ┃ ┣ 📜image-service.js
+ ┃ ┃ ┃ ┣ 📜order-service.js
+ ┃ ┃ ┃ ┣ 📜product-service.js
+ ┃ ┃ ┃ ┗ 📜user-service.js
+ ┃ ┃ ┣ 📂utils
+ ┃ ┃ ┃ ┣ 📜constants.js
+ ┃ ┃ ┃ ┣ 📜cron-schedule.js
+ ┃ ┃ ┃ ┣ 📜customError.js
+ ┃ ┃ ┃ ┣ 📜update-time.js
+ ┃ ┃ ┃ ┗ 📜validators.js
+ ┃ ┃ ┗ 📜app.js
+ ┃ ┣ 📂uploads
+ ┃ ┣ 📜.babelrc
+ ┃ ┣ 📜.gitignore
+ ┃ ┣ 📜index.js
+ ┃ ┣ 📜package-lock.json
+ ┃ ┣ 📜package.json
+ ┃ ┣ 📜yarn-error.log
+ ┃ ┗ 📜yarn.lock
+ ┣ 📂data
+ ┃ ┣ 📂seoul_map
+ ┃ ┃ ┣ 📜district1.png
+ ┃ ┃ ┣ 📜district2.png
+ ┃ ┃ ┣ 📜district3.png
+ ┃ ┃ ┣ 📜district4.png
+ ┃ ┃ ┣ 📜district5.png
+ ┃ ┃ ┣ 📜LARD_ADM_SECT_SGG_11.dbf
+ ┃ ┃ ┣ 📜LARD_ADM_SECT_SGG_11.prj
+ ┃ ┃ ┣ 📜LARD_ADM_SECT_SGG_11.shp
+ ┃ ┃ ┣ 📜LARD_ADM_SECT_SGG_11.shx
+ ┃ ┃ ┗ 📜seoulMap.png
+ ┃ ┣ 📜DataAnalysis_1_overall.ipynb
+ ┃ ┣ 📜DataAnalysis_2_District.ipynb
+ ┃ ┣ 📜DataAnalysis_3_Season.ipynb
+ ┃ ┣ 📜DomesticAverage.png
+ ┃ ┣ 📜DomesticDistrict.png
+ ┃ ┗ 📜Industry.png
+ ┣ 📂front
+ ┃ ┣ 📂public
+ ┃ ┃ ┗ 📜vite.svg
+ ┃ ┣ 📂src
+ ┃ ┃ ┣ 📂assets
+ ┃ ┃ ┃ ┣ 📜alert.jsx
+ ┃ ┃ ┃ ┣ 📜banner1.png
+ ┃ ┃ ┃ ┣ 📜banner2.png
+ ┃ ┃ ┃ ┣ 📜banner3.png
+ ┃ ┃ ┃ ┣ 📜blogIcon.png
+ ┃ ┃ ┃ ┣ 📜challenge.png
+ ┃ ┃ ┃ ┣ 📜challengeIcon.png
+ ┃ ┃ ┃ ┣ 📜districtInfo.jsx
+ ┃ ┃ ┃ ┣ 📜ecologo.png
+ ┃ ┃ ┃ ┣ 📜favicon-32x32.png
+ ┃ ┃ ┃ ┣ 📜font.css
+ ┃ ┃ ┃ ┣ 📜heartblank.png
+ ┃ ┃ ┃ ┣ 📜heartfill.png
+ ┃ ┃ ┃ ┣ 📜logo.png
+ ┃ ┃ ┃ ┣ 📜mall.png
+ ┃ ┃ ┃ ┣ 📜mallIcon.png
+ ┃ ┃ ┃ ┣ 📜placeholder.png
+ ┃ ┃ ┃ ┣ 📜react.svg
+ ┃ ┃ ┃ ┗ 📜tip.png
+ ┃ ┃ ┣ 📂context
+ ┃ ┃ ┃ ┗ 📂user
+ ┃ ┃ ┃ ┃ ┗ 📜UserProvider.jsx
+ ┃ ┃ ┣ 📂pages
+ ┃ ┃ ┃ ┣ 📂Blog
+ ┃ ┃ ┃ ┃ ┣ 📜Blog.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜BlogComment.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜BlogLike.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜BlogPost.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜BlogPostEdit.jsx
+ ┃ ┃ ┃ ┃ ┗ 📜BlogRead.jsx
+ ┃ ┃ ┃ ┣ 📂Challenge
+ ┃ ┃ ┃ ┃ ┣ 📜ChallengeComments.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜ChallengeCreate.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜ChallengePage.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜ChallengeParticipate.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜ChallengeRead.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜ChallengeUpdate.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜ChallengeView.jsx
+ ┃ ┃ ┃ ┃ ┗ 📜MegaChallengeCarousel.jsx
+ ┃ ┃ ┃ ┣ 📂HomePage
+ ┃ ┃ ┃ ┃ ┣ 📂Data
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜DistrictChart.jsx
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜SeoulDistrictGraph.jsx
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜SeoulUsageGraph.jsx
+ ┃ ┃ ┃ ┃ ┣ 📂svg
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜seoulDistricts.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜BannerCarousel.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜HomePage.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜Intro.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜TrendingBlogs.css
+ ┃ ┃ ┃ ┃ ┣ 📜TrendingBlogs.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜TrendingChallenges.css
+ ┃ ┃ ┃ ┃ ┗ 📜TrendingChallenges.jsx
+ ┃ ┃ ┃ ┣ 📂Layout
+ ┃ ┃ ┃ ┃ ┣ 📜Header.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜Layout.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜LeftNav.jsx
+ ┃ ┃ ┃ ┃ ┗ 📜RightNav.jsx
+ ┃ ┃ ┃ ┣ 📂Login
+ ┃ ┃ ┃ ┃ ┗ 📜Login.jsx
+ ┃ ┃ ┃ ┣ 📂Mall
+ ┃ ┃ ┃ ┃ ┣ 📜Mall.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜MallProductEdit.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜MallProductSell.jsx
+ ┃ ┃ ┃ ┃ ┗ 📜MapContainer.jsx
+ ┃ ┃ ┃ ┣ 📂Modal
+ ┃ ┃ ┃ ┃ ┣ 📜BlogModal.jsx
+ ┃ ┃ ┃ ┃ ┗ 📜PaginationBar.jsx
+ ┃ ┃ ┃ ┣ 📂My
+ ┃ ┃ ┃ ┃ ┣ 📜MyPage.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜UserEditForm.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜UserMileageHistory.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜UserOrderHistory.jsx
+ ┃ ┃ ┃ ┃ ┗ 📜UserSummary.jsx
+ ┃ ┃ ┃ ┗ 📂Register
+ ┃ ┃ ┃ ┃ ┗ 📜Register.jsx
+ ┃ ┃ ┣ 📂reducer
+ ┃ ┃ ┃ ┣ 📜action.jsx
+ ┃ ┃ ┃ ┗ 📜reducer.jsx
+ ┃ ┃ ┣ 📂routes
+ ┃ ┃ ┃ ┣ 📜Router.jsx
+ ┃ ┃ ┃ ┗ 📜routes.jsx
+ ┃ ┃ ┣ 📂util
+ ┃ ┃ ┃ ┗ 📜common.js
+ ┃ ┃ ┣ 📜api.jsx
+ ┃ ┃ ┣ 📜App.css
+ ┃ ┃ ┣ 📜App.jsx
+ ┃ ┃ ┣ 📜index.css
+ ┃ ┃ ┗ 📜main.jsx
+ ┃ ┣ 📜.eslintrc.cjs
+ ┃ ┣ 📜index.html
+ ┃ ┣ 📜package-lock.json
+ ┃ ┣ 📜package.json
+ ┃ ┣ 📜vite.config.js
+ ┃ ┗ 📜yarn.lock
+ ┣ 📜.gitignore
+ ┣ 📜.prettierrc
+ ┗ 📜README.md
+```
