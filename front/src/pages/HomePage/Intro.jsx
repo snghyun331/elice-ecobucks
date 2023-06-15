@@ -1,17 +1,15 @@
 import { ShoppingBagIcon } from "@heroicons/react/20/solid";
 import { MapPinIcon } from "@heroicons/react/20/solid";
-
+import { ArrowDownIcon } from "@heroicons/react/24/outline";
+import LogoWhite from "../../assets/logoWhite.png";
 import React, { useEffect } from "react";
+import "./Intro.css";
 import AOS from "aos";
+import { Link } from "react-router-dom";
 import "aos/dist/aos.css";
-import {
-  Button,
-  Container,
-  Card,
-  OverlayTrigger,
-  Tooltip,
-  Badge,
-} from "react-bootstrap";
+import { Button, Image, Container, Card, Badge } from "react-bootstrap";
+import { ROUTE } from "../../routes/routes";
+
 const Intro = () => {
   useEffect(() => {
     AOS.init({
@@ -19,6 +17,10 @@ const Intro = () => {
       once: true,
     });
   }, []);
+  const handleScrollDown = () => {
+    const nextSection = document.getElementById("section2");
+    nextSection.scrollIntoView({ behavior: "smooth" });
+  };
 
   const style = {
     minHeight: "100vh",
@@ -51,8 +53,75 @@ const Intro = () => {
       `}
       </style>
 
-      <div className="page" style={{ ...style, backgroundColor: "#00D387" }}>
-        <h1 data-aos="fade-up">ECOBUCKS : 절약하고 쇼핑해요</h1>
+      <div
+        className="page"
+        style={{
+          ...style,
+          backgroundColor: "#00D387",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <Image data-aos="fade-up" src={LogoWhite} style={{ width: "50%" }} />
+          <h1
+            data-aos="fade-up"
+            style={{ textAlign: "center", marginTop: 30, color: "white" }}
+          >
+            절약하고 쇼핑해요
+          </h1>
+          <button className="intro-button" data-aos="fade-up">
+            <Link
+              to={ROUTE.REGISTER.link}
+              style={{textDecoration: "none", color: "black", paddingLeft: 10, paddingRight: 10 }}
+            >
+              회원가입
+            </Link>{" "}
+          </button>
+          <button className="intro-button" data-aos="fade-up">
+            <Link
+              to={ROUTE.LOGIN.link}
+              style={{textDecoration: "none", color: "black", paddingLeft: 17, paddingRight: 17 }}
+            >
+              로그인
+            </Link>
+          </button>
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            bottom: "0",
+            left: "50%",
+            transform: "translateX(-50%)",
+          }}
+        >
+          <div style={{ color: "white", marginBottom: 0 }} data-aos="fade-down">
+            {" "}
+            SCROLL DOWN{" "}
+          </div>
+          <ArrowDownIcon
+            alt="아래화살표"
+            color="white"
+            style={{
+              width: "25px",
+              marginTop: "0px",
+              marginRight: "5px",
+              marginBottom: "50px",
+              height: "30px",
+            }}
+            data-aos="fade-down"
+          />
+        </div>
       </div>
 
       <div className="page" style={{ ...style, backgroundColor: "#00A36B " }}>
@@ -248,11 +317,19 @@ const Intro = () => {
             maxWidth: "60vw",
             position: "absolute",
             left: "-45px",
-            textAlign: 'left'
+            textAlign: "left",
           }}
           data-aos="fade-right"
         >
-          <Card style={{ width: "20rem", height: "20rem", marginBottom: 20, margin: 20 }}>
+          <Card
+            style={{
+              width: "20rem",
+              height: "20rem",
+              marginBottom: 20,
+              margin: 20,
+              boxShadow: "8px 8px 15px 1px rgba(122, 122, 122, 0.5)",
+            }}
+          >
             <Card.Body className="card-body">
               <Card.Title className="card-title">
                 <span>상품명:</span> 콘샐러드빵
@@ -298,7 +375,15 @@ const Intro = () => {
             </Card.Body>
           </Card>
 
-          <Card style={{ width: "20rem", height: "20rem", marginBottom: 20, margin: 20 }}>
+          <Card
+            style={{
+              width: "20rem",
+              height: "20rem",
+              marginBottom: 20,
+              margin: 20,
+              boxShadow: "8px 8px 15px 1px rgba(122, 122, 122, 0.5)",
+            }}
+          >
             <Card.Body className="card-body">
               <Card.Title className="card-title">
                 <span>상품명:</span> 햇양파
@@ -346,7 +431,15 @@ const Intro = () => {
             </Card.Body>
           </Card>
 
-          <Card style={{ width: "20rem", height: "20rem", marginBottom: 20 , margin: 20 }}>
+          <Card
+            style={{
+              width: "20rem",
+              height: "20rem",
+              marginBottom: 20,
+              margin: 20,
+              boxShadow: "8px 8px 15px 1px rgba(122, 122, 122, 0.5)",
+            }}
+          >
             <Card.Body className="card-body">
               <Card.Title className="card-title">
                 <span>상품명:</span> 떡볶이
@@ -393,7 +486,6 @@ const Intro = () => {
               />
             </Card.Body>
           </Card>
-          
         </Container>
         <Container style={{ alignItems: "right" }}>
           <h1
@@ -403,7 +495,7 @@ const Intro = () => {
               fontSize: "4em",
               textAlign: "left",
               marginBottom: "50px",
-              left: '920px',
+              left: "920px",
               lineHeight: "150%",
               position: "absolute",
               right: "5%",
