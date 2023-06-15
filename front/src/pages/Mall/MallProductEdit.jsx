@@ -32,7 +32,7 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
   }
 
   return (
-    <div style={{ padding: "16px", width: "calc(100% - 32px)" }}>
+    <div style={{ padding: "16px" }}>
       <div
         style={{
           position: "absolute",
@@ -108,6 +108,7 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
           설명을 적어주세요.
         </Container>
         <Form.Control
+          as='textarea'
           className="form-control-large"
           name="description"
           value={description}
@@ -119,10 +120,18 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
 
 
         <button
-          className="btn-default"
           onClick={handleSubmit}
+                  style={{
+          width: "100%",
+          borderRadius: "0px",
+          backgroundColor: "#00D387",
+          color: "white",
+          fontWeight: "900",
+          padding: 5,
+          border: "0px",
+        }}
         >
-          상품 수정하기
+          수정하기
         </button>
       </div>
     </div>

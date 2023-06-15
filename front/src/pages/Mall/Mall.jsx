@@ -381,6 +381,7 @@ const Mall = () => {
                           show={editModalOpen}
                           onHide={handleCloseEditModal}
                           centered
+                          size='lg'
                         >
                           <Modal.Header closeButton>
                             <Modal.Title>상품 수정</Modal.Title>
