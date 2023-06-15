@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Container } from "react-bootstrap";
 import * as Api from '../../api'
-const BlogPost = (props) => {
+const BlogPost = ({ onClose }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [topic, setTopic] = useState("");
@@ -17,6 +17,7 @@ const BlogPost = (props) => {
       });
       console.log("절약 팁 작성 res: ", res);
       // window.location.reload()
+      onClose();
     } catch (err) {
       console.log("절약 팁 글 작성에 실패했습니다.", err);
     }
