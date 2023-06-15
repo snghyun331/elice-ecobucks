@@ -271,6 +271,9 @@ const Mall = () => {
           />
         </Container>
 
+        <Container
+          className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
+        >
         <Button
           variant="primary"
           style={{ marginBottom: "10px", top: "5", marginLeft: "10px" }}
@@ -298,15 +301,11 @@ const Mall = () => {
             </Button>
           </Modal.Footer>
         </Modal>
-
-        <Container
-          className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
-        >
           <Row style={{ display: "flex", alignItems: "center" }}>
             {list
               .map(item => (
                 <Col key={item._id}>
-                  <Card style={{ width: "20rem", height: "20rem" }}>
+                  <Card style={{ width: "20rem", height: "20rem", marginBottom:20 }}>
                     <Card.Body className="card-body">
                       <Card.Title className="card-title"><span>상품명:</span> {item.name}</Card.Title>
                       <Card.Text className="card-text">가격: {item.price}</Card.Text>
@@ -388,7 +387,7 @@ const Mall = () => {
                         // </Button>
                         <ShoppingBagIcon
                           color="#00D387"
-                          style={{ width: "30px", height: "30px", cursor: "pointer", position: "absolute", bottom: 10, right: 10 }}
+                          style={{ width: "30px", height: "30px", cursor: "pointer", position: "absolute", bottom: 30, right: 15 }}
                           onClick={() => handleOpenPurchaseModal(item)}
                           disabled={item.stock === 0} />
                       )}
