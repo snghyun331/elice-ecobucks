@@ -12,7 +12,7 @@ import { Container, Button, Dropdown, DropdownButton } from "react-bootstrap";
 import mallIcon from "../../assets/mallIcon.png";
 import blogIcon from "../../assets/blogIcon.png";
 import challengeIcon from "../../assets/challengeIcon.png";
-import TipCarousel from "./TipCarousel";
+import BannerCarousel from "./BannerCarousel";
 import TrendingBlogs from "./TrendingBlogs";
 import TrendingChallenges from "./TrendingChallenges";
 import { useState } from "react";
@@ -51,9 +51,9 @@ const HomePage = () => {
           }}
         ></div>
         <Container>
-          <TipCarousel />
+          <BannerCarousel />
         </Container>
-        <Container
+        {/* <Container
           style={{
             marginBottom: "20px",
             display: "flex",
@@ -117,7 +117,7 @@ const HomePage = () => {
               <span style={{ color: "black", fontSize: "0.9rem" }}>떠리몰</span>
             </Button>
           </Link>
-        </Container>
+        </Container> */}
 
         <Container
           style={{
