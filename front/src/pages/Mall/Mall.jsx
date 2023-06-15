@@ -299,26 +299,29 @@ const Mall = () => {
           </Modal.Footer>
         </Modal>
 
-        <Container>
+        <Container
+          className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
+        >
           <Row style={{ display: "flex", alignItems: "center" }}>
             {list
               .map(item => (
                 <Col key={item._id}>
-                  <Card style={{ width: "18rem" }}>
+                  <Card style={{ width: "20rem", height: "20rem" }}>
                     <Card.Body className="card-body">
                       <Card.Title className="card-title"><span>상품명:</span> {item.name}</Card.Title>
                       <Card.Text className="card-text">가격: {item.price}</Card.Text>
-                      <Card.Text className="card-text">
+                      <Card.Text
+                        className="card-text"
+                        style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+                      >
                         {/* <Button variant="primary" style={{ borderColor: 'transparent', backgroundColor: "#fff" }} onClick={() => handleLocate(item)}> */}
                         <MapPinIcon
                           onClick={() => handleLocate(item)}
                           alt="위치찾기"
                           color="#009960"
-                          style={{ width: "25px", marginRight: "5px", marginBottom: "3px", height: "30px", cursor: "pointer" }} />
-                        {/* <img src={placelocate} alt="위치찾기" /> */}
-                        {/* </Button> */}
+                          style={{ width: "25px", marginRight: "5px", marginBottom: "3px", height: "30px", cursor: "pointer" }}
+                        />
                         {item.place}
-
                       </Card.Text>
                       <Card.Text className="card-text">판매자: {item.sellerName}</Card.Text>
                       <Card.Text className="card-text">재고: {item.stock}</Card.Text>

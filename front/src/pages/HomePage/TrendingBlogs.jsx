@@ -12,7 +12,7 @@ const TrendingBlogs = () => {
       try {
         const res = await Api.get("blog");
         console.log(res.data.posts)
-        setBlogs(res.data);
+        setBlogs(res.data.posts);
       } catch (error) {
         console.error(error);
       }

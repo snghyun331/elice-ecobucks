@@ -17,9 +17,9 @@ class blogPostService {
         return createdNewPost
     }
 
-    static async getPosts() {
-        const posts = await BlogPost.findAllPosts();
-        return posts
+    static async getPosts(skip, limit) {
+        const { posts, count } = await BlogPost.findAndCountAll(skip, limit);
+        return { posts, count }
     }
 
 

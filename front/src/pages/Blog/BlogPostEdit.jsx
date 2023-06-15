@@ -62,7 +62,7 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
               marginBottom: "16px",
             }}
             placeholder={selectedBlog.title}
-            value={title}
+            value={title || selectedBlog.title}
             onChange={(event) => {
                 setTitle(event.target.value);
             }}
@@ -78,7 +78,7 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
               marginBottom: "16px",
             }}
             placeholder={selectedBlog.topic}
-            value={topic}
+            value={topic || selectedBlog.topic}
             onChange={(event) => {
               setTopic(event.target.value);
             }}
@@ -94,7 +94,7 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
               marginBottom: "16px",
             }}
             placeholder={selectedBlog.content}
-            value={content}
+            value={content || selectedBlog.content}
             onChange={(event) => {
               setContent(event.target.value);
             }}
