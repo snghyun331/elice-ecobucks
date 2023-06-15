@@ -63,7 +63,7 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
               marginBottom: "16px",
             }}
             placeholder={selectedItem.name}
-            value={name || selectedItem.name}
+            value={name}
             onChange={(event) => {
               setName(event.target.value);
             }}
@@ -79,25 +79,9 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
               marginBottom: "16px",
             }}
             placeholder={selectedItem.price}
-            value={price || selectedItem.price}
+            value={price}
             onChange={(event) => {
               setPrice(event.target.value);
-            }}
-          />
-          <span>위치</span>
-          <textarea
-            style={{
-              width: "100%",
-              height: "20px",
-              padding: "16px",
-              fontSize: "16px",
-              lineHeight: "20px",
-              marginBottom: "16px",
-            }}
-            placeholder={selectedItem.place}
-            value={place || selectedItem.place}
-            onChange={(event) => {
-              setPlace(event.target.value);
             }}
           />
           <span>수량</span>
@@ -111,7 +95,7 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
               marginBottom: "16px",
             }}
             placeholder={selectedItem.stock}
-            value={stock || selectedItem.stock}
+            value={stock}
             onChange={(event) => {
               setStock(event.target.value);
             }}
@@ -127,7 +111,7 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
               marginBottom: "16px",
             }}
             placeholder={selectedItem.description}
-            value={description || selectedItem.description}
+            value={description}
             onChange={(event) => {
               setDescription(event.target.value);
             }}
