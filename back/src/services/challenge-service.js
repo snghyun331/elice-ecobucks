@@ -15,9 +15,8 @@ class ChallengeService {
     if (!title || !content || !icon || !weeks){ 
       throw setError("제목, 내용, 아이콘, 기간 모두 입력해 주세요.", 400, "BAD_REQUEST")
     }
-    let newDueDate = new Date();
-    const dueDate = newDueDate.setMinutes(newDueDate.getMinutes() + 3);
-    //const dueDate = this.makeDueDate(weeks)
+    //const dueDate = new Date().setMinutes(newDueDate.getMinutes() + 1); // newDueDate 1분설정 
+    const dueDate = this.makeDueDate(weeks)
     const createdChallenge = await Challenge.create({ userId, title, content, icon, weeks, dueDate });
     if (!createdChallenge)  
       throw setError("챌린지 게시물 생성 실패", 500, "CREATE_FAILED")

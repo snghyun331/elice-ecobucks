@@ -13,7 +13,11 @@ import { orderRouter } from "./routers/order-router.js";
 import { imageRouter } from "./routers/image-router.js";
 import { dataRouter } from "./routers/data-router.js";
 
+
 const app = express();
+
+// 외부노출방지 헤더정보 비활성화 
+app.disable('x-powered-by');
 
 // CORS 에러 방지
 app.use(cors());
