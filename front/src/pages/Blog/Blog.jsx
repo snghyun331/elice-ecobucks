@@ -12,7 +12,7 @@ import PaginationBar from "../Modal/PaginationBar";
 import like from "../../assets/heartfill.png";
 import dislike from "../../assets/heartblank.png";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline"
-import { HeartIcon as HeartSolid } from "@heroicons/react/20/solid";
+import { HeartIcon as HeartSolid, PencilIcon } from "@heroicons/react/20/solid";
 import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
 
 const Blog = () => {
@@ -206,9 +206,7 @@ const Blog = () => {
           className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
           style={{ marginTop: '120px', paddingTop: '30px' }}
         >
-          {/* <Button variant="success" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
-            팁 작성하기
-          </Button> */}
+
           <Button
             variant="light"
             style={{
@@ -216,28 +214,35 @@ const Blog = () => {
               display: "block",
               marginBottom: "30px",
               color: 'white',
-              borderRadius: "0px",
-              width: '20%',
+              fontWeight: 'bold',
+              fontSize: '20px',
+              borderRadius: "10px",
+              width: '10rem',
               backgroundColor: "#00D387",
             }} // 스타일 추가
             onClick={handleOpenModal}
-          >
-            팁 작성하기
+          ><PencilIcon
+              variant="light"
+              color="#FFF"
+              style={{ width: "30px", height: "30px", cursor: "pointer", marginRight: "10px" }}
+              onClick={handleOpenModal}
+            />
+            작성하기
           </Button>
           <BlogModal size='1g' show={showModal} onHide={handleCloseModal} title="팁 작성하기" handleClose={handleCloseModal}>
             <BlogPost />
           </BlogModal>
           {/* BlogRead 에 해당하는 영역 */}
           <Container>
-            <Row >
+            <Row className="justify-content-center">
               {blogList.map(item => (
                 <Col key={item._id}>
                   <Card
-                    style={{ width: "20rem", height: "20rem", marginBottom: 10 }} >
+                    style={{ width: "20rem", height: "20rem", marginBottom: 20, border: "3px solid #DDF7E3", boxShadow: "0px 1px 2px #5D9C59", }} >
                     <Card.Body className="card-body">
                       <div className="d-flex align-items-center">
                         <Card.Title className="card-title flex-grow-1">
-                          <span>제목:</span> {item.title}
+                          {item.title}
                         </Card.Title>
                         {userState.user._id === item.userId ?
                           <>
@@ -277,12 +282,19 @@ const Blog = () => {
                         <HeartSolid
                           color="#FF5722"
                           onClick={() => handleDislike(item)}
-                          style={{ width: "40px", height: "40px", cursor: "pointer", position: "absolute", bottom: 75, right: 25 }} />
+                          style={{ width: "40px", height: "40px", cursor: "pointer", position: "absolute", bottom: 75, right: 25 }}
+                        />
                       ) : (
                         <HeartOutline
                           color="#FF5722"
                           onClick={() => handleLike(item)}
-                          style={{ width: "40px", height: "40px", cursor: "pointer", position: "absolute", bottom: 75, right: 25 }} />
+                          style={{ width: "40px", height: "40px", cursor: "pointer", position: "absolute", bottom: 75, right: 25 }}
+                          onMouseDown={(event) => {
+                            event.currentTarget.style.transform = "scale(1.2)";
+                          }}
+                          onMouseUp={(event) => {
+                            event.currentTarget.style.transform = "scale(1)";
+                          }} />
                       )}
                       <Badge
                         bg="danger"
