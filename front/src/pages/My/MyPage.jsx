@@ -45,19 +45,19 @@ function MyPage() {
     try {
       // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
       const res = await Api.get("mypage");
-      console.log("통신결과", res.data);
+
       setUser(res.data);
       setIsFetchCompleted(true);
-      console.log(userState.user._id);
+
   
       //유저의 프로필 사진 조회
       const imageRes = await Api.get('images');
       const latestProfileImage = getLatestProfileImage(imageRes.data, userState);
-      console.log(latestProfileImage);
+
       setProfileImage(latestProfileImage);
     } catch (err) {
       showAlert("User 정보 불러오기를 실패하였습니다.");
-      console.log("User 정보 불러오기를 실패하였습니다.", err);
+
     }
   };
   

@@ -20,11 +20,11 @@ function MegaChallengeCarousel() {
   const fetchMegaChallengeData = async () => {
     try {
       const res = await Api.get(`challenges/${megaChallengeId}`);
-      console.log("메가 챌린지 통신결과", res.data);
+
       setMegaChallenge(res.data);
       setIsFetchCompleted(true);
     } catch (err) {
-      console.log("메가 챌린지 정보 불러오기를 실패하였습니다.", err);
+
     }
   };
 
