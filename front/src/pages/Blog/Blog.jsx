@@ -211,7 +211,7 @@ const Blog = () => {
           {currentList.map(item => (
         <Col key={item._id}>
           <Card 
-            style={{ width: "18rem" }} >
+            style={{ width: "20rem", height: "20rem" }} >
             <Card.Body className="card-body">
             <div className="d-flex align-items-center">
               <Card.Title className="card-title flex-grow-1">
@@ -230,7 +230,10 @@ const Blog = () => {
               
             </div>
               <Card.Text className="card-text">주제: {item.topic}</Card.Text>
-              <Card.Text className="card-text">설명: {item.content}</Card.Text>
+              <Card.Text
+                className="card-text"
+                style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+              >설명: {item.content}</Card.Text>
               <Card.Text className="card-text">작성자: {item.username}</Card.Text>
               <Card.Text className="card-text" onClick={() => handleReadMoreClick(item)}>자세히보기</Card.Text>
               {item.likeUsers.includes(userState.user._id) ? (
