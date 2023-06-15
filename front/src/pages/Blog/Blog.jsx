@@ -223,7 +223,7 @@ const Blog = () => {
                         {userState.user._id === item.userId ?
                         <>
                           <PencilSquareIcon color="#00D387"
-                            onClick={() => handleOpenEditModal(item._id)}
+                            onClick={() => handleOpenEditModal(item.blogId)}
                             style={{ width: "30px", height: "30px", cursor: "pointer" }} />
                           <BlogModal show={editModalOpen} onHide={handleCloseEditModal} handleClose={handleCloseEditModal} >
                             <BlogPostEdit handleEditBlog={handleEditBlog} selectedBlog={selectedUpdateBlog} />
@@ -232,7 +232,7 @@ const Blog = () => {
                           <TrashIcon
                             color="#00D387"
                             style={{ width: "30px", height: "30px", cursor: "pointer", marginLeft: "10px" }}
-                            onClick={() => handleOpenDeleteModal(item._id)} />
+                            onClick={() => handleOpenDeleteModal(item.blogId)} />
                           <Modal show={deleteModalOpen} onHide={handleCloseDeleteModal} centered>
                             <Modal.Header closeButton>
                               <Modal.Title>글 삭제</Modal.Title>
