@@ -95,15 +95,23 @@ const DistrictChart = (idx) => {
     // const avgPowerUsageByCity = calculateAvgPowerUsage();
     // console.log("avgPowerUsageByCity", avgPowerUsageByCity);
     const transformedData = calculateAvgPowerUsage()
-    console.log(transformedData[2]);
-    
-    let dynamicData = transformedData;
+    // console.log(transformedData);
+    // console.log(transformedData.map(item=> console.log(item)));
+    transformedData.forEach(item => {
+        console.log(item.id);
+      });
+      const dynamicData = [];
 
+      for (let i = 0; i < transformedData.length; i++) {
+        const currentObject = transformedData[i];
+        if (currentObject.id === idx.idx) {
+          dynamicData.push(currentObject);
+        }
+      }
+      console.log(dynamicData);
     if (isFirstMount.current) {
         isFirstMount.current = false;
-    } else {
-        dynamicData = [transformedData[idx.idx - 1]];
-    }
+    } 
     // console.log('transformedData:', transformedData[(idx.idx) - 1]);
     // const { id, data } = transformedData[idx.idx - 1];
     // console.log("id: ", id);
@@ -134,7 +142,7 @@ const DistrictChart = (idx) => {
                 data={dynamicData}
                 margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
                 xScale={{ type: 'point' }}
-                yScale={{ type: 'linear', min: 150, max: 400, stacked: true, reverse: false }}
+                yScale={{ type: 'linear', min: 150, max: 420, stacked: true, reverse: false }}
                 yFormat=" >-.2f"
                 axisTop={null}
                 axisRight={null}
