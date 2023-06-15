@@ -22,7 +22,7 @@ class userAuthService {
       // 기존 정보에서 다시 가입할 때 등록한 정보로 업데이트
       const updatedUser = await userModel.findOneAndUpdate(   
         {email: email, is_withdrawed: true},  // 필터링
-        {username: username, email: email, password: hashedPassword, districtCode: districtCode, is_withdrawed: false},  // 업데이트 항목들
+        {username: username, email: email, password: hashedPassword, districtCode: districtCode, districtName: districtName, is_withdrawed: false},  // 업데이트 항목들
         { returnOriginal: false }   // 업데이트 된 상태로 저장
       )
       return updatedUser
