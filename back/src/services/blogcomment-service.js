@@ -60,7 +60,6 @@ class blogCommentService {
 
     static async findAllComments() {
         const comments = await BlogComment.findAll();
-        console.log(comments);
         return comments;
     }
 }

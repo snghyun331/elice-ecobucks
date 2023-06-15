@@ -11,8 +11,8 @@ class ChallengeParticipation {
     return participations;
   } 
 
-  static async find({ _id }) {
-    const participations = await participationModel.find({ _id });
+  static async find({ userId, challengeId }) {
+    const participations = await participationModel.find({ userId, challengeId });
     return participations;
   } 
 

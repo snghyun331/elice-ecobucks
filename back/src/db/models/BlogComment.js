@@ -35,7 +35,6 @@ class BlogComment {
 
     static async findAll() {
         const comments = await BlogCommentModel.find();
-        console.log('g')
         return comments;
     }
 }

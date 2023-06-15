@@ -51,7 +51,6 @@ const imageController = {
       const file = req.file;
       const currentUserId = req.currentUserId; 
       const updateImage = await imageService.updateImage({ imageId, currentUserId, file });
-      console.log('updateImage: ',updateImage);
       res.status(OK).send(updateImage);
     } catch (error) {
       next(error);
