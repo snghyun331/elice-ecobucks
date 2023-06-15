@@ -40,6 +40,7 @@ class ParticipationService {
         const createInput = { userId, challengeId, imageId, hasParticipatedToday: false } // true
         const createParticipation = await ChallengeParticipation.create(createInput);
         createNewParticipation=updateTime.toTimestamps(createParticipation);
+        await participation.save();
       }
       if (!createNewParticipation)  
         throw setError("참여 신청 실패", 500, "CREATE_FAILED")
@@ -54,7 +55,6 @@ class ParticipationService {
       const user = await User.findById({ userId });
       user.mileage += 1000;
       await user.save();
-      await participation.save();
       await challenge.save();
       
       return createNewParticipation;
