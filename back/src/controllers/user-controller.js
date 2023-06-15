@@ -3,7 +3,7 @@ import { validateEmptyBody } from "../utils/validators.js";
 import { NOT_FOUND, CREATED, OK, NO_CONTENT } from "../utils/constants.js";
 
 const userController = {
-  PostUser_register: async function (req, res, next) {
+  postUserRegister: async function (req, res, next) {
     try {
       validateEmptyBody(req)
       const { username, email, password, districtName } = req.body;
@@ -25,7 +25,7 @@ const userController = {
     }
   },
 
-  PostUser_login: async function (req, res, next) {
+  postUserLogin: async function (req, res, next) {
     try {
 
       const { email, password } = req.body;
@@ -54,7 +54,7 @@ const userController = {
     }
   },
 
-  GetUser_myPage: async function (req, res, next) {
+  getUserMyPage: async function (req, res, next) {
     try {
       // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
       const userId = req.currentUserId;
@@ -70,8 +70,23 @@ const userController = {
       next(error);
     }
   },
+  
+  getUserMyPageChallenges: async function (req, res, next) {
+    try{
+      const userId = req.currentUserId;
+      const UserChallengeInfo = await userAuthService.getUserMyPageChallenges({ userId });   
+      
+      if (UserChallengeInfo.errorMessage){
+        throw new Error(UserChallengeInfo.errorMessage);
+      }
+    return res.status(OK).send(UserChallengeInfo);
+    } catch (error) {
+      error.status = NOT_FOUND;
+      next(error);
+    }
+  },
 
-  GetUser_err_yellow: async function (req, res, next) {
+  getUserErrYellow: async function (req, res, next) {
     try {
       const userId = req.params._id;
       const currentUserInfo = await userAuthService.getUserInfo({ userId });

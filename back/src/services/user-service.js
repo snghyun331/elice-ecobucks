@@ -152,11 +152,11 @@ class userAuthService {
     return user;  
   }
 
-  static async getUserMypage({userId}){
-    const user  = await User.findById({userId});
+  static async getUserMypage({ userId }){
+    const user  = await User.findById({ userId });
     const challenges = await Challenge.findAllByUserId({ userId: userId });
     const participations = await ChallengeParticipation.findAllByUserId({ userId: userId });
-    const orders = await order.findAll({buyer: userId});
+    const orders = await order.findAll({ buyer: userId });
     const comments = await ChallengeComment.findAllByUserId({ userId: userId });
     const userInfo = {
       ...user._doc,
@@ -172,6 +172,33 @@ class userAuthService {
     return userInfo
   }
 
+
+  static async getUserMyPageChallenges({ userId }) {
+    try {
+      const participations = await ChallengeParticipation.find({ userId });
+      const populatedParticipations = await ChallengeParticipation.populate(participations, [
+        { path: 'challengeId', select: 'title createdAt updatedAt' }
+      ]);
+  
+      const newParticipations = {
+        userChallengeCount: populatedParticipations.length,
+        userChallengeList: populatedParticipations.map(participation => ({
+          userParticipantCount: participations.length,
+          particioationMileage: participation.particioationMileage,
+          challengeTitle: participation.challengeId.title,
+          createdAt: updateTime.toKST(participation.challengeId.createdAt),
+          updatedAt: updateTime.toKST(participation.challengeId.updatedAt)
+        }))
+      };
+  
+      return newParticipations;
+    } catch (error) {
+      // Handle error
+      console.error(error);
+      throw error;
+    }
+  }
+  
   static async subtractMileage(userId, amount) {
     //유저 마일리지 차감 로직
     const user = await User.findById({ userId });
@@ -181,10 +208,8 @@ class userAuthService {
 
   // 유저의 모든 챌린지 게시물 갯수와 게시물 조회
   static async getUserChallenges({userId}){
-    const user  = await User.findById({userId});
     const challenges = await Challenge.findAllByUserId({ userId: userId });
     const userInfo = {
-      //...user._doc,
       userChallengeCount: challenges.length,
       userChallengeList: challenges,
     }

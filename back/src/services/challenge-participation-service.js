@@ -15,7 +15,7 @@ class ParticipationService {
       const participation = await ChallengeParticipation.findOne({ challengeId });
       const challenge = await Challenge.findById({ _id: challengeId })
 
-      //--- Check ---
+      //---1. Check ---
       // 1) challenge 참여기간 종료 Check, dueDate를 넘을경우 신청x
       const currentDateTime = new Date();
       if (challenge.dueDate.getTime() < currentDateTime.getTime()){
@@ -28,7 +28,7 @@ class ParticipationService {
         // 생성된 이미지들의 아이디가 아닐경우
         const data = { userId, challengeId, imageId, hasParticipatedToday: true } 
         const createParticipation = await ChallengeParticipation.create(data);
-        // 시간을 한국표준시간으로 변경
+        // 한국표준시로 변경
         createNewParticipation=updateTime.toTimestamps(createParticipation);
       }
       else {
@@ -45,7 +45,7 @@ class ParticipationService {
       if (!createNewParticipation)  
         throw setError("참여 신청 실패", 500, "CREATE_FAILED")
         
-      //--- Update ---  
+      //---2. Update ---  
       //1) Challenge Update      
       // challenge 신청자 count 증가
       challenge.participantsCount += 1; 
@@ -95,7 +95,6 @@ class ParticipationService {
     if (!participation || participation.challengeId.toString() !== challengeId){ 
       throw setError("참여기록을 찾을 수 없습니다", 404, "NOT_FOUND")
     }
-    //participation.imageId = await Image.findById({ _id: participation.imageId });
 
     const image = await Image.findById({ _id: participation.imageId });
     if (image) {

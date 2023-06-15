@@ -30,8 +30,7 @@ function validateEmptyBody(req){
   }
 }
 
-async function checkData(classFuction, id) {
-  const findModel = await classFuction
+async function checkData(findModel) {
   if (!findModel) {
     throw setError("해당 id를 가진 데이터는 없습니다.", 404, "NOT_FOUND");
   }
@@ -39,12 +38,12 @@ async function checkData(classFuction, id) {
 }
 
 // 공통 함수: 작성자 권한 확인
-function checkAuthor(data, currentUserId) {
-  if (data.userId.toString() !== currentUserId) {
+function checkAuthor(findModel, currentUserId) {
+  if (findModel.userId.toString() !== currentUserId) {
     throw setError("작성자가 아닙니다, 권한이 없습니다.", 403, "FORBIDDEN");
   }
 }
-
+// 공통 함수: 작성자 권한 확인
 async function validatePermission(findModel, currentUserId) {
   if (!findModel) {
     throw setError("해당 id를 가진 데이터는 없습니다.", 404, "NOT_FOUND");

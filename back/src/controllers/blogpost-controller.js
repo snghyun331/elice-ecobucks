@@ -105,13 +105,11 @@ const blogpostController = {
             }
             else {
                 const page = parseInt(req.query.page || 1);
-                const limit = 6;
-                const skip = (page - 1) * limit;
-                const { posts, count } = await blogPostService.getPosts(skip, limit);
+                const { posts, totalPage } = await blogPostService.getPosts(page);
                 // posts = await blogPostService.getPosts(); 
                 res.status(OK).send({
                     currentPage: page,
-                    totalPage: Math.ceil(count / limit ),
+                    totalPage: totalPage,
                     posts,
                 });
             }

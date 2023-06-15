@@ -64,7 +64,6 @@ class imageService {
     }
   }
   
-
   static async getImages( ) {
     try {
       const images = await Image.findAll( );

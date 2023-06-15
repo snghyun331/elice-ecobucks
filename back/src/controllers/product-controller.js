@@ -45,28 +45,14 @@ const productController = {
     }
   },
 
-  // productGetAll: async function (req, res, next) {
-  //   try {
-  //     const products = await productService.findAllProducts();
-  //     res.status(OK).send(products);
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // },
-
   productGetAll: async function (req, res, next) {
     try {
       const page = parseInt(req.query.page || 1);
-      const limit = 6;
-      const skip = (page - 1) * limit;
-      console.log("page : ", page);
-      console.log("skip : ", skip);
-
-      const { products, count } = await productService.findAllProducts(skip, limit);
+      const { newProducts, totalPages } = await productService.findAllProducts(page);
       res.status(OK).send({
         currentPage: page,
-        totalPages: Math.ceil(count / limit),
-        products,
+        totalPages: totalPages,
+        newProducts,
       });
     } catch (error) {
       next(error);

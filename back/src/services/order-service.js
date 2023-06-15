@@ -43,36 +43,13 @@ const orderService = {
         await productService.decreaseProductStock(productId);
     },
 
-    // getOrdersByBuyer: async function(buyer) {
-    //     const orders = await order.findAll({ buyer: buyer });
-        
-    //     const orderDetails = await Promise.all(
-    //         orders.map(async (order) => {
-    //             const { productId, createdAt } = order;
-    //             const product = await productService.findProduct(productId);
-                
-    //             if (!product) {
-    //                 // 상품을 찾지 못한 경우에 대한 처리
-    //                 throw new Error("해당 id의 상품을 찾을 수 없습니다.")
-    //             }
-    
-    //             const { name, price, place } = product;
-    
-    //             return {
-    //                 date: createdAt,
-    //                 product: name,
-    //                 price: price,
-    //                 location: place,
-    //             };
-    //         })
-    //     );
 
-    //     return orderDetails;
-    // },
-        getOrdersByBuyer: async function({ buyer, skip, limit }) {
+    getOrdersByBuyer: async function({ buyer, page }) {
+        const limit = 5;
+        const skip = (page - 1) * limit;
         const { orders, count } = await order.findAndCountByBuyer({ buyer, skip, limit });
-        //const orders = await order.findAll({ buyer: buyer });
-        //const count = orders.length;
+        const totalPages = Math.ceil(count / limit)
+
         const orderDetails = await Promise.all(
             orders.map(async (order) => {
                 const { productId, createdAt } = order;
@@ -82,7 +59,6 @@ const orderService = {
                     // 상품을 찾지 못한 경우에 대한 처리
                     throw new Error("해당 id의 상품을 찾을 수 없습니다.")
                 }
-    
                 const { name, price, place } = product;
     
                 return {
@@ -93,9 +69,7 @@ const orderService = {
                 };
             })
         );
-        // console.log('orderDetails: ',orderDetails);
-
-        return { orderDetails, count };
+        return { orderDetails, totalPages };
     },
 
 
