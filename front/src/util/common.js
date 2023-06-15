@@ -20,3 +20,8 @@ export const formatDate = (dateString) => {
   const date = new Date(dateString);
   return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
 };
+
+export const formatDateTime = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleString(); // Format date as 'YYYY-MM-DD HH:MM:SS'
+};

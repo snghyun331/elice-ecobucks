@@ -230,7 +230,7 @@ const Blog = () => {
             작성하기
           </Button>
           <BlogModal size='1g' show={showModal} onHide={handleCloseModal} title="팁 작성하기" handleClose={handleCloseModal}>
-            <BlogPost />
+            <BlogPost onClose={handleCloseModal}/>
           </BlogModal>
           {/* BlogRead 에 해당하는 영역 */}
           <Container>
