@@ -61,7 +61,6 @@ const blogcommentController = {
 
     blogcommentGetAll: async function(req, res, next) {
         try {
-            console.log('letgo')
             const comments = await blogCommentService.findAllComments();
 
             res.status(OK).send(comments);

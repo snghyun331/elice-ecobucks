@@ -12,7 +12,6 @@ const getSeoulUsage = (req, res, next) => {
 };
 
 const getDistrictUsage = (req, res, next) => {
-    console.log('hi');
     districtUsageService()
       .then(documents => {
         res.json(documents); // 조회한 데이터를 JSON으로 응답

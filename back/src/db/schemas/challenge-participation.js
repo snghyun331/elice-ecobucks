@@ -16,6 +16,11 @@ const participationSchema = new Schema(
       ref: 'Challenge', 
       required: true 
     },
+    mileage: { 
+      type: Number, 
+      default: 1000,
+      required: false,
+    },
     hasParticipatedToday: {
       type: Boolean, 
       required: false,

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { User } from "./models/User.js";
-import { BlogPost } from "./models/BlogPost.js";
-import { BlogComment } from "./models/BlogComment.js";
+import { User } from "./models/user.js";
+import { BlogPost } from "./models/blogPost.js";
+import { BlogComment } from "./models/blogComment.js";
 import { District } from "./models/district.js";
 import { Product } from "./models/product.js";
 import { Challenge } from "./models/challenge.js";
