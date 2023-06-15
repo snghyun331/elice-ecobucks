@@ -1,6 +1,5 @@
 // Intro.js
 import React, { useEffect } from "react";
-import "./Intro.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -14,11 +13,34 @@ const Intro = () => {
 
   const style = {
     minHeight: "100vh",
-    minWidth: '100vw'
+    minWidth: "100vw",
+  };
+
+  const introStyle = {
+    scrollbarWidth: "none",
+    msOverflowStyle: "none",
+    overflow: "-moz-scrollbars-none",
   };
 
   return (
-    <div className="container">
+    <div className="container" style={introStyle}>
+      <style>
+        {`
+        ::-webkit-scrollbar {
+          display: none;
+        }
+        .container {
+          margin: 0;
+          padding: 0;
+        }
+        .page {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+        }
+      `}
+      </style>
       <div className="page" style={{ ...style, backgroundColor: "#00D387" }}>
         <h1 data-aos="fade-up">ECOBUCKS : 절약하고 쇼핑해요</h1>
       </div>

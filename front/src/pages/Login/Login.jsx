@@ -36,10 +36,8 @@ function LoginForm() {
       });
       navigate("/", { replace: true });
     } catch (err) {
-      if (err.response.status === 400) {
-        alert(err.response.data);
-      }
-      console.log("로그인에 실패하였습니다.\n", err);
+        alert(err.response.data.message);
+
     }
   };
 
