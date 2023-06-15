@@ -11,7 +11,6 @@ import { participationModel } from "../db/schemas/challenge-participation.js";
 // 1분마다 update 테스트용 : '*/1 * * * *' 
 
 export async function scheduleChallenge() {
-  console.log("scheduleChallenge")
   const now = moment().tz('Asia/Seoul').format();
   console.log(now);
   cron.schedule('0 15 * * *', async function() { 
@@ -33,7 +32,6 @@ export async function scheduleChallenge() {
         console.log('이미지 삭제: ',participation.imageId); 
         const image = await Image.findById({_id: participation.imageId})  
         if(image){
-          console.log('image: ',image);
           if (image.path)
             fs.unlinkSync(image.path);
           await Image.deleteImage( participation.imageId ) 

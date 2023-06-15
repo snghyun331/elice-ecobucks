@@ -51,10 +51,8 @@ class productService {
     const totalPages = Math.ceil(count / limit)
     let test ={}
     const newProducts = await Promise.all(products.map(async (product) => {
-      console.log('product: ',product);
       const image = await Image.findById({ _id: product.imageId });
-      // console.log('image: ',image);
-      console.log('product: ',product);
+   
       if (image) {
         return {
           ...product, 
@@ -65,7 +63,6 @@ class productService {
         };
       }
       }));
-      console.log("newProducts: ", newProducts);
     return { newProducts, count };
   }
 

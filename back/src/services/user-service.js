@@ -175,7 +175,7 @@ class userAuthService {
 
   static async getUserMyPageChallenges({ userId }) {
     try {
-      const participations = await ChallengeParticipation.find({ userId });
+      const participations = await ChallengeParticipation.findById({ _id: userId });
       const populatedParticipations = await ChallengeParticipation.populate(participations, [
         { path: 'challengeId', select: 'title createdAt updatedAt' }
       ]);

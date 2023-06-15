@@ -9,7 +9,6 @@ const commentController = {
       const challengeId = req.params.challengeId
       const userId = req.currentUserId;
       const { content } = req.body;
-      console.log(challengeId)
       const challenge = await CommentService.createComment({ userId, challengeId : challengeId, content });
 
       res.status(CREATED).send(challenge);

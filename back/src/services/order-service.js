@@ -61,7 +61,6 @@ const orderService = {
                 // }
     
                 const { productName, price, place, createdAt } = order;
-                console.log(productName, price, place, createdAt)
     
                 return {
                     date: createdAt,
