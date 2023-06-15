@@ -212,10 +212,7 @@ const Mall = () => {
     }
   };
   const handleLocate = (selectedItem) => {
-<<<<<<< HEAD
-    window.scrollTo(100,100);
-=======
->>>>>>> 0825207c8b1fb992e3b17599d6914f2669987ceb
+    window.scrollTo(100, 100);
     setItemLocate(selectedItem.location);
   };
 
@@ -332,7 +329,7 @@ const Mall = () => {
                 >
                   <Card.Body className="card-body">
                     <img src={item.path} width="200rem" height="200rem"
-                    style={{ marginBottom:"10px" }} />
+                      style={{ marginBottom: "10px" }} />
                     <Card.Title className="card-title">
                       {item.name}
                     </Card.Title>
@@ -361,7 +358,7 @@ const Mall = () => {
                       />
                       {item.place}
                     </Card.Text>
-                  
+
                     <Card.Text className="card-text">
                       재고: {item.stock}
                     </Card.Text>
