@@ -1,4 +1,6 @@
-// Intro.js
+import { ShoppingBagIcon } from "@heroicons/react/20/solid";
+import { MapPinIcon } from "@heroicons/react/20/solid";
+
 import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -62,7 +64,7 @@ const Intro = () => {
               fontSize: "4em",
               textAlign: "left",
               marginBottom: "50px",
-              lineHeight: '150%'
+              lineHeight: "150%",
             }}
           >
             절약 인증하고
@@ -239,7 +241,180 @@ const Intro = () => {
       </div>
 
       <div className="page" style={{ ...style, backgroundColor: "#60FFAA " }}>
-        <h1 data-aos="fade-up">마일리지로 저렴하게 쇼핑하세요</h1>
+        {/* 카드예시데이터 */}
+        <Container
+          className="d-flex justify-content-between overflow-hidden mt-4"
+          style={{
+            maxWidth: "60vw",
+            position: "absolute",
+            left: "-45px",
+            textAlign: 'left'
+          }}
+          data-aos="fade-right"
+        >
+          <Card style={{ width: "20rem", height: "20rem", marginBottom: 20, margin: 20 }}>
+            <Card.Body className="card-body">
+              <Card.Title className="card-title">
+                <span>상품명:</span> 콘샐러드빵
+              </Card.Title>
+              <Card.Text className="card-text">가격: 1,000</Card.Text>
+              <Card.Text
+                className="card-text"
+                style={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {/* <Button variant="primary" style={{ borderColor: 'transparent', backgroundColor: "#fff" }} onClick={() => handleLocate(item)}> */}
+                <MapPinIcon
+                  alt="위치찾기"
+                  color="#009960"
+                  style={{
+                    width: "25px",
+                    marginRight: "5px",
+                    marginBottom: "3px",
+                    height: "30px",
+                  }}
+                />
+                서울시 에코구 74 에코빵집
+              </Card.Text>
+              <Card.Text className="card-text">판매자: 수호천사</Card.Text>
+              <Card.Text className="card-text">재고: 4</Card.Text>
+              <Card.Text className="card-text">
+                설명: 오늘 만든 빵입니다. 마감시간이 다가와 저렴하게 내놓았어요.
+              </Card.Text>
+
+              <ShoppingBagIcon
+                color="#00D387"
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  position: "absolute",
+                  bottom: 30,
+                  right: 15,
+                }}
+              />
+            </Card.Body>
+          </Card>
+
+          <Card style={{ width: "20rem", height: "20rem", marginBottom: 20, margin: 20 }}>
+            <Card.Body className="card-body">
+              <Card.Title className="card-title">
+                <span>상품명:</span> 햇양파
+              </Card.Title>
+              <Card.Text className="card-text">가격: 500</Card.Text>
+              <Card.Text
+                className="card-text"
+                style={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {/* <Button variant="primary" style={{ borderColor: 'transparent', backgroundColor: "#fff" }} onClick={() => handleLocate(item)}> */}
+                <MapPinIcon
+                  alt="위치찾기"
+                  color="#009960"
+                  style={{
+                    width: "25px",
+                    marginRight: "5px",
+                    marginBottom: "3px",
+                    height: "30px",
+                    cursor: "pointer",
+                  }}
+                />
+                서울시 전력구 44-1 행복청과
+              </Card.Text>
+              <Card.Text className="card-text">판매자: 양파요정</Card.Text>
+              <Card.Text className="card-text">재고: 2</Card.Text>
+              <Card.Text className="card-text">
+                설명: 조금 물렀지만 양파즙 만들기에 적합해요.
+              </Card.Text>
+
+              <ShoppingBagIcon
+                color="#00D387"
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  cursor: "pointer",
+                  position: "absolute",
+                  bottom: 30,
+                  right: 15,
+                }}
+              />
+            </Card.Body>
+          </Card>
+
+          <Card style={{ width: "20rem", height: "20rem", marginBottom: 20 , margin: 20 }}>
+            <Card.Body className="card-body">
+              <Card.Title className="card-title">
+                <span>상품명:</span> 떡볶이
+              </Card.Title>
+              <Card.Text className="card-text">가격: 2,000</Card.Text>
+              <Card.Text
+                className="card-text"
+                style={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {/* <Button variant="primary" style={{ borderColor: 'transparent', backgroundColor: "#fff" }} onClick={() => handleLocate(item)}> */}
+                <MapPinIcon
+                  alt="위치찾기"
+                  color="#009960"
+                  style={{
+                    width: "25px",
+                    marginRight: "5px",
+                    marginBottom: "3px",
+                    height: "30px",
+                    cursor: "pointer",
+                  }}
+                />
+                서울시 파워구 12-3 코코분식
+              </Card.Text>
+              <Card.Text className="card-text">판매자: 손큰맘</Card.Text>
+              <Card.Text className="card-text">재고: 12</Card.Text>
+              <Card.Text className="card-text">
+                설명: 맛있는 시장떡볶이입니다. 마감 전에 싸게 가져가세요.
+              </Card.Text>
+
+              <ShoppingBagIcon
+                color="#00D387"
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  cursor: "pointer",
+                  position: "absolute",
+                  bottom: 30,
+                  right: 15,
+                }}
+              />
+            </Card.Body>
+          </Card>
+          
+        </Container>
+        <Container style={{ alignItems: "right" }}>
+          <h1
+            data-aos="fade-up"
+            style={{
+              color: "black",
+              fontSize: "4em",
+              textAlign: "left",
+              marginBottom: "50px",
+              left: '920px',
+              lineHeight: "150%",
+              position: "absolute",
+              right: "5%",
+              transform: "translateY(-50%)",
+            }}
+          >
+            마일리지로
+            <br />
+            저렴하게 쇼핑해요
+          </h1>
+        </Container>
       </div>
     </Container>
   );
