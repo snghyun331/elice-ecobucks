@@ -199,7 +199,7 @@ const Blog = () => {
       ) : (
         <Container
           className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
-          style={{ marginTop: '200px', paddingTop: '30px', width: "80%", border: "1px solid #c2c2c2", backgroundColor: 'white', borderRadius: '10px' }}
+          style={{ marginTop: '120px', paddingTop: '30px'}}
         >
           <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
             팁 작성하기
@@ -213,7 +213,7 @@ const Blog = () => {
               {blogList.map(item => (
                 <Col key={item._id}>
                   <Card
-                    style={{ width: "20rem", height: "20rem" }} >
+                    style={{ width: "20rem", height: "20rem", marginBottom:10 }} >
                     <Card.Body className="card-body">
                       <div className="d-flex align-items-center">
                         <Card.Title className="card-title flex-grow-1">
