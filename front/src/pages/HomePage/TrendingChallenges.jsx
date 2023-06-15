@@ -57,7 +57,7 @@ const TrendingChallenges = () => {
             borderRadius: "10px",
           }}
         ></div>
-        <Link to="/blog" className="more-link">
+        <Link to="/challenge" className="more-link">
           더보기
         </Link>
         <Carousel
