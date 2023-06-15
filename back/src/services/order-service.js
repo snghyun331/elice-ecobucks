@@ -73,8 +73,6 @@ const orderService = {
         const { orders, count } = await order.findAndCountByBuyer({ buyer, skip, limit });
         //const orders = await order.findAll({ buyer: buyer });
         //const count = orders.length;
-        console.log('count: ',count);  
-        console.log('orders: ',orders);  
         const orderDetails = await Promise.all(
             orders.map(async (order) => {
                 const { productId, createdAt } = order;
@@ -95,7 +93,7 @@ const orderService = {
                 };
             })
         );
-        console.log('orderDetails: ',orderDetails);
+        // console.log('orderDetails: ',orderDetails);
 
         return { orderDetails, count };
     },

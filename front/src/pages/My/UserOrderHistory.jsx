@@ -3,35 +3,43 @@ import { Table, Pagination, Container } from "react-bootstrap";
 import moment from "moment";
 import * as Api from "../../api";
 import { formatDate } from "../../util/common";
+import PagenationBar from "../Modal/PaginationBar";
 
 const UserOrderHistory = ({ user }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const ordersPerPage = 5;
   const [orderHistory, setOrderHistory] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const fetchOrderHistory = async () => {
       try {
-        const res = await Api.get("mypage/orders");
+        const res = await Api.get(`mypage/orders?page=${currentPage}`);
+        console.log('current', currentPage)
         if (res.data.message) {
           setOrderHistory([])
-        } else { setOrderHistory(res.data.orderDetails) };
+        } else {
+          setOrderHistory(res.data.orderDetails);
+          setTotalPages(res.data.totalPages)
+        };
       } catch (err) {
-        console.error("Failed to fetch order history:", err);
+        console.error("주문 내역 불러오기를 실패하였습니다:", err);
       }
     };
 
     fetchOrderHistory();
-  }, [user]);
+  }, [currentPage]);
 
   // 현재 페이지에 해당하는 주문 내역 가져오기
-  const indexOfLastOrder = currentPage * ordersPerPage;
-  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  // const indexOfLastOrder = currentPage * ordersPerPage;
+  // const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
   // const currentOrders = orderHistory.slice(indexOfFirstOrder, indexOfLastOrder);
 
   // 페이지네이션 클릭 시 페이지 변경
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const handlePageChange = (newPage) => {
+    if (newPage <= totalPages) {
+      console.log(newPage);
+      setCurrentPage(newPage);
+    };
   };
 
   return (
@@ -47,8 +55,8 @@ const UserOrderHistory = ({ user }) => {
         </thead>
         <tbody>
           {orderHistory
-            .sort((a, b) => new Date(b.date) - new Date(a.date)) // 날짜를 최신순으로 정렬
-            .slice((currentPage - 1) * ordersPerPage, currentPage * ordersPerPage) // 현재 페이지에 해당하는 주문 내역 선택
+            // .sort((a, b) => new Date(b.date) - new Date(a.date)) // 날짜를 최신순으로 정렬
+            // .slice((currentPage - 1) * ordersPerPage, currentPage * ordersPerPage) // 현재 페이지에 해당하는 주문 내역 선택
             .map((order, index) => (
               <tr key={index} style={{ fontSize: '0.8rem' }}>
                 <td style={{ width: '25%' }}>{formatDate(order.date)}</td>
@@ -60,9 +68,9 @@ const UserOrderHistory = ({ user }) => {
         </tbody>
       </Table>
 
-      {orderHistory.length > ordersPerPage && (
+      {(
         <Container className="d-flex justify-content-center">
-          <Pagination size='sm'>
+          {/* <Pagination size='sm'>
             {Array.from({ length: Math.ceil(orderHistory.length / ordersPerPage) }).map((_, index) => (
               <Pagination.Item
                 key={index + 1}
@@ -72,7 +80,14 @@ const UserOrderHistory = ({ user }) => {
                 {index + 1}
               </Pagination.Item>
             ))}
-          </Pagination>
+          </Pagination> */}
+
+          <PagenationBar
+            content={orderHistory}
+            totalPages={totalPages}
+            handlePageChange={handlePageChange}
+            currentPage={currentPage}
+          />
         </Container>
       )}
     </Container>

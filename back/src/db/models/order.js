@@ -18,10 +18,11 @@ class order{
 
     static async findAndCountByBuyer({ buyer, skip, limit }) {
         const orders = await orderModel.find({ buyer })
-                          .skip(skip)
-                          .limit(limit)
-                          .exec();
-        const count = await orderModel.countDocuments();
+                        .sort({createdAt: -1})  
+                        .skip(skip)
+                        .limit(limit)
+                        .exec();
+        const count = await orderModel.countDocuments({buyer});
         return { orders, count };
       }
 }

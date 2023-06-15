@@ -11,7 +11,8 @@ import MallProductEdit from "./MallProductEdit";
 import MapContainer from "./MapContainer";
 import PaginationBar from "../Modal/PaginationBar";
 import placelocate from "../../assets/placeholder.png"
-
+import { ShoppingBagIcon, MapPinIcon } from "@heroicons/react/20/solid"
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline"
 const Mall = () => {
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
@@ -23,24 +24,17 @@ const Mall = () => {
 
   ///pagination////
   const [currentPage, setCurrentPage] = useState(1);
-  // const [perPage, setPerPage] = useState(8);/
   const [totalPages, setTotalPages] = useState(1);
   /////////////////
 
-
-  // const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(8);
   const handlePageChange = (newPage) => {
-    // console.log("newPage: ", newPage); 
-    if (newPage <= totalPages) {
+    if (newPage <= totalPages || newPage > 0) {
       setCurrentPage(newPage)
+    } else {
+      console.log('!')
+      setCurrentPage(1)
     };
   };
-  // const sortedList = list.sort((a, b) => (a.stock === 0 ? 1 : -1)); //전부다 sort
-  // const currentList = sortedList.slice( //8개만 보여주는 
-  //   (currentPage - 1) * itemsPerPage,
-  //   currentPage * itemsPerPage
-  // );
 
   const [sellModalOpen, setSellModalOpen] = useState(false);
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
@@ -114,7 +108,6 @@ const Mall = () => {
     try {
       // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
       const res = await Api.get(`products?page=${currentPage}`);
-      console.log(currentPage, 'a')
 
       // console.log("db data: ", res)
       const newList = res.data.products.map(item => {
@@ -221,7 +214,7 @@ const Mall = () => {
       await Api.delete(`products/${selectedItem._id}`);
 
       const res = await Api.get("products");
-      const newList = res.data.map(item => {
+      const newList = res.data.products.map(item => {
         return {
           name: item.name,
           price: item.price,
@@ -235,6 +228,7 @@ const Mall = () => {
         };
       });
       setList(newList);
+      setTotalPages(res.data.totalPages)
       handleCloseDeleteModal();
     } catch (err) {
       console.log("상품 삭제에 실패했습니다.", err);
@@ -315,10 +309,16 @@ const Mall = () => {
                       <Card.Title className="card-title"><span>상품명:</span> {item.name}</Card.Title>
                       <Card.Text className="card-text">가격: {item.price}</Card.Text>
                       <Card.Text className="card-text">
+                        {/* <Button variant="primary" style={{ borderColor: 'transparent', backgroundColor: "#fff" }} onClick={() => handleLocate(item)}> */}
+                        <MapPinIcon
+                          onClick={() => handleLocate(item)}
+                          alt="위치찾기"
+                          color="#009960"
+                          style={{ width: "25px", marginRight: "5px", marginBottom: "3px", height: "30px", cursor: "pointer" }} />
+                        {/* <img src={placelocate} alt="위치찾기" /> */}
+                        {/* </Button> */}
                         {item.place}
-                        <Button variant="primary" style={{ borderColor: 'transparent', backgroundColor: "#fff" }} onClick={() => handleLocate(item)}>
-                          <img src={placelocate} alt="위치찾기" />
-                        </Button>
+
                       </Card.Text>
                       <Card.Text className="card-text">판매자: {item.sellerName}</Card.Text>
                       <Card.Text className="card-text">재고: {item.stock}</Card.Text>
@@ -326,9 +326,12 @@ const Mall = () => {
 
                       {userState.user._id === item.seller && (
                         <>
-                          <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item._id)}>
+                          {/* <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item._id)}>
                             수정
-                          </Button>
+                          </Button> */}
+                          <PencilSquareIcon color="#00D387"
+                            onClick={() => handleOpenEditModal(item._id)}
+                            style={{ width: "30px", height: "30px", cursor: "pointer" }} />
                           <Modal show={editModalOpen} onHide={handleCloseEditModal} centered>
                             <Modal.Header closeButton>
                               <Modal.Title>상품 수정</Modal.Title>
@@ -350,9 +353,13 @@ const Mall = () => {
                               </Button>
                             </Modal.Footer>
                           </Modal>
-                          <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenDeleteModal(item._id)}>
+                          {/* <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenDeleteModal(item._id)}>
                             삭제
-                          </Button>
+                          </Button> */}
+                          <TrashIcon
+                            color="#00D387"
+                            style={{ width: "30px", height: "30px", cursor: "pointer", marginLeft: "10px" }}
+                            onClick={() => handleOpenDeleteModal(item._id)} />
                           <Modal show={deleteModalOpen} onHide={handleCloseDeleteModal} centered>
                             <Modal.Header closeButton>
                               <Modal.Title>상품 삭제</Modal.Title>
@@ -368,14 +375,19 @@ const Mall = () => {
                         </>
                       )}
                       {item.seller !== userState.user._id && (
-                        <Button
-                          variant="primary"
-                          style={{ margin: "10px", top: "5" }}
+                        // <Button
+                        //   variant="primary"
+                        //   style={{ margin: "10px", top: "5", width: "50px", height: "40px" }}
+                        //   onClick={() => handleOpenPurchaseModal(item)}
+                        //   disabled={item.stock === 0}
+                        // >
+                        //   <ShoppingBagIcon className="h-6 w-6 text-blue-500" />
+                        // </Button>
+                        <ShoppingBagIcon
+                          color="#00D387"
+                          style={{ width: "30px", height: "30px", cursor: "pointer" }}
                           onClick={() => handleOpenPurchaseModal(item)}
-                          disabled={item.stock === 0}
-                        >
-                          구매
-                        </Button>
+                          disabled={item.stock === 0} />
                       )}
                     </Card.Body>
                   </Card>

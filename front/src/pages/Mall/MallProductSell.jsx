@@ -11,7 +11,7 @@ const MallProductSell = ({ onClose }) => {
   // const [stock, setStock] = useState("");
   // const [description, setDescription] = useState("");
   const [location, setLocation] = useState({});
-  const [showModal, setShowModal] = useState(false);    
+  const [showModal, setShowModal] = useState(false);
 
   const [form, setForm] = React.useState({
     name: '',
@@ -19,19 +19,19 @@ const MallProductSell = ({ onClose }) => {
     place: '',
     stock: '',
     description: '',
-    });
+  });
 
-    const { name, price, place, stock, description } = form;
+  const { name, price, place, stock, description } = form;
 
-    const onChange = (e) => {
-      const { name, value} = e.target; 
-      setForm(prevForm => ({
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setForm(prevForm => ({
       ...prevForm,
       [name]: value
-      }))
-      }
-      
-    
+    }))
+  }
+
+
 
   const navigate = useNavigate();
 

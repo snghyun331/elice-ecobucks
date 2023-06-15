@@ -4,7 +4,6 @@ import { Pagination } from 'react-bootstrap';
 const PagenationBar = ({ content, totalPages, handlePageChange, currentPage }
 ) => {
   // 페이지네이션 아이템 생성 함수
-  console.log("totalPages")
   const renderPaginationItems = () => {
     // console.log(currentPage);
     // const totalPages = totalPages2;
@@ -26,7 +25,7 @@ const PagenationBar = ({ content, totalPages, handlePageChange, currentPage }
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: "50px" }}>
       {/* 페이지네이션 컴포넌트 */}
       <Pagination>
         <Pagination.First onClick={() => handlePageChange(1)} />
