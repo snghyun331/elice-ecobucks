@@ -14,7 +14,7 @@ export async function scheduleChallenge() {
   console.log("scheduleChallenge")
   const now = moment().tz('Asia/Seoul').format();
   console.log(now);
-  cron.schedule('*/3 * * * *', async function() { 
+  cron.schedule('0 15 * * *', async function() { 
     try{
       const now = moment().tz('Asia/Seoul').format();
 
@@ -24,14 +24,10 @@ export async function scheduleChallenge() {
         { $set: { isCompleted: true } }
       );
 
-
       //dueDate(마감기한)가 지날때 participation 참여기록삭제, 저장된 이미지도 삭제
       const expiredChallenges = await challengeModel.find({ dueDate: { $lt: now } });
-      //console.log('expiredChallenges: ',expiredChallenges);
       const challengeIds = expiredChallenges.map(challenge => challenge._id);
-      //console.log('challengeIds: ',challengeIds);
       const participations = await participationModel.find({ challengeId: { $in: challengeIds } });
-      //console.log('participations: ',participations);
       for (let participation of participations) {
         //await imageModel.findByIdAndRemove(participation.imageId);
         console.log('이미지 삭제: ',participation.imageId); 
@@ -45,13 +41,10 @@ export async function scheduleChallenge() {
         await participationModel.findByIdAndRemove(participation._id); 
       }
 
-
-
       // 챌린지 참여 할 수 있는 권한 다시 부여
       await participationModel.updateMany(
         { }, { $set: { hasParticipatedToday: false } }
       );
-
 
       console.log('---Updated challenges---');
       console.log(now);

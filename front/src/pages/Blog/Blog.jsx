@@ -44,7 +44,7 @@ const Blog = () => {
   const handleCloseEditModal = () => setEditModalOpen(false);
   const handleOpenEditModal = async (blogId) => {
     try {
-      // console.log("blogId: ", blogId);
+      console.log("blogId: ", blogId);
       const res = await Api.get(`blog/${blogId}`);
       const blog = res.data;
       // console.log("받아온 blog: ", blog);
@@ -247,14 +247,16 @@ const Blog = () => {
               ))}
             </Row>
           </Container>
+
+          <PaginationBar
+            content={blogList}
+            totalPages={totalPages}
+            handlePageChange={handlePageChange}
+            currentPage={currentPage}
+          />
         </Container>
       )}
-      <PaginationBar
-        content={blogList}
-        totalPages={totalPages}
-        handlePageChange={handlePageChange}
-        currentPage={currentPage}
-      />
+
     </div>
   );
 };
