@@ -75,13 +75,12 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
   }, [challenge]);
 
   return (
-    <Container className="mt-5">
-      <h2>챌린지 내용 확인</h2>
+    <Container className="mt-1" style={{paddingLeft: '90px', paddingRight: '90px'}}>
       <Card className="m-2">
         <Card.Body>
-          <Card.Title>{challenge.title}</Card.Title>
+          <Card.Title><h4>{challenge.title}</h4></Card.Title>
           <Card.Text>{challenge.content}</Card.Text>
-          <Card.Text>
+          <Card.Text style={{fontSize: '0.8em', textAlign: 'right'}}>
             작성일자: {formatDate(challenge.createdAt)}
             <br />
             마감일자: {formatDate(challenge.dueDate)}
@@ -90,14 +89,25 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
             <br />
             참여인원: {challenge.participantsCount.toLocaleString()} 명
           </Card.Text>
-
+    <hr />
           <ChallengeComments challenge={challenge} />
-
         </Card.Body>
       </Card>
 
       <>
-        <Button className="mt-3" onClick={handleJoinClick}>
+        <Button
+          className="mt-3 ms-2"
+          onClick={handleJoinClick}
+          variant="light"
+          style={{
+
+            marginBottom: "30px",
+            color: "white",
+            borderRadius: "0px",
+            width: "10%",
+            backgroundColor: "#00D387",
+          }}
+        >
           참가하기
         </Button>
       </>
@@ -113,9 +123,18 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
           >
             <a>
               <Button
-                className="mt-3"
+                className="mt-3 ms-2"
                 onClick={handleUpdateClick}
                 disabled={challenge.participantsCount >= 1}
+                variant="light"
+                style={{
+      
+                  marginBottom: "30px",
+                  color: "white",
+                  borderRadius: "0px",
+                  width: "10%",
+                  backgroundColor: "#00D387",
+                }}
               >
                 수정하기
               </Button>
@@ -132,9 +151,18 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
           >
             <a>
               <Button
-                className="mt-3"
+                className="mt-3 ms-2"
                 onClick={handleDeleteClick}
                 disabled={challenge.participantsCount >= 1}
+                variant="light"
+                style={{
+      
+                  marginBottom: "30px",
+                  color: "white",
+                  borderRadius: "0px",
+                  width: "10%",
+                  backgroundColor: "#00D387",
+                }}
               >
                 삭제하기
               </Button>
@@ -142,7 +170,18 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
           </OverlayTrigger>
         </>
       )}
-      <Button onClick={onBackToListClick} className="mt-3">
+      <Button
+        onClick={onBackToListClick}
+        className="mt-3 ms-2"
+        variant="light"
+        style={{
+          marginBottom: "30px",
+          color: "white",
+          borderRadius: "0px",
+          width: "10%",
+          backgroundColor: "#00D387",
+        }}
+      >
         목록으로
       </Button>
 
