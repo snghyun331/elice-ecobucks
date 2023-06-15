@@ -16,6 +16,7 @@ import PaginationBar from "../Modal/PaginationBar";
 import placelocate from "../../assets/placeholder.png";
 import { ShoppingBagIcon, MapPinIcon } from "@heroicons/react/20/solid";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { formatDateTime } from "../../util/common";
 const Mall = () => {
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
@@ -124,6 +125,7 @@ const Mall = () => {
           sellerName: item.sellerName,
           location: item.location,
           path: item.path,
+          createdAt: item.createdAt,
           _id: item._id, //상품 ObjectId
         };
       });
@@ -217,32 +219,13 @@ const Mall = () => {
       console.log("삭제할 상품: ", selectedItem);
       await Api.delete(`products/${selectedItem._id}`);
       fetchData();
-      // const res = await Api.get("products");
-      // const newList = res.data.products.map((item) => {
-      //   return {
-      //     name: item.name,
-      //     price: item.price,
-      //     place: item.place,
-      //     stock: item.stock,
-      //     description: item.description,
-      //     seller: item.seller,
-      //     sellerName: item.sellerName,
-      //     location: item.location,
-      //     _id: item._id, //상품 ObjectId
-      //   };
-      // });
-      // setList(newList);
-      // setTotalPages(res.data.totalPages);
       handleCloseDeleteModal();
     } catch (err) {
       console.log("상품 삭제에 실패했습니다.", err);
     }
   };
   const handleLocate = (selectedItem) => {
-    // console.log("handleLocate: ", selectedItem);
-    // console.log("x좌표: ", selectedItem.location.x);
-    // console.log("y좌표: ", selectedItem.location.y);
-    // setSelectedItem(selectedItem);
+    window.scrollTo(100,100);
     setItemLocate(selectedItem.location);
   };
 
@@ -315,7 +298,7 @@ const Mall = () => {
         </Container>
 
 
-        <Container className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center">
+        <Container className="pt-2 pb-10 d-flex flex-column align-items-center justify-content-center">
           <Button
             variant="light"
             style={{
@@ -324,6 +307,7 @@ const Mall = () => {
               backgroundColor: "#00D387",
               color: "white",
               fontWeight: "900",
+              marginBottom: "10px"
             }}
             onClick={handleOpenSellModal}
           >
@@ -354,12 +338,13 @@ const Mall = () => {
             {list.map((item) => (
               <Col key={item._id}>
                 <Card
-                  style={{ width: "20rem", height: "20rem", marginBottom: 20 }}
+                  style={{ width: "20rem", height: "32rem", marginBottom: 20 }}
                 >
                   <Card.Body className="card-body">
-                    <img src={item.path} width="300" height="200" />
+                    <img src={item.path} width="200rem" height="200rem"
+                    style={{ marginBottom:"10px" }} />
                     <Card.Title className="card-title">
-                      <span>상품명:</span> {item.name}
+                      {item.name}
                     </Card.Title>
                     <Card.Text className="card-text">
                       가격: {item.price}
@@ -387,11 +372,12 @@ const Mall = () => {
                       />
                       {item.place}
                     </Card.Text>
-                    <Card.Text className="card-text">
-                      판매자: {item.sellerName}
-                    </Card.Text>
+                  
                     <Card.Text className="card-text">
                       재고: {item.stock}
+                    </Card.Text>
+                    <Card.Text className="card-text">
+                      등록시간: {formatDateTime(item.createdAt)}
                     </Card.Text>
                     <Card.Text className="card-text">
                       설명: {item.description}
