@@ -2,7 +2,7 @@
 export const PRODUCT_PAGE_LIMIT = 6 
 
 //파일 업로드 사이즈
-export const MAX_FILE_SIZE = 3 // 단위: MB
+export const MAX_FILE_SIZE = 5 // 단위: MB
 
 // 에러 상태 코드
 //--- 2xx: 성공 (Success) ---
