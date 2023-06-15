@@ -81,7 +81,7 @@ const UserEditForm = ({ onClose, user }) => {
 
       console.log(res);
       if (res.status === 200) {
-        alert("변경된 정보가 저장되었습니다.");
+        showSuccess("변경된 정보가 저장되었습니다.");
 
         const userData = await Api.get("current");
         const user = userData.data;
@@ -93,10 +93,10 @@ const UserEditForm = ({ onClose, user }) => {
 
         onClose();
       } else {
-        alert("정보 변경에 실패했습니다.");
+        showAlert("정보 변경에 실패했습니다.");
       }
     } catch (error) {
-      alert("정보 변경에 실패했습니다.");
+      alshowAlertert("정보 변경에 실패했습니다.");
       console.error(error);
     }
   };

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, ButtonGroup, Container, Form, Alert } from "react-bootstrap";
 import * as Api from "../../api";
+import { showAlert } from "../../assets/alert";
 
 const ChallengeCreate = ({ onBackToListClick }) => {
   const [title, setTitle] = useState("");
@@ -20,7 +21,7 @@ const ChallengeCreate = ({ onBackToListClick }) => {
       });
       window.location.reload();
     } catch (err) {
-      alert("모든 값을 입력해주세요.");
+      showAlert("모든 값을 입력해주세요.");
       console.log("챌린지 등록에 실패하였습니다.", err);
     }
   };
