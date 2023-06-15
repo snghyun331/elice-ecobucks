@@ -65,13 +65,27 @@ function ChallengePage() {
           borderRadius: "10px",
         }}
       >
+        {buttonClicked ? null : (
+          <Button
+            variant="light"
+            style={{
+              marginRight: "865px",
+              display: "block",
+              marginBottom: "30px",
+              color: 'white',
+              borderRadius: "0px",
+              width: '13%',
+              backgroundColor: "#00D387",
+            }} // 스타일 추가
+            onClick={handleCreateButtonClick}
+          >
+            챌린지 모집
+          </Button>
+        )}
         {showCreateForm ? (
           <ChallengeCreate onBackToListClick={handleBackToListClick} />
         ) : (
           <ChallengeView />
-        )}
-        {buttonClicked ? null : (
-          <Button onClick={handleCreateButtonClick}>챌린지 모집</Button>
         )}
       </Container>
     </div>

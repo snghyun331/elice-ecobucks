@@ -10,7 +10,6 @@ const ChallengeComments = ({ challenge }) => {
   const [editedComment, setEditedComment] = useState("");
   const userState = useContext(UserStateContext);
 
-
   const fetchComments = async () => {
     try {
       const res = await Api.get(`challenges/${challenge._id}/comments`);
@@ -178,7 +177,18 @@ const ChallengeComments = ({ challenge }) => {
             required
           />
         </Form.Group>
-        <Button type="submit" className="mt-3">
+        <Button
+          type="submit"
+          className="mt-3"
+          variant="light"
+          style={{
+            marginBottom: "30px",
+            color: "white",
+            borderRadius: "0px",
+            width: "10%",
+            backgroundColor: "#00D387",
+          }}
+        >
           댓글 추가
         </Button>
       </Form>

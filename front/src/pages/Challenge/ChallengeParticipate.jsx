@@ -41,20 +41,19 @@ const ChallengeParticipate = ({ show, onClose, challenge }) => {
 
   const confirmUpload = async () => {
     try {
-
       //이미지 전송 통신
       const formData = new FormData();
-      formData.append('image', selectedFile)
-      console.log('폼데이터', formData)
-      const imageRes = await Api.postFile(('images/challenges/upload'), formData);
-      console.log('이미지레스', imageRes)
+      formData.append("image", selectedFile);
+      console.log("폼데이터", formData);
+      const imageRes = await Api.postFile("images/challenges/upload", formData);
+      console.log("이미지레스", imageRes);
 
       //참가 통신
-      console.log('이미지아이디', imageRes.data._id)
+      console.log("이미지아이디", imageRes.data._id);
       const res = await Api.post(`challenges/${challenge._id}/participants`, {
         imageId: imageRes.data._id,
       });
-      
+
       showSuccess("인증사진 업로드가 완료되었습니다.");
 
       const userData = await Api.get("current");
@@ -74,58 +73,73 @@ const ChallengeParticipate = ({ show, onClose, challenge }) => {
 
   return (
     <Modal show={show} style={{ zIndex: "1050", marginTop: "50px" }}>
-        <Modal.Header closeButton onHide={onClose} >    <Modal.Title>참가하기</Modal.Title>
-  </Modal.Header>
-    <Modal.Body>
-      <h4>인증사진 업로드</h4>
-      <Alert variant="danger" className="small">
-        올바르지 않은 사진이 업로드 된 경우 마일리지 지급이 취소됩니다.
-        <br />
-        반드시 참여를 인증할 수 있는 사진만 올려주세요.
-      </Alert>
-      <Form.Group>
-        <Form.Control
-          type="file"
-          onChange={handleFileChange}
-          accept="image/*"
-        />
-        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-      </Form.Group>
-      {selectedFile && (
-        <div className="mt-3">
-          <h6>미리보기</h6>
-          <Image src={previewURL} alt="Selected Image" thumbnail />
-        </div>
-      )}
-      <Button variant="light" onClick={handleUpload}>
-        인증 완료하기
-      </Button>
-      <Button variant="light" onClick={onClose}>
-        돌아가기
-      </Button>
+      <Modal.Header closeButton onHide={onClose}>
+        {" "}
+        <Modal.Title>참가하기</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <h4>인증사진 업로드</h4>
+        <Alert variant="danger" className="small">
+          올바르지 않은 사진이 업로드 된 경우 마일리지 지급이 취소됩니다.
+          <br />
+          반드시 참여를 인증할 수 있는 사진만 올려주세요.
+        </Alert>
+        <Form.Group className="mb-3">
+          <Form.Control
+            type="file"
+            onChange={handleFileChange}
+            accept="image/*"
+          />
+          {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+        </Form.Group>
+        {selectedFile && (
+          <div style={{paddingBottom: '10px'}}>
+            <h6>미리보기</h6>
+            <Image src={previewURL} alt="Selected Image" thumbnail />
+          </div>
+        )}
+        <Button
+          variant="light"
+          onClick={handleUpload}
+          style={{
+            marginBottom: "30px",
+            color: "white",
+            borderRadius: "0px",
+            backgroundColor: "#00D387",
+          }}
+        >
+          인증 완료하기
+        </Button>
+        <Button variant="light" onClick={onClose}           style={{
+            marginBottom: "30px",
+            borderRadius: "0px",
+            marginLeft: '10px'
+          }}>
+          돌아가기
+        </Button>
 
-      <Modal
-        show={showConfirmation}
-        onHide={handleConfirmationClose}
-        style={{ marginTop: "200px", zIndex: 1050 }}
-      >
-        <Modal.Header style={{ backgroundColor: "#fffee3" }}>
-          <Modal.Title>반드시 확인해주세요.</Modal.Title>
-        </Modal.Header>
-        <Modal.Body style={{ backgroundColor: "#fffee3" }}>
-          올바르지 않은 사진이 업로드 된 경우 마일리지 지급이 취소됩니다. <br />{" "}
-          진행하시겠습니까?
-        </Modal.Body>
-        <Modal.Footer style={{ backgroundColor: "#fffee3" }}>
-          <Button variant="primary" onClick={confirmUpload}>
-            진행
-          </Button>
-          <Button variant="secondary" onClick={handleConfirmationClose}>
-            돌아가기
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </Modal.Body>
+        <Modal
+          show={showConfirmation}
+          onHide={handleConfirmationClose}
+          style={{ marginTop: "200px", zIndex: 1050 }}
+        >
+          <Modal.Header style={{ backgroundColor: "#fffee3" }}>
+            <Modal.Title>반드시 확인해주세요.</Modal.Title>
+          </Modal.Header>
+          <Modal.Body style={{ backgroundColor: "#fffee3" }}>
+            올바르지 않은 사진이 업로드 된 경우 마일리지 지급이 취소됩니다.{" "}
+            <br /> 진행하시겠습니까?
+          </Modal.Body>
+          <Modal.Footer style={{ backgroundColor: "#fffee3" }}>
+            <Button variant="primary" onClick={confirmUpload}>
+              진행
+            </Button>
+            <Button variant="secondary" onClick={handleConfirmationClose}>
+              돌아가기
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </Modal.Body>
     </Modal>
   );
 };
