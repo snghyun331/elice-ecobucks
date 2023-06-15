@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
+import { Form, Container } from "react-bootstrap"
 
 const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
   const [name, setName] = useState("");
@@ -51,85 +52,78 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
           justifyContent: "center",
         }}
       >
-        <div style={{ width: "100%", maxWidth: "720px", padding: "60px" }}>
-          <span>상품</span>
-          <textarea
-            style={{
-              width: "100%",
-              height: "20px",
-              padding: "16px",
-              fontSize: "16px",
-              lineHeight: "20px",
-              marginBottom: "16px",
-            }}
-            placeholder={selectedItem.name}
-            value={name}
-            onChange={(event) => {
-              setName(event.target.value);
-            }}
-          />
-          <span>가격</span>
-          <textarea
-            style={{
-              width: "100%",
-              height: "20px",
-              padding: "16px",
-              fontSize: "16px",
-              lineHeight: "20px",
-              marginBottom: "16px",
-            }}
-            placeholder={selectedItem.price}
-            value={price}
-            onChange={(event) => {
-              setPrice(event.target.value);
-            }}
-          />
-          <span>수량</span>
-          <textarea
-            style={{
-              width: "100%",
-              height: "20px",
-              padding: "16px",
-              fontSize: "16px",
-              lineHeight: "20px",
-              marginBottom: "16px",
-            }}
-            placeholder={selectedItem.stock}
-            value={stock}
-            onChange={(event) => {
-              setStock(event.target.value);
-            }}
-          />
-          <span>설명</span>
-          <textarea
-            style={{
-              width: "100%",
-              height: "100px",
-              padding: "16px",
-              fontSize: "16px",
-              lineHeight: "20px",
-              marginBottom: "16px",
-            }}
-            placeholder={selectedItem.description}
-            value={description}
-            onChange={(event) => {
-              setDescription(event.target.value);
-            }}
-          />
+        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>상품명</Form.Label>
+        <Container
+          className="text-muted mb-2"
+          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
+        >
+          상품명을 적어주세요.
+        </Container>
+        <Form.Control
+          className="form-control-small"
+          name="title"
+          value={name}
+          onChange={(event) => {
+            setName(event.target.value);
+          }}
+          placeholder={selectedItem.name}
+        />
+        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>가격</Form.Label>
+        <Container
+          className="text-muted mb-2"
+          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
+        >
+          가격을 적어주세요.
+        </Container>
+        <Form.Control
+          className="form-control-small"
+          name="price"
+          value={price}
+          onChange={(event) => {
+            setPrice(event.target.value);
+          }}
+          placeholder={selectedItem.price}
+        />
+        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>수량</Form.Label>
+        <Container
+          className="text-muted mb-2"
+          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
+        >
+          수량을 적어주세요.
+        </Container>
+        <Form.Control
+          className="form-control-small"
+          name="stock"
+          value={stock}
+          onChange={(event) => {
+            setStock(event.target.value);
+          }}
+          placeholder={selectedItem.stock}
+        />
+        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>설명</Form.Label>
+        <Container
+          className="text-muted mb-2"
+          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
+        >
+          설명을 적어주세요.
+        </Container>
+        <Form.Control
+          className="form-control-large"
+          name="description"
+          value={description}
+          onChange={(event) => {
+            setDescription(event.target.value);
+          }}
+          placeholder={selectedItem.description}
+        />
 
-          <button
-            style={{
-              padding: "8px 16px",
-              fontSize: "16px",
-              borderWidth: "1px",
-              borderRadius: "8px",
-              cursor: "pointer",
-            }}
-            onClick={handleSubmit}
-          >
-            상품 수정하기
-          </button>
-        </div>
+
+        <button
+          className="btn-default"
+          onClick={handleSubmit}
+        >
+          상품 수정하기
+        </button>
       </div>
     </div>
   );
