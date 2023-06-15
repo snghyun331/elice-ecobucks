@@ -42,7 +42,7 @@ class Validation {
     place: Joi.string(),
     stock: Joi.number().integer(),
     description: Joi.string(),
-    imageId: Joi.string().required()
+    imageId: Joi.string()
   })
 
   static imageCreateSchema = Joi.object({

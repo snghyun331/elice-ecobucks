@@ -62,11 +62,12 @@ const productController = {
       console.log("page : ", page);
       console.log("skip : ", skip);
 
-      const { products, count } = await productService.findAllProducts(skip, limit);
+      const { newProducts, count } = await productService.findAllProducts(skip, limit);
+      console.log("newProducts: ",newProducts);
       res.status(OK).send({
         currentPage: page,
         totalPages: Math.ceil(count / limit),
-        products,
+        newProducts,
       });
     } catch (error) {
       next(error);

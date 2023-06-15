@@ -50,19 +50,19 @@ class productService {
     const { products, count } = await Product.findAndCountAll(skip, limit);
     const newProducts = await Promise.all(products.map(async (product) => {
       const image = await Image.findById({ _id: product.imageId });
-      console.log('image: ',image);
+      // console.log('image: ',image);
+      console.log('product: ',product);
       if (image) {
         return {
-          ...product._doc, 
+          ...product, 
           imageId: image._id,
           path: image.path,
           createdAt: updateTime.toKST(product.createdAt),
           updatedAt: updateTime.toKST(product.updatedAt),  
         };
-      } 
-      
+      }
       }));
-
+      console.log("newProducts: ", newProducts);
     return { newProducts, count };
   }
 
