@@ -29,13 +29,15 @@ const Blog = () => {
   const [itemsPerPage] = useState(6);
   const [totalPages, setTotalPages] = useState(1);
   const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
+    if (newPage < 1) {
+      setCurrentPage(1)
+    } else if (newPage > totalPages) {
+      setCurrentPage(totalPages)
+    } else {
+      setCurrentPage(newPage);
+    }
   };
-  // const sortedList = blogList.sort((a, b) => b.likeCount - a.likeCount)
-  // const currentList = sortedList.slice(
-  //   (currentPage - 1) * itemsPerPage,
-  //   currentPage * itemsPerPage
-  // );
+
   const handleReadMoreClick = (blog) => {
     setSelectedBlog(blog);
   };
@@ -89,7 +91,7 @@ const Blog = () => {
     try {
       // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
       const res = await Api.get(`blog?page=${currentPage}`);
-      // console.log("db data: ", res.data)
+      console.log("db data: ", res.data)
 
       const newList = res.data.posts.map(item => {
         return {
@@ -204,15 +206,30 @@ const Blog = () => {
           className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
           style={{ marginTop: '120px', paddingTop: '30px' }}
         >
-          <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
+          {/* <Button variant="success" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
+            팁 작성하기
+          </Button> */}
+          <Button
+            variant="light"
+            style={{
+              marginTop: "30px",
+              display: "block",
+              marginBottom: "30px",
+              color: 'white',
+              borderRadius: "0px",
+              width: '20%',
+              backgroundColor: "#00D387",
+            }} // 스타일 추가
+            onClick={handleOpenModal}
+          >
             팁 작성하기
           </Button>
-          <BlogModal show={showModal} onHide={handleCloseModal} title="팁 작성하기" handleClose={handleCloseModal}>
+          <BlogModal size='1g' show={showModal} onHide={handleCloseModal} title="팁 작성하기" handleClose={handleCloseModal}>
             <BlogPost />
           </BlogModal>
           {/* BlogRead 에 해당하는 영역 */}
           <Container>
-            <Row>
+            <Row >
               {blogList.map(item => (
                 <Col key={item._id}>
                   <Card
@@ -257,32 +274,18 @@ const Blog = () => {
                       <Card.Text className="card-text">작성자: {item.username}</Card.Text>
                       <Card.Text className="card-text" onClick={() => handleReadMoreClick(item)} style={{ cursor: "pointer", color: "#2E8B57", fontWeight: 'bold' }}>자세히보기</Card.Text> <br />
                       {item.likeUsers.includes(userState.user._id) ? (
-                        //   <button onClick={() => handleDislike(item)}>
-                        //     <img src={like} alt="좋아요" />
-                        //   </button>
-                        // ) : (
-                        //   <button onClick={() => handleLike(item)}>
-                        //     <img src={dislike} alt="좋아요취소" />
-                        //   </button>
                         <HeartSolid
-                          color="#00D387"
+                          color="#FF5722"
                           onClick={() => handleDislike(item)}
                           style={{ width: "40px", height: "40px", cursor: "pointer", position: "absolute", bottom: 75, right: 25 }} />
-                        // <button onClick={() => handleDislike(item)}>
-                        //   {/* <img src={like} alt="좋아요" /> */}
-                        //   <HeartSolid />
-                        // </button>
                       ) : (
                         <HeartOutline
-                          color="#00D387"
+                          color="#FF5722"
                           onClick={() => handleLike(item)}
                           style={{ width: "40px", height: "40px", cursor: "pointer", position: "absolute", bottom: 75, right: 25 }} />
-                        // <button onClick={() => handleLike(item)}>
-                        //   <img src={dislike} alt="좋아요취소" />
-                        // </button>
                       )}
                       <Badge
-                        bg="success"
+                        bg="danger"
                         className="position-absolute end-0 m-3 bg-opacity-50"
                         style={{ zIndex: 1 }}
                       >
@@ -296,7 +299,6 @@ const Blog = () => {
             </Row>
           </Container>
           <PaginationBar
-            content={blogList}
             totalPages={totalPages}
             handlePageChange={handlePageChange}
             currentPage={currentPage}

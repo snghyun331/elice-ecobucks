@@ -11,10 +11,10 @@ const orderService = {
             //상품 재고 감소
             await this.decreaseProductStock(productId);
 
+            const { name, price, place } = await productService.findProduct(productId);
             //주문 생성
-            const newOrder = { productId, buyer };
+            const newOrder = { productName: name, price, buyer, place };
             const createdOrder = await order.create(newOrder);
-
             if (!createdOrder) {
                 throw new Error("주문에 실패하였습니다.");
               }
@@ -52,18 +52,20 @@ const orderService = {
 
         const orderDetails = await Promise.all(
             orders.map(async (order) => {
-                const { productId, createdAt } = order;
-                const product = await productService.findProduct(productId);
+                // const { productId, createdAt } = order;
+                // const product = await productService.findProduct(productId);
                 
-                if (!product) {
-                    // 상품을 찾지 못한 경우에 대한 처리
-                    throw new Error("해당 id의 상품을 찾을 수 없습니다.")
-                }
-                const { name, price, place } = product;
+                // if (!product) {
+                //     // 상품을 찾지 못한 경우에 대한 처리
+                //     throw new Error("해당 id의 상품을 찾을 수 없습니다.")
+                // }
+    
+                const { productName, price, place, createdAt } = order;
+                console.log(productName, price, place, createdAt)
     
                 return {
                     date: createdAt,
-                    product: name,
+                    product: productName,
                     price: price,
                     location: place,
                 };

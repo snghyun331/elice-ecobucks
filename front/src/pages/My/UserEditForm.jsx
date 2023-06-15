@@ -15,6 +15,7 @@ import {
   DispatchContext,
 } from "../../context/user/UserProvider";
 import * as Api from "../../api";
+import { showAlert, showSuccess } from "../../assets/alert";
 
 const UserEditForm = ({ onClose, user }) => {
   const navigate = useNavigate();
@@ -55,12 +56,11 @@ const UserEditForm = ({ onClose, user }) => {
       if (selectedFile) {
         const formData = new FormData();
         formData.append("image", selectedFile);
-        console.log("폼데이터", formData);
+
         const imageRes = await Api.postFile(
           "images/profiles/upload",
           formData
         );
-        console.log('이미지레스', imageRes);
       }
 
       //그 외 정보 전송 통신
@@ -78,9 +78,8 @@ const UserEditForm = ({ onClose, user }) => {
         requestData
       );
 
-      console.log(res);
       if (res.status === 200) {
-        alert("변경된 정보가 저장되었습니다.");
+        showSuccess("변경된 정보가 저장되었습니다.");
 
         const userData = await Api.get("current");
         const user = userData.data;
@@ -92,10 +91,10 @@ const UserEditForm = ({ onClose, user }) => {
 
         onClose();
       } else {
-        alert("정보 변경에 실패했습니다.");
+        showAlert("정보 변경에 실패했습니다.");
       }
     } catch (error) {
-      alert("정보 변경에 실패했습니다.");
+      alshowAlertert("정보 변경에 실패했습니다.");
       console.error(error);
     }
   };
@@ -107,21 +106,20 @@ const UserEditForm = ({ onClose, user }) => {
   const confirmWithdraw = async () => {
     try {
       const res = await Api.delete("mypage/withdraw");
-      console.log("탈퇴요청완료", res);
 
       // 탈퇴 후 리디렉션 등의 작업 수행
       if (res.status === 200) {
         setShowConfirm(false);
         // Display success alert and navigate to login page
-        alert("에코벅스를 이용해주셔서 감사합니다. 로그인 창으로 이동합니다.");
+        showSuccess("에코벅스를 이용해주셔서 감사합니다. 로그인 창으로 이동합니다.");
         navigate("/login");
       } else {
         // Display error alert
-        alert("탈퇴 과정에 오류가 발생했습니다.");
+        showAlert("탈퇴 과정에 오류가 발생했습니다.");
       }
     } catch (error) {
       // Display error alert
-      alert("탈퇴 과정에 오류가 발생했습니다.");
+      showAlert("탈퇴 과정에 오류가 발생했습니다.");
       console.error(error);
     }
   };

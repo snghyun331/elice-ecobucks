@@ -1,6 +1,7 @@
 import { userAuthService } from "../services/user-service.js";
 import { validateEmptyBody } from "../utils/validators.js";
 import { NOT_FOUND, CREATED, OK, NO_CONTENT } from "../utils/constants.js";
+import { userModel } from "../db/schemas/user.js";
 
 const userController = {
   postUserRegister: async function (req, res, next) {
@@ -130,10 +131,11 @@ const userController = {
       if(!user) {
         const errorMessage = "회원이 존재하지 않습니다."
         const result = {result: errorMessage}
+        return res.status(NOT_FOUND).send(result);
       }
 
       user.is_withdrawed = true
-      await user.save()
+      await userModel.findOneAndUpdate({ _id: userId }, { is_withdrawed: true });   // await user.save()가 안되서 다음과 같이 구현
 
       const result = { result : "Successfully withdraw"}
       return res.status(OK).send(result)

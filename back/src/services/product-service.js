@@ -53,7 +53,8 @@ class productService {
     const newProducts = await Promise.all(products.map(async (product) => {
       console.log('product: ',product);
       const image = await Image.findById({ _id: product.imageId });
-      console.log('image: ',image);
+      // console.log('image: ',image);
+      console.log('product: ',product);
       if (image) {
         return {
           ...product, 
@@ -62,12 +63,10 @@ class productService {
           createdAt: updateTime.toKST(product.createdAt),
           updatedAt: updateTime.toKST(product.updatedAt),   
         };
-      } 
-      //console.log('newProducts: ',newProducts);
+      }
       }));
-      console.log('newProducts: ',newProducts);
-
-    return { newProducts, totalPages };
+      console.log("newProducts: ", newProducts);
+    return { newProducts, count };
   }
 
   static async findProduct(productId) {
