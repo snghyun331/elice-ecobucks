@@ -15,7 +15,7 @@ const BlogPost = (props) => {
         topic
       });
       console.log("절약 팁 작성 res: ", res);
-      window.location.reload()
+      // window.location.reload()
     } catch (err) {
       console.log("절약 팁 글 작성에 실패했습니다.", err);
     }

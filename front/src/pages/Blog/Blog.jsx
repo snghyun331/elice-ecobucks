@@ -89,7 +89,7 @@ const Blog = () => {
     try {
       // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
       const res = await Api.get(`blog?page=${currentPage}`);
-      // console.log("db data: ", res.data)
+      console.log("db data: ", res.data)
 
       const newList = res.data.posts.map(item => {
         return {

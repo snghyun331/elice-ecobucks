@@ -96,7 +96,7 @@ const MallProductSell = ({ onClose }) => {
           "images/products/upload",
           formData
         );
-      }
+      
       console.log(imageRes);
       const res = await Api.post("products", {
         name,
@@ -105,11 +105,12 @@ const MallProductSell = ({ onClose }) => {
         location,
         stock: Number(stock),
         description,
-        imageId: imageRes._id
+        imageId: imageRes.data._id
       });
       console.log(res);
       // window.location.reload();
       onClose();
+      }
     } catch (err) {
       alert("모든 값을 입력해주세요.", err);
       console.log("상품 등록에 실패하였습니다.", err);
@@ -270,7 +271,6 @@ const MallProductSell = ({ onClose }) => {
             padding: 5,
             border: '0px'
           }}
-          onClick={handleSubmit}
         >
           등록하기
         </button>
