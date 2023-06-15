@@ -5,8 +5,7 @@ const PagenationBar = ({ content, totalPages, handlePageChange, currentPage }
 ) => {
   // 페이지네이션 아이템 생성 함수
   const renderPaginationItems = () => {
-    // console.log(currentPage);
-    // const totalPages = totalPages2;
+
     const paginationItems = [];
 
     for (let i = 1; i <= totalPages; i++) {
@@ -20,7 +19,6 @@ const PagenationBar = ({ content, totalPages, handlePageChange, currentPage }
         </Pagination.Item>
       );
     }
-    // console.log(paginationItems);
     return paginationItems;
   };
 

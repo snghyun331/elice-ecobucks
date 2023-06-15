@@ -11,7 +11,6 @@ const TrendingChallenges = () => {
     const fetchData = async () => {
       try {
         const res = await Api.get("challenges");
-        console.log(res.data);
         setBlogs(res.data);
       } catch (error) {
         console.error(error);

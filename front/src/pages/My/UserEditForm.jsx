@@ -56,12 +56,11 @@ const UserEditForm = ({ onClose, user }) => {
       if (selectedFile) {
         const formData = new FormData();
         formData.append("image", selectedFile);
-        console.log("폼데이터", formData);
+
         const imageRes = await Api.postFile(
           "images/profiles/upload",
           formData
         );
-        console.log('이미지레스', imageRes);
       }
 
       //그 외 정보 전송 통신
@@ -79,7 +78,6 @@ const UserEditForm = ({ onClose, user }) => {
         requestData
       );
 
-      console.log(res);
       if (res.status === 200) {
         showSuccess("변경된 정보가 저장되었습니다.");
 
@@ -108,7 +106,6 @@ const UserEditForm = ({ onClose, user }) => {
   const confirmWithdraw = async () => {
     try {
       const res = await Api.delete("mypage/withdraw");
-      console.log("탈퇴요청완료", res);
 
       // 탈퇴 후 리디렉션 등의 작업 수행
       if (res.status === 200) {

@@ -14,7 +14,6 @@ const UserOrderHistory = ({ user }) => {
     const fetchOrderHistory = async () => {
       try {
         const res = await Api.get(`mypage/orders?page=${currentPage}`);
-        console.log('current', currentPage)
         if (res.data.message) {
           setOrderHistory([])
         } else {
@@ -37,7 +36,6 @@ const UserOrderHistory = ({ user }) => {
   // 페이지네이션 클릭 시 페이지 변경
   const handlePageChange = (newPage) => {
     if (newPage <= totalPages) {
-      console.log(newPage);
       setCurrentPage(newPage);
     };
   };
