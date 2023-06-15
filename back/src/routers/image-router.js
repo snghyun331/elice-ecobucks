@@ -11,12 +11,13 @@ const imageUpdateValidation = Validation.validate(Validation.imageUpdateSchema);
 const imageRouter = Router();
 imageRouter.use(login_required)
 
-const upload = multer({
-  dest: 'uploads/',
-  limits: {  // 최대 파일 크기 제한 (3MB)
-    fileSize: MAX_FILE_SIZE * 1024 * 1024, 
+const upload = multer({ // 메모리에 파일 임시 저장
+  storage: multer.memoryStorage(),   // dest: 'uploads/',  <- 로컬저장인 image-local-save-service 사용시
+  limits: {
+    fileSize: MAX_FILE_SIZE * 1024 * 1024,  // 최대 파일 크기 제한 (3MB)
   },
 });
+
 
 imageRouter.post('/images/:object/upload', imageCreateValidation, upload.single('image'), imageController.imageCreate);
 
