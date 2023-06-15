@@ -98,7 +98,7 @@ const Blog = () => {
           topic: item.topic,
           username: item.username,
           userId: item.userId, //작성자 아아디
-          blogId: item._id //블로그 고유 아이디
+          blogId: item._id //절약 팁 고유 아이디
         };
       });
       // console.log(newList);
@@ -107,7 +107,7 @@ const Blog = () => {
       // console.log(blogList.map(item => (console.log(item))));
     } catch (err) {
       // alert("정보 불러오기를 실패하였습니다.");
-      console.log("블로그 불러오기를 실패하였습니다.", err);
+      console.log("절약 팁 불러오기를 실패하였습니다.", err);
     }
   }
 
@@ -126,20 +126,20 @@ const Blog = () => {
   }
   const handleDeleteBlog = async (selectedBlog) => {
     try {
-      console.log("삭제할 블로그: ", selectedBlog);
+      console.log("삭제할 절약 팁: ", selectedBlog);
       await Api.delete(`blog/${selectedBlog._id}`);
 
       fetchData();
       handleCloseDeleteModal();
     } catch (err) {
-      console.log("블로그 삭제에 실패했습니다.", err);
+      console.log("절약 팁 삭제에 실패했습니다.", err);
     }
   }
 
   // 좋아요 버튼 클릭 시 동작
   const handleLike = async (blog) => {
     try {
-      // 좋아요 요청을 보내고 업데이트된 블로그 글 정보를 가져옴
+      // 좋아요 요청을 보내고 업데이트된 절약 팁 글 정보를 가져옴
       await Api.put(`blog/${blog.blogId}/likes`, {
         pressLikeUserId: userState.user._id
       });
@@ -152,7 +152,7 @@ const Blog = () => {
   // 좋아요 취소 버튼 클릭 시 동작
   const handleDislike = async (blog) => {
     try {
-      // 좋아요 취소 요청을 보내고 업데이트된 블로그 글 정보를 가져옴
+      // 좋아요 취소 요청을 보내고 업데이트된 절약 팁 글 정보를 가져옴
       await Api.put(`blog/${blog.blogId}/dislikes`, {
         cancelLikeUserId: userState.user._id
       });
@@ -188,9 +188,9 @@ const Blog = () => {
           fontSize: '2rem',
           fontWeight: '900',
         }}
-      >짧로그 :
+      >절약 팁 :
         <br />
-        <span style={{ fontSize: '1.3rem', fontWeight: '400' }}>절약 꿀팁 공유해요</span>
+        <span style={{ fontSize: '1.3rem', fontWeight: '400' }}>절약 꿀팁을 공유해요.</span>
       </div>
       {selectedBlog ? (
         <BlogRead

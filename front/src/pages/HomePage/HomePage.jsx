@@ -9,19 +9,27 @@ import { Container, Button, Dropdown, DropdownButton } from "react-bootstrap";
 // import district4 from "../../../../data/seoul_map/district4.png";
 // import district5 from "../../../../data/seoul_map/district5.png";
 // import Industry from "../../../../data/Industry.png";
-import mallIcon from "../../assets/mallIcon.png";
-import blogIcon from "../../assets/blogIcon.png";
-import challengeIcon from "../../assets/challengeIcon.png";
+import { useContext } from "react";
+import { UserStateContext } from "../../context/user/UserProvider";
+
 import BannerCarousel from "./BannerCarousel";
 import TrendingBlogs from "./TrendingBlogs";
 import TrendingChallenges from "./TrendingChallenges";
+import Intro from './Intro';
+
 import { useState } from "react";
 import SeoulDistrictsGraph from "./Data/SeoulDistrictGraph";
 import SeoulUsageChart from "./Data/SeoulUsageGraph";
 import DistrictChart from "./Data/DistrictChart";
 import districtInfo from "../../assets/districtInfo";
-const HomePage = () => {
 
+const HomePage = () => {
+  const { user } = useContext(UserStateContext);
+
+  if (!user) {
+    return <Intro />;
+  }
+  
   return (
     <div
       style={{
@@ -53,71 +61,6 @@ const HomePage = () => {
         <Container>
           <BannerCarousel />
         </Container>
-        {/* <Container
-          style={{
-            marginBottom: "20px",
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "30px",
-          }}
-        >
-          <Link to="/challenge">
-            <Button
-              type="button"
-              style={{
-                display: "grid",
-                marginRight: "20px",
-                backgroundColor: "transparent",
-                placeItems: "center",
-                border: "0px",
-              }}
-            >
-              <img
-                src={challengeIcon}
-                style={{ width: "3.5rem" }}
-                alt="Challenge"
-              />
-              <span style={{ color: "black", fontSize: "0.9rem" }}>챌린지</span>
-            </Button>
-          </Link>
-          <Link to="/blog">
-            <Button
-              type="button"
-              style={{
-                display: "grid",
-                marginRight: "20px",
-                backgroundColor: "transparent",
-                placeItems: "center",
-                border: "0px",
-              }}
-            >
-              <img src={blogIcon} style={{ width: "3.5rem" }} alt="Blog" />
-              <span
-                style={{
-                  color: "black",
-                  fontSize: "0.9rem",
-                  textDecoration: "none",
-                }}
-              >
-                블로그
-              </span>{" "}
-            </Button>
-          </Link>
-          <Link to="/mall">
-            <Button
-              type="button"
-              style={{
-                display: "grid",
-                backgroundColor: "transparent",
-                placeItems: "center",
-                border: "0px",
-              }}
-            >
-              <img src={mallIcon} style={{ width: "3.5rem" }} alt="Mall" />
-              <span style={{ color: "black", fontSize: "0.9rem" }}>떠리몰</span>
-            </Button>
-          </Link>
-        </Container> */}
 
         <Container
           style={{
