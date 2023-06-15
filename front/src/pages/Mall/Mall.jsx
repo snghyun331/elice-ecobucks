@@ -30,11 +30,12 @@ const Mall = () => {
   /////////////////
 
   const handlePageChange = (newPage) => {
-    if (newPage <= totalPages || newPage > 0) {
-      setCurrentPage(newPage);
+    if (newPage < 1) {
+      setCurrentPage(1)
+    } else if (newPage > totalPages) {
+      setCurrentPage(totalPages)
     } else {
-      console.log("!");
-      setCurrentPage(1);
+      setCurrentPage(newPage);
     }
   };
 
@@ -279,39 +280,39 @@ const Mall = () => {
           </span>
         </div>
         <Container
-  className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
-  style={{
-    marginTop: "140px",
-    width: "80%",
-    border: "1px solid #c2c2c2",
-    backgroundColor: "white",
-    borderRadius: "10px",
-    minHeight: "500px",  // height 값을 지정합니다.
-    overflow: 'hidden',
-    padding: '30px'
-  }}
->
-  <Container
-    style={{
-      alignSelf: "flex-start",
-      paddingLeft: "50px",
-      fontSize: "1.8em",
-      paddingBottom: "20px",
-    }}
-  >
-    매장 위치 안내
-  </Container>
-  <Container
-          className="text-muted mb-2"
-          style={{ fontSize: "0.85rem", textAlign: 'left', paddingLeft: '50px', paddingBottom: '20px'  }}
+          className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
+          style={{
+            marginTop: "140px",
+            width: "80%",
+            border: "1px solid #c2c2c2",
+            backgroundColor: "white",
+            borderRadius: "10px",
+            minHeight: "500px",  // height 값을 지정합니다.
+            overflow: 'hidden',
+            padding: '30px'
+          }}
         >
-          판매 상품의 핀을 클릭하면 위치를 확인할 수 있어요.
+          <Container
+            style={{
+              alignSelf: "flex-start",
+              paddingLeft: "50px",
+              fontSize: "1.8em",
+              paddingBottom: "20px",
+            }}
+          >
+            매장 위치 안내
+          </Container>
+          <Container
+            className="text-muted mb-2"
+            style={{ fontSize: "0.85rem", textAlign: 'left', paddingLeft: '50px', paddingBottom: '20px' }}
+          >
+            판매 상품의 핀을 클릭하면 위치를 확인할 수 있어요.
+          </Container>
+          <MapContainer
+            locations={extractLocations()}
+            selectedItemLocate={itemLocate}
+          />
         </Container>
-  <MapContainer
-    locations={extractLocations()}
-    selectedItemLocate={itemLocate}
-  />
-</Container>
 
 
         <Container className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center">
@@ -542,7 +543,6 @@ const Mall = () => {
         </Container>
 
         <PaginationBar
-          content={list}
           totalPages={totalPages}
           handlePageChange={handlePageChange}
           currentPage={currentPage}
