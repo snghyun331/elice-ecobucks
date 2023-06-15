@@ -65,6 +65,17 @@ class BlogPost {
         const DeleteLike = await BlogPostModel.findOneAndUpdate(filter, update, option);
         return DeleteLike;
     }
+
+    static async findAndCountAll(skip, limit) {
+        const posts = await BlogPostModel.find({})
+            .sort({likeCount: -1})
+            .skip(skip)
+            .limit(limit)
+            .exec();
+        
+        const count = await BlogPostModel.countDocuments();
+        return { posts, count }
+      }
 }
 
 export { BlogPost };

@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import * as Api from "../../api";
 import DaumPostcode from "react-daum-postcode";
 import { useEffect } from "react";
+import { Button, ButtonGroup, Container, Form, Alert } from "react-bootstrap";
 
-const MallProductSell = (props) => {
+const MallProductSell = ({ onClose }) => {
   // const [name, setName] = useState("");
   // const [price, setPrice] = useState("");
   // const [place, setPlace] = useState("");
@@ -14,24 +15,22 @@ const MallProductSell = (props) => {
   const [showModal, setShowModal] = useState(false);
 
   const [form, setForm] = React.useState({
-    name: '',
-    price: '',
-    place: '',
-    stock: '',
-    description: '',
+    name: "",
+    price: "",
+    place: "",
+    stock: "",
+    description: "",
   });
 
   const { name, price, place, stock, description } = form;
 
   const onChange = (e) => {
     const { name, value } = e.target;
-    setForm(prevForm => ({
+    setForm((prevForm) => ({
       ...prevForm,
-      [name]: value
-    }))
-  }
-
-
+      [name]: value,
+    }));
+  };
 
   const navigate = useNavigate();
 
@@ -47,9 +46,9 @@ const MallProductSell = (props) => {
     const { address, roadAddress, zonecode } = data;
 
     // 사용자가 선택한 주소 정보를 처리하는 로직 작성
-    setForm(prevForm => ({
+    setForm((prevForm) => ({
       ...prevForm,
-      place: address
+      place: address,
     }));
 
     setShowModal(false);
@@ -82,132 +81,163 @@ const MallProductSell = (props) => {
       });
       console.log(res);
       // window.location.reload();
+      onClose();
     } catch (err) {
-      alert("모든 값을 입력해주세요.");
+      alert("모든 값을 입력해주세요.", err);
       console.log("상품 등록에 실패하였습니다.", err);
     }
   };
 
   return (
-    <div style={{ padding: "16px", width: "calc(100% - 32px)" }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div
         style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: "70%",
-          background: "#4d9e81",
-          zIndex: -1,
-        }}
-      ></div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
+          width: "100%",
+          maxWidth: "720px",
+          padding: "10px",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          background: "#fff",
+          borderRadius: '10px',
         }}
       >
-        <div style={{ width: "100%", maxWidth: "720px", padding: "60px" }}>
-          <span>상품</span>
-          <textarea
+        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>상품명</Form.Label>
+        <Container
+          className="text-muted mb-2"
+          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
+        >
+          상품명을 적어주세요.
+        </Container>
+        <Form.Control
+          style={{
+            width: "100%",
+            height: "20px",
+            padding: "16px",
+            fontSize: "16px",
+            lineHeight: "20px",
+            marginBottom: "16px",
+            borderRadius: "0px"
+          }}
+          name="name"
+          value={name}
+          onChange={onChange}
+        />
+        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>가격</Form.Label>
+        <Container
+          className="text-muted mb-2"
+          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
+        >
+          판매가격을 적어주세요. 추후에 1마일 : N원으로 교환할 수 있습니다.
+        </Container>
+        <Form.Control
+          style={{
+            width: "100%",
+            height: "20px",
+            padding: "16px",
+            fontSize: "16px",
+            lineHeight: "20px",
+            marginBottom: "16px",
+            borderRadius: "0px"
+          }}
+          name="price"
+          value={price}
+          onChange={onChange}
+        />
+        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>위치</Form.Label>
+        <Container
+          className="text-muted mb-2"
+          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
+        >
+          구매자가 상품을 수령할 수 있는 위치를 지정해주세요.
+        </Container>
+        <div style={{ display: "flex", marginBottom: "16px", width: '100%' }}>
+          <Form.Control
             style={{
               width: "100%",
               height: "20px",
               padding: "16px",
               fontSize: "16px",
               lineHeight: "20px",
-              marginBottom: "16px",
+              borderRadius: "0px"
             }}
-            name="name"
-            value={name}
+            placeholder="'검색' 버튼을 눌러 검색하세요."
+            name="place"
+            value={place}
             onChange={onChange}
           />
-          <span>가격</span>
-          <textarea
-            style={{
-              width: "100%",
-              height: "20px",
-              padding: "16px",
-              fontSize: "16px",
-              lineHeight: "20px",
-              marginBottom: "16px",
-            }}
-            name="price"
-            value={price}
-            onChange={onChange}
-          />
-          <span>위치</span>
-          <div style={{ display: "flex", marginBottom: "16px" }}>
-            <textarea
-              style={{
-                width: "100%",
-                height: "20px",
-                padding: "16px",
-                fontSize: "16px",
-                lineHeight: "20px",
-              }}
-              name="place"
-              value={place}
-              onChange={onChange}
-            />
-            <button
-              style={{
-                marginLeft: "8px",
-                padding: "8px 16px",
-                fontSize: "16px",
-                borderWidth: "1px",
-                borderRadius: "8px",
-                cursor: "pointer",
-              }}
-              onClick={handleSearchAddress}
-            >
-              검색
-            </button>
-          </div>
-          <span>수량</span>
-          <textarea
-            style={{
-              width: "100%",
-              height: "20px",
-              padding: "16px",
-              fontSize: "16px",
-              lineHeight: "20px",
-              marginBottom: "16px",
-            }}
-            name="stock"
-            value={stock}
-            onChange={onChange}
-          />
-          <span>설명</span>
-          <textarea
-            style={{
-              width: "100%",
-              height: "100px",
-              padding: "16px",
-              fontSize: "16px",
-              lineHeight: "20px",
-              marginBottom: "16px",
-            }}
-            name="description"
-            value={description}
-            onChange={onChange}
-          />
-
           <button
             style={{
-              padding: "8px 16px",
-              fontSize: "16px",
-              borderWidth: "1px",
-              borderRadius: "8px",
-              cursor: "pointer",
+              width: "70%",
+              borderRadius: "0px",
+              backgroundColor: "#00D387",
+              color: "white",
+              fontWeight: "900",
+              marginLeft: 5,
+              border: '0px'
             }}
-            onClick={handleSubmit}
+            onClick={handleSearchAddress}
           >
-            상품 등록하기
+            검색
           </button>
         </div>
+        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>수량</Form.Label>
+        <Container
+          className="text-muted mb-2"
+          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
+        >
+          판매 가능한 최대 수량을 적어주세요. 수량이 0에 도달하면 판매가 종료됩니다.
+        </Container>
+        <Form.Control
+          style={{
+            width: "100%",
+            height: "20px",
+            padding: "16px",
+            fontSize: "16px",
+            lineHeight: "20px",
+            marginBottom: "16px",
+            borderRadius: 0,
+          }}
+          name="stock"
+          value={stock}
+          onChange={onChange}
+        />
+        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>설명</Form.Label>
+        <Container
+          className="text-muted mb-2"
+          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
+        >
+          상품에 대한 구체적인 설명을 적어주세요. 유통기한 임박 상품이라면, 유통기한을 함께 기재해주세요.
+        </Container>
+        <Form.Control
+          style={{
+            width: "100%",
+            height: "100px",
+            fontSize: "16px",
+            lineHeight: "20px",
+            marginBottom: "16px",
+            borderRadius: 0
+          }}
+          as='textarea'
+          name="description"
+          value={description}
+          onChange={onChange}
+        />
+
+        <button
+          style={{
+            width: "100%",
+            borderRadius: "0px",
+            backgroundColor: "#00D387",
+            color: "white",
+            fontWeight: "900",
+            padding: 5,
+            border: '0px'
+          }}
+          onClick={handleSubmit}
+        >
+          등록하기
+        </button>
       </div>
 
       {showModal && (
@@ -227,6 +257,7 @@ const MallProductSell = (props) => {
       )}
     </div>
   );
+
 };
 
 export default MallProductSell;

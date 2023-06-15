@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import Logo from "../../assets/logo.png";
+import { showAlert } from '../../assets/alert';
 
 import * as Api from '../../api'
 import { DispatchContext, UserStateContext } from '../../context/user/UserProvider'
@@ -36,10 +37,7 @@ function LoginForm() {
       });
       navigate("/", { replace: true });
     } catch (err) {
-      if (err.response.status === 400) {
-        alert(err.response.data);
-      }
-      console.log("로그인에 실패하였습니다.\n", err);
+        showAlert(err.response.data.message)
     }
   };
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, ButtonGroup, Container, Form, Alert } from "react-bootstrap";
 import * as Api from "../../api";
+import { showAlert } from "../../assets/alert";
 
 const ChallengeCreate = ({ onBackToListClick }) => {
   const [title, setTitle] = useState("");
@@ -20,7 +21,7 @@ const ChallengeCreate = ({ onBackToListClick }) => {
       });
       window.location.reload();
     } catch (err) {
-      alert("모든 값을 입력해주세요.");
+      showAlert("모든 값을 입력해주세요.");
       console.log("챌린지 등록에 실패하였습니다.", err);
     }
   };
@@ -34,7 +35,7 @@ const ChallengeCreate = ({ onBackToListClick }) => {
 
   const handleContentChange = (event) => {
     const { value } = event.target;
-    if (value.length <= 100) {
+    if (value.length <= 300) {
       setContent(value);
     }
   };
@@ -86,13 +87,13 @@ const ChallengeCreate = ({ onBackToListClick }) => {
             as="textarea"
             value={content}
             onChange={handleContentChange}
-            maxLength={100}
-            placeholder="설명을 입력해주세요 (최대 100자)"
+            maxLength={300}
+            placeholder="설명을 입력해주세요 (최대 300자)"
             style={{ borderRadius: "0px", marginBottom: "20px" }}
           />
-          {content.length > 100 && (
+          {content.length > 300 && (
             <Alert variant="danger" className="mt-2 p-2">
-              설명은 최대 100자까지 입력 가능합니다.
+              설명은 최대 300자까지 입력 가능합니다.
             </Alert>
           )}
         </Form.Group>

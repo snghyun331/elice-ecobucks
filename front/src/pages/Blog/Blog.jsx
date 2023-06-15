@@ -1,14 +1,20 @@
 import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Card, Container, Modal, Row, Col, ListGroup, Form } from "react-bootstrap";
+import { Button, Card, Container, Modal, Row, Col, ListGroup, Form, Badge } from "react-bootstrap";
 import * as Api from "../../api";
 import { UserStateContext } from "../../context/user/UserProvider";
+import BlogModal from "../Modal/BlogModal";
 import BlogPost from "./BlogPost";
 import BlogPostEdit from "./BlogPostEdit";
 import BlogComment from "./BlogComment";
+import BlogRead from "./BlogRead";
 import PaginationBar from "../Modal/PaginationBar";
 import like from "../../assets/heartfill.png";
 import dislike from "../../assets/heartblank.png";
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline"
+import { HeartIcon as HeartSolid } from "@heroicons/react/20/solid";
+import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
+
 const Blog = () => {
   // const [blogPosts, setBlogPosts] = useState([]);
   const userState = useContext(UserStateContext);
@@ -17,29 +23,39 @@ const Blog = () => {
   const handleOpenModal = () => setShowModal(true);
   const [blogList, setBlogList] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
+  const [selectedUpdateBlog, setSelectedUpdateBlog] = useState(null);
   // const [isLiked, setIsLiked] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(6);
+  const [totalPages, setTotalPages] = useState(1);
   const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
+    if (newPage < 1) {
+      setCurrentPage(1)
+    } else if (newPage > totalPages) {
+      setCurrentPage(totalPages)
+    } else {
+      setCurrentPage(newPage);
+    }
   };
-  const sortedList = blogList.sort((a, b) => b.likeCount - a.likeCount)
-  const currentList = sortedList.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+
+  const handleReadMoreClick = (blog) => {
+    setSelectedBlog(blog);
+  };
+  const handleBackToListClick = () => {
+    setSelectedBlog(null);
+  };
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const handleCloseEditModal = () => setEditModalOpen(false);
   const handleOpenEditModal = async (blogId) => {
     try {
-      // console.log("blogId: ", blogId);
+      console.log("blogId: ", blogId);
       const res = await Api.get(`blog/${blogId}`);
       const blog = res.data;
       // console.log("받아온 blog: ", blog);
       // console.log("res", res);
-      setSelectedBlog(blog);
+      setSelectedUpdateBlog(blog);
       // console.log("selectedItem: ", selectedItem);
     } catch (err) {
       console.log("수정 모달 열 때 에러 ", err);
@@ -53,7 +69,7 @@ const Blog = () => {
       const res = await Api.get(`blog/${blogId}`);
       const blog = res.data;
       // console.log("삭제 blog: ", blog);
-      setSelectedBlog(blog);
+      setSelectedUpdateBlog(blog);
     } catch (err) {
       console.log(err);
     }
@@ -69,15 +85,15 @@ const Blog = () => {
       return;
     }
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   const fetchData = async () => {
     try {
       // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
-      const res = await Api.get("blog");
+      const res = await Api.get(`blog?page=${currentPage}`);
       // console.log("db data: ", res.data)
 
-      const newList = res.data.map(item => {
+      const newList = res.data.posts.map(item => {
         return {
           content: item.content,
           likeCount: item.likeCount,
@@ -86,15 +102,16 @@ const Blog = () => {
           topic: item.topic,
           username: item.username,
           userId: item.userId, //작성자 아아디
-          blogId: item._id //블로그 고유 아이디
+          blogId: item._id //절약 팁 고유 아이디
         };
       });
       // console.log(newList);
       setBlogList(newList);
+      setTotalPages(res.data.totalPage)
       // console.log(blogList.map(item => (console.log(item))));
     } catch (err) {
       // alert("정보 불러오기를 실패하였습니다.");
-      console.log("블로그 불러오기를 실패하였습니다.", err);
+      console.log("절약 팁 불러오기를 실패하였습니다.", err);
     }
   }
 
@@ -113,20 +130,20 @@ const Blog = () => {
   }
   const handleDeleteBlog = async (selectedBlog) => {
     try {
-      console.log("삭제할 블로그: ", selectedBlog);
+      console.log("삭제할 절약 팁: ", selectedBlog);
       await Api.delete(`blog/${selectedBlog._id}`);
 
       fetchData();
       handleCloseDeleteModal();
     } catch (err) {
-      console.log("블로그 삭제에 실패했습니다.", err);
+      console.log("절약 팁 삭제에 실패했습니다.", err);
     }
   }
 
   // 좋아요 버튼 클릭 시 동작
   const handleLike = async (blog) => {
     try {
-      // 좋아요 요청을 보내고 업데이트된 블로그 글 정보를 가져옴
+      // 좋아요 요청을 보내고 업데이트된 절약 팁 글 정보를 가져옴
       await Api.put(`blog/${blog.blogId}/likes`, {
         pressLikeUserId: userState.user._id
       });
@@ -139,7 +156,7 @@ const Blog = () => {
   // 좋아요 취소 버튼 클릭 시 동작
   const handleDislike = async (blog) => {
     try {
-      // 좋아요 취소 요청을 보내고 업데이트된 블로그 글 정보를 가져옴
+      // 좋아요 취소 요청을 보내고 업데이트된 절약 팁 글 정보를 가져옴
       await Api.put(`blog/${blog.blogId}/dislikes`, {
         cancelLikeUserId: userState.user._id
       });
@@ -151,7 +168,7 @@ const Blog = () => {
   };
 
   return (
-    <div style={{ padding: "60px" }}>
+    <div style={{ padding: "100px" }}>
       <div
         style={{
           position: "absolute",
@@ -175,117 +192,120 @@ const Blog = () => {
           fontSize: '2rem',
           fontWeight: '900',
         }}
-      >짧로그 :
+      >절약 팁 :
         <br />
-        <span style={{ fontSize: '1.3rem', fontWeight: '400' }}>절약 꿀팁 공유해요</span>
+        <span style={{ fontSize: '1.3rem', fontWeight: '400' }}>절약 꿀팁을 공유해요.</span>
       </div>
-      <Container
-        className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
-        style={{ marginTop: '200px', paddingTop: '30px', width: "80%", border: "1px solid #c2c2c2", backgroundColor: 'white', borderRadius: '10px' }}
-      >
-        <Button variant="primary" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
-          팁 작성하기
-        </Button>
-        <Modal show={showModal} onHide={handleCloseModal} centered>
-          <Modal.Header closeButton>
-            <Modal.Title>팁 작성하기</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="text-center">
+      {selectedBlog ? (
+        <BlogRead
+          blog={selectedBlog}
+          onBackToListClick={handleBackToListClick}
+        />
+      ) : (
+        <Container
+          className="pt-5 pb-5 d-flex flex-column align-items-center justify-content-center"
+          style={{ marginTop: '120px', paddingTop: '30px' }}
+        >
+          {/* <Button variant="success" style={{ marginBottom: "10px", top: "5" }} onClick={handleOpenModal}>
+            팁 작성하기
+          </Button> */}
+          <Button
+            variant="light"
+            style={{
+              marginTop: "30px",
+              display: "block",
+              marginBottom: "30px",
+              color: 'white',
+              borderRadius: "0px",
+              width: '20%',
+              backgroundColor: "#00D387",
+            }} // 스타일 추가
+            onClick={handleOpenModal}
+          >
+            팁 작성하기
+          </Button>
+          <BlogModal size='1g' show={showModal} onHide={handleCloseModal} title="팁 작성하기" handleClose={handleCloseModal}>
             <BlogPost />
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              className="mt-4 mb-4"
-              variant="secondary"
-              onClick={handleCloseModal}
-              style={{
-                width: "100%",
-                borderRadius: "0px",
-              }}
-            >
-              닫기
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
-        <Container>
-          <Row>
-            {currentList
-              .map(item => (
+          </BlogModal>
+          {/* BlogRead 에 해당하는 영역 */}
+          <Container>
+            <Row >
+              {blogList.map(item => (
                 <Col key={item._id}>
-                  <Card style={{ width: "18rem" }}>
+                  <Card
+                    style={{ width: "20rem", height: "20rem", marginBottom: 10 }} >
                     <Card.Body className="card-body">
-                      <Card.Title className="card-title"><span>제목:</span> {item.title}</Card.Title>
+                      <div className="d-flex align-items-center">
+                        <Card.Title className="card-title flex-grow-1">
+                          <span>제목:</span> {item.title}
+                        </Card.Title>
+                        {userState.user._id === item.userId ?
+                          <>
+                            <PencilSquareIcon color="#00D387"
+                              onClick={() => handleOpenEditModal(item.blogId)}
+                              style={{ width: "30px", height: "30px", cursor: "pointer" }} />
+                            <BlogModal show={editModalOpen} onHide={handleCloseEditModal} handleClose={handleCloseEditModal} >
+                              <BlogPostEdit handleEditBlog={handleEditBlog} selectedBlog={selectedUpdateBlog} />
+                            </BlogModal>
+
+                            <TrashIcon
+                              color="#00D387"
+                              style={{ width: "30px", height: "30px", cursor: "pointer", marginLeft: "10px" }}
+                              onClick={() => handleOpenDeleteModal(item.blogId)} />
+                            <Modal show={deleteModalOpen} onHide={handleCloseDeleteModal} centered>
+                              <Modal.Header closeButton>
+                                <Modal.Title>글 삭제</Modal.Title>
+                              </Modal.Header>
+                              <Modal.Body className="text-center">
+                                선택한 블로그를 삭제하시겠습니까?
+                              </Modal.Body>
+                              <Modal.Footer>
+                                <Button variant="secondary" onClick={handleCloseDeleteModal}>취소</Button>
+                                <Button variant="primary" onClick={() => handleDeleteBlog(selectedUpdateBlog)}>삭제하기</Button>
+                              </Modal.Footer>
+                            </Modal>
+                          </> : null}
+
+                      </div>
                       <Card.Text className="card-text">주제: {item.topic}</Card.Text>
-                      <Card.Text className="card-text">설명: {item.content}</Card.Text>
+                      <Card.Text
+                        className="card-text"
+                        style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>설명: {item.content}</Card.Text>
                       <Card.Text className="card-text">작성자: {item.username}</Card.Text>
+                      <Card.Text className="card-text" onClick={() => handleReadMoreClick(item)} style={{ cursor: "pointer", color: "#2E8B57", fontWeight: 'bold' }}>자세히보기</Card.Text> <br />
                       {item.likeUsers.includes(userState.user._id) ? (
-                        <button onClick={() => handleDislike(item)}>
-                          <img src={like} alt="좋아요" />
-                        </button>
+                        <HeartSolid
+                          color="#FF5722"
+                          onClick={() => handleDislike(item)}
+                          style={{ width: "40px", height: "40px", cursor: "pointer", position: "absolute", bottom: 75, right: 25 }} />
                       ) : (
-                        <button onClick={() => handleLike(item)}>
-                          <img src={dislike} alt="좋아요취소" />
-                        </button>
+                        <HeartOutline
+                          color="#FF5722"
+                          onClick={() => handleLike(item)}
+                          style={{ width: "40px", height: "40px", cursor: "pointer", position: "absolute", bottom: 75, right: 25 }} />
                       )}
-                      <p>좋아요 수: {item.likeCount}</p>
-                      <BlogComment blog={item} />
-                      {userState.user._id === item.userId && (
-                        <>
-                          <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenEditModal(item.blogId)}>
-                            수정
-                          </Button>
-                          <Modal show={editModalOpen} onHide={handleCloseEditModal} centered>
-                            <Modal.Header closeButton>
-                              <Modal.Title>글 수정</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body className="text-center">
-                              <BlogPostEdit handleEditBlog={handleEditBlog} selectedBlog={selectedBlog} />
-                            </Modal.Body>
-                            <Modal.Footer>
-                              <Button
-                                className="mt-4 mb-4"
-                                variant="secondary"
-                                onClick={handleCloseEditModal}
-                                style={{
-                                  width: "100%",
-                                  borderRadius: "0px",
-                                }}
-                              >
-                                닫기
-                              </Button>
-                            </Modal.Footer>
-                          </Modal>
-                          <Button variant="primary" style={{ margin: "10px", top: "5" }} onClick={() => handleOpenDeleteModal(item.blogId)}>
-                            삭제
-                          </Button>
-                          <Modal show={deleteModalOpen} onHide={handleCloseDeleteModal} centered>
-                            <Modal.Header closeButton>
-                              <Modal.Title>팁 삭제</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body className="text-center">
-                              선택한 팁을 삭제하시겠습니까?
-                            </Modal.Body>
-                            <Modal.Footer>
-                              <Button variant="secondary" onClick={handleCloseDeleteModal}>취소</Button>
-                              <Button variant="primary" onClick={() => handleDeleteBlog(selectedBlog)}>삭제하기</Button>
-                            </Modal.Footer>
-                          </Modal>
-                        </>
-                      )}
+                      <Badge
+                        bg="danger"
+                        className="position-absolute end-0 m-3 bg-opacity-50"
+                        style={{ zIndex: 1 }}
+                      >
+                        {item.likeCount > 0 &&
+                          `좋아요 ${item.likeCount}`}
+                      </Badge>
                     </Card.Body>
                   </Card>
                 </Col>
               ))}
-          </Row>
+            </Row>
+          </Container>
+          <PaginationBar
+            totalPages={totalPages}
+            handlePageChange={handlePageChange}
+            currentPage={currentPage}
+          />
         </Container>
-      </Container>
-      <PaginationBar
-        content={blogList}
-        itemsPerPage={itemsPerPage}
-        handlePageChange={handlePageChange}
-        currentPage={currentPage}
-      />
+      )}
+
     </div>
   );
 };

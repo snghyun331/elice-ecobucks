@@ -6,7 +6,7 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
     const [content, setContent] = useState("");
     const [topic, setTopic] = useState("");
     useEffect(() => {
-      console.log("선택된 블로그: ",selectedBlog);
+      console.log("선택된 절약 팁: ",selectedBlog);
     }, []);
     const handleSubmit = async (e) => {
         e.preventDefault();

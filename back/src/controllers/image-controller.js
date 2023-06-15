@@ -7,6 +7,7 @@ const imageController = {
       const object = req.params.object
       const userId = req.currentUserId
       const file = req.file
+      console.log(file)
       const createImage = await imageService.uploadImage({ userId, object, file });
       res.status(CREATED).send(createImage);
     } catch (error) {

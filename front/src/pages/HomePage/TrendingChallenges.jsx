@@ -11,7 +11,6 @@ const TrendingChallenges = () => {
     const fetchData = async () => {
       try {
         const res = await Api.get("challenges");
-        console.log(res.data)
         setBlogs(res.data);
       } catch (error) {
         console.error(error);
@@ -45,32 +44,42 @@ const TrendingChallenges = () => {
       }}
     >
       <div className="trending-challenges-container">
-        <h3 style={{ marginLeft: '20px' }}>요즘 뜨는 챌린지</h3>
+        <h3 style={{ marginLeft: "20px" }}>요즘 뜨는 챌린지</h3>
         <div
           style={{
             marginTop: "18px",
             marginBottom: "18px",
-            marginLeft: '20px',
+            marginLeft: "20px",
             height: "5.5px",
             width: "120px",
             backgroundColor: "#FF6B00",
             borderRadius: "10px",
           }}
         ></div>
-        <Link to="/blog" className="more-link">
+        <Link to="/challenge" className="more-link">
           더보기
         </Link>
         <Carousel
-          nextIcon={<span className="carousel-icon carousel-icon-next">&#8250;</span>}
-          prevIcon={<span className="carousel-icon carousel-icon-prev">&#8249;</span>}
+          nextIcon={
+            <span className="carousel-icon carousel-icon-next">&#8250;</span>
+          }
+          prevIcon={
+            <span className="carousel-icon carousel-icon-prev">&#8249;</span>
+          }
         >
           {groupedBlogs.map((group, i) => (
             <Carousel.Item key={`group-${i}`}>
-              <Container className="carousel-container">
+              <Container fluid className="carousel-container">
                 <Row className="d-flex justify-content-center">
                   {group.map((blog) => (
-                    <Col key={blog.id} xs={4} className="challenge-item" style={{ width: "33.333%" }}>
-                      <Card className="challenge-card">
+                    <Col
+                      key={blog.id}
+                      className="challenge-item"
+                      style={{ width: "33.333%" }}
+                    >
+                      <Card
+                        className="challenge-card"
+                      >
                         <Card.Body>
                           <Card.Title>{blog.title}</Card.Title>
                           <Card.Text className="pt-3 pb-3">
@@ -78,12 +87,15 @@ const TrendingChallenges = () => {
                               ? `${blog.content.slice(0, 30)}...`
                               : blog.content}
                           </Card.Text>
-                          <div className="by-author muted-text" style={{ fontSize: '0.8em' }}>
-                            by {blog.userId.username}
+                          <div
+                            className="by-author muted-text"
+                            style={{ fontSize: "0.8em" }}
+                          >
+                            {blog.userId.username}
                           </div>
                           <div className="like-count">
                             <span role="img" aria-label="heart">
-                              ❤️
+                              {blog.icon}
                             </span>{" "}
                             {blog.participantsCount}명 참가
                           </div>
