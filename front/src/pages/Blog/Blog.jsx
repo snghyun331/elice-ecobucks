@@ -207,15 +207,12 @@ const Blog = () => {
           <Button
             variant="light"
             style={{
-              marginTop: "30px",
-              display: "block",
-              marginBottom: "30px",
-              color: 'white',
-              fontWeight: 'bold',
-              fontSize: '15px',
-              borderRadius: "0px",
-              width: '10rem',
-              backgroundColor: "#00D387",
+              borderRadius: 0,
+              padding: 10,
+              width: 270,
+              fontWeight: "500",
+              backgroundColor: '#00D387',
+              color: 'white'
             }} // 스타일 추가
             onClick={handleOpenModal}
           ><PencilIcon
