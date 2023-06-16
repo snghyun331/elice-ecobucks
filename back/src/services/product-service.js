@@ -52,7 +52,7 @@ class productService {
     let test ={}
     const newProducts = await Promise.all(products.map(async (product) => {
       const image = await Image.findById({ _id: product.imageId });
-   
+  
       if (image) {
         return {
           ...product, 
@@ -99,7 +99,7 @@ class productService {
     const isDataDeleted = await Product.deleteById(productId);
 
     // 업로드 이미지 삭제
-    await imageService.deleteImage( product.imageId );
+    await imageService.deleteImage(product.imageId);
 
     if (!isDataDeleted) {
       const errorMessage =

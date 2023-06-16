@@ -7,7 +7,7 @@ class CommentService {
   static async createComment({ userId, challengeId, content }) {
     //--- Challenge Update ---
     // 신청자수 count 증가, user의 마일리지 1000추가
-    const challenge = await Challenge.findById({ _id:challengeId })
+    const challenge = await Challenge.findById({ _id : challengeId })
     // dueDate(마감기한)를 넘을경우 신청x
     const currentDateTime = new Date();
     if (challenge.dueDate.getTime() < currentDateTime.getTime()){

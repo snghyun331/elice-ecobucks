@@ -31,7 +31,7 @@ const orderController = {
                 currentPage: page,
                 totalPages: totalPages,
                 orderDetails,
-              });
+            });
         } catch (error) {
             error.status = NOT_FOUND;
             next(error);

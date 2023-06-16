@@ -30,11 +30,11 @@ export async function scheduleChallenge() {
       for (let participation of participations) {
         //await imageModel.findByIdAndRemove(participation.imageId);
         console.log('이미지 삭제: ',participation.imageId); 
-        const image = await Image.findById({_id: participation.imageId})  
+        const image = await Image.findById({ _id: participation.imageId })  
         if(image){
           if (image.path)
             fs.unlinkSync(image.path);
-          await Image.deleteImage( participation.imageId ) 
+          await Image.deleteImage(participation.imageId) 
         }
         await participationModel.findByIdAndRemove(participation._id); 
       }

@@ -60,8 +60,8 @@ const participationController = {
       const currentUserId = req.currentUserId;
   
       await ParticipationService.deleteParticipation(challengeId, _id, currentUserId);
-       
-      res.status(OK).send({ message: "challenge 삭제 완료"});
+
+      res.status(OK).send({ message: "challenge 삭제 완료" });
   
     } catch (error) {
       next(error);

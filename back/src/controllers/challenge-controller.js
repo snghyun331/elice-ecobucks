@@ -56,8 +56,8 @@ const challengeController = {
       const chllengeId = req.params._id;
       const currentUserId = req.currentUserId;
       await ChallengeService.deleteChallenge(chllengeId, currentUserId);
-       
-      res.status(OK).send({ message: "challenge 삭제 완료"});
+
+      res.status(OK).send({ message: "challenge 삭제 완료" });
     } catch (error) {
       next(error);
     }
