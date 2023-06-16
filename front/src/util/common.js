@@ -23,5 +23,11 @@ export const formatDate = (dateString) => {
 
 export const formatDateTime = (dateString) => {
   const date = new Date(dateString);
-  return date.toLocaleString(); // Format date as 'YYYY-MM-DD HH:MM:SS'
+  return date.toLocaleString(undefined, {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  }); // Format date as 'YYYY-MM-DD HH:MM'
 };
