@@ -65,6 +65,7 @@ const HomePage = () => {
                 width: "100%",
                 height: "100%",
                 overflow: "hidden",
+                boxShadow: "3px 3px 4px #ebebeb",
               }}
             >
               <Card.Body style={{ display: "flex", flexDirection: "column" }}>
@@ -91,6 +92,7 @@ const HomePage = () => {
                 width: "100%",
                 height: "100%",
                 overflow: "hidden",
+                boxShadow: "3px 3px 4px #ebebeb",
               }}
             >
               <Card.Body style={{ display: "flex", flexDirection: "column" }}>
