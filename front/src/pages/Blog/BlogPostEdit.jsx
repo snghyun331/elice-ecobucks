@@ -88,20 +88,12 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
                 variant={icon === "🌍" ? "success" : "outline-success"}
                 onClick={() => {
                   handleIconSelect("🌍");
-                  setTopic("지구");
+                  setTopic("환경");
                 }}
               >
-                🌍 <br/><span style={{fontSize:'0.8rem'}}>지구</span>
+                🌍 <br/><span style={{fontSize:'0.8rem'}}>환경</span>
               </Button>
-              <Button
-                variant={icon === "👩‍👦‍👦" ? "success" : "outline-success"}
-                onClick={() => {
-                  handleIconSelect("👩‍👦‍👦");
-                  setTopic("가족");
-                }}
-              >
-                👩‍👦‍👦 <br/><span style={{fontSize:'0.8rem'}}>가족</span>
-              </Button>
+              
               <Button
                 variant={icon === "💪🏻" ? "success" : "outline-success"}
                 onClick={() => {
@@ -114,7 +106,7 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
               <Button
                 variant={icon === "💧" ? "success" : "outline-success"}
                 onClick={() => {
-                  handleIconSelect("💧")
+                  handleIconSelect("💧");
                   setTopic("물");
                 }}
               >
@@ -129,6 +121,15 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
                 style={{ borderRadius: "0px" }}
               >
                 🍀 <br/><span style={{fontSize:'0.8rem'}}>기후</span>
+              </Button>
+              <Button
+                variant={icon === "👩‍👦‍👦" ? "success" : "outline-success"}
+                onClick={() => {
+                  handleIconSelect("👩‍👦‍👦");
+                  setTopic("가족");
+                }}
+              >
+                👩‍👦‍👦 <br/><span style={{fontSize:'0.8rem'}}>가족</span>
               </Button>
               <Button
                 variant={icon === "💚" ? "success" : "outline-success"}
