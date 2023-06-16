@@ -97,9 +97,7 @@ const DistrictChart = (idx) => {
     const transformedData = calculateAvgPowerUsage()
     // console.log(transformedData);
     // console.log(transformedData.map(item=> console.log(item)));
-    transformedData.forEach(item => {
-        console.log(item.id);
-      });
+
       const dynamicData = [];
 
       for (let i = 0; i < transformedData.length; i++) {
@@ -108,7 +106,7 @@ const DistrictChart = (idx) => {
           dynamicData.push(currentObject);
         }
       }
-      console.log(dynamicData);
+    //   console.log(dynamicData);
     if (isFirstMount.current) {
         isFirstMount.current = false;
     } 
