@@ -3,9 +3,10 @@ import { getSeoulUsage, getDistrictUsage, getSeasonalUsage } from "../controller
 
 const dataRouter = Router();
 
-
 dataRouter.get("/data/seoulUsage", getSeoulUsage);
+
 dataRouter.get("/data/districtUsage", getDistrictUsage);
+
 dataRouter.get("/data/seasonalUsage", getSeasonalUsage);
 
 

@@ -29,9 +29,14 @@ async function findAllByUserIdAndPopulate(findAllByUserIdFunction, findByIdFunct
 export { findAllByUserIdAndPopulate };
 
 
-/* Origin Code
+/* 
+  1. Use this code
+  static async getUserParticipants({ userId }) {
+    return await findAllByUserIdAndPopulate(ChallengeParticipation.findAllByUserId, Challenge.findById, userId, "challengeTitle");
+  }
 
-  // 1. 유저의 모든 챌린지 참여 갯수와 참여 조회 
+  1. Origin Code
+  // 유저의 모든 챌린지 참여 갯수와 참여 조회 
   static async getUserParticipants({ userId }){
     const participations = await ChallengeParticipation.findAllByUserId({ userId });
     const populatedParticipations = await Promise.all(
@@ -53,39 +58,4 @@ export { findAllByUserIdAndPopulate };
     };
     return newParticipations;
   } 
-
-  //  => Use this code
-  static async getUserParticipants({ userId }) {
-    return await findAllByUserIdAndPopulate(ChallengeParticipation.findAllByUserId, Challenge.findById, userId, "challengeTitle");
-  }
-
-
-  // 2. 유저의 모든 댓글 갯수와 댓글 조회
-  static async getUserComments({ userId }){
-    const comments = await ChallengeComment.findAllByUserId({ userId: userId });
-    const populatedComments = await Promise.all(
-      comments.map(async (Comment) => {  
-        const challenge = await Challenge.findById(Comment.challengeId);
-        return { 
-          userCommentCount: comments.length,
-          ...Comment._doc,   
-          challengeTitle: challenge.title,  // title 추가
-          createdAt: updateTime.toKST(challenge.createdAt),
-          updatedAt: updateTime.toKST(challenge.updatedAt)
-        };
-      })
-    );
-
-    const newComments = {
-      userChallengeCount: populatedComments.length,
-      userChallengeList: populatedComments
-    };
-    
-    return newComments
-  }
-   
-  // -> Use this code
-  static async getUserComments({ userId }) {
-    return await findAllByUserIdAndPopulate(ChallengeComment.findAllByUserId, Challenge.findById, userId, "commentTitle");
-  }
 */
