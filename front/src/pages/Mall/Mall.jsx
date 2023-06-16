@@ -1,6 +1,6 @@
 /** 작성자: 정원석 */
 import { Container, Button, Card, Row, Col, Modal } from "react-bootstrap";
-import { showSuccess } from "../../assets/alert"
+import { showSuccess } from "../../assets/alert";
 import * as Api from "../../api";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -158,8 +158,10 @@ const Mall = () => {
         type: UPDATE_USER,
         payload: user,
       });
-      
-    showSuccess(`구매에 성공하였습니다. <br />'마이페이지의 구매 내역을 점주에게 보여주세요.`)
+
+      showSuccess(
+        `구매에 성공하였습니다. <br />'마이페이지의 구매 내역을 점주에게 보여주세요.`
+      );
 
       handleClosePurchaseModal();
     } catch (err) {
@@ -298,7 +300,12 @@ const Mall = () => {
             variant="light"
             className="btn-post"
             onClick={handleOpenSellModal}
-            style={{borderRadius: 0, padding: 10, width: 270, fontWeight: '400'}}
+            style={{
+              borderRadius: 0,
+              padding: 10,
+              width: 270,
+              fontWeight: "400",
+            }}
           >
             <GiftIcon
               variant="light"
@@ -338,184 +345,212 @@ const Mall = () => {
               </Button>
             </Modal.Footer>
           </Modal>
-          <Row style={{ display: "flex", alignItems: "center" }}>
+          <Row
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             {list.map((item) => (
-              <Col key={item._id}>
+              <Col key={item._id} className="d-flex justify-content-center">
                 <Card
-                 className="ps-2 pt-1"
-  style={{
-    width: "20rem",
-    height: "32rem",
-    marginBottom: 20,
-    backgroundColor: "#DDF7E3",
-    border: "3px solid #DDF7E3",
-    boxShadow: "0px 1px 2px #5D9C59",
-  }}
->
-  <Card.Body className="card-body">
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <img
-        src={item.path}
-        width="200rem"
-        height="200rem"
-        style={{ marginBottom: "20px", borderRadius: "5px" }}
-      />
-    </div>
-    <Card.Title
-      className="card-title"
-      style={{
-        fontWeight: "900",
-        fontSize: "1.5em",
-        padding: "5px 3px 20px 0px",
-      }}
-    >
-      {item.name}
-    </Card.Title>
-    <Card.Text className="card-text mb-1">
-      <span style={{ fontWeight: "900", paddingRight: 30 }}>가격</span>{" "}
-      🪙{item.price.toLocaleString()}
-    </Card.Text>
-    <Card.Text
-      className="card-text mb-0"
-      style={{
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        whiteSpace: "nowrap",
-      }}
-    >
-      <span style={{ fontWeight: "900", paddingRight: 30 }}>위치 </span>
-      {item.place}{" "}
-      <MapPinIcon
-        onClick={() => handleLocate(item)}
-        alt="위치찾기"
-        color="#00D387"
-        style={{
-          width: "1.1em",
-          marginRight: "5px",
-          paddingBottom: "3px",
-          height: "30px",
-          cursor: "pointer",
-        }}
-      />
-    </Card.Text>
+                  className="ps-2 pt-1"
+                  style={{
+                    width: "20rem",
+                    height: "32rem",
+                    marginBottom: 30,
+                    backgroundColor: "#DDF7E3",
+                    border: "3px solid #DDF7E3",
+                    borderRadius: '15px'                    
+                  }}
+                >
+                  <Card.Body className="card-body">
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                      <img
+                        src={item.path}
+                        width="200rem"
+                        height="200rem"
+                        style={{ marginBottom: "20px", borderRadius: "5px" }}
+                      />
+                    </div>
+                    <Card.Title
+                      className="card-title"
+                      style={{
+                        fontWeight: "900",
+                        fontSize: "1.5em",
+                        padding: "5px 3px 20px 0px",
+                      }}
+                    >
+                      {item.name}
+                    </Card.Title>
+                    <Card.Text className="card-text mb-1">
+                      <span style={{ fontWeight: "900", paddingRight: 30 }}>
+                        가격
+                      </span>{" "}
+                      🪙{item.price.toLocaleString()}
+                    </Card.Text>
+                    <Card.Text
+                      className="card-text mb-0"
+                      style={{
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      <span style={{ fontWeight: "900", paddingRight: 30 }}>
+                        위치{" "}
+                      </span>
+                      {item.place}{" "}
+                      <MapPinIcon
+                        onClick={() => handleLocate(item)}
+                        alt="위치찾기"
+                        color="#00D387"
+                        style={{
+                          width: "1.1em",
+                          marginRight: "5px",
+                          paddingBottom: "3px",
+                          height: "30px",
+                          cursor: "pointer",
+                        }}
+                      />
+                    </Card.Text>
 
-    <Card.Text className="card-text mb-1">
-      <span style={{ fontWeight: "900", paddingRight: 30 }}>재고</span>{" "}
-      {item.stock}
-    </Card.Text>
-    <Card.Text className="card-text mb-1">
-      <span style={{ fontWeight: "900", paddingRight: 15 }}>등록일</span>{" "}
-      {formatDateTime(item.createdAt)}
-    </Card.Text>
-    <Card.Text className="card-text mb-1">
-      <span style={{ fontWeight: "900", paddingRight: 30 }}>설명</span>{" "}
-      {item.description}
-    </Card.Text>
+                    <Card.Text className="card-text mb-1">
+                      <span style={{ fontWeight: "900", paddingRight: 30 }}>
+                        재고
+                      </span>{" "}
+                      {item.stock}
+                    </Card.Text>
+                    <Card.Text className="card-text mb-1">
+                      <span style={{ fontWeight: "900", paddingRight: 15 }}>
+                        등록일
+                      </span>{" "}
+                      {formatDateTime(item.createdAt)}
+                    </Card.Text>
+                    <Card.Text className="card-text mb-1">
+                      <span style={{ fontWeight: "900", paddingRight: 30 }}>
+                        설명
+                      </span>{" "}
+                      {item.description}
+                    </Card.Text>
 
-    {userState.user._id === item.seller && (
-      <>
-        <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "auto" }}>
-  <PencilSquareIcon
-    color="#00D387"
-    onClick={() => handleOpenEditModal(item._id)}
-    style={{
-      position: 'absolute',
-      right: 53,
-      bottom: 13,
-      width: "30px",
-      height: "30px",
-      cursor: "pointer"
-    }}
-  />
+                    {userState.user._id === item.seller && (
+                      <>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            marginTop: "auto",
+                          }}
+                        >
+                          <PencilSquareIcon
+                            color="#00D387"
+                            onClick={() => handleOpenEditModal(item._id)}
+                            style={{
+                              position: "absolute",
+                              right: 53,
+                              bottom: 13,
+                              width: "30px",
+                              height: "30px",
+                              cursor: "pointer",
+                            }}
+                          />
 
-  <TrashIcon
-    color="#00D387"
-    style={{
-      position: 'absolute',
-      right: 13,
-      bottom: 13,
-      width: "30px",
-      cursor: "pointer",
-    }}
-    onClick={() => handleOpenDeleteModal(item._id)}
-  />
-</div>
+                          <TrashIcon
+                            color="#00D387"
+                            style={{
+                              position: "absolute",
+                              right: 13,
+                              bottom: 13,
+                              width: "30px",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => handleOpenDeleteModal(item._id)}
+                          />
+                        </div>
 
+                        <Modal
+                          show={editModalOpen}
+                          onHide={handleCloseEditModal}
+                          centered
+                          size="lg"
+                        >
+                          <Modal.Header closeButton>
+                            <Modal.Title>상품 수정</Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body className="text-center">
+                            <MallProductEdit
+                              handleEditProduct={handleEditProduct}
+                              selectedItem={selectedItem}
+                            />
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <Button
+                              className="mt-4 mb-4"
+                              variant="secondary"
+                              onClick={handleCloseEditModal}
+                              style={{
+                                width: "100%",
+                                borderRadius: "0px",
+                              }}
+                            >
+                              닫기
+                            </Button>
+                          </Modal.Footer>
+                        </Modal>
 
-        <Modal
-          show={editModalOpen}
-          onHide={handleCloseEditModal}
-          centered
-          size="lg"
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>상품 수정</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="text-center">
-            <MallProductEdit
-              handleEditProduct={handleEditProduct}
-              selectedItem={selectedItem}
-            />
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              className="mt-4 mb-4"
-              variant="secondary"
-              onClick={handleCloseEditModal}
-              style={{
-                width: "100%",
-                borderRadius: "0px",
-              }}
-            >
-              닫기
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
-        <Modal
-          show={deleteModalOpen}
-          onHide={handleCloseDeleteModal}
-          centered
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>상품 삭제</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="text-center">
-            선택한 상품을 삭제하시겠습니까?
-          </Modal.Body>
-          <Modal.Footer>
-
-            <Button
-              variant="light"
-              onClick={() => handleDeleteProduct(selectedItem)}
-              style={{borderRadius: 0, backgroundColor: '#00D387', fontWeight: 'bold'}}
-            >
-              삭제
-            </Button>
-            <Button variant="secondary" onClick={handleCloseDeleteModal} style={{borderRadius: 0}}>
-              취소
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </>
-    )}
-    {item.seller !== userState.user._id && (
-      <ShoppingBagIcon
-        color="#00D387"
-        style={{
-          width: "30px",
-          cursor: "pointer",
-          position: "absolute",
-          bottom: 15,
-          right: 15,
-        }}
-        onClick={() => handleOpenPurchaseModal(item)}
-        disabled={item.stock === 0}
-      />
-    )}
-  </Card.Body>
-</Card>
-
+                        <Modal
+                          show={deleteModalOpen}
+                          onHide={handleCloseDeleteModal}
+                          centered
+                        >
+                          <Modal.Header closeButton>
+                            <Modal.Title>상품 삭제</Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body className="text-center">
+                            선택한 상품을 삭제하시겠습니까?
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <Button
+                              variant="light"
+                              onClick={() => handleDeleteProduct(selectedItem)}
+                              style={{
+                                borderRadius: 0,
+                                backgroundColor: "#00D387",
+                                fontWeight: "bold",
+                                color: "white",
+                              }}
+                            >
+                              삭제
+                            </Button>
+                            <Button
+                              variant="secondary"
+                              onClick={handleCloseDeleteModal}
+                              style={{ borderRadius: 0 }}
+                            >
+                              취소
+                            </Button>
+                          </Modal.Footer>
+                        </Modal>
+                      </>
+                    )}
+                    {item.seller !== userState.user._id && (
+                      <ShoppingBagIcon
+                        color="#00D387"
+                        style={{
+                          width: "30px",
+                          cursor: "pointer",
+                          position: "absolute",
+                          bottom: 15,
+                          right: 15,
+                        }}
+                        onClick={() => handleOpenPurchaseModal(item)}
+                        disabled={item.stock === 0}
+                      />
+                    )}
+                  </Card.Body>
+                </Card>
               </Col>
             ))}
           </Row>
@@ -524,30 +559,51 @@ const Mall = () => {
             <Modal.Header closeButton>
               <Modal.Title>구매 확인</Modal.Title>
             </Modal.Header>
-            <Modal.Body style={{padding: 40}}>
+            <Modal.Body style={{ padding: 40 }}>
               <Card.Text className="card-text">
-              <span style={{ fontWeight: "900", paddingRight: 30 }}>상품</span>{selectedItem && selectedItem.name}
+                <span style={{ fontWeight: "900", paddingRight: 30 }}>
+                  상품
+                </span>
+                {selectedItem && selectedItem.name}
                 <br />
-                <span style={{ fontWeight: "900", paddingRight: 30 }}>가격</span>🪙{selectedItem && selectedItem.price}
+                <span style={{ fontWeight: "900", paddingRight: 30 }}>
+                  가격
+                </span>
+                🪙{selectedItem && selectedItem.price}
                 <br />
-                <span style={{ fontWeight: "900", paddingRight: 30 }}>위치</span>{selectedItem && selectedItem.place}
+                <span style={{ fontWeight: "900", paddingRight: 30 }}>
+                  위치
+                </span>
+                {selectedItem && selectedItem.place}
                 <br />
-                <span style={{ fontWeight: "900", paddingRight: 30 }}>설명</span>{selectedItem && selectedItem.description}
+                <span style={{ fontWeight: "900", paddingRight: 30 }}>
+                  설명
+                </span>
+                {selectedItem && selectedItem.description}
               </Card.Text>
               <br />
-              <Container style={{textAlign: 'center'}}>선택한 상품을 구매하시겠습니까?</Container>
+              <Container style={{ textAlign: "center" }}>
+                선택한 상품을 구매하시겠습니까?
+              </Container>
             </Modal.Body>
             <Modal.Footer>
-
               <Button
                 variant="light"
                 onClick={() => handleConfirmPurchase(selectedItem)}
-                style={{borderRadius: 0, backgroundColor: '#00D387', fontWeight: 'bold'}}
-        
+                style={{
+                  borderRadius: 0,
+                  backgroundColor: "#00D387",
+                  fontWeight: "bold",
+                  color: "white",
+                }}
               >
                 구매
               </Button>
-              <Button variant="secondary" onClick={handleClosePurchaseModal} style={{borderRadius: 0}}>
+              <Button
+                variant="secondary"
+                onClick={handleClosePurchaseModal}
+                style={{ borderRadius: 0 }}
+              >
                 취소
               </Button>
             </Modal.Footer>

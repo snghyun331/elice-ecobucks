@@ -96,6 +96,8 @@ function LoginForm() {
                     width: "100%",
                     borderRadius: "0px",
                     backgroundColor: "#00D387",
+                    color: 'white',
+                    fontWeight: 'bold'
                   }}
                 >
                   로그인
