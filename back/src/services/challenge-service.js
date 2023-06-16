@@ -15,7 +15,7 @@ class ChallengeService {
     if (!title || !content || !icon || !weeks){ 
       throw setError("제목, 내용, 아이콘, 기간 모두 입력해 주세요.", 400, "BAD_REQUEST")
     }
-    //const dueDate = new Date().setMinutes(newDueDate.getMinutes() + 1); // newDueDate 1분설정 
+ 
     const dueDate = this.makeDueDate(weeks)
     const createdChallenge = await Challenge.create({ userId, title, content, icon, weeks, dueDate });
     if (!createdChallenge)  
@@ -81,12 +81,13 @@ class ChallengeService {
         throw setError("삭제 권한이 없습니다.", 403, "FORBIDDEN")
       if (challenge.commentsCount != 0)
         throw setError("참여자가 존재하여 삭제 할 수 없습니다.", 409, "CONFLICT")
-      if (challenge.isCompleted = false){
+      // 마감기한 전에 삭제되면 마일리지 회수
+      if (challenge.isCompleted == false){
         const user = await User.findById({ userId: challenge.userId })
         user.mileage -= 1000;
         await user.save();
+      
       } 
-
       await Challenge.deleteById(chllengeId);
     } catch (error) {
       throw handleError(error)
