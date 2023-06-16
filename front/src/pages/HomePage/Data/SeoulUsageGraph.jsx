@@ -31,7 +31,7 @@ const SeoulUsageChart = () => {
     }));
     // console.log("transformedData: ", transformedData);
     const sortedData = transformedData.sort((a, b) => a.x - b.x);
-    console.log("sortedData: ", sortedData);
+    // console.log("sortedData: ", sortedData);
 
 
     return (

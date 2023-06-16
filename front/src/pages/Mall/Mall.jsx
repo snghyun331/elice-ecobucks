@@ -403,7 +403,7 @@ const Mall = () => {
                     </Card.Text>
 
                     <Card.Text className="card-text mb-1">
-                      <span style={{ fontWeight: "900", paddingRight: 30 }}>
+                      <span style={{ fontWeight: "900", paddingRight: 30, color: item.stock === 0 ? "red" : "black" }}>
                         재고
                       </span>{" "}
                       {item.stock}

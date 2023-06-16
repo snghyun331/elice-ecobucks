@@ -5,7 +5,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter('Dobong-gu')}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Dobong-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === 'Dobong-gu' ? '#FD8D3C' : '#C8C8C8'} 
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === 'Dobong-gu' ? '#fc7515' : '#FD8D3C'} 
 			d="M964.064,164.667 c-1.447,9.018-0.285,18.105-2.002,27.506c-2.068,11.332-9.018,22.101-11.502,33.507c-0.867,3.979-0.977,9.201-1.5,14.003
 	c-0.508,4.656-1.969,10.129-1.5,14.003c0.779,6.456,5.756,14.04,8.502,21.005c2.287,5.805,7.385,15.948,8.002,21.505
 	c0.539,4.856-0.953,11.628-1.502,17.504c-0.547,5.879-1.484,11.904-2,17.504c-1.135,12.346-0.799,25.368-3,36.008
@@ -21,7 +21,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Dongdaemun-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Dongdaemun-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Dongdaemun-gu" ? '#FED976' : '#C8C8C8'} 
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Dongdaemun-gu" ? '#fcd056' : '#FED976'} 
 			d="M943.059,562.258 c17.314-12.86,45.85-14.498,69.016-21.505c4.727,50.787,10.273,100.752,15.504,151.034c-6.555,14.951-12.34,30.67-19.004,45.511
 	c-22.848-9.494-47.135-17.548-71.518-25.506c-1.996-7.838-4.219-15.451-7-22.505c-1.004-1.498-4.105-0.896-6.502-1
 	c-0.693-1.14-3.48-0.187-5.002-0.5c-4.93,0.306-9.943-0.296-15.002-0.5c-5.111-0.206-11.324-1.679-15.004-0.5
@@ -33,7 +33,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Dongjak-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Dongjak-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Dongjak-gu" ? '#FED976' : '#C8C8C8'} 
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Dongjak-gu" ? '#fcd056' : '#FED976'} 
 			d="M549.469,914.338 c12.88,1.814,26.066,2.353,40.509,1.5c5.67-0.331,12.667,0.665,17.504-0.5c1.864,0.031,3.163-0.504,4.501-1
 	c6.505,6.898,12.973,14.271,19.505,22.006c6.095,7.215,12.891,16.18,21.505,20.504c7.69,3.861,17.505,3.021,28.006,5.502
 	c1.606,6.563,2.639,13.698,5.001,19.504c6.734,1.602,15.933,0.738,23.005,2c4.186,7.818,7.715,16.29,11.502,24.506
@@ -49,7 +49,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Eunpyeong-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Eunpyeong-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Eunpyeong-gu" ? '#FEB24C' : '#C8C8C8'}
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Eunpyeong-gu" ? '#e79933' : '#FEB24C'}
 			d="M575.476,330.705
 	c7.587,0.952,9.29-2.505,13.003-6.501c7.224-7.775,13.519-17.169,18.004-25.505c14.693,12.132,30.782,26.277,46.01,39.509
 	c3.894,3.383,13.752,9.375,15.003,13.503c0.862,2.844-0.673,6.792,0,9.002c0,4.834,0,9.669,0,14.503
@@ -72,7 +72,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Gangbuk-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Gangbuk-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Gangbuk-gu" ? '#FED976' : '#C8C8C8'}
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Gangbuk-gu" ? '#fcd056' : '#FED976'}
 			d="M809.029,188.173
 	c0.912,12.448,6.383,24.226,6.5,36.508c0.084,8.802-3.998,17.245-3,27.006c-1.156,1.678-0.176,5.492-0.5,8.001
 	c0,4.167,0,8.335,0,12.503c1.809,14.38-6.305,20.132-3.5,34.008c1.307,1.693,2.83,3.171,4,5.001
@@ -90,7 +90,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Gangdong-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Gangdong-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Gangdong-gu" ? '#FEB24C' : '#C8C8C8'} 
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Gangdong-gu" ? '#e79933' : '#FEB24C'} 
 			d="M1169.111,741.299
 	c5.732-6.754,13.379-10.111,22.004-15.504c8.936-5.586,14.174-12.908,26.506-13.003c10.67-0.333,22.672,0.667,32.508-0.5
 	c18.525-4.354,29.406-16.417,44.01-25.006c8.764-5.154,19.996-8.898,28.506-14.003c0,1.667,0,3.334,0,5.001
@@ -107,7 +107,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Gangseo-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Gangseo-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Gangseo-gu" ? '#FED976' : '#C8C8C8'} 
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Gangseo-gu" ? '#fcd056' : '#FED976'} 
 			d="M134.875,530.751
 	c14.186,7.902,28.88,17.473,41.509,27.006c4.251,3.209,9.459,6.075,13.003,9.502c4.232,4.093,7.689,10.18,11.502,15.004
 	c3.918,4.956,7.421,10.604,11.503,15.003c6.56,7.07,15.108,12.175,21.505,19.005c8.05,8.595,12.902,20.3,21.505,29.006
@@ -130,7 +130,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Geumcheon-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Geumcheon-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Geumcheon-gu" ? '#FFEDA0' : '#C8C8C8'} 
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Geumcheon-gu" ? '#fcd056' : '#FFEDA0'} 
 			d="M409.438,1062.872
 	c10.055-0.948,14.109-7.896,22.005-11.003c8.709,3.959,17.785,18.691,29.007,11.503c1.936,4.731,4.911,8.425,7.001,13.003
 	c4.371,1.964,8.918,3.752,13.003,6.002c-0.113,3.721-0.805,6.863-0.5,11.002c-0.828,0.7-0.828,4.801,0,5.502
@@ -144,7 +144,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Guro-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Guro-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Guro-gu" ? '#FED976' : '#C8C8C8'} 
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Guro-gu" ? '#fcd056' : '#FED976'} 
 			d="M428.942,1040.367c0.317,1.684-0.644,4.645,0.5,5.501
 	c0,1,0,2.001,0,3.001c-7.014,3.32-11.124,9.547-20.504,10.502c-1.849,0.319-4.982-0.647-6.001,0.5c-2.667,0-5.334,0-8.002,0
 	c-1.848,0.319-4.982-0.647-6.001,0.5c-2.834,0-5.668,0-8.502,0c-3.834,0-7.668,0-11.502,0c-3.07-0.264-7.24,0.572-9.502-0.5
@@ -170,7 +170,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 		onMouseEnter={() => handleMouseEnter("Gwanak-gu")}
 		onMouseLeave={handleMouseLeave}
 		onClick={() => handleMouseClick('Gwanak-gu')}
-		fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Gwanak-gu" ? '#FFFFCC' : '#C8C8C8'} 
+		fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Gwanak-gu" ? '#f9f9a9' : '#FFFFCC'} 
 		d="M694.002,1210.906
 	c-4.465,4.478-9.49,9.332-15.003,14.503c-4.905,4.601-9.783,10.629-15.504,14.503c-5.579,3.778-12.692,6.807-20.004,11.003
 	c-6.592,3.783-13.672,10.269-20.004,11.503c-4.604,0.896-10.121,0.33-15.004,0.5c-4.958,0.172-10.222,0.289-15.503,0.5
@@ -189,7 +189,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 		onMouseEnter={() => handleMouseEnter("Gwangjin-gu")}
 		onMouseLeave={handleMouseLeave}
 		onClick={() => handleMouseClick('Gwangjin-gu')}
-		fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Gwangjin-gu" ? '#FFEDA0' : '#C8C8C8'} 
+		fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Gwangjin-gu" ? '#fde579' : '#FFEDA0'} 
 		d="M968.564,871.328
 	c2.316-14.521,7.197-26.477,7.502-43.01c8.822-11.86,18.256-21.808,24.006-37.008c5.83-15.418,6.246-33.637,11.002-51.012
 	c2.184-7.975,6.811-15.682,10.002-23.506c3.381-8.283,5.756-16.752,10.002-23.505c13.057-2.375,26.496,0.72,38.01-2.501
@@ -205,7 +205,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 		onMouseEnter={() => handleMouseEnter("Gangnam-gu")}
 		onMouseLeave={handleMouseLeave}
 		onClick={() => handleMouseClick('Gangnam-gu')}
-		fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Gangnam-gu" ? '#BD0026' : '#BD0026'}  
+		fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Gangnam-gu" ? '#a00020' : '#BD0026'}  
 		d="M809.529,885.332
 	c3.344-3.51,7.164-6.168,11.002-9.502c3.58-3.111,6.844-7.933,11.002-9.503c3.145-1.187,8.471-1.302,12.504-2.001
 	c10.121-1.754,17.617-2.169,29.006-1.5c15.992,0.939,26.063,3.173,37.008,8.002c26.447,11.669,47.611,32.773,78.518,36.008
@@ -230,7 +230,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Jongno-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Jongno-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Jongno-gu" ? '#FFEDA0' : '#C8C8C8'}  
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Jongno-gu" ? '#fde579' : '#FFEDA0'}  
 			d="M720.008,682.285
 	c-13.643,8.694-29.509,15.167-47.511,19.505c-6.417-5.753-13.255-11.084-19.004-17.504c-1.625-2.043-3.458-3.876-5.501-5.501
 	c-4.496-4.668-9.113-12.79-9.002-20.004c0.059-3.846,2.49-9.455,4.001-14.504c3.006-10.049,6.144-18.898,9.002-28.506
@@ -250,7 +250,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Jung-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Jung-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Jung-gu" ? '#FED976' : '#C8C8C8'}  
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Jung-gu" ? '#fcd056' : '#FED976'}  
 			d="M852.039,722.795
 	c-3.846,7.49-7.141,15.533-13.504,20.504c-2.877,2.459-5.543,5.126-8.002,8.002c-0.404,0.096-0.498,0.502-1,0.5
 	c-2.299,2.201-5.035,3.969-6.502,7.002c-4.045,11.457-9.639,21.369-14.502,32.008c-7.918-3.086-13.068-8.938-21.506-11.503
@@ -266,7 +266,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Jungnang-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Jungnang-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Jungnang-gu" ? '#FED976' : '#C8C8C8'}  
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Jungnang-gu" ? '#fcd056' : '#FED976'}  
 			d="M1120.1,474.238
 	c4.662,7.841,18.324,6.681,27.006,10.502c-2.287,12.067,11.305,15.833,13.004,24.506c1.773,9.058-4.662,14.91-5.502,24.005
 	c-4.322,4.18-9.531,7.472-13.004,12.502c0,0.334,0,0.667,0,1c-0.832,3.84-0.832,11.164,0,15.003c0.725,3.943,3.436,5.9,4.502,9.502
@@ -281,7 +281,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Mapo-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Mapo-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Mapo-gu" ? '#FED976' : '#C8C8C8'}  
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Mapo-gu" ? '#fcd056' : '#FED976'}  
 			d="M402.936,583.763
 	c6.628,6.041,6.576,18.764,20.004,18.004c5.968,13.406,17.593,19.237,29.007,28.007c7.357,5.653,15.368,10.769,22.005,16.504
 	c12.672,10.951,22.254,25.911,33.508,36.008c5.59,5.017,12.528,8.948,18.004,14.503c2.292,2.709,4.792,5.21,7.502,7.501
@@ -300,7 +300,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Nowon-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Nowon-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Nowon-gu" ? '#FC4E2A' : '#FC4E2A'}  
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Nowon-gu" ? '#f82c03' : '#FC4E2A'}  
 			d="M1083.592,305.699
 	c-0.51,4.537-3.662,5.613-4.502,10.002c-0.775,4.05,0.262,18.509,1.5,23.005c0.885,3.208,6.793,14.643,9.002,16.004
 	c5.967,3.672,16.053,1.403,23.506,3c8.109,1.738,14.93,5.567,22.006,7.501c2.74,11.227,0.236,20.766,3,30.507
@@ -351,7 +351,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Seodaemun-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Seodaemun-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Seodaemun-gu" ? '#FED976' : '#C8C8C8'}  
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Seodaemun-gu" ? '#fcd056' : '#FED976'}  
 			d="M651.993,687.787
 	c5.392,5.944,12.344,10.328,17.504,16.503c-9.036,16.137-28.058,22.287-41.509,34.008c-13.573-1.495-30.166-3.397-45.511-5.001
 	c-8.969-0.938-16.812-0.158-20.504-6.002c-2.458-2.875-5.125-5.543-8.002-8.001c-2.292-2.71-4.792-5.21-7.501-7.502
@@ -368,7 +368,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Seongbuk-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Seongbuk-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Seongbuk-gu" ? '#FEB24C' : '#C8C8C8'}  
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Seongbuk-gu" ? '#e79933' : '#FEB24C'}  
 			d="M729.51,392.219
 	c4.775,3.428,6.586,11.528,11.504,15.003c6.434,4.547,15.797,4.11,23.004,8.002c4.41,2.381,8.689,6.688,13.004,10.002
 	c13.127,10.086,26.316,20.602,38.508,30.507c3.721,15.952,7.818,31.525,11.504,47.511c6.191,3.309,10.23,8.773,21.004,7.501
@@ -387,7 +387,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Seongdong-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Seongdong-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Seongdong-gu" ? '#E31A1C' : '#E31A1C'}  
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Seongdong-gu" ? '#cb0104' : '#E31A1C'}  
 			d="M874.543,701.29c2.168,0,4.334,0,6.502,0
 	c5.318-3.184,4.223-12.782,14.504-11.002c0.693,1.141,3.48,0.187,5,0.5c9.426-0.09,18.045,0.627,27.006,1
 	c2.555,7.281,4.742,14.93,7.002,22.506c24.572,8.603,50.193,16.154,73.018,26.506c-4.559,27.309-8.412,49.525-20.506,68.516
@@ -401,7 +401,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Songpa-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Songpa-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Songpa-gu" ? '#BD0026' : '#BD0026'} 
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Songpa-gu" ? '#a00020' : '#BD0026'} 
 			d="M1142.104,808.314
 	c3.291,2.545,5.451,6.219,8.002,9.502c3.914,0.421,8.018,0.652,12.504,0.5c6.393,10.426,0.719,26.423-3.502,37.508
 	c-1.508,3.963-4.914,9.193-4.5,12.004c0.85,5.775,13.672,9.944,16.004,15.003c4.35,8.153,6.883,18.123,12.002,25.506
@@ -425,7 +425,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Yangcheon-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Yangcheon-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Yangcheon-gu" ? '#BD0026' : '#BD0026'} 
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Yangcheon-gu" ? '#a00020' : '#BD0026'} 
 			d="M199.39,804.313
 	c2.805-5.029,4.873-10.797,8.502-15.003c6.626,0.688,11.923-2.626,17.004-1.501c2.33,0.518,7.231,5.06,8.502,7.002
 	c1.986,3.038,3.1,8.013,5.001,12.504c4.896,11.561,11.807,26.589,15.504,37.008c6.607,6.648,15.021,9.528,27.006,12.002
@@ -443,7 +443,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Yeongdeungpo-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Yeongdeungpo-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Yeongdeungpo-gu" ? '#FED976' : '#C8C8C8'}
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Yeongdeungpo-gu" ? '#fcd056' : '#FED976'}
 			d="M385.432,872.828
 	c3.914-3.196,8.258-7.184,13.503-11.502c3.549-2.922,11.847-7.633,13.003-12.003c1.547-5.849-1.958-11.689-1-19.505
 	c-7.127-8.824-10.49-18.873-15.503-30.506c-4.992-11.584-10.961-20.336-10.503-36.009c12.586,8.73,21.889,21.758,35.008,30.507
@@ -461,7 +461,7 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 			onMouseEnter={() => handleMouseEnter("Yongsan-gu")}
 			onMouseLeave={handleMouseLeave}
 			onClick={() => handleMouseClick('Yongsan-gu')}
-			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Yongsan-gu" ? '#FC4E2A' : '#FC4E2A'} 
+			fillRule="evenodd" clipRule="evenodd" fill={hoveredPath === "Yongsan-gu" ? '#f82c03' : '#FC4E2A'} 
 			d="M737.012,767.305
 	c8.662,5.808,11.73,17.15,28.506,14.504c1.02,1.146,4.154,0.18,6.002,0.5c3.002,0,6.002,0,9.002,0c1.02,1.146,4.154,0.181,6.002,0.5
 	c8.139,3.197,14.717,7.955,21.504,12.502c2.967,15.711,8.664,31.341,11.004,46.011c-17.625,10.849-33.219,28.17-48.512,45.011
