@@ -8,11 +8,11 @@ const blogcommentController = {
         try {
             validateEmptyBody(req)
             const post_id = req.params._id
-            const writer_id = req.currentUserId;
+            const writerId = req.currentUserId;
             const { comment } = req.body;
 
             const newComment = await blogCommentService.addComment({
-                post_id, writer_id, comment
+                post_id, writerId, comment
             });
             
             return res.status(CREATED).send(newComment);

@@ -2,15 +2,15 @@ import { User, BlogComment } from "../db/index.js";
 
 
 class blogCommentService {
-    static async addComment({ post_id, writer_id, comment }) {
+    static async addComment({ post_id, writerId, comment }) {
         if (!comment) {
             const errorMessage = "댓글을 입력해주세요";
             return { errorMessage };
         }
-        const user = await User.findByWriterId({ writer_id })
+        const user = await User.findByWriterId({ writerId })
         
         const writername = user.username
-        const newComment = { post_id, writer_id, writername, comment };
+        const newComment = { post_id, writerId, writername, comment };
         const createdNewComment = await BlogComment.createComment({ newComment })
         createdNewComment.errorMessage = null
 
