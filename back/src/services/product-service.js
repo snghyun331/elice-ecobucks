@@ -14,7 +14,7 @@ class productService {
 
   static async updateProduct({ productId, sellerId, toUpdate }) {
     let product = await Product.findById(productId);
-    
+    console.log('product: ',product);
     // 상품이 없는 경우 오류 메시지
     if (!product) {
       const errorMessage =
@@ -52,7 +52,7 @@ class productService {
     let test ={}
     const newProducts = await Promise.all(products.map(async (product) => {
       const image = await Image.findById({ _id: product.imageId });
-  
+   
       if (image) {
         return {
           ...product, 
@@ -99,7 +99,7 @@ class productService {
     const isDataDeleted = await Product.deleteById(productId);
 
     // 업로드 이미지 삭제
-    await imageService.deleteImage(product.imageId);
+    await imageService.deleteImage( product.imageId );
 
     if (!isDataDeleted) {
       const errorMessage =
@@ -126,7 +126,7 @@ class productService {
 
       return product;
     } catch (error) {
-      throw new Error(`주문에 실패하였습니다. ${ error.message }`);
+      throw new Error(`상품 재고를 감소시키는 도중 오류가 발생했습니다: ${ error.message }`);
     }
   }
 }

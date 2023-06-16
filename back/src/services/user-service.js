@@ -167,13 +167,15 @@ class userAuthService {
     return userInfo
   }
 
+  static paginate(array, page, limit) {
+    return array.slice((page - 1) * limit, page * limit);
+  }  
 
   static async getUserMyPageChallenges({ userId, page }) {
     try {
       const limit = PRODUCT_PAGE_LIMIT;
       const skip = (page - 1) * limit;
-      const { userParticipations, count } = await ChallengeParticipation.findAndCountAll( userId, skip, limit);
-      const totalPages = Math.ceil(count / limit)
+      const userParticipations = await ChallengeParticipation.findAllByUserId({ userId });
       const populatedParticipations = await Promise.all(
         userParticipations.map(async (participation) => {  
           const challenge = await Challenge.findById(participation.challengeId);
@@ -185,11 +187,19 @@ class userAuthService {
             challengeDueDate: updateTime.toKST(challenge.dueDate),
           }; 
         }) 
-      ); 
+      );  
+      // 페이지네이션하기 위해서 현재 페이지 limit 값만큼 가져오기 
+      const pageParticipations = this.paginate(populatedParticipations, page, limit)
+      // totalPages 계산
+      const count =populatedParticipations.length
+      const totalPages = Math.ceil(count / limit)
+
       const newParticipations = {
-        userParticipationCount: populatedParticipations.length,
-        userParticipationList: populatedParticipations
+        userParticipationCount: pageParticipations.length,
+        userParticipationList: pageParticipations
       };
+
+    
       return {newParticipations, totalPages};
 
     } catch (error) {
