@@ -81,7 +81,12 @@ class ChallengeService {
         throw setError("삭제 권한이 없습니다.", 403, "FORBIDDEN")
       if (challenge.commentsCount != 0)
         throw setError("참여자가 존재하여 삭제 할 수 없습니다.", 409, "CONFLICT")
-  
+      if (challenge.isCompleted = false){
+        const user = await User.findById({ userId: challenge.userId })
+        user.mileage -= 1000;
+        await user.save();
+      } 
+
       await Challenge.deleteById(chllengeId);
     } catch (error) {
       throw handleError(error)
