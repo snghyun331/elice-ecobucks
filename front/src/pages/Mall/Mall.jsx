@@ -535,16 +535,17 @@ const Mall = () => {
               <Container style={{textAlign: 'center'}}>선택한 상품을 구매하시겠습니까?</Container>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={handleClosePurchaseModal} style={{borderRadius: 0}}>
-                취소
-              </Button>
+
               <Button
                 variant="light"
                 onClick={() => handleConfirmPurchase(selectedItem)}
                 style={{borderRadius: 0, backgroundColor: '#00D387'}}
         
               >
-                구매하기
+                구매
+              </Button>
+              <Button variant="secondary" onClick={handleClosePurchaseModal} style={{borderRadius: 0}}>
+                취소
               </Button>
             </Modal.Footer>
           </Modal>
