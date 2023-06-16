@@ -104,7 +104,7 @@ const Blog = () => {
           likeUsers: item.likeUsers,
           title: item.title,
           topic: item.topic,
-          username: item.username,
+          userName: item.userName,
           userId: item.userId, //작성자 아아디
           blogId: item._id, //절약 팁 고유 아이디
           createdAt: item.createdAt,
@@ -348,7 +348,7 @@ const Blog = () => {
                       <Card.Text className="card-text">
                       <span style={{ fontWeight: "900", paddingRight: 15 }}>
                         작성자
-                      </span> {item.username}
+                      </span> {item.userName}
                       </Card.Text>
                       <Card.Text
                         className="card-text mt-5"

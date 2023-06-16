@@ -77,7 +77,7 @@ const TrendingBlogs = () => {
                               : blog.content}
                           </Card.Text>
                           <div className="by-author muted-text" style={{ fontSize: '0.8em' }}>
-                            {blog.username}
+                            {blog.userName}
                           </div>
                           <div className="like-count">
                             <span role="img" aria-label="heart">

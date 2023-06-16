@@ -7,9 +7,9 @@ const userController = {
   postUserRegister: async function (req, res, next) {
     try {
       validateEmptyBody(req)
-      const { username, email, password, districtName } = req.body;
+      const { userName, email, password, districtName } = req.body;
       const newUser = await userAuthService.addUser({
-        username,
+        userName,
         email,
         password,
         districtName,
@@ -147,8 +147,8 @@ const userController = {
   userPutMypage: async function (req, res, next) {
     try {
       const userId = req.currentUserId;
-      const { username, districtName, password } = req.body ?? null;
-      const toUpdate = { username, districtName, password };
+      const { userName, districtName, password } = req.body ?? null;
+      const toUpdate = { userName, districtName, password };
 
       const updatedUser = await userAuthService.updateUser({ userId, toUpdate });
 

@@ -6,8 +6,8 @@ class BlogPost {
         return createdNewPost;
     }
 
-    static async findOneById({ post_id }) {
-        const post = await BlogPostModel.findOne({ _id: post_id });
+    static async findOneById({ postId }) {
+        const post = await BlogPostModel.findOne({ _id: postId });
         return post
     }
 
@@ -21,8 +21,8 @@ class BlogPost {
         return posts
     }
 
-    static async update({ post_id, fieldToUpdate, newValue }) {
-        const filter = { _id: post_id };
+    static async update({ postId, fieldToUpdate, newValue }) {
+        const filter = { _id: postId };
         const update = { [fieldToUpdate]: newValue };
         const option = { returnOriginal: false };
     
@@ -32,14 +32,14 @@ class BlogPost {
         return updatedpost;
     }
 
-    static async deleteOneById({ post_id }) {
-        const deletedPost = await BlogPostModel.deleteOne({ _id: post_id });
+    static async deleteOneById({ postId }) {
+        const deletedPost = await BlogPostModel.deleteOne({ _id: postId });
         const isCompleteDeleted = deletedPost.deletedCount === 1;
         return isCompleteDeleted;
     }
 
-    static async addLike({ post_id, pressLikeUserId }) {
-        const filter = { _id: post_id, likeUsers: { $ne: pressLikeUserId }};
+    static async addLike({ postId, pressLikeUserId }) {
+        const filter = { _id: postId, likeUsers: { $ne: pressLikeUserId }};
         const update = {
             $inc: { likeCount: 1 },
             $addToSet: { likeUsers: pressLikeUserId },
@@ -54,8 +54,8 @@ class BlogPost {
     }
 
 
-    static async deleteLike({ post_id, cancelLikeUserId }) {
-        const filter = { _id: post_id, likeCount: { $gt: 0 }, likeUsers: cancelLikeUserId };  // likeCount가 0보다 크고 likeUsers에 cancelLikeUserId가 있는 경우에만 업데이트
+    static async deleteLike({ postId, cancelLikeUserId }) {
+        const filter = { _id: postId, likeCount: { $gt: 0 }, likeUsers: cancelLikeUserId };  // likeCount가 0보다 크고 likeUsers에 cancelLikeUserId가 있는 경우에만 업데이트
         const update = {
             $inc: { likeCount: -1 },
             $pull: { likeUsers: cancelLikeUserId },

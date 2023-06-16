@@ -26,7 +26,7 @@ const BlogComment = ({ blog }) => {
           ...res.data,
           userId: {
             _id: userState.user._id,
-            username: userState.user.username,
+            userName: userState.user.userName,
           },
         };
         setComments([...comments, newComment]);
@@ -126,7 +126,7 @@ const BlogComment = ({ blog }) => {
             className="d-flex flex-column justify-content-between align-items-start"
           >
             <div>
-              <strong>{comment.writername}</strong>{" "}
+              <strong>{comment.writerName}</strong>{" "}
               <span style={{ color: "gray", fontSize: "0.8em" }}>
                 {formatDate(comment.updatedAt)}
               </span>

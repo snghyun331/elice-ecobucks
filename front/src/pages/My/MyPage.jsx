@@ -147,7 +147,7 @@ function MyPage() {
               ></Container>
 
               <Container className="mt-3">
-                <a style={{ fontWeight: "bold" }}>{userState.user.username}</a>{" "}
+                <a style={{ fontWeight: "bold" }}>{userState.user.userName}</a>{" "}
                 님
                 <br />
                 <a
