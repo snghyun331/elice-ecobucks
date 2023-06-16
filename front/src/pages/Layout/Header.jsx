@@ -26,9 +26,12 @@ const Header = () => {
     >
       <div className="container-fluid">
         <LeftNav />
-        <RightNav isLogin={user ? true : false} user={user} />
+        <div className="col-md-6 col-lg-8">
+          <RightNav isLogin={user ? true : false} user={user} />
+        </div>
       </div>
     </Navbar>
   );
+
 };
 export default Header;

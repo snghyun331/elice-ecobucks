@@ -30,14 +30,15 @@ const SeoulUsageChart = () => {
         y: item.powerUsage
     }));
     // console.log("transformedData: ", transformedData);
-
+    const sortedData = transformedData.sort((a, b) => a.x - b.x);
+    console.log("sortedData: ", sortedData);
 
 
     return (
         <div style={{ width: 500, height: 450, marginLeft:"20px" }}>
             <p />
             <ResponsiveLine
-                data={[{ id: 'Seoul Usage', data: transformedData }]}
+                data={[{ id: 'Seoul Usage', data: sortedData }]}
                 margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
                 xScale={{ type: 'point' }}
                 yScale={{ type: 'linear', min: 220, max: 250, stacked: true, reverse: false }}

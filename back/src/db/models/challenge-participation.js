@@ -40,6 +40,15 @@ class ChallengeParticipation {
     const userParticipations = await participationModel.find({ userId });;
     return userParticipations
   }
+  
+  static async findAndCountAll( userId, skip, limit ){
+    const userParticipations = await participationModel.find({userId})
+                      .skip(skip)
+                      .limit(limit)
+                      .exec();
+    const count = await participationModel.countDocuments();
+    return { userParticipations, count }
+  }
 
   // update
   static async update({ _id, imageId }) {
