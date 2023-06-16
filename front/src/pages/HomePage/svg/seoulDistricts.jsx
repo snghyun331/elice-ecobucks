@@ -472,12 +472,12 @@ const SeoulDistricts = ({ hoveredPath, handleMouseEnter, handleMouseLeave, handl
 	c2.834,0,5.668,0,8.502,0c2.344-0.324,5.988,0.654,7.502-0.5c3.334,0,6.668,0,10.002,0
 	C730.596,766.053,735.563,764.919,737.012,767.305z"/>
 		<text fontSize={50} alignmentBaseline="middle">
-			<textPath xlinkHref="#Dobong-gu">
+			{/* <textPath xlinkHref="#Dobong-gu">
 				도봉구
 			</textPath>
 			<textPath xlinkHref="#Jung-gu">
 				중구
-			</textPath>
+			</textPath> */}
 		</text>
 	</svg>
 )

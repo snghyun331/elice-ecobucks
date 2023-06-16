@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { Form, Container } from "react-bootstrap"
+import { showAlert } from "../../assets/alert";
 
 const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
   const [name, setName] = useState("");
@@ -19,14 +20,11 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
         stock: Number(stock) || Number(selectedItem.stock),
         description: description || selectedItem.description,
       };
-      // setList(updatedItem);
-      // console.log("updatedItem: ", updatedItem);
-      // console.log("바뀐 list: ", list);
 
       await handleEditProduct(selectedItem, updatedItem);
 
     } catch (err) {
-      alert("모든 값을 입력해주세요.")
+      showAlert("모든 값을 입력해주세요.")
       console.log("상품 등록에 실패하였습니다.", err);
     }
   }

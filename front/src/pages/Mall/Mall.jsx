@@ -1,6 +1,6 @@
 /** 작성자: 정원석 */
 import { Container, Button, Card, Row, Col, Modal } from "react-bootstrap";
-import { showSuccess } from "../../assets/alert";
+import { showAlert, showSuccess } from "../../assets/alert";
 import * as Api from "../../api";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -54,7 +54,6 @@ const Mall = () => {
       const res = await Api.get(`products/${itemId}`);
       const product = res.data;
       setSelectedItem(product);
-      console.log("handleOpenSellModal 안에서 selectedItem: ", selectedItem);
     } catch (err) {
       console.log(err);
     }
@@ -64,7 +63,6 @@ const Mall = () => {
   const handleClosePurchaseModal = () => setPurchaseModalOpen(false);
   const handleOpenPurchaseModal = (item) => {
     setSelectedItem(item);
-    console.log(selectedItem);
     setPurchaseModalOpen(true);
   };
 
@@ -85,7 +83,6 @@ const Mall = () => {
     try {
       const res = await Api.get(`products/${itemId}`);
       const product = res.data;
-      console.log(product);
       setSelectedItem(product);
     } catch (err) {
       console.log(err);
@@ -103,10 +100,7 @@ const Mall = () => {
 
   const fetchData = async () => {
     try {
-      // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
       const res = await Api.get(`products?page=${currentPage}`);
-
-      console.log("db data: ", res.data.newProducts);
       const newList = res.data.newProducts.map((item) => {
         return {
           name: item.name,
@@ -122,7 +116,6 @@ const Mall = () => {
           _id: item._id, //상품 ObjectId
         };
       });
-      console.log("newList: ", newList);
       const totalpage = res.data.totalPages;
       setTotalPages(totalpage);
       setList(newList);
@@ -145,7 +138,6 @@ const Mall = () => {
     try {
       // 마일리지 충분한지 확인하기
       // 유효성 검사: 구매할 수 있는 수량인지. (수량이 0 개이면 db 삭제)
-      console.log("함수 안에서 selectedItem: ", selectedItem);
       await Api.post(`orders/`, {
         productId: selectedItem._id,
       });
@@ -165,16 +157,13 @@ const Mall = () => {
 
       handleClosePurchaseModal();
     } catch (err) {
-      alert(err.response.data.message);
+      showAlert(err.response.data.message);
       console.log("상품 구매에 실패하였습니다.", err);
     }
   };
 
   const handleEditProduct = async (selectedItem, updatedItem) => {
     try {
-      console.log("selectedItem: ", selectedItem);
-      console.log("updatedItem: ", updatedItem);
-      //잘 받아옴.
 
       const updatedProduct = {
         // ...selectedItem,
@@ -210,7 +199,6 @@ const Mall = () => {
 
   const handleDeleteProduct = async (selectedItem) => {
     try {
-      console.log("삭제할 상품: ", selectedItem);
       await Api.delete(`products/${selectedItem._id}`);
       fetchData();
       handleCloseDeleteModal();

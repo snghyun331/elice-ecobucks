@@ -14,6 +14,7 @@ import dislike from "../../assets/heartblank.png";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { HeartIcon as HeartSolid, PencilIcon } from "@heroicons/react/20/solid";
 import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
+import { showAlert } from "../../assets/alert";
 
 const Blog = () => {
   // const [blogPosts, setBlogPosts] = useState([]);
@@ -50,7 +51,6 @@ const Blog = () => {
   const handleCloseEditModal = () => setEditModalOpen(false);
   const handleOpenEditModal = async (blogId) => {
     try {
-      console.log("blogId: ", blogId);
       const res = await Api.get(`blog/${blogId}`);
       const blog = res.data;
       setSelectedUpdateBlog(blog);
@@ -86,7 +86,6 @@ const Blog = () => {
     try {
       // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
       const res = await Api.get(`blog?page=${currentPage}`);
-      console.log("db data: ", res.data)
 
       const newList = res.data.posts.map(item => {
         return {
@@ -102,20 +101,17 @@ const Blog = () => {
         };
       });
       console.log(newList, 'new')
-      // console.log(newList);
       setBlogList(newList);
       setTotalPages(res.data.totalPage)
-      // console.log(blogList.map(item => (console.log(item))));
     } catch (err) {
-      // alert("정보 불러오기를 실패하였습니다.");
+      showAlert("정보 불러오기를 실패하였습니다.");
       console.log("절약 팁 불러오기를 실패하였습니다.", err);
     }
   }
 
   const handleEditBlog = async (selectedBlog, updatedBlog) => {
     try {
-      console.log("selectedBlog: ", selectedBlog);
-      console.log("updatedBlog: ", updatedBlog);
+
 
       await Api.put(`blog/${selectedBlog._id}/write`, updatedBlog);
       fetchData();
@@ -127,7 +123,6 @@ const Blog = () => {
   }
   const handleDeleteBlog = async (selectedBlog) => {
     try {
-      console.log("삭제할 절약 팁: ", selectedBlog);
       await Api.delete(`blog/${selectedBlog._id}`);
 
       fetchData();
@@ -189,9 +184,9 @@ const Blog = () => {
           fontSize: '2rem',
           fontWeight: '900',
         }}
-      >절약 팁 :
+      >절약팁 :
         <br />
-        <span style={{ fontSize: '1.3rem', fontWeight: '400' }}>절약 꿀팁을 공유해요.</span>
+        <span style={{ fontSize: '1.3rem', fontWeight: '400' }}>나만의 절약 꿀팁을 공유할 수 있어요.</span>
       </div>
       {selectedBlog ? (
         <BlogRead
@@ -207,21 +202,18 @@ const Blog = () => {
           <Button
             variant="light"
             style={{
-              marginTop: "30px",
-              display: "block",
-              marginBottom: "30px",
-              color: 'white',
-              fontWeight: 'bold',
-              fontSize: '15px',
-              borderRadius: "10px",
-              width: '10rem',
-              backgroundColor: "#00D387",
+              borderRadius: 0,
+              padding: 10,
+              width: 270,
+              fontWeight: "500",
+              backgroundColor: '#00D387',
+              color: 'white'
             }} // 스타일 추가
             onClick={handleOpenModal}
           ><PencilIcon
               variant="light"
               color="#FFF"
-              style={{ width: "30px", height: "30px", cursor: "pointer", marginRight: "10px" }}
+              style={{ width: "20px", height: "20px", cursor: "pointer", marginRight: "10px" }}
               onClick={handleOpenModal}
             />
             작성하기

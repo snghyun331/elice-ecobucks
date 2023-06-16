@@ -5,7 +5,6 @@ import like from "../../assets/heartfill.png";
 import dislike from "../../assets/heartblank.png";
 import { UserStateContext } from '../../context/user/UserProvider';
 const BlogLike = ({ blog }) => {
-    // console.log("bloglike 함수 안: ", blog);
     const userState = useContext(UserStateContext);
   const [isLiked, setIsLiked] = useState(false);
   useEffect(() => {
@@ -14,7 +13,6 @@ const BlogLike = ({ blog }) => {
     setIsLiked(likedByUser);
   }, [blog, userState.user._id]);
   const [likeCount, setLikeCount] = useState(blog.likeCount);
-//   console.log(likeCount);
 
   const handleLikeAction = async () => {
     try {

@@ -31,7 +31,6 @@ const ChallengeUpdate = ({ show, onClose, challenge }) => {
         icon,
         weeks: duration,
       });
-      console.log(res);
       window.location.reload();
     } catch (err) {
       showAlert("챌린지 수정에 실패하였습니다.");

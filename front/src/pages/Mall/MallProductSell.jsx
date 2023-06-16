@@ -11,6 +11,7 @@ import {
   Alert,
   Image,
 } from "react-bootstrap";
+import { showAlert } from "../../assets/alert";
 
 const MallProductSell = ({ onClose }) => {
   const [location, setLocation] = useState({});
@@ -52,7 +53,8 @@ const MallProductSell = ({ onClose }) => {
 
   const navigate = useNavigate();
 
-  const handleSearchAddress = () => {
+  const handleSearchAddress = (e) => {
+    e.preventDefault();
     setShowModal(true);
   };
 
@@ -96,7 +98,6 @@ const MallProductSell = ({ onClose }) => {
 
         const imageRes = await Api.postFile("images/products/upload", formData);
 
-        console.log(imageRes);
         const res = await Api.post("products", {
           name,
           price: Number(price),
@@ -111,7 +112,7 @@ const MallProductSell = ({ onClose }) => {
         onClose();
       }
     } catch (err) {
-      alert("모든 값을 입력해주세요.", err);
+      showAlert("모든 값을 입력해주세요.", err);
       console.log("상품 등록에 실패하였습니다.", err);
     }
   };

@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { ListGroup, Form, Button, Container } from "react-bootstrap";
 import * as Api from "../../api";
 import { UserStateContext } from "../../context/user/UserProvider";
+import { showAlert } from "../../assets/alert";
 
 const BlogComment = ({ blog }) => {
   const userState = useContext(UserStateContext);
@@ -34,13 +35,12 @@ const BlogComment = ({ blog }) => {
       }
 
     } else {
-      alert("댓글은 20글자 이하여야 합니다.");
+      showAlert("댓글은 20글자 이하여야 합니다.");
     }
     e.target.reset();
   };
   const handleCommentChange = (e) => {
     const content = e.target.value;
-    console.log(content.length);
     setCommentContent(content);
 
     if (content.length > 20) {

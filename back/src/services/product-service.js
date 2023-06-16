@@ -126,7 +126,7 @@ class productService {
 
       return product;
     } catch (error) {
-      throw new Error(`주문에 실패하였습니다: ${ error.message }`);
+      throw new Error(`주문에 실패하였습니다. ${ error.message }`);
     }
   }
 }
