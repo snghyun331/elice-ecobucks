@@ -8,10 +8,16 @@ const PaginationBar = ({ totalPages, handlePageChange, currentPage }) => {
 
     for (let i = 1; i <= totalPages; i++) {
       paginationItems.push(
-        <a href="#"
+        <a
           key={i}
           active={currentPage === i}
-          onClick={() => handlePageChange(i)}
+          onClick={() => {
+            handlePageChange(i);
+            window.scrollTo({
+              top: 800,
+              behavior: 'smooth'
+            })
+          }}
           style={{
             width: '15px',
             height: '15px',
