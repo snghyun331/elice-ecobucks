@@ -10,9 +10,11 @@ function MegaChallengeCarousel({ challenges }) {
   const [megaChallenge, setMegaChallenge] = useState(null);
 
   useEffect(() => {
-    const challengeWithHighestParticipantsCount = getChallengeWithHighestParticipantsCount();
-    setMegaChallenge(challengeWithHighestParticipantsCount);
-  }, []);
+    if (challenges.length > 0) {
+      const challengeWithHighestParticipantsCount = getChallengeWithHighestParticipantsCount();
+      setMegaChallenge(challengeWithHighestParticipantsCount);
+    }
+  }, [challenges]);
 
   const handleFirstCarouselItemClick = () => {
     setShowChallengeRead(true);
@@ -48,6 +50,10 @@ function MegaChallengeCarousel({ challenges }) {
       : "";
   };
 
+  if (challenges.length === 0) {
+    return null; // or display an error message
+  }
+
   return (
     <>
       {!showChallengeRead && (
@@ -68,22 +74,6 @@ function MegaChallengeCarousel({ challenges }) {
               <h1>{megaChallenge ? megaChallenge.title : ""}</h1>
             </Carousel.Caption>
           </Carousel.Item>
-          {/* <Carousel.Item>
-            <Container style={{ width: '100%', height: '17rem', backgroundColor: '#ffa1ee' }}>
-            </Container>
-            <Carousel.Caption>
-              <h3>{getChallengeWithHighestCommentsCount()}</h3>
-              <p>개발자가 제공하는 챌린지</p>
-            </Carousel.Caption>
-          </Carousel.Item> */}
-          {/* <Carousel.Item>
-            <Container style={{ width: '100%', height: '17rem', backgroundColor: '#9acc54' }}>
-            </Container>
-            <Carousel.Caption>
-              <h3>절약짱 동네 랭킹</h3>
-              <p>모든 챌린지 참가 건에 대하여, 참가자의 구별로 랭킹 보여주기</p>
-            </Carousel.Caption>
-          </Carousel.Item> */}
         </Carousel>
       )}
       {showChallengeRead && (

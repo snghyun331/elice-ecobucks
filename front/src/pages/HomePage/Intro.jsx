@@ -135,7 +135,18 @@ const Intro = () => {
       </div>
 
       <div className="page" style={{ ...style, backgroundColor: "#00A36B " }}>
-        <Container className="d-flex">
+      <div
+        className="cover"
+        data-aos="fade-left"
+        style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100vh',
+          background: 'linear-gradient(270deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 50%)',
+          zIndex: 1,
+        }}
+      ></div>
+  <Container className="d-flex" style={{ position: 'relative', zIndex: 1 }}>
           <h1
             data-aos="fade-up"
             style={{
@@ -327,6 +338,17 @@ const Intro = () => {
       </div>
 
       <div className="page" style={{ ...style, backgroundColor: "#60FFAA " }}>
+      <div
+        className="cover"
+        data-aos="fade-right"
+        style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100vh',
+          background: 'linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 50%)',
+          zIndex: 1,
+        }}
+      ></div>
         {/* 카드예시데이터 */}
         <Container
           className="d-flex justify-content-between overflow-hidden mt-4"
