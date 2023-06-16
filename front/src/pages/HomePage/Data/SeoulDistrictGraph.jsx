@@ -133,6 +133,7 @@ const SeoulDistrictsGraph = () => {
             />
             
             {idx === 0 ? <SeoulUsageChart /> : <DistrictChart idx={idx} /> }
+            {idx === "서초구" ? <span>서초구 전력사용량이 많아서 어쩌구 저쩌구서초구 전력사용량이 많아서 어쩌구 저쩌구서초구 전력사용량이 많아서 어쩌구 저쩌구<br />서초구 전력사용량이 많아서 어쩌구 저쩌구<br />서초구 전력사용량이 많아서 어쩌구 저쩌구<br />서초구 전력사용량이 많아서 어쩌구 저쩌구</span> : null} 
             {/* <DistrictChart /> */}
             {/* <SeoulUsageChart /> */}
         </>

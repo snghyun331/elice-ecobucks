@@ -21,16 +21,6 @@ const SeoulUsageChart = () => {
         fetchData();
     }, []);
 
-    // useEffect(() => {
-    //     if (chartData.length > 0) {
-    //         const transformedData = chartData.map(item => ({
-    //             x: item.year,
-    //             y: item.powerUsage
-    //         }));
-    //         // console.log(transformedData);
-    //     }
-    // }, [chartData]);
-
     if (chartData.length === 0) {
         return null; // 또는 로딩 상태를 표시할 수 있는 JSX를 반환합니다.
     }
@@ -74,6 +64,7 @@ const SeoulUsageChart = () => {
                 pointColor={{ theme: 'background' }}
                 pointBorderWidth={2}
                 pointBorderColor={{ from: 'serieColor' }}
+                enablePointLabel={true}
                 pointLabelYOffset={-12}
                 useMesh={true}
                 legends={[

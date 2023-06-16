@@ -1,14 +1,5 @@
 import { Link } from "react-router-dom";
-import { Container, Button, Dropdown, DropdownButton } from "react-bootstrap";
-// import map from "../../../../data/seoul_map/seoulMap.png";
-// import DomesticAverage from "../../../../data/DomesticAverage.png";
-// import DomesticDistrict from "../../../../data/DomesticDistrict.png";
-// import district1 from "../../../../data/seoul_map/district1.png";
-// import district2 from "../../../../data/seoul_map/district2.png";
-// import district3 from "../../../../data/seoul_map/district3.png";
-// import district4 from "../../../../data/seoul_map/district4.png";
-// import district5 from "../../../../data/seoul_map/district5.png";
-// import Industry from "../../../../data/Industry.png";
+import { Container, Row, Col, Button, Dropdown, DropdownButton } from "react-bootstrap";
 import { useContext } from "react";
 import { UserStateContext } from "../../context/user/UserProvider";
 
@@ -19,9 +10,12 @@ import Intro from './Intro';
 
 import { useState } from "react";
 import SeoulDistrictsGraph from "./Data/SeoulDistrictGraph";
-import SeoulUsageChart from "./Data/SeoulUsageGraph";
+import SeoulUsageGraph from "./Data/SeoulUsageGraph";
+import SeasonalUsageGraph from "./Data/SeasonalUsageGraph";
 import DistrictChart from "./Data/DistrictChart";
 import districtInfo from "../../assets/districtInfo";
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const HomePage = () => {
   const { user } = useContext(UserStateContext);
@@ -62,6 +56,75 @@ const HomePage = () => {
           <BannerCarousel />
         </Container>
 
+        <Row className="justify-content-md-end mt-5">
+          <Col>
+            <h3>최근 5년 서울 전력 평균</h3>
+            <div
+              style={{
+                marginTop: "18px",
+                height: "5.5px",
+                width: "120px",
+                backgroundColor: "#FF6B00",
+                borderRadius: "10px",
+              }}
+            >
+              {" "}
+            </div>
+            <SeoulUsageGraph />
+          </Col>
+          <Col>
+            <h3>계절별 전력 사용량</h3>
+              <div
+                style={{
+                  marginTop: "18px",
+                  height: "5.5px",
+                  width: "120px",
+                  backgroundColor: "#FF6B00",
+                  borderRadius: "10px",
+                }}
+              >
+                {" "}
+              </div>
+              <SeasonalUsageGraph />
+          </Col>
+        </Row>
+        {/* <Container
+          style={{
+            width: "100%",
+            backgroundColor: "#fff",
+            border: "1px solid #d6d6d6",
+            borderRadius: "10px",
+            boxShadow: "3px 3px 4px #ebebeb",
+            padding: "20px",
+            marginTop: "50px",
+          }}
+        >
+          <h3>서울 평균</h3>
+          <div
+            style={{
+              marginTop: "18px",
+              height: "5.5px",
+              width: "120px",
+              backgroundColor: "#FF6B00",
+              borderRadius: "10px",
+            }}
+          >
+            {" "}
+
+          </div>
+
+      <Row className="justify-content-md-end">
+        <Col>
+          <SeoulUsageGraph />
+        </Col>
+        <Col>
+          <SeasonalUsageGraph />
+        </Col>
+      </Row> */}
+
+          
+        {/* </Container> */}
+
         <Container
           style={{
             width: "100%",
@@ -88,14 +151,12 @@ const HomePage = () => {
           </div>
 
           <div
-            className="btn-toolbar justify-content-md-end"
+            className="btn-toolbar justify-content-center justify-content-md-end"
             role="toolbar"
             aria-label="Toolbar with button groups"
           >
-            <div className="d-flex gap-2 mx-auto justify-content-md-end">
               <SeoulDistrictsGraph />
-              {/* <DistrictChart /> */}
-            </div>
+
           </div> 
         </Container>
 
