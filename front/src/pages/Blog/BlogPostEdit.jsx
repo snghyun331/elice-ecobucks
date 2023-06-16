@@ -71,7 +71,7 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
           className="text-muted mb-2"
           style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
         >
-          공유할 팁의 주제를 간단히 적어주세요.
+            공유할 팁의 주제를 적어주세요. 예) 환경, 건강, 기후변화, 대기오염
         </Container>
         <ButtonGroup style={{ width: "100%" }}>
               <Button
@@ -124,11 +124,11 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
                 variant={icon === "🍀" ? "success" : "outline-success"}
                 onClick={() => {
                   handleIconSelect("🍀");
-                  setTopic("운세");
+                  setTopic("기후");
                 }}
                 style={{ borderRadius: "0px" }}
               >
-                🍀 <br/><span style={{fontSize:'0.8rem'}}>운세</span>
+                🍀 <br/><span style={{fontSize:'0.8rem'}}>기후</span>
               </Button>
               <Button
                 variant={icon === "💚" ? "success" : "outline-success"}

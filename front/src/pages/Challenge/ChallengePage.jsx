@@ -50,7 +50,7 @@ function ChallengePage() {
         챌린지 :
         <br />
         <span style={{ fontSize: "1.3rem", fontWeight: "400" }}>
-          절약 인증하고 마일리지를 모을 수 있어요.
+          절약 인증하고 1,000 마일리지를 받을 수 있어요.
         </span>
       </div>
 
@@ -66,11 +66,10 @@ function ChallengePage() {
         }}
       >
         {buttonClicked ? null : (
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <div style={{ display: "flex", flexDirection: 'column', justifyContent: "center", alignItems: 'center' }}>
           <Button
             variant="light"
             style={{
-              marginBottom: "30px",
               color: "white",
               borderRadius: "0px",
               backgroundColor: "#00D387",
@@ -82,6 +81,9 @@ function ChallengePage() {
           >
             챌린지 모집
           </Button>
+          <Container style={{textAlign: 'center', fontSize: '0.8em', marginBottom: '30px', marginTop: '10px'}}>
+            챌린지를 시작하면 나도 마일리지를 받을 수 있어요.
+          </Container>
         </div>
         
         )}
