@@ -90,7 +90,7 @@ const Mall = () => {
   };
 
   useEffect(() => {
-    if (!userState.user || !userState.user.is_withdrawed == false) {
+    if (!userState.user || !userState.user.isWithdrew == false) {
       navigate("/login", { replace: true });
       return;
     }

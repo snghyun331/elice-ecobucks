@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login_required } from "../middlewares/login-required.js";
+import { loginRequired } from "../middlewares/login-required.js";
 
 import { commentController } from "../controllers/challenge-comment-controller.js"
 import { Validation } from "../middlewares/validation.js";
@@ -8,7 +8,7 @@ const commentCreateValidation = Validation.validate(Validation.challengeCommentC
 const commentUpdateValidation = Validation.validate(Validation.challengeCommentUpdateSchema);
 
 const commentRouter = Router();
-commentRouter.use(login_required);
+commentRouter.use(loginRequired);
 
 commentRouter.post("/challenges/:challengeId/comments", commentCreateValidation, commentController.commentCreate);
 

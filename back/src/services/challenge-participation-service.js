@@ -66,7 +66,7 @@ class ParticipationService {
   }
 
   static async findParticipations({ challengeId }) {
-    const participations = await ChallengeParticipation.NoAsyncfindAll({ challengeId }).populate('userId', 'username districtCode districtName').exec();
+    const participations = await ChallengeParticipation.NoAsyncfindAll({ challengeId }).populate('userId', 'userName districtCode districtName').exec();
     if (participations.length === 0){
       throw setError("참여기록을 찾을 수 없습니다", 404, "NOT_FOUND")
     }
@@ -90,7 +90,7 @@ class ParticipationService {
   }
 
   static async findParticipation({ challengeId, _id }) {
-    let participation = await ChallengeParticipation.NoAsyncfindById({ _id }).populate('userId', 'username districtCode districtName').exec();
+    let participation = await ChallengeParticipation.NoAsyncfindById({ _id }).populate('userId', 'userName districtCode districtName').exec();
     if (!participation || participation.challengeId.toString() !== challengeId){ 
       throw setError("참여기록을 찾을 수 없습니다", 404, "NOT_FOUND")
     }

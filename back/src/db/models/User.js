@@ -16,9 +16,9 @@ class User {
     return user;
   }
 
-  // Comment용 (Comment 스키마에 userId 대신 writer_id로 정의함)
-  static async findByWriterId({ writer_id }) {
-    const user = await userModel.findOne({ _id: writer_id });
+  // Comment용 (Comment 스키마에 userId 대신 writerId로 정의함)
+  static async findByWriterId({ writerId }) {
+    const user = await userModel.findOne({ _id: writerId });
     return user;
   }
 
@@ -29,7 +29,7 @@ class User {
 
   // 탈퇴한 회원 찾는 함수
   static async findWithdraw({ email }) {
-    const user = await userModel.findOne({ is_withdrawed: true, email: email })
+    const user = await userModel.findOne({ isWithdrew: true, email: email })
     return user
   }
 

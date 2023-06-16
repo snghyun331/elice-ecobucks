@@ -7,9 +7,9 @@ const userController = {
   postUserRegister: async function (req, res, next) {
     try {
       validateEmptyBody(req)
-      const { username, email, password, districtName } = req.body;
+      const { userName, email, password, districtName } = req.body;
       const newUser = await userAuthService.addUser({
-        username,
+        userName,
         email,
         password,
         districtName,
@@ -133,8 +133,8 @@ const userController = {
         return res.status(NOT_FOUND).send(result);
       }
 
-      user.is_withdrawed = true
-      await userModel.findOneAndUpdate({ _id: userId }, { is_withdrawed: true });   // await user.save()가 안되서 다음과 같이 구현
+      user.isWithdrew = true
+      await userModel.findOneAndUpdate({ _id: userId }, { isWithdrew: true });   // await user.save()가 안되서 다음과 같이 구현
       const result = { result : "Successfully withdraw" }
       return res.status(OK).send(result)
 
@@ -147,8 +147,8 @@ const userController = {
   userPutMypage: async function (req, res, next) {
     try {
       const userId = req.currentUserId;
-      const { username, districtName, password } = req.body ?? null;
-      const toUpdate = { username, districtName, password };
+      const { userName, districtName, password } = req.body ?? null;
+      const toUpdate = { userName, districtName, password };
 
       const updatedUser = await userAuthService.updateUser({ userId, toUpdate });
 

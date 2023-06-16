@@ -84,7 +84,7 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
             <br />
             마감일자: {formatDate(challenge.dueDate)}
             <br />
-            작성자: {challenge.userId.username}
+            작성자: {challenge.userId.userName}
             <br />
             참여인원: {challenge.participantsCount.toLocaleString()} 명
           </Card.Text>

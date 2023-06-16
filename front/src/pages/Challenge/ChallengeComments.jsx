@@ -32,7 +32,7 @@ const ChallengeComments = ({ challenge }) => {
         ...res.data,
         userId: {
           _id: userState.user._id,
-          username: userState.user.username,
+          userName: userState.user.userName,
         },
       };
       setComments([...comments, newComment]);
@@ -97,7 +97,7 @@ const ChallengeComments = ({ challenge }) => {
             className="d-flex flex-column justify-content-between align-items-start"
           >
             <div>
-              <strong>{comment.userId.username}</strong>{" "}
+              <strong>{comment.userId.userName}</strong>{" "}
               <span style={{ color: "gray", fontSize: "0.8em" }}>
                 {formatDate(comment.updatedAt)}
               </span>

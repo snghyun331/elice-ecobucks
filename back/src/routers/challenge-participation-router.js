@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login_required } from "../middlewares/login-required.js";
+import { loginRequired } from "../middlewares/login-required.js";
 import { participationController } from "../controllers/challenge-participation-controller.js"
 import { Validation } from "../middlewares/validation.js";
 
@@ -7,7 +7,7 @@ const participationCreateValidation = Validation.validate(Validation.participati
 const participationUpdateValidation = Validation.validate(Validation.participationUpdateSchema);
 
 const participationRouter = Router();
-participationRouter.use(login_required)
+participationRouter.use(loginRequired)
 
 participationRouter.post("/challenges/:challengeId/participants", participationCreateValidation, participationController.participationCreate);
 

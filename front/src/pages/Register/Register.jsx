@@ -56,7 +56,7 @@ function RegisterForm() {
     try {
       // "user/register" 엔드포인트로 post요청함.
       await Api.post("register", {
-        username: name,
+        userName: name,
         email,
         password,
         districtName,

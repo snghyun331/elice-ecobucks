@@ -6,10 +6,10 @@ import { updateTime } from "../utils/update-time.js";
 import { PRODUCT_PAGE_LIMIT } from "../utils/constants.js";
 
 class userAuthService {
-  static async addUser({ username, email, password, districtName }) {
+  static async addUser({ userName, email, password, districtName }) {
     // 이메일 중복 확인
     const user = await User.findByEmail({ email });
-    if ((user)&&(user.is_withdrawed === false)) {
+    if ((user)&&(user.isWithdrew === false)) {
       const errorMessage =
         "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.";
       return { errorMessage };
@@ -22,8 +22,8 @@ class userAuthService {
       const districtCode = await District.getDistrictCodeByName(districtName)
       // 기존 정보에서 다시 가입할 때 등록한 정보로 업데이트
       const updatedUser = await userModel.findOneAndUpdate(   
-        { email: email, is_withdrawed: true },  // 필터링
-        { username: username, email: email, password: hashedPassword, districtCode: districtCode, districtName: districtName, is_withdrawed: false },  // 업데이트 항목들
+        { email: email, isWithdrew: true },  // 필터링
+        { userName: userName, email: email, password: hashedPassword, districtCode: districtCode, districtName: districtName, isWithdrew: false },  // 업데이트 항목들
         { returnOriginal: false }   // 업데이트 된 상태로 저장
       )
       return updatedUser
@@ -35,7 +35,7 @@ class userAuthService {
     // 구 코드 변환
     const districtCode = await District.getDistrictCodeByName(districtName)
 
-    const newUser = { username, email, password: hashedPassword, districtCode, districtName };
+    const newUser = { userName, email, password: hashedPassword, districtCode, districtName };
 
     // db에 저장
     const createdNewUser = await User.create({ newUser });
@@ -54,7 +54,7 @@ class userAuthService {
       return { errorMessage };
     }
 
-    if (user.is_withdrawed === true) {
+    if (user.isWithdrew === true) {
       const errorMessage = "이미 탈퇴한 회원입니다. 다시 가입해주세요"
       return {errorMessage}
     }
@@ -75,7 +75,7 @@ class userAuthService {
     const token = jwt.sign({ userId: user._id }, secretKey);
   
     const _id = user._id;
-    const username = user.username;
+    const userName = user.userName;
     const districtCode = user.districtCode;
     const mileage = user.mileage;
 
@@ -83,7 +83,7 @@ class userAuthService {
       token,
       _id,
       email,
-      username,
+      userName,
       districtCode,
       mileage,
       errorMessage: null,
@@ -128,7 +128,7 @@ class userAuthService {
     }
 
     const fieldsToUpdate = {
-      username: "username",
+      userName: "userName",
       password: "password",
       districtName: "districtName",
       districtCode: "districtCode",

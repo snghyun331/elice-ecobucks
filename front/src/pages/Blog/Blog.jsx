@@ -85,7 +85,7 @@ const Blog = () => {
 
   useEffect(() => {
     // 만약 전역 상태의 user가 null이거나 탈퇴한 회원이라면, 로그인 페이지로 이동함.
-    if (!userState.user || !userState.user.is_withdrawed == false) {
+    if (!userState.user || !userState.user.isWithdrew == false) {
       navigate("/login", { replace: true });
       return;
     }
@@ -104,7 +104,7 @@ const Blog = () => {
           likeUsers: item.likeUsers,
           title: item.title,
           topic: item.topic,
-          username: item.username,
+          userName: item.userName,
           userId: item.userId, //작성자 아아디
           blogId: item._id, //절약 팁 고유 아이디
           createdAt: item.createdAt,
@@ -346,7 +346,7 @@ const Blog = () => {
                       <Card.Text className="card-text">
                       <span style={{ fontWeight: "900", paddingRight: 15 }}>
                         작성자
-                      </span> {item.username}
+                      </span> {item.userName}
                       </Card.Text>
                       <Card.Text
                         className="card-text mt-5"

@@ -2,17 +2,17 @@ import { Schema, model } from "mongoose";
 
 const BlogCommentSchema = new Schema(
     {
-        post_id: {
+        postId: {
             type: Schema.Types.ObjectId,
             ref: "BlogPost",
             required: true,
         },
-        writer_id: {
+        writerId: {
             type: Schema.Types.ObjectId,
             ref: "User",
             required: true,
         },
-        writername: {
+        writerName: {
             type: String,
             required: true,
         },

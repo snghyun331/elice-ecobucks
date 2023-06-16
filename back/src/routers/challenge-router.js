@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login_required } from "../middlewares/login-required.js";
+import { loginRequired } from "../middlewares/login-required.js";
 import { challengeController } from "../controllers/challenge-controller.js"
 import { Validation } from "../middlewares/validation.js";
 
@@ -7,7 +7,7 @@ const challengeCreateValidation = Validation.validate(Validation.challengeCreate
 const challengeUpdateValidation = Validation.validate(Validation.challengeUpdateSchema);
 
 const challengeRouter = Router();
-challengeRouter.use(login_required)
+challengeRouter.use(loginRequired)
 
 challengeRouter.post("/challenges", challengeCreateValidation, challengeController.challengeCreat);
 
