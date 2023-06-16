@@ -1,6 +1,6 @@
 /** 작성자: 정원석 */
 import { Container, Button, Card, Row, Col, Modal } from "react-bootstrap";
-import Logo from "../../assets/logo.png";
+import { showSuccess } from "../../assets/alert"
 import * as Api from "../../api";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,6 @@ import MallProductSell from "./MallProductSell";
 import MallProductEdit from "./MallProductEdit";
 import MapContainer from "./MapContainer";
 import PaginationBar from "../Modal/PaginationBar";
-import placelocate from "../../assets/placeholder.png";
 import { MapPinIcon } from "@heroicons/react/20/solid";
 import {
   ShoppingBagIcon,
@@ -128,7 +127,7 @@ const Mall = () => {
       setTotalPages(totalpage);
       setList(newList);
     } catch (err) {
-      console.log("몰불러오기를 실패하였습니다.", err);
+      console.log("몰 불러오기를 실패하였습니다.", err);
     }
   };
 
@@ -159,6 +158,8 @@ const Mall = () => {
         type: UPDATE_USER,
         payload: user,
       });
+      
+    showSuccess(`구매에 성공하였습니다. <br />마이페이지의 구매 내역을 점주에게 보여주세요.`)
 
       handleClosePurchaseModal();
     } catch (err) {
