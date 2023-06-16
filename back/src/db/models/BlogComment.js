@@ -11,8 +11,8 @@ class BlogComment {
         return comment
     }
 
-    static async findAllByPostId({ post_id }){
-        const PostComments = await BlogCommentModel.find({ post_id : post_id });;
+    static async findAllByPostId({ postId }){
+        const PostComments = await BlogCommentModel.find({ postId: postId });;
         return PostComments
     }
     

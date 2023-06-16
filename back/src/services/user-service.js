@@ -4,6 +4,7 @@ import bcrypt, { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
 import { updateTime } from "../utils/update-time.js";
 import { PRODUCT_PAGE_LIMIT } from "../utils/constants.js";
+import { findAllByUserIdAndPopulate } from "../utils/joinQuery.js";
 
 class userAuthService {
   static async addUser({ username, email, password, districtName }) {
@@ -229,57 +230,13 @@ class userAuthService {
     return userInfo
   }
 
-  // 유저의 모든 챌린지 참여 갯수와 참여 조회 
-  static async getUserParticipants({ userId }){
-    const participations = await ChallengeParticipation.findAllByUserId({ userId });
-    const populatedParticipations = await Promise.all(
-      participations.map(async (participation) => {  
-        const challenge = await Challenge.findById(participation.challengeId);
-        return { 
-          userParticipantCount: participations.length,
-          ...participation._doc,   
-          challengeTitle: challenge.title,  // title 추가
-          createdAt: updateTime.toKST(challenge.createdAt),
-          updatedAt: updateTime.toKST(challenge.updatedAt)
-        }; 
-      }) 
-    );  
-
-    const newParticipations = {
-      userChallengeCount: populatedParticipations.length,
-      userChallengeList: populatedParticipations
-    };
-    return newParticipations;
-  } 
-
-
-  // 유저의 모든 댓글 갯수와 댓글 조회
-  static async getUserComments({ userId }){
-    const comments = await ChallengeComment.findAllByUserId({ userId: userId });
-    const populatedComments = await Promise.all(
-      comments.map(async (Comment) => {  
-        const challenge = await Challenge.findById(Comment.challengeId);
-        return { 
-          userCommentCount: comments.length,
-          ...Comment._doc,   
-          challengeTitle: challenge.title,  // title 추가
-          createdAt: updateTime.toKST(challenge.createdAt),
-          updatedAt: updateTime.toKST(challenge.updatedAt)
-        };
-      })
-    );
-
-    const newComments = {
-      userChallengeCount: populatedComments.length,
-      userChallengeList: populatedComments
-    };
-    
-    return newComments
+  static async getUserParticipants({ userId }) {
+    return await findAllByUserIdAndPopulate(ChallengeParticipation.findAllByUserId, Challenge.findById, userId, "challengeTitle");
   }
 
-
-
-
+  static async getUserComments({ userId }) {
+    return await findAllByUserIdAndPopulate(ChallengeComment.findAllByUserId, Challenge.findById, userId, "commentTitle");
+  }
 
 }
 
