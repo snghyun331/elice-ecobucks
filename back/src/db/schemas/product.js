@@ -17,11 +17,9 @@ const productSchema = new Schema(
     location: {
       x: {
         type: Number,
-        required: true,
       },
       y: {
         type: Number,
-        required: true,
       },
     },
     stock: {

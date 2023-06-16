@@ -14,7 +14,7 @@ import {
 import { showAlert } from "../../assets/alert";
 
 const MallProductSell = ({ onClose }) => {
-  const [location, setLocation] = useState({});
+  const [location, setLocation] = useState({ "x": "127.0664922836648", "y": "37.5460168946624" });
   const [showModal, setShowModal] = useState(false);
   const [isPriceInvalid, setIsPriceInvalid] = useState(false);
   const [isStockInvalid, setIsStockInvalid] = useState(false);
@@ -98,25 +98,25 @@ const MallProductSell = ({ onClose }) => {
 
     try {
       // 이미지 전송 하기
-      
-        const formData = new FormData();
-        formData.append("image", selectedFile);
 
-        const imageRes = await Api.postFile("images/products/upload", formData);
+      const formData = new FormData();
+      formData.append("image", selectedFile);
 
-        const res = await Api.post("products", {
-          name,
-          price: Number(price),
-          place,
-          location,
-          stock: Number(stock),
-          description,
-          imageId: imageRes.data._id,
-        });
-        console.log(res);
-        // window.location.reload();
-        onClose();
-      
+      const imageRes = await Api.postFile("images/products/upload", formData);
+
+      const res = await Api.post("products", {
+        name,
+        price: Number(price),
+        place,
+        location,
+        stock: Number(stock),
+        description,
+        imageId: imageRes.data._id,
+      });
+      console.log(res);
+      // window.location.reload();
+      onClose();
+
     } catch (err) {
       if (!selectedFile) {
         showAlert("사진을 업로드해주세요");
@@ -153,7 +153,7 @@ const MallProductSell = ({ onClose }) => {
         </div>
       )}
       <Form.Label
-      className="d-block"
+        className="d-block"
         style={{
           fontSize: "1.2em",
           fontWeight: "bold",
@@ -183,7 +183,7 @@ const MallProductSell = ({ onClose }) => {
         onChange={onChange}
       />
       <Form.Label
-      className="d-block"
+        className="d-block"
         style={{
           fontSize: "1.2em",
           fontWeight: "bold",
@@ -214,7 +214,7 @@ const MallProductSell = ({ onClose }) => {
         onChange={onChange}
       />
       <Form.Label
-      className="d-block"
+        className="d-block"
         style={{
           fontSize: "1.2em",
           fontWeight: "bold",
@@ -262,7 +262,7 @@ const MallProductSell = ({ onClose }) => {
         </button>
       </Container>
       <Form.Label
-      className="d-block"
+        className="d-block"
         style={{
           fontSize: "1.2em",
           fontWeight: "bold",
@@ -294,7 +294,7 @@ const MallProductSell = ({ onClose }) => {
         onChange={onChange}
       />
       <Form.Label
-      className="d-block"
+        className="d-block"
         style={{
           fontSize: "1.2em",
           fontWeight: "bold",
@@ -366,7 +366,7 @@ const MallProductSell = ({ onClose }) => {
               닫기
             </button>
             <DaumPostcode
-              style= {{ border: '3px solid #00D387'}}
+              style={{ border: '3px solid #00D387' }}
               onComplete={handleAddressSelected}
               onClose={handleAddressModalClose}
             />
