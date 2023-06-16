@@ -8,7 +8,7 @@ const SeoulDistrictsGraph = () => {
     const handleMouseEnter = (id) => {
         setHoveredPath(id);
     };
-    
+
     const handleMouseLeave = () => {
         setHoveredPath(null);
     };
@@ -118,22 +118,28 @@ const SeoulDistrictsGraph = () => {
                 break;
 
 
-          default:
-            break;
+            default:
+                break;
         }
-      };
+    };
 
     return (
         <>
-            <SeoulDistricts 
+            <SeoulDistricts
                 hoveredPath={hoveredPath}
                 handleMouseEnter={handleMouseEnter}
                 handleMouseLeave={handleMouseLeave}
                 handleMouseClick={handleMouseClick}
             />
+<<<<<<< HEAD
             
             {idx === 0 ? <SeoulUsageChart /> : <DistrictChart idx={idx} /> }
             {idx === "서초구" ? 
+=======
+
+            {idx === 0 ? <SeoulUsageChart /> : <DistrictChart idx={idx} />}
+            {idx === "서초구" ?
+>>>>>>> 9c4d24957139992f0fb36ed63c470b93c1424df7
                 <span>
                     <h5>서초구</h5>
                     최근 5년간 서초구의 전력 사용량은 지속적으로 증가하고 있습니다.<br />
@@ -150,7 +156,11 @@ const SeoulDistrictsGraph = () => {
                     에너지 절약 및 효율적인 에너지 관리에 노력을 기울이는 것이 필요합니다.</span>
                 : null
             }
+<<<<<<< HEAD
             {idx === "송파구" ? 
+=======
+            {idx === "송파구" ?
+>>>>>>> 9c4d24957139992f0fb36ed63c470b93c1424df7
                 <span>
                     <h5>송파구</h5>
                     전력 사용량에 주의하세요. 송파구에서는 최근 5년 동안 전력 사용량이 증가하고 있는 경향이 있습니다.<br />
@@ -181,7 +191,11 @@ const SeoulDistrictsGraph = () => {
                 </span>
                 : null
             }
+<<<<<<< HEAD
             {idx === "노원구" ? 
+=======
+            {idx === "노원구" ?
+>>>>>>> 9c4d24957139992f0fb36ed63c470b93c1424df7
                 <span>
                     <h5>노원구</h5>
                     주의하세요. 노원구에서는 최근 5년간 전력 사용량이 상당히 증가하고 있습니다.<br />
