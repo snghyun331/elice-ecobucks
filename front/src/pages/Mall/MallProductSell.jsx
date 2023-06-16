@@ -348,10 +348,29 @@ const MallProductSell = ({ onClose }) => {
             transform: "translate(-50%, -50%)",
           }}
         >
-          <DaumPostcode
-            onComplete={handleAddressSelected}
-            onClose={handleAddressModalClose}
-          />
+          <div style={{ position: "relative" }}>
+            <button
+              style={{
+                position: "absolute",
+                top: "-1.65rem",
+                right: "0px",
+                borderRadius: "30%",
+                backgroundColor: "#00D387",
+                color: "black",
+                border: "none",
+                display: "flex",
+                cursor: "pointer",
+              }}
+              onClick={handleAddressModalClose}
+            >
+              닫기
+            </button>
+            <DaumPostcode
+              style= {{ border: '3px solid #00D387'}}
+              onComplete={handleAddressSelected}
+              onClose={handleAddressModalClose}
+            />
+          </div>
         </div>
       )}
     </Form>
