@@ -71,7 +71,7 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
           className="text-muted mb-2"
           style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
         >
-            공유할 팁의 주제를 적어주세요. 예) 환경, 건강, 기후변화, 대기오염
+            공유할 팁의 주제를 적어주세요.
         </Container>
         <ButtonGroup style={{ width: "100%" }}>
               <Button
