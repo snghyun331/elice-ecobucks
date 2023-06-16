@@ -5,13 +5,23 @@ import { userAuthService } from "./user-service.js";
 const orderService = {
     createOrder: async function ({ productId, buyer }) {
         try{
+            const { name, price, place, stock } = await productService.findProduct(productId);
+            const buyerInfo = await userAuthService.getUserInfo({ userId: buyer });
+            const { mileage: buyerMileage } = buyerInfo;
+
+            if (stock <= 0) {
+                throw new Error("재고가 부족합니다.");
+            }
+    
+            if (buyerMileage < price) {
+                throw new Error("마일리지가 부족합니다.");
+            }
+
             //상품 재고 감소
             await this.decreaseProductStock(productId);
 
             //마일리지 차감
             await this.subtractMileage(productId, buyer);
-
-            const { name, price, place } = await productService.findProduct(productId);
 
             //주문 생성
             const newOrder = { productName: name, price, buyer, place };
@@ -53,13 +63,6 @@ const orderService = {
 
         const orderDetails = await Promise.all(
             orders.map(async (order) => {
-                // const { productId, createdAt } = order;
-                // const product = await productService.findProduct(productId);
-                
-                // if (!product) {
-                //     // 상품을 찾지 못한 경우에 대한 처리
-                //     throw new Error("해당 id의 상품을 찾을 수 없습니다.")
-                // }
     
                 const { productName, price, place, createdAt } = order;
     
