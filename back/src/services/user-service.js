@@ -3,6 +3,7 @@ import { User, District, Challenge, ChallengeParticipation, ChallengeComment, or
 import bcrypt, { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
 import { updateTime } from "../utils/update-time.js";
+import { PRODUCT_PAGE_LIMIT } from "../utils/constants.js";
 
 class userAuthService {
   static async addUser({ username, email, password, districtName }) {
@@ -167,30 +168,37 @@ class userAuthService {
   }
 
 
-  static async getUserMyPageChallenges({ userId }) {
+  static async getUserMyPageChallenges({ userId, page }) {
     try {
-      const participations = await ChallengeParticipation.findById({ _id: userId });
-      const populatedParticipations = await ChallengeParticipation.populate(participations, [
-        { path: 'challengeId', select: 'title createdAt updatedAt' }
-      ]);
-  
+      const limit = PRODUCT_PAGE_LIMIT;
+      const skip = (page - 1) * limit;
+      const { userParticipations, count } = await ChallengeParticipation.findAndCountAll(skip, limit);
+      const totalPages = Math.ceil(count / limit)
+      const populatedParticipations = await Promise.all(
+        userParticipations.map(async (participation) => {  
+          const challenge = await Challenge.findById(participation.challengeId);
+          return {   
+            mileage: participation.mileage,
+            participationCreatedAt: updateTime.toKST(participation.createdAt),
+            challengeIcon: challenge.icon,
+            challengeTitle: challenge.title,  // title 추가
+            challengeDueDate: updateTime.toKST(challenge.dueDate),
+          }; 
+        }) 
+      ); 
       const newParticipations = {
-        userChallengeCount: populatedParticipations.length,
-        userChallengeList: populatedParticipations.map(participation => ({
-          userParticipantCount: participations.length,
-          particioationMileage: participation.particioationMileage,
-          challengeTitle: participation.challengeId.title,
-          createdAt: updateTime.toKST(participation.challengeId.createdAt),
-          updatedAt: updateTime.toKST(participation.challengeId.updatedAt)
-        }))
+        userParticipationCount: populatedParticipations.length,
+        userParticipationList: populatedParticipations
       };
-      return newParticipations;
+      return {newParticipations, totalPages};
+
     } catch (error) {
       // Handle error
       console.error(error);
       throw error;
     }
   }
+
   
 
   static async subtractMileage(userId, amount) {

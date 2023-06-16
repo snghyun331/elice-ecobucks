@@ -40,6 +40,31 @@ class ChallengeParticipation {
     const userParticipations = await participationModel.find({ userId });;
     return userParticipations
   }
+  
+  static async findAndCountAll( skip, limit ){
+    const userParticipations = await participationModel.aggregate([
+      {
+        $addFields: {
+          isZeroStock: { $cond: [{ $eq: ["$stock", 0] }, 1, 0] }
+        }
+      },
+      {
+        $sort: {
+          isZeroStock: 1,
+          createdAt: 1
+        }
+      },
+      {
+        $skip: skip
+      },
+      {
+        $limit: limit
+      }
+    ]);
+    
+    const count = await participationModel.countDocuments();
+    return { userParticipations, count }
+  }
 
   // update
   static async update({ _id, imageId }) {
