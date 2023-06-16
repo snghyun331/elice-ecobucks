@@ -1,20 +1,18 @@
-import { Link } from "react-router-dom";
-import { Container, Row, Col, Button, Dropdown, DropdownButton } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import { useContext } from "react";
 import { UserStateContext } from "../../context/user/UserProvider";
 
 import BannerCarousel from "./BannerCarousel";
 import TrendingBlogs from "./TrendingBlogs";
 import TrendingChallenges from "./TrendingChallenges";
-import Intro from './Intro';
+import Intro from "./Intro";
 
-import { useState } from "react";
 import SeoulDistrictsGraph from "./Data/SeoulDistrictGraph";
 import SeoulUsageGraph from "./Data/SeoulUsageGraph";
 import SeasonalUsageGraph from "./Data/SeasonalUsageGraph";
 import DistrictChart from "./Data/DistrictChart";
 import districtInfo from "../../assets/districtInfo";
-import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const HomePage = () => {
@@ -23,7 +21,7 @@ const HomePage = () => {
   if (!user) {
     return <Intro />;
   }
-  
+
   return (
     <div
       style={{
@@ -56,38 +54,63 @@ const HomePage = () => {
           <BannerCarousel />
         </Container>
 
-        <Row className="justify-content-md-end mt-5">
-          <Col>
-            <h3>최근 5년 서울 전력 평균</h3>
-            <div
+        <Row
+          className="justify-content-md-end mt-5"
+          style={{ alignItems: "stretch" }}
+        >
+          <Col xl={6}>
+            <Card
               style={{
-                marginTop: "18px",
-                height: "5.5px",
-                width: "120px",
-                backgroundColor: "#FF6B00",
-                borderRadius: "10px",
+                border: "1px solid #cccccc",
+                width: "100%",
+                height: "100%",
+                overflow: "hidden",
               }}
             >
-              {" "}
-            </div>
-            <SeoulUsageGraph />
+              <Card.Body style={{ display: "flex", flexDirection: "column" }}>
+                <h3>서울시 가구 당 전력 사용량 평균 (연도별)</h3>
+                <h6>(단위 : kWh)</h6>
+                <div
+                  style={{
+                    marginTop: "18px",
+                    height: "5.5px",
+                    width: "120px",
+                    backgroundColor: "#FF6B00",
+                    borderRadius: "10px",
+                  }}
+                ></div>
+                <SeoulUsageGraph />
+              </Card.Body>
+            </Card>
           </Col>
-          <Col>
-            <h3>계절별 전력 사용량</h3>
-              <div
-                style={{
-                  marginTop: "18px",
-                  height: "5.5px",
-                  width: "120px",
-                  backgroundColor: "#FF6B00",
-                  borderRadius: "10px",
-                }}
-              >
-                {" "}
-              </div>
-              <SeasonalUsageGraph />
+
+          <Col xl={6}>
+            <Card
+              style={{
+                border: "1px solid #cccccc",
+                width: "100%",
+                height: "100%",
+                overflow: "hidden",
+              }}
+            >
+              <Card.Body style={{ display: "flex", flexDirection: "column" }}>
+                <h3>서울시 가구 당 전력 사용량 평균 (계절별)</h3>
+                <h6>(단위 : kWh)</h6>
+                <div
+                  style={{
+                    marginTop: "18px",
+                    height: "5.5px",
+                    width: "120px",
+                    backgroundColor: "#FF6B00",
+                    borderRadius: "10px",
+                  }}
+                ></div>
+                <SeasonalUsageGraph />
+              </Card.Body>
+            </Card>
           </Col>
         </Row>
+
         {/* <Container
           style={{
             width: "100%",
@@ -122,7 +145,6 @@ const HomePage = () => {
         </Col>
       </Row> */}
 
-          
         {/* </Container> */}
 
         <Container
@@ -136,7 +158,9 @@ const HomePage = () => {
             marginTop: "50px",
           }}
         >
-          <h3>전력통계</h3>
+          <h3>서울시 가구 당 전력 사용량 평균 (구별)</h3>
+          <h6>(단위 : kWh)</h6>
+          <h6>구를 선택하여 구별 차이를 확인해보세요.</h6>
           <div
             style={{
               marginTop: "18px",
@@ -147,7 +171,6 @@ const HomePage = () => {
             }}
           >
             {" "}
-
           </div>
 
           <div
@@ -155,15 +178,13 @@ const HomePage = () => {
             role="toolbar"
             aria-label="Toolbar with button groups"
           >
-              <SeoulDistrictsGraph />
-
-          </div> 
+            <SeoulDistrictsGraph />
+          </div>
         </Container>
 
         <TrendingBlogs />
         <TrendingChallenges />
       </div>
-      
     </div>
   );
 };
