@@ -17,7 +17,7 @@ const orderService = {
             const createdOrder = await order.create(newOrder);
             if (!createdOrder) {
                 throw new Error("주문에 실패하였습니다.");
-              }
+            }
     
             return createdOrder;
         } catch (error) {
@@ -72,9 +72,6 @@ const orderService = {
         );
         return { orderDetails, totalPages };
     },
-
-
-    
 }
 
 export { orderService };

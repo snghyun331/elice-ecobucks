@@ -6,8 +6,8 @@ class ChallengeComment {
     return createdChallenge;
   }  
 
-  static async findAll( ) {
-    const comments = await commentModel.find( );
+  static async findAll() {
+    const comments = await commentModel.find();
     return comments;
   } 
 
@@ -41,8 +41,8 @@ class ChallengeComment {
     return updateComment               ;
   }
 
-  static async deleteById( _id ) {
-    await commentModel.findByIdAndDelete( _id );
+  static async deleteById(_id) {
+    await commentModel.findByIdAndDelete(_id);
     return ;
   }
   

@@ -67,7 +67,7 @@ class BlogPost {
     }
 
     static async findAndCountAll(skip, limit) {
-        const posts = await BlogPostModel.find({})
+        const posts = await BlogPostModel.find({ })
             .sort({likeCount: -1})
             .skip(skip)
             .limit(limit)
@@ -75,7 +75,7 @@ class BlogPost {
         
         const count = await BlogPostModel.countDocuments();
         return { posts, count }
-      }
+    }
 }
 
 export { BlogPost };

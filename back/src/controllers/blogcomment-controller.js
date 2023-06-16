@@ -64,9 +64,9 @@ const blogcommentController = {
             const comments = await blogCommentService.findAllComments();
 
             res.status(OK).send(comments);
-          } catch (error) {
-            next(error);
-          }
+        } catch (error) {
+        next(error);
+        }
     }
 }
 
