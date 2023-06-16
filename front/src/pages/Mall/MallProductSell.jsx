@@ -16,7 +16,8 @@ import { showAlert } from "../../assets/alert";
 const MallProductSell = ({ onClose }) => {
   const [location, setLocation] = useState({});
   const [showModal, setShowModal] = useState(false);
-
+  const [isPriceInvalid, setIsPriceInvalid] = useState(false);
+  const [isStockInvalid, setIsStockInvalid] = useState(false);
   const [form, setForm] = React.useState({
     name: "",
     price: "",
@@ -33,6 +34,11 @@ const MallProductSell = ({ onClose }) => {
       ...prevForm,
       [name]: value,
     }));
+    if (name === 'price') {
+      setIsPriceInvalid(isNaN(value));
+    } else if (name === 'stock') {
+      setIsStockInvalid(isNaN(value));
+    }
   };
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewURL, setPreviewURL] = useState(null);
@@ -92,7 +98,7 @@ const MallProductSell = ({ onClose }) => {
 
     try {
       // 이미지 전송 하기
-      if (selectedFile) {
+      
         const formData = new FormData();
         formData.append("image", selectedFile);
 
@@ -110,10 +116,17 @@ const MallProductSell = ({ onClose }) => {
         console.log(res);
         // window.location.reload();
         onClose();
-      }
+      
     } catch (err) {
-      showAlert("모든 값을 입력해주세요.", err);
-      console.log("상품 등록에 실패하였습니다.", err);
+      if (!selectedFile) {
+        showAlert("사진을 업로드해주세요");
+      } else if (!name || !price || !place || !stock || !description) {
+        showAlert("모든 값을 입력해주세요.");
+      } else if (isPriceInvalid) {
+        showAlert("가격을 잘못 입력했습니다.");
+      } else if (isStockInvalid) {
+        showAlert("수량을 잘못 입력했습니다.");
+      }
     }
   };
 
@@ -195,6 +208,7 @@ const MallProductSell = ({ onClose }) => {
           marginBottom: "16px",
           borderRadius: "0px",
         }}
+        placeholder="숫자만 입력하세요"
         name="price"
         value={price}
         onChange={onChange}
@@ -274,6 +288,7 @@ const MallProductSell = ({ onClose }) => {
           marginBottom: "16px",
           borderRadius: 0,
         }}
+        placeholder="숫자만 입력하세요."
         name="stock"
         value={stock}
         onChange={onChange}
