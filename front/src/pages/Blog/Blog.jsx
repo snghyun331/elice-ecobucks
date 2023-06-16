@@ -205,6 +205,7 @@ const Blog = () => {
               borderRadius: 0,
               padding: 10,
               width: 270,
+              marginBottom: 20,
               fontWeight: "500",
               backgroundColor: '#00D387',
               color: 'white'
