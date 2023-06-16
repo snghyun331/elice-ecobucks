@@ -172,7 +172,7 @@ class userAuthService {
     try {
       const limit = PRODUCT_PAGE_LIMIT;
       const skip = (page - 1) * limit;
-      const { userParticipations, count } = await ChallengeParticipation.findAndCountAll(skip, limit);
+      const { userParticipations, count } = await ChallengeParticipation.findAndCountAll( userId, skip, limit);
       const totalPages = Math.ceil(count / limit)
       const populatedParticipations = await Promise.all(
         userParticipations.map(async (participation) => {  
