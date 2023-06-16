@@ -33,7 +33,7 @@ const UserEditForm = ({ onClose, user }) => {
     setPreviewURL(URL.createObjectURL(file));
   };
 
-  const [name, setName] = useState(user?.username || ""); // user가 null인 경우를 고려하여 기본값 설정
+  const [name, setName] = useState(user?.userName || ""); // user가 null인 경우를 고려하여 기본값 설정
   const [districtName, setDistrict] = useState(user?.districtName || ""); // user가 null인 경우를 고려하여 기본값 설정
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -65,7 +65,7 @@ const UserEditForm = ({ onClose, user }) => {
 
       //그 외 정보 전송 통신
       const requestData = {
-        username: name,
+        userName: name,
         districtName,
       };
 

@@ -84,17 +84,17 @@ class Validation {
   });
 
   static userSchema = Joi.object({
-    username: Joi.string().min(USERNAME_MIN).max(USERNAME_MAX).required(),
+    userName: Joi.string().min(USERNAME_MIN).max(USERNAME_MAX).required(),
     email: Joi.string().email().required(),
     password: Joi.string().required().regex(new RegExp(`^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*()])[a-zA-Z\\d!@#$%^&*()]{${PWD_MIN},${PWD_MAX}}$`)),
     districtName: Joi.string().required(), 
   });
 
   static userUpdateSchema = Joi.object({
-    username: Joi.string().min(USERNAME_MIN).max(USERNAME_MAX).pattern(/^(?=.*[가-힣a-zA-Z])[가-힣a-zA-Z]+$/),
+    userName: Joi.string().min(USERNAME_MIN).max(USERNAME_MAX).pattern(/^(?=.*[가-힣a-zA-Z])[가-힣a-zA-Z]+$/),
     password: Joi.string().regex(new RegExp(`^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*()])[a-zA-Z\\d!@#$%^&*()]{${PWD_MIN},${PWD_MAX}}$`)),
     districtName: Joi.string(), 
-  }).or('username', 'password', 'districtName');
+  }).or('userName', 'password', 'districtName');
 
   static validate(schema) {
     return (req, res, next) => {    

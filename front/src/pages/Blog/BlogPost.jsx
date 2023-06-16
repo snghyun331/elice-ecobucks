@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Form, Container } from "react-bootstrap";
+import { Form, Container, ButtonGroup, Button } from "react-bootstrap";
 import * as Api from '../../api'
+import { showAlert } from "../../assets/alert";
 const BlogPost = ({ onClose }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [topic, setTopic] = useState("");
+  const [icon, setIcon] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,28 +15,21 @@ const BlogPost = ({ onClose }) => {
       const res = await Api.post("blog/write", {
         title,
         content,
-        topic
+        topic: icon + topic
       });
-      // window.location.reload()
-      onClose();
+      window.location.reload()
+      // onClose();
     } catch (err) {
-      console.log("절약 팁 글 작성에 실패했습니다.", err);
+      showAlert("모든 값을 입력해주세요.")
+      // console.log("절약 팁 글 작성에 실패했습니다.", err);
     }
   }
+  const handleIconSelect = (selectedIcon) => {
+    setIcon(selectedIcon);
+  };
 
   return (
     <div style={{ justifyContent: 'center', alignItems: 'center', overflow: "auto" }}>
-      {/* <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: "70%",
-          background: "#4d9e81",
-          zIndex: -1,
-        }}
-      ></div> */}
       <div
         style={{
           display: "flex",
@@ -43,7 +38,6 @@ const BlogPost = ({ onClose }) => {
           justifyContent: "center",
         }}
       >
-        {/* <div style={{ width: "100%", maxWidth: "720px", padding: "60px" }}> */}
         <div
           style={{
             width: "100%",
@@ -57,7 +51,6 @@ const BlogPost = ({ onClose }) => {
           }}
         >
           <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>제목</Form.Label>
-          {/* <span>제목</span> */}
           <Container
             className="text-muted mb-2"
             style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
@@ -85,7 +78,7 @@ const BlogPost = ({ onClose }) => {
             className="text-muted mb-2"
             style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
           >
-            공유할 팁의 주제를 간단히 적어주세요. 예) 환경, 건강, ... 뭐 적죠?
+            공유할 팁의 주제를 적어주세요.
           </Container>
           <Form.Control
             style={{

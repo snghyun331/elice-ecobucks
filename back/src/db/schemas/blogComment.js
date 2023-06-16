@@ -12,7 +12,7 @@ const BlogCommentSchema = new Schema(
             ref: "User",
             required: true,
         },
-        writername: {
+        writerName: {
             type: String,
             required: true,
         },

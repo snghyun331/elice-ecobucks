@@ -9,8 +9,8 @@ class blogCommentService {
         }
         const user = await User.findByWriterId({ writerId })
         
-        const writername = user.username
-        const newComment = { postId, writerId, writername, comment };
+        const writerName = user.userName
+        const newComment = { postId, writerId, writerName, comment };
         const createdNewComment = await BlogComment.createComment({ newComment })
         createdNewComment.errorMessage = null
 
@@ -49,7 +49,7 @@ class blogCommentService {
 
     static async findComments({ blogId }) {
         const comments = await BlogComment.NoAsyncfindAll({ challengeId })
-            .populate("userId", "username districtCode districtName")
+            .populate("userId", "userName districtCode districtName")
             .exec();
         if (!comments) {
             throw setError("댓글을 찾을 수 없습니다.", 404, "NOT_FOUND")

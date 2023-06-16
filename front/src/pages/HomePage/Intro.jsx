@@ -1,4 +1,4 @@
-import { ShoppingBagIcon } from "@heroicons/react/20/solid";
+import { ChartPieIcon, ShoppingBagIcon } from "@heroicons/react/20/solid";
 import { MapPinIcon } from "@heroicons/react/20/solid";
 import { ArrowDownIcon } from "@heroicons/react/24/outline";
 import LogoWhite from "../../assets/logoWhite.png";
@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import "aos/dist/aos.css";
 import { Button, Image, Container, Card, Badge } from "react-bootstrap";
 import { ROUTE } from "../../routes/routes";
-
+import { ArrowTrendingUpIcon, BoltIcon } from "@heroicons/react/20/solid";
 const Intro = () => {
   useEffect(() => {
     AOS.init({
@@ -52,7 +52,6 @@ const Intro = () => {
         }
       `}
       </style>
-
       <div
         className="page"
         style={{
@@ -74,13 +73,25 @@ const Intro = () => {
           }}
         >
           <Image data-aos="fade-up" src={LogoWhite} style={{ width: "50%" }} />
-          <h1
+          <h2
             data-aos="fade-up"
-            style={{ textAlign: "center", marginTop: 30, color: "white" }}
+            style={{
+              textAlign: "center",
+              marginTop: 30,
+              color: "white",
+              lineHeight: "150%",
+              marginBlock: 30
+            }}
           >
-            절약하고 쇼핑해요
-          </h1>
-          <button className="intro-button" data-aos="fade-up">
+            당신의 미래를 위해, 지금 시작하세요!
+            <br />
+            <br />
+            <h3>
+              전기에너지 절약 챌린지에 참여하고, <br />
+              환경과 지각변화에 도움을 주세요.
+            </h3>
+          </h2>
+          <button className="intro-button mt-2">
             <Link
               to={ROUTE.REGISTER.link}
               style={{
@@ -93,7 +104,7 @@ const Intro = () => {
               회원가입
             </Link>{" "}
           </button>
-          <button className="intro-button" data-aos="fade-up">
+          <button className="intro-button mt-2">
             <Link
               to={ROUTE.LOGIN.link}
               style={{
@@ -115,10 +126,6 @@ const Intro = () => {
             transform: "translateX(-50%)",
           }}
         >
-          <div style={{ color: "white", marginBottom: 0 }} data-aos="fade-down">
-            {" "}
-            SCROLL DOWN{" "}
-          </div>
           <ArrowDownIcon
             alt="아래화살표"
             color="white"
@@ -134,8 +141,203 @@ const Intro = () => {
         </div>
       </div>
 
+      <div
+        className="page"
+        style={{
+          ...style,
+          backgroundColor: "#ffd9d9",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            position: "relative",
+          }}
+        >
+          <h1
+            data-aos="fade-up"
+            style={{
+              lineHeight: "1.5em",
+              textAlign: "center",
+              marginTop: 30,
+              color: "black",
+              marginBottom: 30,
+            }}
+          >
+            올 여름도 화제가 될 전기 사용량 문제, <br />
+            우리는 어떤 도움을 줄 수 있을까요?{" "}
+          </h1>
+          <h6
+            data-aos="fade-up"
+            style={{
+              lineHeight: "1.8em",
+              textAlign: "center",
+              marginTop: 30,
+              color: "black",
+              marginBottom: 30,
+            }}
+          >
+            어려운 숫자나 거창한 변화보다, 당신이 오늘 실천 가능한 환경에 대한
+            배려를 제안합니다. <br />
+            에코벅스에서 제공하는 다양한 기능을 살펴보세요.
+          </h6>
+          <Container style={{ display: "flex", marginTop: 30, color: "black" }}>
+            <Card
+              data-aos="flip-left"
+              style={{
+                backgroundColor: "#d6efff",
+                width: "15em",
+                height: "18em",
+                marginRight: "30px",
+                border: "0px",
+              }}
+            >
+              <div style={{ position: "relative" }}>
+                <Container
+                  style={{
+                    position: "absolute",
+                    fontSize: "7em",
+                    textAlign: "right",
+                    top: "-9px",
+                    right: "6px",
+                  }}
+                >
+                  📈
+                </Container>
+              </div>
+              <Card.Text
+                style={{
+                  textAlign: "left",
+                  marginTop: 215,
+                  fontSize: "1.1em",
+                  paddingLeft: "20px",
+                  fontWeight: "900",
+                }}
+              >
+                시각화된 통계로 <br />
+                쉽게 알아보는 전력 사용량
+              </Card.Text>
+            </Card>
+
+            <Card
+              data-aos="flip-left"
+              style={{
+                backgroundColor: "#ffffcc",
+                width: "15em",
+                height: "18em",
+                marginRight: "30px",
+                border: "0px",
+              }}
+            >
+              <div style={{ position: "relative" }}>
+                <Container
+                  style={{
+                    position: "absolute",
+                    fontSize: "7em",
+                    textAlign: "right",
+                    top: "-9px",
+                    right: "6px",
+                  }}
+                >
+                  🪙
+                </Container>
+              </div>
+              <Card.Text
+                style={{
+                  textAlign: "left",
+                  marginTop: 215,
+                  fontSize: "1.1em",
+                  paddingLeft: "20px",
+                  fontWeight: "900",
+                }}
+              >
+                챌린지와 보상을 통해 <br />
+                길러보는 절약 습관
+              </Card.Text>
+            </Card>
+
+            <Card
+              data-aos="flip-left"
+              style={{
+                backgroundColor: "#dfffcc",
+                width: "15em",
+                height: "18em",
+                marginRight: "30px",
+                border: "0px",
+              }}
+            >
+              <div style={{ position: "relative" }}>
+                <Container
+                  style={{
+                    position: "absolute",
+                    fontSize: "7em",
+                    textAlign: "right",
+                    top: "-9px",
+                    right: "6px",
+                  }}
+                >
+                  🌏
+                </Container>
+              </div>
+              <Card.Text
+                style={{
+                  textAlign: "left",
+                  marginTop: 215,
+                  fontSize: "1.1em",
+                  paddingLeft: "20px",
+                  fontWeight: "900",
+                }}
+              >
+                유저들과 공유하는 <br />
+                나만의 절약 꿀팁
+              </Card.Text>
+            </Card>
+          </Container>
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            bottom: "0",
+            left: "50%",
+            transform: "translateX(-50%)",
+          }}
+        >
+          {/* <ArrowDownIcon
+            alt="아래화살표"
+            color="white"
+            style={{
+              position: "relative",
+              top: 690,
+              bottom: -300,
+              width: "25px",
+              height: "30px",
+            }}
+            data-aos="fade-down"
+          /> */}
+        </div>
+      </div>
+
       <div className="page" style={{ ...style, backgroundColor: "#00A36B " }}>
-        <Container className="d-flex">
+        <div
+          className="cover"
+          data-aos="fade-left"
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100vh",
+            background:
+              "linear-gradient(270deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 50%)",
+            zIndex: 1,
+          }}
+        ></div>
+        <Container
+          className="d-flex"
+          style={{ position: "relative", zIndex: 1 }}
+        >
           <h1
             data-aos="fade-up"
             style={{
@@ -327,6 +529,18 @@ const Intro = () => {
       </div>
 
       <div className="page" style={{ ...style, backgroundColor: "#60FFAA " }}>
+        <div
+          className="cover"
+          data-aos="fade-right"
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100vh",
+            background:
+              "linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 50%)",
+            zIndex: 1,
+          }}
+        ></div>
         {/* 카드예시데이터 */}
         <Container
           className="d-flex justify-content-between overflow-hidden mt-4"
@@ -524,11 +738,91 @@ const Intro = () => {
             저렴하게 쇼핑해요
             <Container className="mt-4">
               <h5 style={{ lineHeight: "150%" }}>
-                소상공인이 판매하는 유통기한 임박 상품을 <br /> 저렴하게 만나보세요.
+                소상공인이 판매하는 유통기한 임박 상품을 <br /> 저렴하게
+                만나보세요.
               </h5>
             </Container>
           </h1>
         </Container>
+      </div>
+      <div
+        className="page"
+        style={{
+          ...style,
+          backgroundColor: "#bafeff",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            position: "relative",
+          }}
+        >
+          <h1
+            data-aos="fade-up"
+            style={{
+              lineHeight: "1.5em",
+              textAlign: "center",
+              marginTop: 30,
+              color: "black",
+              marginBottom: 30,
+            }}
+          >
+            오늘부터 에코벅스와 함께 <br />
+            절약 습관을 기르고, 저렴하게 쇼핑해보세요.{" "}
+          </h1>
+          <button className="intro-button" data-aos="fade-up">
+            <Link
+              to={ROUTE.REGISTER.link}
+              style={{
+                textDecoration: "none",
+                color: "black",
+                paddingLeft: 10,
+                paddingRight: 10,
+              }}
+            >
+              회원가입
+            </Link>{" "}
+          </button>
+          <button className="intro-button" data-aos="fade-up">
+            <Link
+              to={ROUTE.LOGIN.link}
+              style={{
+                textDecoration: "none",
+                color: "black",
+                paddingLeft: 17,
+                paddingRight: 17,
+              }}
+            >
+              로그인
+            </Link>
+          </button>
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            bottom: "0",
+            left: "50%",
+            transform: "translateX(-50%)",
+          }}
+        >
+          {/* <ArrowDownIcon
+            alt="아래화살표"
+            color="white"
+            style={{
+              position: "relative",
+              top: 690,
+              bottom: -300,
+              width: "25px",
+              height: "30px",
+            }}
+            data-aos="fade-down"
+          /> */}
+        </div>
       </div>
     </Container>
   );

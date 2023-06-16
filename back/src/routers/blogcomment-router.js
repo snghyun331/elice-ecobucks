@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login_required } from "../middlewares/login-required.js";
+import { loginRequired } from "../middlewares/login-required.js";
 import { blogcommentController } from "../controllers/blogcomment-controller.js"
 import { Validation } from "../middlewares/validation.js";
 
@@ -7,7 +7,7 @@ const blogcommentCreateValidation = Validation.validate(Validation.blogcommentSc
 const blogcommentUpdateValidation = Validation.validate(Validation.blogcommentUpdateSchema);
 
 const blogCommentRouter = Router();
-blogCommentRouter.use(login_required);
+blogCommentRouter.use(loginRequired);
 
 blogCommentRouter.post("/blog/:_id/comment/write", blogcommentCreateValidation, blogcommentController.blogcommentPostWrite);
 

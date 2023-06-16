@@ -32,7 +32,7 @@ class ChallengeService {
   }
 
   static async findChallenges() {
-    const challenges = await Challenge.NoAsyncfindAll().populate('userId', 'username districtCode districtName').exec();
+    const challenges = await Challenge.NoAsyncfindAll().populate('userId', 'userName districtCode districtName').exec();
   
     if (!challenges) {
       throw setError("챌린지 게시물을 찾을 수 없습니다.", 404, "NOT_FOUND")
@@ -41,7 +41,7 @@ class ChallengeService {
   }
 
   static async findChallenge({ chllengeId }) {
-    const challenge = await Challenge.NoAsyncfindById({ chllengeId }).populate('userId', 'username districtCode districtName').exec();
+    const challenge = await Challenge.NoAsyncfindById({ chllengeId }).populate('userId', 'userName districtCode districtName').exec();
     if (!challenge) {
       throw setError("챌린지 게시물을 찾을 수 없습니다.", 404, "NOT_FOUND")
     }

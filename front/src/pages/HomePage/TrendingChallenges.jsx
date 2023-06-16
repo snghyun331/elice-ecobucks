@@ -91,7 +91,7 @@ const TrendingChallenges = () => {
                             className="by-author muted-text"
                             style={{ fontSize: "0.8em" }}
                           >
-                            {blog.userId.username}
+                            {blog.userId.userName}
                           </div>
                           <div className="like-count">
                             <span role="img" aria-label="heart">

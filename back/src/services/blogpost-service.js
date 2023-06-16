@@ -9,8 +9,8 @@ class blogPostService {
         }
         const user = await User.findById({ userId })
         
-        const username = user.username
-        const newPost = { userId, username, title, topic, content };
+        const userName = user.userName
+        const newPost = { userId, userName, title, topic, content };
         const createdNewPost = await BlogPost.createPost({ newPost })
         createdNewPost.errorMessage = null
 

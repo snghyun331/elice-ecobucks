@@ -1,6 +1,6 @@
 import multer from "multer";
 import { Router } from "express";
-import { login_required } from "../middlewares/login-required.js";
+import { loginRequired } from "../middlewares/login-required.js";
 import { imageController } from "../controllers/image-controller.js";
 import { MAX_FILE_SIZE } from "../utils/constants.js";
 import { Validation } from "../middlewares/validation.js";
@@ -9,7 +9,7 @@ const imageCreateValidation = Validation.validate(Validation.imageCreateSchema);
 const imageUpdateValidation = Validation.validate(Validation.imageUpdateSchema);
 
 const imageRouter = Router();
-imageRouter.use(login_required)
+imageRouter.use(loginRequired)
 
 const upload = multer({ // 메모리에 파일 임시 저장
   storage: multer.memoryStorage(),   // dest: 'uploads/',  <- 로컬저장인 image-local-save-service 사용시
