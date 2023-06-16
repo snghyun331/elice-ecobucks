@@ -73,13 +73,25 @@ const Intro = () => {
           }}
         >
           <Image data-aos="fade-up" src={LogoWhite} style={{ width: "50%" }} />
-          <h1
+          <h2
             data-aos="fade-up"
-            style={{ textAlign: "center", marginTop: 30, color: "white" }}
+            style={{
+              textAlign: "center",
+              marginTop: 30,
+              color: "white",
+              lineHeight: "150%",
+              marginBlock: 30
+            }}
           >
-            절약하고 쇼핑해요
-          </h1>
-          <button className="intro-button" data-aos="fade-up">
+            당신의 미래를 위해, 지금 시작하세요!
+            <br />
+            <br />
+            <h3>
+              전기에너지 절약 챌린지에 참여하고, <br />
+              환경과 지각변화에 도움을 주세요.
+            </h3>
+          </h2>
+          <button className="intro-button mt-2">
             <Link
               to={ROUTE.REGISTER.link}
               style={{
@@ -92,7 +104,7 @@ const Intro = () => {
               회원가입
             </Link>{" "}
           </button>
-          <button className="intro-button" data-aos="fade-up">
+          <button className="intro-button mt-2">
             <Link
               to={ROUTE.LOGIN.link}
               style={{
@@ -761,7 +773,7 @@ const Intro = () => {
             }}
           >
             오늘부터 에코벅스와 함께 <br />
-            절약 습관을 기르고, 저렴하게 쇼핑해보세요. {" "}
+            절약 습관을 기르고, 저렴하게 쇼핑해보세요.{" "}
           </h1>
           <button className="intro-button" data-aos="fade-up">
             <Link
