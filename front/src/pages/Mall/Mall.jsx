@@ -483,14 +483,16 @@ const Mall = () => {
             선택한 상품을 삭제하시겠습니까?
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseDeleteModal}>
-              취소
-            </Button>
+
             <Button
-              variant="primary"
+              variant="light"
               onClick={() => handleDeleteProduct(selectedItem)}
+              style={{borderRadius: 0, backgroundColor: '#00D387', fontWeight: 'bold'}}
             >
-              삭제하기
+              삭제
+            </Button>
+            <Button variant="secondary" onClick={handleCloseDeleteModal} style={{borderRadius: 0}}>
+              취소
             </Button>
           </Modal.Footer>
         </Modal>
@@ -539,7 +541,7 @@ const Mall = () => {
               <Button
                 variant="light"
                 onClick={() => handleConfirmPurchase(selectedItem)}
-                style={{borderRadius: 0, backgroundColor: '#00D387'}}
+                style={{borderRadius: 0, backgroundColor: '#00D387', fontWeight: 'bold'}}
         
               >
                 구매
