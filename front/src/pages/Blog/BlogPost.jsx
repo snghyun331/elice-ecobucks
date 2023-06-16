@@ -87,7 +87,7 @@ const BlogPost = ({ onClose }) => {
             className="text-muted mb-2"
             style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
           >
-            공유할 팁의 주제를 간단히 적어주세요. 예) 환경, 건강, ... 뭐 적죠?
+            공유할 팁의 주제를 적어주세요. 예) 환경, 건강, 기후변화, 대기오염
           </Container>
           <Form.Control
             style={{
