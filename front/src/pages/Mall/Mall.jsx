@@ -1,6 +1,6 @@
 /** 작성자: 정원석 */
 import { Container, Button, Card, Row, Col, Modal } from "react-bootstrap";
-import { showSuccess } from "../../assets/alert";
+import { showAlert, showSuccess } from "../../assets/alert";
 import * as Api from "../../api";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -161,7 +161,7 @@ const Mall = () => {
 
       handleClosePurchaseModal();
     } catch (err) {
-      alert(err.response.data.message);
+      showAlert(err.response.data.message);
       console.log("상품 구매에 실패하였습니다.", err);
     }
   };

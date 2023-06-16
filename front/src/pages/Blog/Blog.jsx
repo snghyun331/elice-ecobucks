@@ -14,6 +14,7 @@ import dislike from "../../assets/heartblank.png";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { HeartIcon as HeartSolid, PencilIcon } from "@heroicons/react/20/solid";
 import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
+import { showAlert } from "../../assets/alert";
 
 const Blog = () => {
   // const [blogPosts, setBlogPosts] = useState([]);
@@ -107,7 +108,7 @@ const Blog = () => {
       setTotalPages(res.data.totalPage)
       // console.log(blogList.map(item => (console.log(item))));
     } catch (err) {
-      // alert("정보 불러오기를 실패하였습니다.");
+      showAlert("정보 불러오기를 실패하였습니다.");
       console.log("절약 팁 불러오기를 실패하였습니다.", err);
     }
   }

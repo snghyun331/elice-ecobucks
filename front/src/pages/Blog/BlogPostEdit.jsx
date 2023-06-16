@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Form, Container } from "react-bootstrap";
+import { showAlert } from "../../assets/alert";
 // import { UserStateContext } from "../../context/user/UserProvider";
 const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
   const [title, setTitle] = useState("");
@@ -25,7 +26,7 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
 
 
     } catch (err) {
-      alert("모든 값을 입력해주세요.")
+      showAlert("모든 값을 입력해주세요.")
       console.log("상품 등록에 실패하였습니다.", err);
     }
   }
