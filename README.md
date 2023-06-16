@@ -77,26 +77,30 @@
 
 ## 4. 웹 서비스 페이지 구성 소개
 
-###1. Main page
+### 1. Main page
 
-![구성도](./back/uploads/mapage.png)
+![구성도](./back/uploads/main.png)
 
-###2. Home page
+### 2. Home page
 
 ![구성도](./back/uploads/home.png)
 
-###3. Challenge page
+### 3. Challenge page
 
 ![구성도](./back/uploads/챌린지.png)
 
-###4. Bloging page
+### 4. Bloging page
 
 ![구성도](./back/uploads/블로깅.png)
 
-###5. shopping mall
+### 5. Shopping mall
 
-![구성도](./back/uploads/떠리몰2.png)
 ![구성도](./back/uploads/떠리몰1.png)
+![구성도](./back/uploads/떠리몰2.png)
+
+### 6. Mypage
+
+![구성도](./back/uploads/mypage.png)
 
 > .
 
