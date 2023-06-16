@@ -521,28 +521,28 @@ const Mall = () => {
             <Modal.Header closeButton>
               <Modal.Title>구매 확인</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body style={{padding: 40}}>
               <Card.Text className="card-text">
-                상품: {selectedItem && selectedItem.name}
+              <span style={{ fontWeight: "900", paddingRight: 30 }}>상품</span>{selectedItem && selectedItem.name}
+                <br />
+                <span style={{ fontWeight: "900", paddingRight: 30 }}>가격</span>🪙{selectedItem && selectedItem.price}
+                <br />
+                <span style={{ fontWeight: "900", paddingRight: 30 }}>위치</span>{selectedItem && selectedItem.place}
+                <br />
+                <span style={{ fontWeight: "900", paddingRight: 30 }}>설명</span>{selectedItem && selectedItem.description}
               </Card.Text>
-              <Card.Text className="card-text">
-                가격: {selectedItem && selectedItem.price}
-              </Card.Text>
-              <Card.Text className="card-text">
-                판매처: {selectedItem && selectedItem.place}
-              </Card.Text>
-              <Card.Text className="card-text">
-                설명: {selectedItem && selectedItem.description}
-              </Card.Text>
-              선택한 상품을 구매하시겠습니까?
+              <br />
+              <Container style={{textAlign: 'center'}}>선택한 상품을 구매하시겠습니까?</Container>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={handleClosePurchaseModal}>
+              <Button variant="secondary" onClick={handleClosePurchaseModal} style={{borderRadius: 0}}>
                 취소
               </Button>
               <Button
-                variant="primary"
+                variant="light"
                 onClick={() => handleConfirmPurchase(selectedItem)}
+                style={{borderRadius: 0, backgroundColor: '#00D387'}}
+        
               >
                 구매하기
               </Button>
