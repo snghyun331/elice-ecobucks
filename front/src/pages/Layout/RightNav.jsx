@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { UserStateContext, DispatchContext } from "../../context/user/UserProvider";
 import { OverlayTrigger, Tooltip, Button } from "react-bootstrap";
-
+import { CurrencyDollarIcon } from "@heroicons/react/20/solid";
 import { ROUTE } from "../../routes/routes";
 import { LOGOUT } from "../../reducer/action";
 import { showSuccess } from "../../assets/alert";
@@ -23,7 +23,10 @@ const RightNav = ({ isLogin, user }) => {
     if (isLogin) {
       return (
         <ul className="navbar-nav" style={{ whiteSpace: "nowrap" }}>
-          <li className="nav-item" style={{ marginRight: '25px'}}>
+          <li className="nav-item" style={{
+            fontFamily: "PyeongChang-Bold",
+            marginRight: '25px'
+          }}>
             <Link
               className="nav-link"
               to={ROUTE.HOME.link}
@@ -37,11 +40,20 @@ const RightNav = ({ isLogin, user }) => {
                 fontWeight: "900",
               }}
             >
-              🪙
-              <span style={{}}>{user.mileage.toLocaleString()}</span>
+              <CurrencyDollarIcon
+                variant="light"
+                color="#EABA36"
+                style={{
+                  width: "25px",
+                  height: "27px",
+                  cursor: "pointer",
+                  marginRight: "5px",
+                  marginBottom: "4px",
+                }} />
+              <span>{user.mileage.toLocaleString()}</span>
             </Link>
           </li>
-          <li className="nav-item" style={{ marginRight: '25px'}}>
+          <li className="nav-item" style={{ marginRight: '25px' }}>
             <Link
               className="nav-link"
               to={ROUTE.CHALLENGE.link}
@@ -54,7 +66,7 @@ const RightNav = ({ isLogin, user }) => {
               챌린지
             </Link>
           </li>
-          <li className="nav-item" style={{ marginRight: '25px'}}>
+          <li className="nav-item" style={{ marginRight: '25px' }}>
             <Link
               className="nav-link"
               to={ROUTE.BLOG.link}
@@ -67,7 +79,7 @@ const RightNav = ({ isLogin, user }) => {
               절약팁
             </Link>
           </li>
-          <li className="nav-item" style={{ marginRight: '25px'}}>
+          <li className="nav-item" style={{ marginRight: '25px' }}>
             <Link
               className="nav-link"
               to={ROUTE.MALL.link}
@@ -80,7 +92,7 @@ const RightNav = ({ isLogin, user }) => {
               떠리몰
             </Link>
           </li>
-          <li className="nav-item" style={{ marginRight: '25px'}}>
+          <li className="nav-item" style={{ marginRight: '25px' }}>
             <Link
               className="nav-link"
               to={ROUTE.MY.link}
