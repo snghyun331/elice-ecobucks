@@ -4,10 +4,10 @@ import { Form, Container, ButtonGroup, Button } from "react-bootstrap";
 import { showAlert } from "../../assets/alert";
 // import { UserStateContext } from "../../context/user/UserProvider";
 const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [topic, setTopic] = useState("");
-  const [icon, setIcon] = useState("");
+  const [title, setTitle] = useState(selectedBlog.title);
+  const [content, setContent] = useState(selectedBlog.content);
+  const [topic, setTopic] = useState(selectedBlog.topic);
+  const [icon, setIcon] = useState(selectedBlog.icon);
   useEffect(() => {
   }, []);
   const handleSubmit = async (e) => {
@@ -146,6 +146,7 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
           style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
         >팁에 대한 구체적인 설명을 적어주세요.</Container>
         <Form.Control
+        as='textarea'
           className="form-control-large"
           name="description"
           value={content}
