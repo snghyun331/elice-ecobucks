@@ -73,7 +73,7 @@
 
 ## 4. 프로젝트 구성도
 
-![](./uploads/InfomationArchitecture.png)
+![구성도](./back/uploads/InfomationArchitecture.png)
 
 - 와이어프레임/스토리보드 추가
 
@@ -88,12 +88,6 @@
 | 이로운 | 백엔드 개발/데이터 분석 |
 
 ## 참고자료
-
-> .
-
-## 데이터셋
-
----
 
 > .
 
