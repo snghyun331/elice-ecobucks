@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { ListGroup, Form, Button, Container } from "react-bootstrap";
+import { ListGroup, Form, Button, Container, Alert } from "react-bootstrap";
 import * as Api from "../../api";
 import { UserStateContext } from "../../context/user/UserProvider";
 import { showAlert } from "../../assets/alert";
@@ -14,8 +14,7 @@ const BlogComment = ({ blog }) => {
 
   const handleAddComment = async (e) => {
     e.preventDefault();
-    // const formData = new FormData(e.target);
-    // const content = formData.get("content");
+
     const content = commentContent.trim();
     if (content.length <= 20) {
       try {
@@ -37,9 +36,12 @@ const BlogComment = ({ blog }) => {
     } else {
       showAlert("댓글은 20글자 이하여야 합니다.");
     }
+    setCommentContent("");
     e.target.reset();
   };
   const handleCommentChange = (e) => {
+    e.preventDefault();
+
     const content = e.target.value;
     setCommentContent(content);
 
@@ -212,7 +214,11 @@ const BlogComment = ({ blog }) => {
             onChange={handleCommentChange}
             style={!isContentValid ? { borderWidth: "2px", borderColor: "red" } : {}}
           />
-          <span>{commentContent.length}/20</span>
+          {commentContent.length > 20 && (
+            <Alert variant="danger" className="mt-2 p-2">
+              댓글은 최대 20자까지 입력 가능합니다.
+            </Alert>
+          )}
         </Form.Group>
         <Button type="submit" className="mt-3 btn-default" >
           댓글 추가

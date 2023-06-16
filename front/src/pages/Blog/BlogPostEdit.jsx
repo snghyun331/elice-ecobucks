@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { Form, Container } from "react-bootstrap";
+import { Form, Container, ButtonGroup, Button } from "react-bootstrap";
 import { showAlert } from "../../assets/alert";
 // import { UserStateContext } from "../../context/user/UserProvider";
 const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [topic, setTopic] = useState("");
+  const [icon, setIcon] = useState("");
   useEffect(() => {
   }, []);
   const handleSubmit = async (e) => {
@@ -15,17 +16,18 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
       const updatedBlog = {
         title: title || selectedBlog.title,
         content: content || selectedBlog.content,
-        topic: topic || selectedBlog.topic
+        topic: icon + topic || selectedBlog.topic
       };
 
       await handleEditBlog(selectedBlog, updatedBlog);
-
-
     } catch (err) {
       showAlert("모든 값을 입력해주세요.")
       console.log("상품 등록에 실패하였습니다.", err);
     }
   }
+  const handleIconSelect = (selectedIcon) => {
+    setIcon(selectedIcon);
+  };
 
   return (
     <div style={{ padding: "16px", width: "calc(100% - 32px)" }}>
@@ -69,17 +71,75 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
           className="text-muted mb-2"
           style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
         >
-          공유할 팁의 주제를 간단히 적어주세요. 예) 환경, 건강, ... 뭐 적죠?
+          공유할 팁의 주제를 간단히 적어주세요.
         </Container>
-        <Form.Control
-          className="form-control-small"
-          name="topic"
-          value={topic}
-          onChange={(event) => {
-            setTopic(event.target.value);
-          }}
-          placeholder={selectedBlog.topic}
-        />
+        <ButtonGroup style={{ width: "100%" }}>
+              <Button
+                variant={icon === "♻️" ? "success" : "outline-success"}
+                style={{ borderRadius: "0px" }}
+                onClick={() => {
+                  handleIconSelect("♻️");
+                  setTopic("재활용");
+                }}
+              >
+                ♻️ <br/><span style={{fontSize:'0.8rem'}}>재활용</span>
+              </Button>
+              <Button
+                variant={icon === "🌍" ? "success" : "outline-success"}
+                onClick={() => {
+                  handleIconSelect("🌍");
+                  setTopic("지구");
+                }}
+              >
+                🌍 <br/><span style={{fontSize:'0.8rem'}}>지구</span>
+              </Button>
+              <Button
+                variant={icon === "👩‍👦‍👦" ? "success" : "outline-success"}
+                onClick={() => {
+                  handleIconSelect("👩‍👦‍👦");
+                  setTopic("가족");
+                }}
+              >
+                👩‍👦‍👦 <br/><span style={{fontSize:'0.8rem'}}>가족</span>
+              </Button>
+              <Button
+                variant={icon === "💪🏻" ? "success" : "outline-success"}
+                onClick={() => {
+                  handleIconSelect("💪🏻");
+                  setTopic("건강");
+                }}
+              >
+                💪🏻 <br/><span style={{fontSize:'0.8rem'}}>건강</span>
+              </Button>
+              <Button
+                variant={icon === "💧" ? "success" : "outline-success"}
+                onClick={() => {
+                  handleIconSelect("💧")
+                  setTopic("물");
+                }}
+              >
+                💧 <br/><span style={{fontSize:'0.8rem'}}>물</span>
+              </Button>
+              <Button
+                variant={icon === "🍀" ? "success" : "outline-success"}
+                onClick={() => {
+                  handleIconSelect("🍀");
+                  setTopic("운세");
+                }}
+                style={{ borderRadius: "0px" }}
+              >
+                🍀 <br/><span style={{fontSize:'0.8rem'}}>운세</span>
+              </Button>
+              <Button
+                variant={icon === "💚" ? "success" : "outline-success"}
+                onClick={() => {
+                  handleIconSelect("💚");
+                  setTopic("연애");
+                }}
+              >
+                💚 <br/><span style={{fontSize:'0.8rem'}}>연애</span>
+              </Button>
+            </ButtonGroup>
         <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>내용</Form.Label>
         <Container
           className="text-muted mb-2"

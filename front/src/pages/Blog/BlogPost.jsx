@@ -93,45 +93,63 @@ const BlogPost = ({ onClose }) => {
                 style={{ borderRadius: "0px" }}
                 onClick={() => {
                   handleIconSelect("♻️");
-                  setTopic(icon + "재활용");
+                  setTopic("재활용");
                 }}
               >
                 ♻️ <br/><span style={{fontSize:'0.8rem'}}>재활용</span>
               </Button>
               <Button
                 variant={icon === "🌍" ? "success" : "outline-success"}
-                onClick={() => handleIconSelect("🌍")}
+                onClick={() => {
+                  handleIconSelect("🌍");
+                  setTopic("지구");
+                }}
               >
                 🌍 <br/><span style={{fontSize:'0.8rem'}}>지구</span>
               </Button>
               <Button
                 variant={icon === "👩‍👦‍👦" ? "success" : "outline-success"}
-                onClick={() => handleIconSelect("👩‍👦‍👦")}
+                onClick={() => {
+                  handleIconSelect("👩‍👦‍👦");
+                  setTopic("가족");
+                }}
               >
                 👩‍👦‍👦 <br/><span style={{fontSize:'0.8rem'}}>가족</span>
               </Button>
               <Button
                 variant={icon === "💪🏻" ? "success" : "outline-success"}
-                onClick={() => handleIconSelect("💪🏻")}
+                onClick={() => {
+                  handleIconSelect("💪🏻");
+                  setTopic("건강");
+                }}
               >
                 💪🏻 <br/><span style={{fontSize:'0.8rem'}}>건강</span>
               </Button>
               <Button
                 variant={icon === "💧" ? "success" : "outline-success"}
-                onClick={() => handleIconSelect("💧")}
+                onClick={() => {
+                  handleIconSelect("💧")
+                  setTopic("물");
+                }}
               >
                 💧 <br/><span style={{fontSize:'0.8rem'}}>물</span>
               </Button>
               <Button
                 variant={icon === "🍀" ? "success" : "outline-success"}
-                onClick={() => handleIconSelect("🍀")}
+                onClick={() => {
+                  handleIconSelect("🍀");
+                  setTopic("운세");
+                }}
                 style={{ borderRadius: "0px" }}
               >
                 🍀 <br/><span style={{fontSize:'0.8rem'}}>운세</span>
               </Button>
               <Button
                 variant={icon === "💚" ? "success" : "outline-success"}
-                onClick={() => handleIconSelect("💚")}
+                onClick={() => {
+                  handleIconSelect("💚");
+                  setTopic("연애");
+                }}
               >
                 💚 <br/><span style={{fontSize:'0.8rem'}}>연애</span>
               </Button>
