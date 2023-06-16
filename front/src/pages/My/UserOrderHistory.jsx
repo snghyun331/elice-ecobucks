@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Pagination, Container } from "react-bootstrap";
-import moment from "moment";
+import { Table,  Container } from "react-bootstrap";
 import * as Api from "../../api";
 import { formatDate } from "../../util/common";
 import PagenationBar from "../Modal/PaginationBar";
