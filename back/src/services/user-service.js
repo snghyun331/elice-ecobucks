@@ -3,6 +3,7 @@ import { User, District, Challenge, ChallengeParticipation, ChallengeComment, or
 import bcrypt, { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
 import { updateTime } from "../utils/update-time.js";
+import { PRODUCT_PAGE_LIMIT } from "../utils/constants.js";
 
 class userAuthService {
   static async addUser({ username, email, password, districtName }) {
@@ -173,31 +174,57 @@ class userAuthService {
   }
 
 
-  static async getUserMyPageChallenges({ userId }) {
+  static async getUserMyPageChallenges({ userId, page }) {
     try {
-      const participations = await ChallengeParticipation.findById({ _id: userId });
-      const populatedParticipations = await ChallengeParticipation.populate(participations, [
-        { path: 'challengeId', select: 'title createdAt updatedAt' }
-      ]);
-  
+      const limit = PRODUCT_PAGE_LIMIT;
+      const skip = (page - 1) * limit;
+      const { userParticipations, count } = await ChallengeParticipation.findAndCountAll(skip, limit);
+      const totalPages = Math.ceil(count / limit)
+      //const participations = await ChallengeParticipation.findAllByUserId({ userId });
+      const populatedParticipations = await Promise.all(
+        userParticipations.map(async (participation) => {  
+          const challenge = await Challenge.findById(participation.challengeId);
+          return { 
+            //...challenge._doc,   
+            mileage: participation.mileage,
+            challengeIcon: challenge.icon,
+            challengeTitle: challenge.title,  // title 추가
+            challengeDueDate: updateTime.toKST(challenge.dueDate),
+            participationCreatedAt: updateTime.toKST(challenge.createdAt),
+            //participationUpdatedAt: updateTime.toKST(challenge.updatedAt)
+          }; 
+        }) 
+      ); 
       const newParticipations = {
-        userChallengeCount: populatedParticipations.length,
-        userChallengeList: populatedParticipations.map(participation => ({
-          userParticipantCount: participations.length,
-          particioationMileage: participation.particioationMileage,
-          challengeTitle: participation.challengeId.title,
-          createdAt: updateTime.toKST(participation.challengeId.createdAt),
-          updatedAt: updateTime.toKST(participation.challengeId.updatedAt)
-        }))
+        userParticipationCount: populatedParticipations.length,
+        userParticipationList: populatedParticipations
       };
-  
-      return newParticipations;
+      return {newParticipations, totalPages};
+
     } catch (error) {
       // Handle error
       console.error(error);
       throw error;
     }
   }
+
+  //
+  // 유저의 모든 챌린지 참여 갯수와 참여 조회 
+  // static async getUserParticipants({userId}){
+  //   const participations = await ChallengeParticipation.findAllByUserId({ userId });
+  //   const populatedParticipations = await Promise.all(
+  //     participations.map(async (participation) => {  
+  //       const challenge = await Challenge.findById(participation.challengeId);
+  //       return { 
+  //         userParticipantCount: participations.length,
+  //         ...participation._doc,   
+  //         challengeTitle: challenge.title,  // title 추가
+  //         createdAt: updateTime.toKST(challenge.createdAt),
+  //         updatedAt: updateTime.toKST(challenge.updatedAt)
+  //       }; 
+  //     }) 
+  //   ); 
+  // }
   
   static async subtractMileage(userId, amount) {
     //유저 마일리지 차감 로직
@@ -218,7 +245,8 @@ class userAuthService {
 
   // 유저의 모든 챌린지 참여 갯수와 참여 조회 
   static async getUserParticipants({userId}){
-    const participations = await ChallengeParticipation.findAllByUserId({ userId });
+    const participations = await ChallengeParticipation.findAllByUserId({ userId: userId });
+    console.log('participations: ',participations);
     const populatedParticipations = await Promise.all(
       participations.map(async (participation) => {  
         const challenge = await Challenge.findById(participation.challengeId);

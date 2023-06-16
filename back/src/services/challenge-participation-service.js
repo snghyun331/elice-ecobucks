@@ -37,7 +37,7 @@ class ParticipationService {
         if (participation[0].hasParticipatedToday == true){
           throw setError("같은 챌린지에는 하루에 한번 참여 할 수 있습니다.", 409, "CONFLICT")
         }
-        participation.hasParticipatedToday = true
+        participation[0].hasParticipatedToday = true
         const createInput = { userId, challengeId, imageId, hasParticipatedToday: true } 
         const createParticipation = await ChallengeParticipation.create(createInput);
         createNewParticipation=updateTime.toTimestamps(createParticipation);

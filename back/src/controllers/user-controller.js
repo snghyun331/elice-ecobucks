@@ -75,12 +75,18 @@ const userController = {
   getUserMyPageChallenges: async function (req, res, next) {
     try{
       const userId = req.currentUserId;
-      const UserChallengeInfo = await userAuthService.getUserMyPageChallenges({ userId });   
+      const page = parseInt(req.query.page || 1)
+
+      const {newParticipations, totalPages} = await userAuthService.getUserMyPageChallenges({ userId, page });   
       
-      if (UserChallengeInfo.errorMessage){
-        throw new Error(UserChallengeInfo.errorMessage);
+      if (newParticipations.errorMessage){
+        throw new Error(newParticipations.errorMessage);
       }
-    return res.status(OK).send(UserChallengeInfo);
+    return res.status(OK).send({
+      currentPage: page,
+      totalPages: totalPages,
+      newParticipations,
+    });
     } catch (error) {
       error.status = NOT_FOUND;
       next(error);
