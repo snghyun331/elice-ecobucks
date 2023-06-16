@@ -168,14 +168,14 @@ const DistrictChart = (idx) => {
                 useMesh={true}
                 legends={[
                     {
-                        anchor: 'bottom-right',
+                        anchor: 'top-right',
                         direction: 'column',
                         justify: false,
                         translateX: 100,
                         translateY: 0,
                         itemsSpacing: 0,
                         itemDirection: 'left-to-right',
-                        itemWidth: 80,
+                        itemWidth: 150,
                         itemHeight: 20,
                         itemOpacity: 0.75,
                         symbolSize: 12,
