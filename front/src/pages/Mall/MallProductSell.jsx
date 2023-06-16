@@ -3,10 +3,17 @@ import { useNavigate } from "react-router-dom";
 import * as Api from "../../api";
 import DaumPostcode from "react-daum-postcode";
 import { useEffect } from "react";
-import { Button, ButtonGroup, Container, Form, Alert, Image } from "react-bootstrap";
+import {
+  Button,
+  ButtonGroup,
+  Container,
+  Form,
+  Alert,
+  Image,
+} from "react-bootstrap";
+import { showAlert } from "../../assets/alert";
 
 const MallProductSell = ({ onClose }) => {
-
   const [location, setLocation] = useState({});
   const [showModal, setShowModal] = useState(false);
 
@@ -46,7 +53,8 @@ const MallProductSell = ({ onClose }) => {
 
   const navigate = useNavigate();
 
-  const handleSearchAddress = () => {
+  const handleSearchAddress = (e) => {
+    e.preventDefault();
     setShowModal(true);
   };
 
@@ -88,12 +96,8 @@ const MallProductSell = ({ onClose }) => {
         const formData = new FormData();
         formData.append("image", selectedFile);
 
-        const imageRes = await Api.postFile(
-          "images/products/upload",
-          formData
-        );
+        const imageRes = await Api.postFile("images/products/upload", formData);
 
-        console.log(imageRes);
         const res = await Api.post("products", {
           name,
           price: Number(price),
@@ -101,14 +105,14 @@ const MallProductSell = ({ onClose }) => {
           location,
           stock: Number(stock),
           description,
-          imageId: imageRes.data._id
+          imageId: imageRes.data._id,
         });
         console.log(res);
         // window.location.reload();
         onClose();
       }
     } catch (err) {
-      alert("모든 값을 입력해주세요.", err);
+      showAlert("모든 값을 입력해주세요.", err);
       console.log("상품 등록에 실패하였습니다.", err);
     }
   };
@@ -118,7 +122,7 @@ const MallProductSell = ({ onClose }) => {
       <Form.Group controlId="formFile" className="mb-3">
         <Form.Label
           className="d-block"
-          style={{ fontWeight: "bold", textAlign: "left" }}
+          style={{ fontWeight: "bold", fontSize: "1.2em", textAlign: "left" }}
         >
           상품 사진
         </Form.Label>
@@ -130,15 +134,24 @@ const MallProductSell = ({ onClose }) => {
         {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
       </Form.Group>
       {selectedFile && (
-        <div className="mt-3">
+        <div>
           <h6>미리보기</h6>
           <Image src={previewURL} alt="Selected Image" thumbnail />
         </div>
       )}
-      <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>상품명</Form.Label>
+      <Form.Label
+      className="d-block"
+        style={{
+          fontSize: "1.2em",
+          fontWeight: "bold",
+          textAlign: "left",
+        }}
+      >
+        상품명
+      </Form.Label>
       <Container
         className="text-muted mb-2"
-        style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
+        style={{ fontSize: "0.85rem", textAlign: "left", padding: 0 }}
       >
         상품명을 적어주세요.
       </Container>
@@ -150,16 +163,25 @@ const MallProductSell = ({ onClose }) => {
           fontSize: "16px",
           lineHeight: "20px",
           marginBottom: "16px",
-          borderRadius: "0px"
+          borderRadius: "0px",
         }}
         name="name"
         value={name}
         onChange={onChange}
       />
-      <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>가격</Form.Label>
+      <Form.Label
+      className="d-block"
+        style={{
+          fontSize: "1.2em",
+          fontWeight: "bold",
+          textAlign: "left",
+        }}
+      >
+        가격
+      </Form.Label>
       <Container
         className="text-muted mb-2"
-        style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
+        style={{ fontSize: "0.85rem", textAlign: "left", padding: 0 }}
       >
         판매가격을 적어주세요. 추후에 1마일 : N원으로 교환할 수 있습니다.
       </Container>
@@ -171,20 +193,31 @@ const MallProductSell = ({ onClose }) => {
           fontSize: "16px",
           lineHeight: "20px",
           marginBottom: "16px",
-          borderRadius: "0px"
+          borderRadius: "0px",
         }}
         name="price"
         value={price}
         onChange={onChange}
       />
-      <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>위치</Form.Label>
+      <Form.Label
+      className="d-block"
+        style={{
+          fontSize: "1.2em",
+          fontWeight: "bold",
+          textAlign: "left",
+        }}
+      >
+        위치
+      </Form.Label>
       <Container
         className="text-muted mb-2"
-        style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
+        style={{ fontSize: "0.85rem", textAlign: "left", padding: 0 }}
       >
         구매자가 상품을 수령할 수 있는 위치를 지정해주세요.
       </Container>
-      <Container style={{ display: "flex", marginBottom: "16px", width: '100%' }}>
+      <Container
+        style={{ display: "flex", marginBottom: "16px", width: "100%" }}
+      >
         <Form.Control
           style={{
             width: "100%",
@@ -192,7 +225,7 @@ const MallProductSell = ({ onClose }) => {
             padding: "16px",
             fontSize: "16px",
             lineHeight: "20px",
-            borderRadius: "0px"
+            borderRadius: "0px",
           }}
           placeholder="'검색' 버튼을 눌러 검색하세요."
           name="place"
@@ -207,19 +240,29 @@ const MallProductSell = ({ onClose }) => {
             color: "white",
             fontWeight: "900",
             marginLeft: 5,
-            border: '0px'
+            border: "0px",
           }}
           onClick={handleSearchAddress}
         >
           검색
         </button>
       </Container>
-      <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>수량</Form.Label>
+      <Form.Label
+      className="d-block"
+        style={{
+          fontSize: "1.2em",
+          fontWeight: "bold",
+          textAlign: "left",
+        }}
+      >
+        수량
+      </Form.Label>
       <Container
         className="text-muted mb-2"
-        style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
+        style={{ fontSize: "0.85rem", textAlign: "left", padding: 0 }}
       >
-        판매 가능한 최대 수량을 적어주세요. 수량이 0에 도달하면 판매가 종료됩니다.
+        판매 가능한 최대 수량을 적어주세요. 수량이 0에 도달하면 판매가
+        종료됩니다.
       </Container>
       <Form.Control
         style={{
@@ -235,12 +278,22 @@ const MallProductSell = ({ onClose }) => {
         value={stock}
         onChange={onChange}
       />
-      <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>설명</Form.Label>
+      <Form.Label
+      className="d-block"
+        style={{
+          fontSize: "1.2em",
+          fontWeight: "bold",
+          textAlign: "left",
+        }}
+      >
+        설명
+      </Form.Label>
       <Container
         className="text-muted mb-2"
-        style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
+        style={{ fontSize: "0.85rem", textAlign: "left", padding: 0 }}
       >
-        상품에 대한 구체적인 설명을 적어주세요. 유통기한 임박 상품이라면, 유통기한을 함께 기재해주세요.
+        상품에 대한 구체적인 설명을 적어주세요. 유통기한 임박 상품이라면,
+        유통기한을 함께 기재해주세요.
       </Container>
       <Form.Control
         style={{
@@ -249,9 +302,9 @@ const MallProductSell = ({ onClose }) => {
           fontSize: "16px",
           lineHeight: "20px",
           marginBottom: "16px",
-          borderRadius: 0
+          borderRadius: 0,
         }}
-        as='textarea'
+        as="textarea"
         name="description"
         value={description}
         onChange={onChange}
@@ -265,12 +318,11 @@ const MallProductSell = ({ onClose }) => {
           color: "white",
           fontWeight: "900",
           padding: 5,
-          border: '0px'
+          border: "0px",
         }}
       >
         등록하기
       </button>
-
 
       {showModal && (
         <div
@@ -289,7 +341,6 @@ const MallProductSell = ({ onClose }) => {
       )}
     </Form>
   );
-
 };
 
 export default MallProductSell;

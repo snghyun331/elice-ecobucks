@@ -86,8 +86,6 @@ class ParticipationService {
       }
       }));
 
-     
-
     return newParticipations;
   }
 
@@ -140,8 +138,6 @@ class ParticipationService {
     try{
       const participation = await ChallengeParticipation.findById({ _id });
       await validatePermission(participation, currentUserId);
-
-
     
       // 삭제시 Challenge의 participantsCount 1감소
       const challenge = await Challenge.findById({ _id:challengeId })
@@ -157,12 +153,11 @@ class ParticipationService {
 
       // 업로드 이미지와 참여신청 삭제
       await ChallengeParticipation.deleteById(_id);
-      await imageService.deleteImage( participation.imageId );
+      await imageService.deleteImage(participation.imageId);
     } catch (error) {
       throw handleError(error)
     }
   }
-
 }
- 
+
 export { ParticipationService };

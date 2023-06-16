@@ -7,11 +7,11 @@ class blogCommentService {
             const errorMessage = "댓글을 입력해주세요";
             return { errorMessage };
         }
-        const user = await User.findByWriterId({writer_id})
+        const user = await User.findByWriterId({ writer_id })
         
         const writername = user.username
         const newComment = { post_id, writer_id, writername, comment };
-        const createdNewComment = await BlogComment.createComment({newComment})
+        const createdNewComment = await BlogComment.createComment({ newComment })
         createdNewComment.errorMessage = null
 
         return createdNewComment
@@ -49,14 +49,14 @@ class blogCommentService {
 
     static async findComments({ blogId }) {
         const comments = await BlogComment.NoAsyncfindAll({ challengeId })
-          .populate("userId", "username districtCode districtName")
-          .exec();
+            .populate("userId", "username districtCode districtName")
+            .exec();
         if (!comments) {
-          throw setError("댓글을 찾을 수 없습니다.", 404, "NOT_FOUND")
+            throw setError("댓글을 찾을 수 없습니다.", 404, "NOT_FOUND")
         }
     
         return comments;
-      }
+    }
 
     static async findAllComments() {
         const comments = await BlogComment.findAll();

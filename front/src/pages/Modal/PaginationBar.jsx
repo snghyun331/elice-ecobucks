@@ -13,8 +13,8 @@ const PaginationBar = ({ totalPages, handlePageChange, currentPage }) => {
           active={currentPage === i}
           onClick={() => handlePageChange(i)}
           style={{
-            width: '30px',
-            height: '30px',
+            width: '15px',
+            height: '15px',
             position: 'relative',
             backgroundColor: currentPage === i ? '#2ecc71' : '#E5F9DB',
             borderRadius: '100%',

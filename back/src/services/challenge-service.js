@@ -31,8 +31,8 @@ class ChallengeService {
     return createdNewChallenge;
   }
 
-  static async findChallenges( ) {
-    const challenges = await Challenge.NoAsyncfindAll( ).populate('userId', 'username districtCode districtName').exec();
+  static async findChallenges() {
+    const challenges = await Challenge.NoAsyncfindAll().populate('userId', 'username districtCode districtName').exec();
   
     if (!challenges) {
       throw setError("챌린지 게시물을 찾을 수 없습니다.", 404, "NOT_FOUND")
@@ -82,7 +82,7 @@ class ChallengeService {
       if (challenge.commentsCount != 0)
         throw setError("참여자가 존재하여 삭제 할 수 없습니다.", 409, "CONFLICT")
   
-      await Challenge.deleteById( chllengeId );
+      await Challenge.deleteById(chllengeId);
     } catch (error) {
       throw handleError(error)
     }

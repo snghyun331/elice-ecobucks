@@ -66,7 +66,6 @@ const TrendingBlogs = () => {
           {groupedBlogs.map((group, i) => (
             <Carousel.Item key={`group-${i}`}>
               <Container fluid className="carousel-container">
-                <Row className="d-flex justify-content-center">
                   {group.map((blog) => (
                     <Col key={blog.id} className="blog-item">
                       <Card className="blog-card">
@@ -90,7 +89,6 @@ const TrendingBlogs = () => {
                       </Card>
                     </Col>
                   ))}
-                </Row>
               </Container>
             </Carousel.Item>
           ))}

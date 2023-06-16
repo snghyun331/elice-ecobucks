@@ -22,8 +22,8 @@ class userAuthService {
       const districtCode = await District.getDistrictCodeByName(districtName)
       // 기존 정보에서 다시 가입할 때 등록한 정보로 업데이트
       const updatedUser = await userModel.findOneAndUpdate(   
-        {email: email, is_withdrawed: true},  // 필터링
-        {username: username, email: email, password: hashedPassword, districtCode: districtCode, districtName: districtName, is_withdrawed: false},  // 업데이트 항목들
+        { email: email, is_withdrawed: true },  // 필터링
+        { username: username, email: email, password: hashedPassword, districtCode: districtCode, districtName: districtName, is_withdrawed: false },  // 업데이트 항목들
         { returnOriginal: false }   // 업데이트 된 상태로 저장
       )
       return updatedUser
@@ -66,8 +66,7 @@ class userAuthService {
       correctPasswordHash
     );
     if (!isPasswordCorrect) {
-      const errorMessage =
-        "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.";
+      const errorMessage = "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
 
@@ -75,7 +74,6 @@ class userAuthService {
     const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
     const token = jwt.sign({ userId: user._id }, secretKey);
   
-    // 반환할 loginuser 객체를 위한 변수 설정
     const _id = user._id;
     const username = user.username;
     const districtCode = user.districtCode;
@@ -94,29 +92,27 @@ class userAuthService {
     return loginUser;
   }
 
+
   static async getUsers() {
     const users = await User.findAll();
     return users;
   }
 
-  
+
   static async getUserInfo({ userId }) {
     const user = await User.findById({ userId });
-    // db에서 찾지 못한 경우, 에러 메시지 반환
+    
     if (!user) {
-      const errorMessage =
-      "가입내역이 없는 이메일입니다. 다시 한 번 확인해 주세요.";
+      const errorMessage = "가입내역이 없는 이메일입니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
-
     return updateTime.toTimestamps(user);
   }
 
+
   static async updateUser({ userId, toUpdate }) {
-    // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
     let user = await User.findById({ userId });
     
-    // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
       throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
     }
@@ -138,7 +134,6 @@ class userAuthService {
       districtCode: "districtCode",
     }
 
-
     for (const [field, fieldToUpdate] of Object.entries(fieldsToUpdate)) {
       if (toUpdate[field] || field === "description") {
         const newValue = toUpdate[field];
@@ -149,9 +144,9 @@ class userAuthService {
         });
       }
     }
-
     return user;  
   }
+
 
   static async getUserMypage({ userId }){
     const user  = await User.findById({ userId });
@@ -169,7 +164,6 @@ class userAuthService {
       userCommentsList: comments,
       orderCount: orders.length,
     }
-
     return userInfo
   }
 
@@ -206,12 +200,14 @@ class userAuthService {
   }
 
   
+
   static async subtractMileage(userId, amount) {
     //유저 마일리지 차감 로직
     const user = await User.findById({ userId });
     user.mileage -= amount;
     await user.save();
   }
+
 
   // 유저의 모든 챌린지 게시물 갯수와 게시물 조회
   static async getUserChallenges({userId}){
@@ -224,9 +220,8 @@ class userAuthService {
   }
 
   // 유저의 모든 챌린지 참여 갯수와 참여 조회 
-  static async getUserParticipants({userId}){
-    const participations = await ChallengeParticipation.findAllByUserId({ userId: userId });
-    console.log('participations: ',participations);
+  static async getUserParticipants({ userId }){
+    const participations = await ChallengeParticipation.findAllByUserId({ userId });
     const populatedParticipations = await Promise.all(
       participations.map(async (participation) => {  
         const challenge = await Challenge.findById(participation.challengeId);
@@ -244,12 +239,12 @@ class userAuthService {
       userChallengeCount: populatedParticipations.length,
       userChallengeList: populatedParticipations
     };
-
     return newParticipations;
   } 
 
+
   // 유저의 모든 댓글 갯수와 댓글 조회
-  static async getUserComments({userId}){
+  static async getUserComments({ userId }){
     const comments = await ChallengeComment.findAllByUserId({ userId: userId });
     const populatedComments = await Promise.all(
       comments.map(async (Comment) => {  

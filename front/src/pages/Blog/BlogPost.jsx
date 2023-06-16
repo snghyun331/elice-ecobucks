@@ -15,7 +15,6 @@ const BlogPost = ({ onClose }) => {
         content,
         topic
       });
-      console.log("절약 팁 작성 res: ", res);
       // window.location.reload()
       onClose();
     } catch (err) {
