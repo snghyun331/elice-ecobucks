@@ -71,11 +71,29 @@
    - 편의점, 빵집, 마트 등 유통기한이 임박해 폐기가 다가오는 제품을 저렴하게 구매할 수 있는 떠리몰을 운영합니다.
    - 판매자는 폐기가 줄어 좋고, 소비자는 저렴하게 제품을 구해 서로에게 윈윈이 되는 환경 보호 떠리몰.
 
-## 4. 프로젝트 구성도
+## 3. 프로젝트 구성도
 
 ![구성도](./back/uploads/InfomationArchitecture.png)
 
-- 와이어프레임/스토리보드 추가
+## 4. 웹 서비스 페이지 구성 소개
+
+1. Main page
+   ![구성도](./back/uploads/mapage.png)
+
+2. Home page
+   ![구성도](./back/uploads/home.png)
+
+3. Challenge page
+   ![구성도](./back/uploads/챌린지.png)
+
+4. Bloging page
+   ![구성도](./back/uploads/블로깅.png)
+
+5. shopping mall
+   ![구성도](./back/uploads/떠리몰2.png)
+   ![구성도](./back/uploads/떠리몰1.png)
+
+> .
 
 ## 5. 프로젝트 팀원 역할 분담
 
@@ -86,10 +104,6 @@
 | 이은석 | 백엔드 개발/데이터 분석 |
 | 이승현 | 백엔드 개발/데이터 분석 |
 | 이로운 | 백엔드 개발/데이터 분석 |
-
-## 참고자료
-
-> .
 
 ## 폴더 트리
 
