@@ -7,7 +7,7 @@ const BlogCommentSchema = new Schema(
             ref: "BlogPost",
             required: true,
         },
-        writer_id: {
+        writerId: {
             type: Schema.Types.ObjectId,
             ref: "User",
             required: true,

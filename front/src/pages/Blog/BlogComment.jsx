@@ -173,7 +173,7 @@ const BlogComment = ({ blog }) => {
                 <Container className="mt-2 mb-2">
                   {comment.content}
                 </Container>
-                {comment.writer_id === userState.user._id && (
+                {comment.writerId === userState.user._id && (
                   <div>
                     <Button
                       variant="link"

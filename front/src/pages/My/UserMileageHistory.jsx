@@ -61,9 +61,6 @@ const UserMileageHistory = ({ user }) => {
             ))
           ) : (
             <tr>
-              <td colSpan={3} style={{ textAlign: "center" }}>
-                No mileage history available.
-              </td>
             </tr>
           )}
         </tbody>

@@ -13,6 +13,7 @@ const UserOrderHistory = ({ user }) => {
     const fetchOrderHistory = async () => {
       try {
         const res = await Api.get(`mypage/orders?page=${currentPage}`);
+        console.log(res)
         if (res.data.message) {
           setOrderHistory([])
         } else {

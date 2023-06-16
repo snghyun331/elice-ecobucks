@@ -16,9 +16,9 @@ class User {
     return user;
   }
 
-  // Comment용 (Comment 스키마에 userId 대신 writer_id로 정의함)
-  static async findByWriterId({ writer_id }) {
-    const user = await userModel.findOne({ _id: writer_id });
+  // Comment용 (Comment 스키마에 userId 대신 writerId로 정의함)
+  static async findByWriterId({ writerId }) {
+    const user = await userModel.findOne({ _id: writerId });
     return user;
   }
 
