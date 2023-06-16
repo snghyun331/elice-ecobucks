@@ -1,5 +1,14 @@
 /** 작성자: 정원석 */
-import { Container, Button, Card, Row, Col, Modal } from "react-bootstrap";
+import {
+  Container,
+  Button,
+  Card,
+  Row,
+  Col,
+  Modal,
+  OverlayTrigger,
+  Tooltip,
+} from "react-bootstrap";
 import { showAlert, showSuccess } from "../../assets/alert";
 import * as Api from "../../api";
 import { useContext, useEffect, useState } from "react";
@@ -28,11 +37,10 @@ const Mall = () => {
   const [list, setList] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [itemLocate, setItemLocate] = useState({});
+  const [showTooltip, setShowTooltip] = useState(false);
 
-  ///pagination////
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  /////////////////
 
   const handlePageChange = (newPage) => {
     if (newPage < 1) {
@@ -164,7 +172,6 @@ const Mall = () => {
 
   const handleEditProduct = async (selectedItem, updatedItem) => {
     try {
-
       const updatedProduct = {
         // ...selectedItem,
         name: updatedItem.name,
@@ -350,7 +357,7 @@ const Mall = () => {
                     marginBottom: 30,
                     backgroundColor: "#DDF7E3",
                     border: "3px solid #DDF7E3",
-                    borderRadius: '15px'                    
+                    borderRadius: "15px",
                   }}
                 >
                   <Card.Body className="card-body">
@@ -523,19 +530,31 @@ const Mall = () => {
                         </Modal>
                       </>
                     )}
+
                     {item.seller !== userState.user._id && (
-                      <ShoppingBagIcon
-                        color="#00D387"
-                        style={{
-                          width: "30px",
-                          cursor: "pointer",
-                          position: "absolute",
-                          bottom: 15,
-                          right: 15,
-                        }}
-                        onClick={() => handleOpenPurchaseModal(item)}
-                        disabled={item.stock === 0}
-                      />
+    <OverlayTrigger
+    placement="top"
+    overlay={<Tooltip>재고가 없습니다.</Tooltip>}
+    show={item.stock === 0 && showTooltip}
+    trigger="hover"
+    onToggle={(nextShow) => setShowTooltip(nextShow)}
+  >
+                        <ShoppingBagIcon
+                          color={item.stock === 0 ? "gray" : "#00D387"}
+                          style={{
+                            width: "30px",
+                            cursor: item.stock !== 0 ? "pointer" : "default",
+                            position: "absolute",
+                            bottom: 15,
+                            right: 15,
+                          }}
+                          onClick={
+                            item.stock === 0
+                              ? (e) => e.preventDefault()
+                              : () => handleOpenPurchaseModal(item)
+                          }
+                        />
+                      </OverlayTrigger>
                     )}
                   </Card.Body>
                 </Card>
