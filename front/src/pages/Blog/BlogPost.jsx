@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, Container } from "react-bootstrap";
 import * as Api from '../../api'
+import { showAlert } from "../../assets/alert";
 const BlogPost = ({ onClose }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -15,10 +16,11 @@ const BlogPost = ({ onClose }) => {
         content,
         topic
       });
-      // window.location.reload()
-      onClose();
+      window.location.reload()
+      // onClose();
     } catch (err) {
-      console.log("절약 팁 글 작성에 실패했습니다.", err);
+      showAlert("모든 값을 입력해주세요.")
+      // console.log("절약 팁 글 작성에 실패했습니다.", err);
     }
   }
 
