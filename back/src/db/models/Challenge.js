@@ -6,13 +6,13 @@ class Challenge {
     return createdChallenge;
   }
   
-  static async findAll( ) {
-    const challenges = await challengeModel.find( );
+  static async findAll() {
+    const challenges = await challengeModel.find();
     return challenges;
   }
 
-  static NoAsyncfindAll( ) {
-    const challenges = challengeModel.find( );
+  static NoAsyncfindAll() {
+    const challenges = challengeModel.find();
     return challenges;
   }
 
@@ -25,13 +25,13 @@ class Challenge {
     return { challenges, count };
   }
   
-  static async findById( _id ){
-    const challenge = await challengeModel.findById( _id );
+  static async findById(_id){
+    const challenge = await challengeModel.findById(_id);
     return challenge
   }
 
-  static async findOne( challengeId ){
-    const challenge = await challengeModel.findOne( challengeId );
+  static async findOne(challengeId){
+    const challenge = await challengeModel.findOne(challengeId);
     return challenge
   }
 
@@ -55,7 +55,7 @@ class Challenge {
     return updatedEducation;
   }
 
-  static async deleteById( chllengeId ) {
+  static async deleteById(chllengeId) {
     await challengeModel.findByIdAndDelete({ _id: chllengeId });
     return ;
   }

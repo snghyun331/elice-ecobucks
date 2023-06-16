@@ -17,7 +17,7 @@ const imageController = {
 
   imageGetAll: async function(req, res, next) {
     try {
-      const image = await imageService.getImages( );
+      const image = await imageService.getImages();
       res.status(OK).send(image);
     } catch (error) {
       next(error);
@@ -60,8 +60,8 @@ const imageController = {
   imageDelete: async function(req, res, next) {
     try {
       const imageId = req.params._id;
-      await imageService.deleteImage( imageId );
-      res.status(OK).send({ message: "image 삭제 완료"});
+      await imageService.deleteImage(imageId);
+      res.status(OK).send({ message: "image 삭제 완료" });
     } catch (error) {
       next(error);
     }

@@ -7,11 +7,11 @@ class blogPostService {
             const errorMessage = "제목, 주제, 내용 모두 입력해주세요";
             return { errorMessage };
         }
-        const user = await User.findById({userId})
+        const user = await User.findById({ userId })
         
         const username = user.username
         const newPost = { userId, username, title, topic, content };
-        const createdNewPost = await BlogPost.createPost({newPost})
+        const createdNewPost = await BlogPost.createPost({ newPost })
         createdNewPost.errorMessage = null
 
         return createdNewPost
@@ -72,15 +72,13 @@ class blogPostService {
         const likeInfo = await BlogPost.findOneById({ post_id });
         
         if (!likeInfo) {
-            const errorMessage =
-                "해당 id의 게시글은 존재하지 않습니다. 다시 한 번 확인해 주세요.";
+            const errorMessage = "해당 id의 게시글은 존재하지 않습니다. 다시 한 번 확인해 주세요.";
             return { errorMessage };
         }
 
         const AddLike = await BlogPost.addLike({ post_id, pressLikeUserId });
         if (!AddLike) {
-            const errorMessage =
-                "좋아요를 이미 눌렀습니다.";
+            const errorMessage = "좋아요를 이미 눌렀습니다.";
             return { errorMessage };
         }
         return AddLike;
@@ -90,23 +88,21 @@ class blogPostService {
     static async deleteLike({ post_id, cancelLikeUserId }) {
         const likeInfo = await BlogPost.findOneById({ post_id });
         if (!likeInfo) {
-            const errorMessage =
-                "해당 id의 게시글은 존재하지 않습니다. 다시 한 번 확인해 주세요.";
+            const errorMessage = "해당 id의 게시글은 존재하지 않습니다. 다시 한 번 확인해 주세요.";
             return { errorMessage };
         }
     
         const DeleteLike = await BlogPost.deleteLike({ post_id, cancelLikeUserId });
         if (!DeleteLike) {
-            const errorMessage =
-                "좋아요를 이미 취소했습니다.";
+            const errorMessage = "좋아요를 이미 취소했습니다.";
             return { errorMessage };
         }
         return DeleteLike;
     }
 
 
-    static async getPostsDetail({post_id}) {
-        const post  = await BlogPost.findOneById({post_id});
+    static async getPostsDetail({ post_id }) {
+        const post  = await BlogPost.findOneById({ post_id });
         const comments = await BlogComment.findAllByPostId({ post_id });
 
         const info = {

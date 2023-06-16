@@ -23,13 +23,13 @@ class User {
   }
 
   static async findAll() {
-    const users = await userModel.find({});
+    const users = await userModel.find({ });
     return users;
   }
 
   // 탈퇴한 회원 찾는 함수
   static async findWithdraw({ email }) {
-    const user = await userModel.findOne({ is_withdrawed: true, email: email})
+    const user = await userModel.findOne({ is_withdrawed: true, email: email })
     return user
   }
 
