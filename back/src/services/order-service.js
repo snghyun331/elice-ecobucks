@@ -5,13 +5,14 @@ import { userAuthService } from "./user-service.js";
 const orderService = {
     createOrder: async function ({ productId, buyer }) {
         try{
-            //마일리지 차감
-            await this.subtractMileage(productId, buyer);
-
             //상품 재고 감소
             await this.decreaseProductStock(productId);
 
+            //마일리지 차감
+            await this.subtractMileage(productId, buyer);
+
             const { name, price, place } = await productService.findProduct(productId);
+
             //주문 생성
             const newOrder = { productName: name, price, buyer, place };
             const createdOrder = await order.create(newOrder);
