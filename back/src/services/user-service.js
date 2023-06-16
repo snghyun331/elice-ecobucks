@@ -180,18 +180,15 @@ class userAuthService {
       const skip = (page - 1) * limit;
       const { userParticipations, count } = await ChallengeParticipation.findAndCountAll(skip, limit);
       const totalPages = Math.ceil(count / limit)
-      //const participations = await ChallengeParticipation.findAllByUserId({ userId });
       const populatedParticipations = await Promise.all(
         userParticipations.map(async (participation) => {  
           const challenge = await Challenge.findById(participation.challengeId);
-          return { 
-            //...challenge._doc,   
+          return {   
             mileage: participation.mileage,
+            participationCreatedAt: updateTime.toKST(participation.createdAt),
             challengeIcon: challenge.icon,
             challengeTitle: challenge.title,  // title 추가
             challengeDueDate: updateTime.toKST(challenge.dueDate),
-            participationCreatedAt: updateTime.toKST(challenge.createdAt),
-            //participationUpdatedAt: updateTime.toKST(challenge.updatedAt)
           }; 
         }) 
       ); 
@@ -208,23 +205,6 @@ class userAuthService {
     }
   }
 
-  //
-  // 유저의 모든 챌린지 참여 갯수와 참여 조회 
-  // static async getUserParticipants({userId}){
-  //   const participations = await ChallengeParticipation.findAllByUserId({ userId });
-  //   const populatedParticipations = await Promise.all(
-  //     participations.map(async (participation) => {  
-  //       const challenge = await Challenge.findById(participation.challengeId);
-  //       return { 
-  //         userParticipantCount: participations.length,
-  //         ...participation._doc,   
-  //         challengeTitle: challenge.title,  // title 추가
-  //         createdAt: updateTime.toKST(challenge.createdAt),
-  //         updatedAt: updateTime.toKST(challenge.updatedAt)
-  //       }; 
-  //     }) 
-  //   ); 
-  // }
   
   static async subtractMileage(userId, amount) {
     //유저 마일리지 차감 로직
