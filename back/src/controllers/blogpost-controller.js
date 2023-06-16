@@ -20,11 +20,11 @@ const blogpostController = {
     
     blogpostPutWrite: async function(req, res, next) {
         try{
-            const post_id = req.params._id
+            const postId = req.params._id
             const { title, topic, content } = req.body;
             const toUpdate = { title, topic, content };
             const updatedPost = await blogPostService.setPost({
-                post_id,
+                postId,
                 toUpdate,
             });
     
@@ -41,8 +41,8 @@ const blogpostController = {
 
     blogpostDeleteWrite: async function(req, res, next) {
         try{
-            const post_id = req.params._id
-            const result = await blogPostService.deletePost({ post_id });
+            const postId = req.params._id
+            const result = await blogPostService.deletePost({ postId });
     
             if (result.errorMessage) {
                 throw new Error(result.errorMessage);
@@ -58,11 +58,11 @@ const blogpostController = {
 
     blogpostPutLikes: async function(req, res, next) {
         try{
-            const post_id = req.params._id
+            const postId = req.params._id
             const { pressLikeUserId } = req.body;
             
             const AddLike = await blogPostService.addLike({
-                post_id,
+                postId,
                 pressLikeUserId,
             });
     
@@ -78,10 +78,10 @@ const blogpostController = {
     
     blogpostPutDislikes: async function(req, res, next) {
         try{
-            const post_id = req.params._id;
+            const postId = req.params._id;
             const { cancelLikeUserId } = req.body;
             const DeleteLike = await blogPostService.deleteLike({
-                post_id,
+                postId,
                 cancelLikeUserId,
             });
     
@@ -121,8 +121,8 @@ const blogpostController = {
 
     blogpostGetDetail: async function(req, res, next) {
         try{
-            const post_id = req.params._id;
-            const postInfo = await blogPostService.getPostsDetail({ post_id })
+            const postId = req.params._id;
+            const postInfo = await blogPostService.getPostsDetail({ postId })
     
             if (postInfo.errorMessage) {
                 throw new Error(postInfo.errorMessage);

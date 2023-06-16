@@ -7,7 +7,7 @@ const BlogPostSchema = new Schema(
             ref: "User",
             required: true,
         },
-        username: {
+        userName: {
             type: String,
             required: true,
         },

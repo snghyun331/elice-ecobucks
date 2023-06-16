@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const BlogCommentSchema = new Schema(
     {
-        post_id: {
+        postId: {
             type: Schema.Types.ObjectId,
             ref: "BlogPost",
             required: true,
@@ -12,7 +12,7 @@ const BlogCommentSchema = new Schema(
             ref: "User",
             required: true,
         },
-        writername: {
+        writerName: {
             type: String,
             required: true,
         },

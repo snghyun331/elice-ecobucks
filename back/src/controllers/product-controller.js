@@ -12,7 +12,7 @@ const productController = {
       const seller = req.currentUserId;
       
       const currentUserInfo = await userAuthService.getUserInfo({ userId: seller });
-      const sellerName = currentUserInfo.username;
+      const sellerName = currentUserInfo.userName;
       const newProduct = { seller, sellerName, name, location, price, place, stock, description, imageId }
 
       const createdNewProduct = await productService.addProduct(newProduct);

@@ -27,7 +27,7 @@ const BlogRead = ({ blog, onBackToListClick }) => {
             <Card.Text style={{ fontSize: '0.8em', textAlign: 'right' }}>
               작성일자: {formatDate(blog.createdAt)}
               <br />
-              작성자: {blog.username}
+              작성자: {blog.userName}
               <br />
             </Card.Text>
 
