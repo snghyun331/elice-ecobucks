@@ -28,7 +28,7 @@ const userSchema = new Schema(
       type: String,
       required: true
     },
-    is_withdrawed : {
+    isWithdrew : {
       type: Boolean,
       default: false
     }

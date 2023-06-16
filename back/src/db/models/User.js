@@ -29,7 +29,7 @@ class User {
 
   // 탈퇴한 회원 찾는 함수
   static async findWithdraw({ email }) {
-    const user = await userModel.findOne({ is_withdrawed: true, email: email })
+    const user = await userModel.findOne({ isWithdrew: true, email: email })
     return user
   }
 

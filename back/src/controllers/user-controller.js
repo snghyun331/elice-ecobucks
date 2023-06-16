@@ -133,8 +133,8 @@ const userController = {
         return res.status(NOT_FOUND).send(result);
       }
 
-      user.is_withdrawed = true
-      await userModel.findOneAndUpdate({ _id: userId }, { is_withdrawed: true });   // await user.save()가 안되서 다음과 같이 구현
+      user.isWithdrew = true
+      await userModel.findOneAndUpdate({ _id: userId }, { isWithdrew: true });   // await user.save()가 안되서 다음과 같이 구현
       const result = { result : "Successfully withdraw" }
       return res.status(OK).send(result)
 
