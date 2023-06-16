@@ -107,7 +107,7 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
         </Container>
         <Form.Control
           as='textarea'
-          className="form-control-large"
+          className="form-control-small"
           name="description"
           value={description}
           onChange={(event) => {
