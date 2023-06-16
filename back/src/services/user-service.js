@@ -210,8 +210,6 @@ class userAuthService {
     }
   }
 
-  
-
   static async subtractMileage(userId, amount) {
     //유저 마일리지 차감 로직
     const user = await User.findById({ userId });
@@ -219,10 +217,9 @@ class userAuthService {
     await user.save();
   }
 
-
   // 유저의 모든 챌린지 게시물 갯수와 게시물 조회
   static async getUserChallenges({userId}){
-    const challenges = await Challenge.findAllByUserId({ userId: userId });
+    const challenges = await Challenge.findAllByUserId({ userId });
     const userInfo = {
       userChallengeCount: challenges.length,
       userChallengeList: challenges,
