@@ -105,8 +105,22 @@ class blogPostService {
         const post  = await BlogPost.findOneById({ postId });
         const comments = await BlogComment.findAllByPostId({ postId });
 
+        const { _id, userId, userName, topic, title, content, likeCount, likeUsers, createdAt, updatedAt } = post;
+        // const info = {
+        //     ...post._doc,
+        //     commentList: comments,
+        // }
         const info = {
-            ...post._doc,
+            _id,
+            userId,
+            userName,
+            topic,
+            title,
+            content,
+            likeCount,
+            likeUsers,
+            createdAt,
+            updatedAt,
             commentList: comments,
         }
         return info
