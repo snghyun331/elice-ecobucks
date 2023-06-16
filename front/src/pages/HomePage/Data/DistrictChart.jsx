@@ -97,9 +97,7 @@ const DistrictChart = (idx) => {
     const transformedData = calculateAvgPowerUsage()
     // console.log(transformedData);
     // console.log(transformedData.map(item=> console.log(item)));
-    transformedData.forEach(item => {
-        console.log(item.id);
-      });
+
       const dynamicData = [];
 
       for (let i = 0; i < transformedData.length; i++) {
@@ -108,7 +106,7 @@ const DistrictChart = (idx) => {
           dynamicData.push(currentObject);
         }
       }
-      console.log(dynamicData);
+    //   console.log(dynamicData);
     if (isFirstMount.current) {
         isFirstMount.current = false;
     } 
@@ -170,14 +168,14 @@ const DistrictChart = (idx) => {
                 useMesh={true}
                 legends={[
                     {
-                        anchor: 'bottom-right',
+                        anchor: 'top-right',
                         direction: 'column',
                         justify: false,
                         translateX: 100,
                         translateY: 0,
                         itemsSpacing: 0,
                         itemDirection: 'left-to-right',
-                        itemWidth: 80,
+                        itemWidth: 150,
                         itemHeight: 20,
                         itemOpacity: 0.75,
                         symbolSize: 12,
