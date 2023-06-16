@@ -396,19 +396,19 @@ const Mall = () => {
                       <span style={{ fontWeight: "900", paddingRight: 30 }}>
                         위치{" "}
                       </span>
-                      {item.place}{" "}
                       <MapPinIcon
-                        onClick={() => handleLocate(item)}
-                        alt="위치찾기"
-                        color="#00D387"
-                        style={{
-                          width: "1.1em",
-                          marginRight: "5px",
-                          paddingBottom: "3px",
-                          height: "30px",
-                          cursor: "pointer",
-                        }}
-                      />
+                    onClick={() => handleLocate(item)}
+                    alt="위치찾기"
+                    color="#00D387"
+                    style={{
+                      width: "1.1em",
+                      marginRight: "5px",
+                      paddingBottom: "3px",
+                      height: "30px",
+                      cursor: "pointer",
+                    }}
+                  />{item.place}{" "}
+                      
                     </Card.Text>
 
                     <Card.Text className="card-text mb-1">
