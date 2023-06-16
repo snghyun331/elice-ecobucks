@@ -159,7 +159,7 @@ const Mall = () => {
         payload: user,
       });
       
-    showSuccess(`구매에 성공하였습니다. <br />마이페이지의 구매 내역을 점주에게 보여주세요.`)
+    showSuccess(`구매에 성공하였습니다. <br />'마이페이지의 구매 내역을 점주에게 보여주세요.`)
 
       handleClosePurchaseModal();
     } catch (err) {

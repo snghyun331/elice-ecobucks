@@ -69,16 +69,16 @@ const TrendingChallenges = () => {
         >
           {groupedBlogs.map((group, i) => (
             <Carousel.Item key={`group-${i}`}>
-              <Container fluid className="carousel-container">
-                <Row className="d-flex justify-content-center">
+              <Container className="carousel-container">
                   {group.map((blog) => (
                     <Col
                       key={blog.id}
                       className="challenge-item"
-                      style={{ width: "33.333%" }}
+                      sm={4}
                     >
                       <Card
-                        className="challenge-card"
+                        className="challenge-card ms-3"
+                        style={{width:'100%'}}
                       >
                         <Card.Body>
                           <Card.Title>{blog.title}</Card.Title>
@@ -103,7 +103,6 @@ const TrendingChallenges = () => {
                       </Card>
                     </Col>
                   ))}
-                </Row>
               </Container>
             </Carousel.Item>
           ))}
