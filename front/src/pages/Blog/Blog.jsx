@@ -51,7 +51,6 @@ const Blog = () => {
   const handleCloseEditModal = () => setEditModalOpen(false);
   const handleOpenEditModal = async (blogId) => {
     try {
-      console.log("blogId: ", blogId);
       const res = await Api.get(`blog/${blogId}`);
       const blog = res.data;
       setSelectedUpdateBlog(blog);
@@ -87,7 +86,6 @@ const Blog = () => {
     try {
       // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
       const res = await Api.get(`blog?page=${currentPage}`);
-      console.log("db data: ", res.data)
 
       const newList = res.data.posts.map(item => {
         return {
@@ -103,10 +101,8 @@ const Blog = () => {
         };
       });
       console.log(newList, 'new')
-      // console.log(newList);
       setBlogList(newList);
       setTotalPages(res.data.totalPage)
-      // console.log(blogList.map(item => (console.log(item))));
     } catch (err) {
       showAlert("정보 불러오기를 실패하였습니다.");
       console.log("절약 팁 불러오기를 실패하였습니다.", err);
@@ -115,8 +111,7 @@ const Blog = () => {
 
   const handleEditBlog = async (selectedBlog, updatedBlog) => {
     try {
-      console.log("selectedBlog: ", selectedBlog);
-      console.log("updatedBlog: ", updatedBlog);
+
 
       await Api.put(`blog/${selectedBlog._id}/write`, updatedBlog);
       fetchData();
@@ -128,7 +123,6 @@ const Blog = () => {
   }
   const handleDeleteBlog = async (selectedBlog) => {
     try {
-      console.log("삭제할 절약 팁: ", selectedBlog);
       await Api.delete(`blog/${selectedBlog._id}`);
 
       fetchData();

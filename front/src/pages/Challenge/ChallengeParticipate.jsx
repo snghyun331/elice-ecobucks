@@ -44,12 +44,9 @@ const ChallengeParticipate = ({ show, onClose, challenge }) => {
       //이미지 전송 통신
       const formData = new FormData();
       formData.append("image", selectedFile);
-      console.log("폼데이터", formData);
       const imageRes = await Api.postFile("images/challenges/upload", formData);
-      console.log("이미지레스", imageRes);
 
       //참가 통신
-      console.log("이미지아이디", imageRes.data._id);
       const res = await Api.post(`challenges/${challenge._id}/participants`, {
         imageId: imageRes.data._id,
       });

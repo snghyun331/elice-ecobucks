@@ -98,7 +98,6 @@ const MallProductSell = ({ onClose }) => {
 
         const imageRes = await Api.postFile("images/products/upload", formData);
 
-        console.log(imageRes);
         const res = await Api.post("products", {
           name,
           price: Number(price),

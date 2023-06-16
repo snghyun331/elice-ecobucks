@@ -54,7 +54,6 @@ const Mall = () => {
       const res = await Api.get(`products/${itemId}`);
       const product = res.data;
       setSelectedItem(product);
-      console.log("handleOpenSellModal 안에서 selectedItem: ", selectedItem);
     } catch (err) {
       console.log(err);
     }
@@ -64,7 +63,6 @@ const Mall = () => {
   const handleClosePurchaseModal = () => setPurchaseModalOpen(false);
   const handleOpenPurchaseModal = (item) => {
     setSelectedItem(item);
-    console.log(selectedItem);
     setPurchaseModalOpen(true);
   };
 
@@ -85,7 +83,6 @@ const Mall = () => {
     try {
       const res = await Api.get(`products/${itemId}`);
       const product = res.data;
-      console.log(product);
       setSelectedItem(product);
     } catch (err) {
       console.log(err);
@@ -141,7 +138,6 @@ const Mall = () => {
     try {
       // 마일리지 충분한지 확인하기
       // 유효성 검사: 구매할 수 있는 수량인지. (수량이 0 개이면 db 삭제)
-      console.log("함수 안에서 selectedItem: ", selectedItem);
       await Api.post(`orders/`, {
         productId: selectedItem._id,
       });
@@ -168,9 +164,6 @@ const Mall = () => {
 
   const handleEditProduct = async (selectedItem, updatedItem) => {
     try {
-      console.log("selectedItem: ", selectedItem);
-      console.log("updatedItem: ", updatedItem);
-      //잘 받아옴.
 
       const updatedProduct = {
         // ...selectedItem,
@@ -206,7 +199,6 @@ const Mall = () => {
 
   const handleDeleteProduct = async (selectedItem) => {
     try {
-      console.log("삭제할 상품: ", selectedItem);
       await Api.delete(`products/${selectedItem._id}`);
       fetchData();
       handleCloseDeleteModal();

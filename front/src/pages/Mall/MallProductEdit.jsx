@@ -20,9 +20,6 @@ const MallProductEdit = ({ handleEditProduct, selectedItem }) => {
         stock: Number(stock) || Number(selectedItem.stock),
         description: description || selectedItem.description,
       };
-      // setList(updatedItem);
-      // console.log("updatedItem: ", updatedItem);
-      // console.log("바뀐 list: ", list);
 
       await handleEditProduct(selectedItem, updatedItem);
 

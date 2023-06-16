@@ -8,7 +8,6 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
   const [content, setContent] = useState("");
   const [topic, setTopic] = useState("");
   useEffect(() => {
-    console.log("선택된 절약 팁: ", selectedBlog);
   }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,9 +17,6 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
         content: content || selectedBlog.content,
         topic: topic || selectedBlog.topic
       };
-      // setList(updatedItem);
-      // console.log("updatedItem: ", updatedItem);
-      // console.log("바뀐 list: ", list);
 
       await handleEditBlog(selectedBlog, updatedBlog);
 

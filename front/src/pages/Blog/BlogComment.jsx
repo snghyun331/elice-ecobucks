@@ -41,7 +41,6 @@ const BlogComment = ({ blog }) => {
   };
   const handleCommentChange = (e) => {
     const content = e.target.value;
-    console.log(content.length);
     setCommentContent(content);
 
     if (content.length > 20) {
