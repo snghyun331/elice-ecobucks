@@ -213,7 +213,6 @@ const Blog = () => {
               borderRadius: 0,
               padding: 10,
               width: 270,
-              marginBottom: 20,
               fontWeight: "500",
               backgroundColor: "#00D387",
               color: "white",
@@ -235,7 +234,6 @@ const Blog = () => {
             작성하기
           </Button>
           <BlogModal
-            size="1g"
             show={showModal}
             onHide={handleCloseModal}
             title="팁 작성하기"
