@@ -57,16 +57,7 @@ const Mall = () => {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const handleCloseSellModal = () => setSellModalOpen(false);
-  const handleOpenSellModal = async (itemId) => {
-    try {
-      const res = await Api.get(`products/${itemId}`);
-      const product = res.data;
-      setSelectedItem(product);
-    } catch (err) {
-      console.log(err);
-    }
-    setSellModalOpen(true);
-  };
+  const handleOpenSellModal = () => setSellModalOpen(true);
 
   const handleClosePurchaseModal = () => setPurchaseModalOpen(false);
   const handleOpenPurchaseModal = (item) => {
