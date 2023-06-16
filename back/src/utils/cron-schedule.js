@@ -28,7 +28,6 @@ export async function scheduleChallenge() {
       const challengeIds = expiredChallenges.map(challenge => challenge._id);
       const participations = await participationModel.find({ challengeId: { $in: challengeIds } });
       for (let participation of participations) {
-        //await imageModel.findByIdAndRemove(participation.imageId);
         // console.log('이미지 삭제: ',participation.imageId); 
         const image = await Image.findById({ _id: participation.imageId })  
         if(image){
@@ -44,7 +43,7 @@ export async function scheduleChallenge() {
         { }, { $set: { hasParticipatedToday: false } }
       );
 
-      // console.log('---Updated challenges---');
+      // console.log('---Daynight Time Updated---');
       // console.log(now);
     }catch (error) {
       console.error('Failed to update challenges:', error);

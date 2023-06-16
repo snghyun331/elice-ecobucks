@@ -4,6 +4,7 @@ import bcrypt, { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
 import { updateTime } from "../utils/update-time.js";
 import { PRODUCT_PAGE_LIMIT } from "../utils/constants.js";
+import { findAllByUserIdAndPopulate } from "../utils/joinQuery.js";
 
 class userAuthService {
   static async addUser({ userName, email, password, districtName }) {
@@ -167,13 +168,15 @@ class userAuthService {
     return userInfo
   }
 
+  static paginate(array, page, limit) {
+    return array.slice((page - 1) * limit, page * limit);
+  }  
 
   static async getUserMyPageChallenges({ userId, page }) {
     try {
       const limit = PRODUCT_PAGE_LIMIT;
       const skip = (page - 1) * limit;
-      const { userParticipations, count } = await ChallengeParticipation.findAndCountAll( userId, skip, limit);
-      const totalPages = Math.ceil(count / limit)
+      const userParticipations = await ChallengeParticipation.findAllByUserId({ userId });
       const populatedParticipations = await Promise.all(
         userParticipations.map(async (participation) => {  
           const challenge = await Challenge.findById(participation.challengeId);
@@ -185,11 +188,19 @@ class userAuthService {
             challengeDueDate: updateTime.toKST(challenge.dueDate),
           }; 
         }) 
-      ); 
+      );  
+      // 페이지네이션하기 위해서 현재 페이지 limit 값만큼 가져오기 
+      const pageParticipations = this.paginate(populatedParticipations, page, limit)
+      // totalPages 계산
+      const count =populatedParticipations.length
+      const totalPages = Math.ceil(count / limit)
+
       const newParticipations = {
-        userParticipationCount: populatedParticipations.length,
-        userParticipationList: populatedParticipations
+        userParticipationCount: pageParticipations.length,
+        userParticipationList: pageParticipations
       };
+
+    
       return {newParticipations, totalPages};
 
     } catch (error) {
@@ -199,8 +210,6 @@ class userAuthService {
     }
   }
 
-  
-
   static async subtractMileage(userId, amount) {
     //유저 마일리지 차감 로직
     const user = await User.findById({ userId });
@@ -208,10 +217,9 @@ class userAuthService {
     await user.save();
   }
 
-
   // 유저의 모든 챌린지 게시물 갯수와 게시물 조회
   static async getUserChallenges({userId}){
-    const challenges = await Challenge.findAllByUserId({ userId: userId });
+    const challenges = await Challenge.findAllByUserId({ userId });
     const userInfo = {
       userChallengeCount: challenges.length,
       userChallengeList: challenges,
@@ -219,57 +227,13 @@ class userAuthService {
     return userInfo
   }
 
-  // 유저의 모든 챌린지 참여 갯수와 참여 조회 
-  static async getUserParticipants({ userId }){
-    const participations = await ChallengeParticipation.findAllByUserId({ userId });
-    const populatedParticipations = await Promise.all(
-      participations.map(async (participation) => {  
-        const challenge = await Challenge.findById(participation.challengeId);
-        return { 
-          userParticipantCount: participations.length,
-          ...participation._doc,   
-          challengeTitle: challenge.title,  // title 추가
-          createdAt: updateTime.toKST(challenge.createdAt),
-          updatedAt: updateTime.toKST(challenge.updatedAt)
-        }; 
-      }) 
-    );  
-
-    const newParticipations = {
-      userChallengeCount: populatedParticipations.length,
-      userChallengeList: populatedParticipations
-    };
-    return newParticipations;
-  } 
-
-
-  // 유저의 모든 댓글 갯수와 댓글 조회
-  static async getUserComments({ userId }){
-    const comments = await ChallengeComment.findAllByUserId({ userId: userId });
-    const populatedComments = await Promise.all(
-      comments.map(async (Comment) => {  
-        const challenge = await Challenge.findById(Comment.challengeId);
-        return { 
-          userCommentCount: comments.length,
-          ...Comment._doc,   
-          challengeTitle: challenge.title,  // title 추가
-          createdAt: updateTime.toKST(challenge.createdAt),
-          updatedAt: updateTime.toKST(challenge.updatedAt)
-        };
-      })
-    );
-
-    const newComments = {
-      userChallengeCount: populatedComments.length,
-      userChallengeList: populatedComments
-    };
-    
-    return newComments
+  static async getUserParticipants({ userId }) {
+    return await findAllByUserIdAndPopulate(ChallengeParticipation.findAllByUserId, Challenge.findById, userId, "challengeTitle");
   }
 
-
-
-
+  static async getUserComments({ userId }) {
+    return await findAllByUserIdAndPopulate(ChallengeComment.findAllByUserId, Challenge.findById, userId, "commentTitle");
+  }
 
 }
 

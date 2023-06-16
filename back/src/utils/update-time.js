@@ -1,14 +1,3 @@
-/*  한국시간으로 ISO 8601 형식의 문자열로 반환
-- timestamp에 한국시간으로 변경 사용 예시
-  const Challenge = {
-    ...createdChallenge._doc,
-    createdAt: updateTime.toKST(createdChallenge.createdAt),
-    updatedAt: updateTime.toKST(createdChallenge.updatedAt),
-  }
-- 7일 더하기
-  challenge.updatedAt = updateTime.addDays(challenge.updatedAt, 7); 
-*/
-
 import moment from 'moment-timezone';
 
 const updateTime = {
@@ -57,3 +46,15 @@ const updateTime = {
 }
 
 export { updateTime }
+
+
+/*  
+- timestamp에 한국시간으로 변경 사용 예시
+  const Challenge = {
+    ...createdChallenge._doc,
+    createdAt: updateTime.toKST(createdChallenge.createdAt),
+    updatedAt: updateTime.toKST(createdChallenge.updatedAt),
+  }
+- 7일 더하기
+  challenge.updatedAt = updateTime.addDays(challenge.updatedAt, 7); 
+*/
