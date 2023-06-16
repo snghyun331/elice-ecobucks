@@ -189,9 +189,9 @@ const Blog = () => {
           fontSize: '2rem',
           fontWeight: '900',
         }}
-      >절약 팁 :
+      >절약팁 :
         <br />
-        <span style={{ fontSize: '1.3rem', fontWeight: '400' }}>절약 꿀팁을 공유해요.</span>
+        <span style={{ fontSize: '1.3rem', fontWeight: '400' }}>나만의 절약 꿀팁을 공유할 수 있어요.</span>
       </div>
       {selectedBlog ? (
         <BlogRead
@@ -213,7 +213,7 @@ const Blog = () => {
               color: 'white',
               fontWeight: 'bold',
               fontSize: '15px',
-              borderRadius: "10px",
+              borderRadius: "0px",
               width: '10rem',
               backgroundColor: "#00D387",
             }} // 스타일 추가
@@ -221,7 +221,7 @@ const Blog = () => {
           ><PencilIcon
               variant="light"
               color="#FFF"
-              style={{ width: "30px", height: "30px", cursor: "pointer", marginRight: "10px" }}
+              style={{ width: "20px", height: "20px", cursor: "pointer", marginRight: "10px" }}
               onClick={handleOpenModal}
             />
             작성하기

@@ -103,10 +103,7 @@ const Mall = () => {
 
   const fetchData = async () => {
     try {
-      // "/mypage" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
       const res = await Api.get(`products?page=${currentPage}`);
-
-      console.log("db data: ", res.data.newProducts);
       const newList = res.data.newProducts.map((item) => {
         return {
           name: item.name,
@@ -122,7 +119,6 @@ const Mall = () => {
           _id: item._id, //상품 ObjectId
         };
       });
-      console.log("newList: ", newList);
       const totalpage = res.data.totalPages;
       setTotalPages(totalpage);
       setList(newList);
