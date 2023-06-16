@@ -156,7 +156,7 @@ const Intro = () => {
               marginBottom: 30,
             }}
           >
-            매년 떠오르는 전기 사용량 문제, <br />
+            올 여름도 화제가 될 전기 사용량 문제, <br />
             우리는 어떤 도움을 줄 수 있을까요?{" "}
           </h1>
           <h6
@@ -733,12 +733,11 @@ const Intro = () => {
           </h1>
         </Container>
       </div>
-
       <div
         className="page"
         style={{
           ...style,
-          backgroundColor: "#00D387",
+          backgroundColor: "#bafeff",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -748,18 +747,21 @@ const Intro = () => {
       >
         <div
           style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
+            position: "relative",
           }}
         >
-          <Image data-aos="fade-up" src={LogoWhite} style={{ width: "50%" }} />
           <h1
             data-aos="fade-up"
-            style={{ textAlign: "center", marginTop: 30, color: "white" }}
+            style={{
+              lineHeight: "1.5em",
+              textAlign: "center",
+              marginTop: 30,
+              color: "black",
+              marginBottom: 30,
+            }}
           >
-            절약하고 쇼핑해요
+            오늘부터 에코벅스와 함께 <br />
+            절약 습관을 기르고, 저렴하게 쇼핑해보세요. {" "}
           </h1>
           <button className="intro-button" data-aos="fade-up">
             <Link
@@ -796,18 +798,18 @@ const Intro = () => {
             transform: "translateX(-50%)",
           }}
         >
-          <ArrowDownIcon
+          {/* <ArrowDownIcon
             alt="아래화살표"
             color="white"
             style={{
+              position: "relative",
+              top: 690,
+              bottom: -300,
               width: "25px",
-              marginTop: "0px",
-              marginRight: "5px",
-              marginBottom: "50px",
               height: "30px",
             }}
             data-aos="fade-down"
-          />
+          /> */}
         </div>
       </div>
     </Container>
