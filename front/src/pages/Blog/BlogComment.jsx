@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { ListGroup, Form, Button, Container } from "react-bootstrap";
 import * as Api from "../../api";
 import { UserStateContext } from "../../context/user/UserProvider";
+import { showAlert } from "../../assets/alert";
 
 const BlogComment = ({ blog }) => {
   const userState = useContext(UserStateContext);
@@ -32,17 +33,16 @@ const BlogComment = ({ blog }) => {
       } catch (error) {
         console.log("Error adding comment:", error);
       }
-      
+
     } else {
-      alert("댓글은 20글자 이하여야 합니다.");
+      showAlert("댓글은 20글자 이하여야 합니다.");
     }
     e.target.reset();
   };
   const handleCommentChange = (e) => {
     const content = e.target.value;
-    console.log(content.length);
     setCommentContent(content);
-  
+
     if (content.length > 20) {
       setContentValid(false);
     } else {
@@ -210,11 +210,11 @@ const BlogComment = ({ blog }) => {
             required
             value={commentContent}
             onChange={handleCommentChange}
-            style={!isContentValid ? {borderWidth:"2px", borderColor: "red"} : {}}
+            style={!isContentValid ? { borderWidth: "2px", borderColor: "red" } : {}}
           />
           <span>{commentContent.length}/20</span>
         </Form.Group>
-        <Button type="submit" className="mt-3">
+        <Button type="submit" className="mt-3 btn-default" >
           댓글 추가
         </Button>
       </Form>

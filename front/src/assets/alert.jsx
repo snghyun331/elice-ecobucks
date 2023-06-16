@@ -16,7 +16,7 @@ export const showAlert = (text, icon = 'error') => {
 
 export const showSuccess = (text, icon = 'success') => {
   MySwal.fire({
-    text: text,
+    html: text,
     icon: icon,
     zIndex: 9999,
     confirmButtonHtml: '확인',

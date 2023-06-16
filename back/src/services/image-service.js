@@ -43,7 +43,7 @@ class imageService {
         ContentType: file.mimetype,
         ACL: 'public-read'
       };
-   
+
       // S3에 이미지 업로드
       const result = await s3.upload(uploadParams).promise();
       
@@ -64,9 +64,9 @@ class imageService {
     }
   }
   
-  static async getImages( ) {
+  static async getImages() {
     try {
-      const images = await Image.findAll( );
+      const images = await Image.findAll();
       if (!images) {
         throw new Error("이미지를 찾을 수 없습니다");
       }
@@ -125,12 +125,12 @@ class imageService {
     return createImage;
   }
 
-  static async deleteImage( imageId ) {
-    const image = await Image.findById( imageId );
+  static async deleteImage(imageId) {
+    const image = await Image.findById(imageId);
     if (!image) {
       throw setError("이미지를 찾을 수 없습니다", 404, "NOT_FOUND");
     }
-    await Image.deleteImage( imageId );
+    await Image.deleteImage(imageId);
 
     // S3에서 이미지 삭제
     await s3.deleteObject({

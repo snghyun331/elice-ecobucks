@@ -51,10 +51,8 @@ class productService {
     const totalPages = Math.ceil(count / limit)
     let test ={}
     const newProducts = await Promise.all(products.map(async (product) => {
-      console.log('product: ',product);
       const image = await Image.findById({ _id: product.imageId });
-      // console.log('image: ',image);
-      console.log('product: ',product);
+  
       if (image) {
         return {
           ...product, 
@@ -65,8 +63,7 @@ class productService {
         };
       }
       }));
-      console.log("newProducts: ", newProducts);
-    return { newProducts, count };
+    return { newProducts, totalPages };
   }
 
   static async findProduct(productId) {
@@ -102,7 +99,7 @@ class productService {
     const isDataDeleted = await Product.deleteById(productId);
 
     // 업로드 이미지 삭제
-    await imageService.deleteImage( product.imageId );
+    await imageService.deleteImage(product.imageId);
 
     if (!isDataDeleted) {
       const errorMessage =
@@ -129,7 +126,7 @@ class productService {
 
       return product;
     } catch (error) {
-      throw new Error(`상품 재고를 감소시키는 도중 오류가 발생했습니다: ${ error.message }`);
+      throw new Error(`주문에 실패하였습니다. ${ error.message }`);
     }
   }
 }

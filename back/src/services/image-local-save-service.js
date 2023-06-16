@@ -57,7 +57,6 @@ class imageService {
       // 리사이징된 이미지 경로 저장
       newImage.path = ImagePath;
       const createImage = await Image.create( newImage );
- 
       return updateTime.toTimestamps(createImage);
 
     } catch (error) {
@@ -66,9 +65,9 @@ class imageService {
     }
   }
 
-  static async getImages( ) {
+  static async getImages() {
     try {
-      const images = await Image.findAll( );
+      const images = await Image.findAll();
       if (!images) {
         throw new Error("이미지를 찾을 수 없습니다");
       }
@@ -124,12 +123,12 @@ class imageService {
   }
 
   
-  static async deleteImage( imageId ) {
-    const image = await Image.findById( imageId );
+  static async deleteImage(imageId) {
+    const image = await Image.findById(imageId);
     if (!image) {
       throw setError("이미지를 찾을 수 없습니다", 404, "NOT_FOUND");
     }
-    await Image.deleteImage( imageId );
+    await Image.deleteImage(imageId);
     
     //uploads의 이미지 삭제
     if (fs.existsSync(image.path)) {

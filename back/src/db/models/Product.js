@@ -15,7 +15,7 @@ class Product {
     const filter = { _id: productId };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
-    const updatedProduct = await productModel.findOneAndUpdate( filter, update, option );
+    const updatedProduct = await productModel.findOneAndUpdate(filter, update, option);
     return updatedProduct;
   }
 

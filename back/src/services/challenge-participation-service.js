@@ -12,8 +12,8 @@ class ParticipationService {
         if (!image){
           throw setError("imageId가 존재하지 않습니다.", 400, "BAD_REQUEST")
       }
-
-      const participation = await ChallengeParticipation.findById({ _id: challengeId });
+  
+      const participation = await ChallengeParticipation.find({ userId, challengeId });
       const challenge = await Challenge.findById({ _id: challengeId })
 
       //---1. Check ---
@@ -25,7 +25,7 @@ class ParticipationService {
       }
 
       // participation가 처음 생성일 때 
-      if (participation == null){
+      if (participation == 0){
         // 생성된 이미지들의 아이디가 아닐경우
         const data = { userId, challengeId, imageId, hasParticipatedToday: true } 
         const createParticipation = await ChallengeParticipation.create(data);
@@ -34,14 +34,14 @@ class ParticipationService {
       }
       else {
         // 2) participation 존재할때, 하루에 한번 참여 hasParticipatedToday: false -> true
-        if (participation.hasParticipatedToday == true){
+        if (participation[0].hasParticipatedToday == true){
           throw setError("같은 챌린지에는 하루에 한번 참여 할 수 있습니다.", 409, "CONFLICT")
         }
         participation.hasParticipatedToday = true
         const createInput = { userId, challengeId, imageId, hasParticipatedToday: true } 
         const createParticipation = await ChallengeParticipation.create(createInput);
         createNewParticipation=updateTime.toTimestamps(createParticipation);
-        await participation.save();
+        await participation[0].save();
       }
       if (!createNewParticipation)  
         throw setError("참여 신청 실패", 500, "CREATE_FAILED")
@@ -85,8 +85,6 @@ class ParticipationService {
 
       }
       }));
-
-     
 
     return newParticipations;
   }
@@ -140,8 +138,6 @@ class ParticipationService {
     try{
       const participation = await ChallengeParticipation.findById({ _id });
       await validatePermission(participation, currentUserId);
-
-
     
       // 삭제시 Challenge의 participantsCount 1감소
       const challenge = await Challenge.findById({ _id:challengeId })
@@ -157,12 +153,11 @@ class ParticipationService {
 
       // 업로드 이미지와 참여신청 삭제
       await ChallengeParticipation.deleteById(_id);
-      await imageService.deleteImage( participation.imageId );
+      await imageService.deleteImage(participation.imageId);
     } catch (error) {
       throw handleError(error)
     }
   }
-
 }
- 
+
 export { ParticipationService };

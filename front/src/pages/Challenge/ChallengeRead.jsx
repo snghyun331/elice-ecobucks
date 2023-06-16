@@ -64,7 +64,6 @@ const ChallengeRead = ({ challenge, onBackToListClick }) => {
     const fetchComments = async () => {
       try {
         const res = await Api.get(`challenges/${challenge._id}/comments`);
-        console.log("코멘트", res.data);
         setComments(res.data);
       } catch (error) {
         console.log("Error fetching comments:", error);

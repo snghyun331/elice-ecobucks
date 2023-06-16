@@ -6,13 +6,13 @@ class ChallengeParticipation {
     return createdChallenge;
   }  
 
-  static async findAll( ) {
-    const participations = await participationModel.find( );
+  static async findAll() {
+    const participations = await participationModel.find();
     return participations;
   } 
 
-  static async find({ _id }) {
-    const participations = await participationModel.find({ _id });
+  static async find({ userId, challengeId }) {
+    const participations = await participationModel.find({ userId, challengeId });
     return participations;
   } 
 
@@ -51,8 +51,8 @@ class ChallengeParticipation {
     return updateParticipation               ;
   }
 
-  static async deleteById( _id ) {
-    await participationModel.findByIdAndDelete( _id );
+  static async deleteById(_id) {
+    await participationModel.findByIdAndDelete(_id);
     return ;
   }
   

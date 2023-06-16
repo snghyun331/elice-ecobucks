@@ -6,54 +6,34 @@ import * as Api from "../../api";
 import ChallengeRead from "./ChallengeRead";
 
 function MegaChallengeCarousel({ challenges }) {
-  const [isFetchCompleted, setIsFetchCompleted] = useState(false);
-  const [megaChallenge, setMegaChallenge] = useState(null);
   const [showChallengeRead, setShowChallengeRead] = useState(false);
-  const megaChallengeId = "648ab962822996bf1c839be4";
+  const [megaChallenge, setMegaChallenge] = useState(null);
 
   useEffect(() => {
-    if (isFetchCompleted) {
-      setShowChallengeRead(true);
-    }
-  }, [isFetchCompleted]);
-
-  const fetchMegaChallengeData = async () => {
-    try {
-      const res = await Api.get(`challenges/${megaChallengeId}`);
-      setMegaChallenge(res.data);
-      setIsFetchCompleted(true);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    const challengeWithHighestParticipantsCount = getChallengeWithHighestParticipantsCount();
+    setMegaChallenge(challengeWithHighestParticipantsCount);
+  }, []);
 
   const handleFirstCarouselItemClick = () => {
-    if (!isFetchCompleted) {
-      fetchMegaChallengeData();
-    } else {
-      setShowChallengeRead(true);
-    }
+    setShowChallengeRead(true);
   };
 
   const handleBackToListClick = () => {
     setShowChallengeRead(false);
   };
 
-// 가장 높은 참가자 수를 가진 챌린지를 찾습니다.
-const getChallengeWithHighestParticipantsCount = () => {
-  let maxParticipantsCount = -1;
-  let challengeWithHighestParticipantsCount = null;
-  challenges.forEach((challenge) => {
-    if (challenge.participantsCount > maxParticipantsCount) {
-      maxParticipantsCount = challenge.participantsCount;
-      challengeWithHighestParticipantsCount = challenge;
-    }
-  });
-  return challengeWithHighestParticipantsCount;
-};
+  const getChallengeWithHighestParticipantsCount = () => {
+    let maxParticipantsCount = -1;
+    let challengeWithHighestParticipantsCount = null;
+    challenges.forEach((challenge) => {
+      if (challenge.participantsCount > maxParticipantsCount) {
+        maxParticipantsCount = challenge.participantsCount;
+        challengeWithHighestParticipantsCount = challenge;
+      }
+    });
+    return challengeWithHighestParticipantsCount;
+  };
 
-
-  // 가장 높은 댓글 수를 가진 챌린지를 찾습니다.
   const getChallengeWithHighestCommentsCount = () => {
     let maxCommentsCount = -1;
     let challengeWithHighestCommentsCount = null;
@@ -85,7 +65,7 @@ const getChallengeWithHighestParticipantsCount = () => {
             ></Container>
             <Carousel.Caption className="mb-5">
               <p>✨ 지금 참가자 수가 가장 높은 챌린지 ✨</p>
-              <h1>{getChallengeWithHighestParticipantsCount().title}</h1>
+              <h1>{megaChallenge ? megaChallenge.title : ""}</h1>
             </Carousel.Caption>
           </Carousel.Item>
           {/* <Carousel.Item>
@@ -118,18 +98,17 @@ const getChallengeWithHighestParticipantsCount = () => {
             <Modal.Title>✨ 지금 뜨는 챌린지를 확인해보세요.</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>{megaChallenge.description}</p>
-            <ChallengeRead
-              size="xl"
-              challenge={getChallengeWithHighestParticipantsCount()}
-              onBackToListClick={handleBackToListClick}
-            />
+            {megaChallenge && (
+              <>
+                <p>{megaChallenge.description}</p>
+                <ChallengeRead
+                  size="xl"
+                  challenge={megaChallenge}
+                  onBackToListClick={handleBackToListClick}
+                />
+              </>
+            )}
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleBackToListClick}>
-              돌아가기
-            </Button>
-          </Modal.Footer>
         </Modal>
       )}
     </>

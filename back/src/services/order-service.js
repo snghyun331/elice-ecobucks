@@ -5,19 +5,20 @@ import { userAuthService } from "./user-service.js";
 const orderService = {
     createOrder: async function ({ productId, buyer }) {
         try{
-            //마일리지 차감
-            await this.subtractMileage(productId, buyer);
-
             //상품 재고 감소
             await this.decreaseProductStock(productId);
 
+            //마일리지 차감
+            await this.subtractMileage(productId, buyer);
+
             const { name, price, place } = await productService.findProduct(productId);
+
             //주문 생성
             const newOrder = { productName: name, price, buyer, place };
             const createdOrder = await order.create(newOrder);
             if (!createdOrder) {
                 throw new Error("주문에 실패하였습니다.");
-              }
+            }
     
             return createdOrder;
         } catch (error) {
@@ -61,7 +62,6 @@ const orderService = {
                 // }
     
                 const { productName, price, place, createdAt } = order;
-                console.log(productName, price, place, createdAt)
     
                 return {
                     date: createdAt,
@@ -73,9 +73,6 @@ const orderService = {
         );
         return { orderDetails, totalPages };
     },
-
-
-    
 }
 
 export { orderService };
