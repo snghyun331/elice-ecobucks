@@ -37,7 +37,6 @@ const PaginationBar = ({ totalPages, handlePageChange, currentPage }) => {
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '50px' }}>
-      {/* 페이지네이션 컴포넌트 */}
       <Pagination>
         {renderPaginationItems()}
       </Pagination>
