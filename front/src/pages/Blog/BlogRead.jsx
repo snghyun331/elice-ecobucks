@@ -18,7 +18,6 @@ const BlogRead = ({ blog, onBackToListClick }) => {
   return (
     <div style={{ padding: "60px" }}>
       <Container className="mt-1" style={{ paddingLeft: '90px', paddingRight: '90px' }}>
-        {/* <h2>절약팁 내용 확인</h2> */}
         <Card style={{ backgroundColor: "#DDF7E3" }} className="m-5">
           <Card.Body className="card-body">
             <Card.Title className="card-title"><h4>{blog.title}</h4></Card.Title>

@@ -21,7 +21,6 @@ const BlogPost = ({ onClose }) => {
       // onClose();
     } catch (err) {
       showAlert("모든 값을 입력해주세요.")
-      // console.log("절약 팁 글 작성에 실패했습니다.", err);
     }
   }
   const handleIconSelect = (selectedIcon) => {

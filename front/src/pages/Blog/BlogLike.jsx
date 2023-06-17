@@ -37,7 +37,6 @@ const BlogLike = ({ blog }) => {
       <button onClick={handleLikeAction}>
         {isLiked ?  <img src={like} alt="좋아요" />:<img src={dislike} alt="좋아요취소" />}
       </button>
-      {/* <Button>좋아요</Button> */}
       <p>좋아요 수: {likeCount}</p>
     </>
   );
