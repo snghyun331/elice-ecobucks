@@ -15,8 +15,7 @@ const MapContainer = ({ locations, selectedItemLocate }) => {
             draggable: false// 마우스로 이동 제한
         };
         const map = new kakao.maps.Map(container, options);
-        // var moveLatLng = new kakao.maps.LatLng(33.450580, 126.574942);   
-        // map.panTo(moveLatLng);
+
         // 마커 생성 및 표시
         locations.forEach((location) => {
 
@@ -70,15 +69,6 @@ const MapContainer = ({ locations, selectedItemLocate }) => {
         });
     }, [selectedItemLocate]);
 
-    // useEffect(() => {
-    //     const container = document.getElementById('myMap');
-    //     const options = {
-    //         center: new kakao.maps.LatLng(37.5469686000002, 127.05732177903647), // 서울을 중심으로 설정
-    //         level: 4
-    //     };
-    //     const map = new kakao.maps.Map(container, options);
-        
-    // }, [selectedItemLocate])
 
     return (
         <div id='myMap' style={{
