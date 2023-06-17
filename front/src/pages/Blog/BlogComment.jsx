@@ -61,7 +61,7 @@ const BlogComment = ({ blog }) => {
     try {
       const res = await Api.get(`blog/${blog.blogId}`);
       const fetchedComments = res.data.commentList;
-      // console.log('a', fetchedComments)
+      
       return fetchedComments;
     } catch (error) {
       console.log("Error fetching comments:", error);

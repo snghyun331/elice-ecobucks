@@ -7,14 +7,11 @@ const DistrictChart = (idx) => {
     const isFirstMount = useRef(true);
     const [chartData, setChartData] = useState([]);
     const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
-    // const intergerIdx = parseInt(idx);
-    // console.log("idx: ", idx);
-    // console.log("idx.idx: ", idx.idx);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await Api.get('data/districtUsage');
-                // console.log("res: ", response);
             
                 // 도시 이름으로 나누기
                 const dataByCity = {};
@@ -26,7 +23,6 @@ const DistrictChart = (idx) => {
                     dataByCity[cityName].push(item);
                 });
                 const cityData = Object.values(dataByCity);
-                // console.log("cityData: ", cityData);
                 setChartData(cityData);
                 setIsLoading(false);
             } catch (error) {
@@ -47,10 +43,8 @@ const DistrictChart = (idx) => {
         const avgPowerUsageByCity = [];
 
         chartData.forEach(cityData => {
-            // console.log('cityDDD', cityData[0].city)
             const { city } = cityData[0];
 
-            // console.log("차트데이터안 폴이치: ", city);
             const monthlyAvgs = {};
 
             cityData.forEach(data => {
@@ -92,11 +86,8 @@ const DistrictChart = (idx) => {
         
           return transformedData;
     }
-    // const avgPowerUsageByCity = calculateAvgPowerUsage();
-    // console.log("avgPowerUsageByCity", avgPowerUsageByCity);
+
     const transformedData = calculateAvgPowerUsage()
-    // console.log(transformedData);
-    // console.log(transformedData.map(item=> console.log(item)));
 
       const dynamicData = [];
 
@@ -106,37 +97,14 @@ const DistrictChart = (idx) => {
           dynamicData.push(currentObject);
         }
       }
-    //   console.log(dynamicData);
+    
     if (isFirstMount.current) {
         isFirstMount.current = false;
     } 
-    // console.log('transformedData:', transformedData[(idx.idx) - 1]);
-    // const { id, data } = transformedData[idx.idx - 1];
-    // console.log("id: ", id);
-    // console.log("data: ", data);
-    // const transformedData = avgPowerUsageByCity.map(item => {
-    //     const monthlyAvgs = item.monthlyAvgs.map(monthlyData => ({
-    //         x: monthlyData.month,
-    //         y: monthlyData.avgPowerUsage
-    //     }));
 
-    //     return {
-    //         id: item.city,
-    //         data: monthlyAvgs
-    //     };
-    // });
-
-    // console.log('transformedData: ', transformedData[idx-1]);
-    // console.log('data: ', transformedData[0].data);
-    // console.log(id, data);
-    // const { id, data } = transformedData[idx - 1];
-    // console.log("id: ", id);
-    // console.log("data: ", data);
     return (
         <div style={{ width: 500, height: 450, marginLeft: "20px" }}>
             <ResponsiveLine
-                // data={[{ id: id, data: data }]}
-                // data = {[transformedData[idx.idx - 1]]}
                 data={dynamicData}
                 margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
                 xScale={{ type: 'point' }}

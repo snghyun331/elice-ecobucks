@@ -11,28 +11,16 @@ const BannerCarousel = () => {
           <a href="https://www.recycling-info.or.kr/act4r/main.do" target="_blank" rel="noopener noreferrer">
             <img src={Banner1} className="d-block w-100" alt="logo" />
           </a>
-          <Carousel.Caption style={{ color: "black" }}>
-            {/* <h5>First slide label</h5>
-            <p>Some representative placeholder content for the first slide.</p> */}
-          </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
           <a href="https://ecomileage.seoul.go.kr/home/" target="_blank" rel="noopener noreferrer">
             <img src={Banner2} className="d-block w-100" alt="logo" />
           </a>
-          <Carousel.Caption style={{ color: "black" }}>
-            {/* <h5>Second slide label</h5>
-            <p>Some representative placeholder content for the second slide.</p> */}
-          </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
           <a href="https://home.kepco.co.kr/kepco/KO/A/A/KOAAHP00101.do?menuCd=FN05" target="_blank" rel="noopener noreferrer">
             <img src={Banner3} className="d-block w-100" alt="logo" />
           </a>
-          <Carousel.Caption style={{ color: "black" }}>
-            {/* <h5>Third slide label</h5>
-            <p>Some representative placeholder content for the third slide.</p> */}
-          </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
     </div>

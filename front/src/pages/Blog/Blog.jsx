@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Card,
@@ -7,8 +7,6 @@ import {
   Modal,
   Row,
   Col,
-  ListGroup,
-  Form,
   Badge,
 } from "react-bootstrap";
 import * as Api from "../../api";
@@ -16,11 +14,8 @@ import { UserStateContext } from "../../context/user/UserProvider";
 import BlogModal from "../Modal/BlogModal";
 import BlogPost from "./BlogPost";
 import BlogPostEdit from "./BlogPostEdit";
-import BlogComment from "./BlogComment";
 import BlogRead from "./BlogRead";
 import PaginationBar from "../Modal/PaginationBar";
-import like from "../../assets/heartfill.png";
-import dislike from "../../assets/heartblank.png";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartSolid, PencilIcon } from "@heroicons/react/20/solid";
 import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
