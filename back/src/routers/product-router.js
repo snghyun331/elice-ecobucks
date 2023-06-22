@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { productController } from "../controllers/product-controller.js";
 import { Validation } from "../middlewares/validation.js";
-import { login_required } from "../middlewares/login-required.js";
+import { loginRequired } from "../middlewares/login-required.js";
 
 const productCreateValidation = Validation.validate(Validation.productSchema);
 const productUpdateValidation = Validation.validate(Validation.productUpdateSchema);
 
 const productRouter = Router();
-productRouter.use(login_required);
+productRouter.use(loginRequired);
 
 //상품 등록
 productRouter.post("/products", productCreateValidation, productController.productPostCreate);

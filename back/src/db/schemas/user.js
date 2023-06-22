@@ -7,7 +7,7 @@ const userSchema = new Schema(
       required: true,
       unique: true,
     },
-    username: {
+    userName: {
       type: String,
       required: true,
     },
@@ -28,7 +28,7 @@ const userSchema = new Schema(
       type: String,
       required: true
     },
-    is_withdrawed : {
+    isWithdrew : {
       type: Boolean,
       default: false
     }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, ButtonGroup, Container, Form, Alert, Modal } from "react-bootstrap";
 import * as Api from "../../api";
+import { showAlert } from "../../assets/alert";
 
 const ChallengeUpdate = ({ show, onClose, challenge }) => {
   const [title, setTitle] = useState("");
@@ -20,7 +21,7 @@ const ChallengeUpdate = ({ show, onClose, challenge }) => {
     e.preventDefault();
     try {
       if (!title || !content || !duration || !icon) {
-        alert("모든 값을 입력해주세요.");
+        showAlert("모든 값을 입력해주세요.");
         return;
       }
 
@@ -30,10 +31,9 @@ const ChallengeUpdate = ({ show, onClose, challenge }) => {
         icon,
         weeks: duration,
       });
-      console.log(res);
       window.location.reload();
     } catch (err) {
-      alert("챌린지 수정에 실패하였습니다.");
+      showAlert("챌린지 수정에 실패하였습니다.");
       console.log("챌린지 수정에 실패하였습니다.", err);
     }
   };
@@ -55,11 +55,11 @@ const ChallengeUpdate = ({ show, onClose, challenge }) => {
   };
 
   return (
-    <Modal size='lg' show={show} style={{ zIndex: "9999", marginTop: "20px" }}>
-      <div style={{ padding: "20px" }}>
-        <Modal.Header closeButton>
-          <Modal.Title>챌린지 수정</Modal.Title>
-        </Modal.Header>
+    <Modal size='lg' show={show} style={{ zIndex: "1050", marginTop: "20px" }}>
+    <div style={{ padding: "20px" }}>
+      <Modal.Header closeButton onHide={onClose}>
+        <Modal.Title>챌린지 수정</Modal.Title>
+      </Modal.Header>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="title">
             <Form.Label>제목</Form.Label>
@@ -96,13 +96,13 @@ const ChallengeUpdate = ({ show, onClose, challenge }) => {
               as="textarea"
               value={content}
               onChange={handleContentChange}
-              maxLength={100}
-              placeholder="설명을 입력해주세요 (최대 100자)"
+              maxLength={300}
+              placeholder="설명을 입력해주세요 (최대 300자)"
               style={{ borderRadius: "0px", marginBottom: "20px" }}
             />
-            {content.length > 100 && (
+            {content.length > 300 && (
               <Alert variant="danger" className="mt-2 p-2">
-                설명은 최대 100자까지 입력 가능합니다.
+                설명은 최대 300자까지 입력 가능합니다.
               </Alert>
             )}
           </Form.Group>

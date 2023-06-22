@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import Logo from "../../assets/logo.png";
+import { showAlert } from '../../assets/alert';
 
 import * as Api from '../../api'
 import { DispatchContext, UserStateContext } from '../../context/user/UserProvider'
@@ -14,65 +15,51 @@ function LoginForm() {
   const dispatch = useContext(DispatchContext)
   const userState = useContext(UserStateContext)
   
-  //useState로 email 상태를 생성함.
   const [email, setEmail] = useState("");
-  //useState로 password 상태를 생성함.
   const [password, setPassword] = useState("");
 
-  //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
   const isEmailValid = validateEmail(email);
-
-  // 이메일과 비밀번호 조건이 동시에 만족되는지 확인함.
   const isFormValid = isEmailValid
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      // "user/login" 엔드포인트로 post요청함.
       const res = await Api.post("login", {
         email,
         password,
       });
-      
-      // 유저 정보는 response의 data임.
       const user = res.data;
-      // JWT 토큰은 유저 정보의 token임.
       const jwtToken = user.token;
-      // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
       sessionStorage.setItem("userToken", jwtToken);
-      // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
       dispatch({
         type: LOGIN_SUCCESS,
         payload: user,
       });
-      // 기본 페이지로 이동함.
       navigate("/", { replace: true });
     } catch (err) {
-      if (err.response.status === 400) {
-        alert(err.response.data);
-    }
-      console.log("로그인에 실패하였습니다.\n", err);
+        showAlert(err.response.data.message)
     }
   };
 
   return (
     <>
-      <Container
-        className="position-absolute top-50 start-50 translate-middle pt-3 pb-3"
-        style={{
-          width: "40%",
-          backgroundColor: "#F3F3F3",
-          transform: "translate(-50%, -50%)",
-          borderRadius: "5px",
-        }}
-      >
-        <Container className="text-center">
-          <img src={Logo} className="w-50 mt-5 mb-5" alt="Logo" />
-        </Container>
-        <Container style={{ width: "95%" }}>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="loginEmail">
+      <Container>
+        <Row className="justify-content-center align-items-center mt-5">
+          <Col md={6}>
+            <div
+              className="p-3"
+              style={{
+                backgroundColor: "#F3F3F3",
+                borderRadius: "5px",
+                marginTop: '50px'
+              }}
+            >
+              <Container className="text-center">
+                <img src={Logo} className="w-50 mt-5 mb-5" alt="Logo" />
+              </Container>
+              <Container style={{ width: "95%" }}>
+                <Form onSubmit={handleSubmit}>
+ <Form.Group controlId="loginEmail">
               <Form.Label style={{ fontWeight: "bold" }}>이메일</Form.Label>
               <Form.Control
                 type="email"
@@ -109,6 +96,8 @@ function LoginForm() {
                     width: "100%",
                     borderRadius: "0px",
                     backgroundColor: "#00D387",
+                    color: 'white',
+                    fontWeight: 'bold'
                   }}
                 >
                   로그인
@@ -127,8 +116,11 @@ function LoginForm() {
                 </Button>
               </Col>
             </Form.Group>
-          </Form>
-        </Container>
+                </Form>
+              </Container>
+            </div>
+          </Col>
+        </Row>
       </Container>
     </>
   );

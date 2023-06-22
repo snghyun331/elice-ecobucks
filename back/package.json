@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@sindresorhus/is": "^5.4.0",
+    "aws-sdk": "^2.1397.0",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "cron": "^2.3.1",
@@ -10,7 +11,9 @@
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.43",
     "mongoose": "^7.2.2",
+    "multer": "^1.4.5-lts.1",
     "node-cron": "^3.0.2",
+    "sharp": "^0.32.1",
     "uuid": "^9.0.0",
     "winston": "^3.9.0"
   },
@@ -27,7 +30,7 @@
     "@babel/node": "^7.22.1",
     "@babel/plugin-transform-runtime": "^7.22.4",
     "@babel/preset-env": "^7.22.4",
-    "dotenv": "^16.0.0",
+    "dotenv": "^16.1.4",
     "nodemon": "^2.0.22"
   },
   "type": "module"

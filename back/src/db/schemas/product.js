@@ -14,6 +14,14 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
+    location: {
+      x: {
+        type: Number,
+      },
+      y: {
+        type: Number,
+      },
+    },
     stock: {
       type: Number,
       required: true,
@@ -31,6 +39,10 @@ const productSchema = new Schema(
       type: String,
       default: "상품 상세 설명이 없습니다.",
       required: true,
+    },
+    imageId: { 
+      type: Schema.Types.ObjectId, 
+      ref: 'Image',
     },
   },
   {

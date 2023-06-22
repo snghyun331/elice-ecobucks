@@ -1,12 +1,12 @@
 import { productModel } from "../schemas/product.js";
 
 class Product {
-  static async findById({ productId }) {
+  static async findById(productId) {
     const product = await productModel.findOne({ _id: productId });
     return product;
   }
 
-  static async create({ newProduct }) {
+  static async create(newProduct) {
     const createdNewProduct = await productModel.create(newProduct);
     return createdNewProduct;
   }
@@ -24,7 +24,32 @@ class Product {
     return products
   }
 
-  static async deleteById({ productId }) {
+  static async findAndCountAll(skip, limit) {
+    const products = await productModel.aggregate([
+      {
+        $addFields: {
+          isZeroStock: { $cond: [{ $eq: ["$stock", 0] }, 1, 0] }
+        }
+      },
+      {
+        $sort: {
+          isZeroStock: 1,
+          createdAt: 1
+        }
+      },
+      {
+        $skip: skip
+      },
+      {
+        $limit: limit
+      }
+    ]);
+    
+    const count = await productModel.countDocuments();
+    return { products, count }
+  }
+
+  static async deleteById(productId) {
     const deleteResult = await productModel.deleteOne({ _id: productId });
     const isDataDeleted = deleteResult.deletedCount === 1;
     return isDataDeleted;

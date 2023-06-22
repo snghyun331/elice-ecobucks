@@ -2,17 +2,13 @@ import React, { useState, useContext, useEffect } from "react";
 import { Button, Form, ListGroup, Container } from "react-bootstrap";
 import { UserStateContext } from "../../context/user/UserProvider";
 import * as Api from "../../api";
+import { formatDate } from "../../util/common";
 
 const ChallengeComments = ({ challenge }) => {
   const [comments, setComments] = useState([]);
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editedComment, setEditedComment] = useState("");
   const userState = useContext(UserStateContext);
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
-  };
 
   const fetchComments = async () => {
     try {
@@ -30,15 +26,13 @@ const ChallengeComments = ({ challenge }) => {
 
     try {
       const res = await Api.post(`challenges/${challenge._id}/comments`, {
-        userId: userState.user._id,
-        challengeId: challenge._id,
         content,
       });
       const newComment = {
         ...res.data,
         userId: {
           _id: userState.user._id,
-          username: userState.user.username,
+          userName: userState.user.userName,
         },
       };
       setComments([...comments, newComment]);
@@ -103,7 +97,7 @@ const ChallengeComments = ({ challenge }) => {
             className="d-flex flex-column justify-content-between align-items-start"
           >
             <div>
-              <strong>{comment.userId.username}</strong>{" "}
+              <strong>{comment.userId.userName}</strong>{" "}
               <span style={{ color: "gray", fontSize: "0.8em" }}>
                 {formatDate(comment.updatedAt)}
               </span>
@@ -183,8 +177,19 @@ const ChallengeComments = ({ challenge }) => {
             required
           />
         </Form.Group>
-        <Button type="submit" className="mt-3">
-          댓글 추가
+        <Button
+          type="submit"
+          className="mt-3"
+          variant="light"
+          style={{
+            marginBottom: "30px",
+            color: "white",
+            borderRadius: "0px",
+            width: "10%",
+            backgroundColor: "#00D387",
+          }}
+        >
+          댓글추가
         </Button>
       </Form>
     </>

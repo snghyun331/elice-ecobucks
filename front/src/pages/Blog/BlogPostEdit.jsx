@@ -1,45 +1,47 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
+import { Form, Container, ButtonGroup, Button } from "react-bootstrap";
+import { showAlert } from "../../assets/alert";
 // import { UserStateContext } from "../../context/user/UserProvider";
 const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
-    const [topic, setTopic] = useState("");
+  const [title, setTitle] = useState(selectedBlog.title);
+  const [content, setContent] = useState(selectedBlog.content);
+  const [topic, setTopic] = useState(selectedBlog.topic);
+  const [icon, setIcon] = useState(selectedBlog.icon);
+  useEffect(() => {
+  }, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const updatedBlog = {
+        title: title || selectedBlog.title,
+        content: content || selectedBlog.content,
+        topic: icon + topic || selectedBlog.topic
+      };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-          const updatedBlog = {
-            _id: selectedBlog._id,
-            title: title || selectedBlog.title,
-            content: content || selectedBlog.content,
-            topic: topic || selectedBlog.topic
-          };
-          // setList(updatedItem);
-          // console.log("updatedItem: ", updatedItem);
-          // console.log("바뀐 list: ", list);
-
-          await handleEditBlog(selectedBlog, updatedBlog);
-
-
-      } catch (err) {
-          alert("모든 값을 입력해주세요.")
-          console.log("상품 등록에 실패하였습니다.", err);
-      }
+      await handleEditBlog(selectedBlog, updatedBlog);
+    } catch (err) {
+      showAlert("모든 값을 입력해주세요.")
+      console.log("상품 등록에 실패하였습니다.", err);
     }
+  }
+  const handleIconSelect = (selectedIcon) => {
+    setIcon(selectedIcon);
+  };
 
   return (
     <div style={{ padding: "16px", width: "calc(100% - 32px)" }}>
       <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: "70%",
-              background: "#4d9e81",
-              zIndex: -1,
-            }}
-          ></div>
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: "70%",
+          background: "#4d9e81",
+          zIndex: -1,
+        }}
+      ></div>
       <div
         style={{
           display: "flex",
@@ -48,63 +50,116 @@ const BlogPostEdit = ({ handleEditBlog, selectedBlog }) => {
           justifyContent: "center",
         }}
       >
-        <div style={{ width: "100%", maxWidth: "720px", padding:"60px" }}>
-            <span>제목</span>
-          <textarea
-            style={{
-              width: "100%",
-              height: "20px",
-              padding: "16px",
-              fontSize: "16px",
-              lineHeight: "20px",
-              marginBottom: "16px",
-            }}
-            placeholder={selectedBlog.title}
-            value={title}
-            onChange={(event) => {
-                setTitle(event.target.value);
-            }}
-          />
-          <span>주제</span>
-          <textarea
-            style={{
-              width: "100%",
-              height: "20px",
-              padding: "16px",
-              fontSize: "16px",
-              lineHeight: "20px",
-              marginBottom: "16px",
-            }}
-            placeholder={selectedBlog.topic}
-            value={topic}
-            onChange={(event) => {
-              setTopic(event.target.value);
-            }}
-          />
-          <span>내용</span>
-          <textarea
-            style={{
-              width: "100%",
-              height: "20px",
-              padding: "16px",
-              fontSize: "16px",
-              lineHeight: "20px",
-              marginBottom: "16px",
-            }}
-            placeholder={selectedBlog.content}
-            value={content}
-            onChange={(event) => {
-              setContent(event.target.value);
-            }}
-          />
+        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>제목</Form.Label>
+        <Container
+          className="text-muted mb-2"
+          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
+        >
+          공유할 팁의 제목을 적어주세요.
+        </Container>
+        <Form.Control
+          className="form-control-small"
+          name="title"
+          value={title}
+          onChange={(event) => {
+            setTitle(event.target.value);
+          }}
+          placeholder={selectedBlog.title}
+        />
+        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>주제</Form.Label>
+        <Container
+          className="text-muted mb-2"
+          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
+        >
+            공유할 팁의 주제를 적어주세요.
+        </Container>
+        <ButtonGroup style={{ width: "100%" }}>
+              <Button
+                variant={icon === "♻️" ? "success" : "outline-success"}
+                style={{ borderRadius: "0px" }}
+                onClick={() => {
+                  handleIconSelect("♻️");
+                  setTopic("재활용");
+                }}
+              >
+                ♻️ <br/><span style={{fontSize:'0.8rem'}}>재활용</span>
+              </Button>
+              <Button
+                variant={icon === "🌍" ? "success" : "outline-success"}
+                onClick={() => {
+                  handleIconSelect("🌍");
+                  setTopic("환경");
+                }}
+              >
+                🌍 <br/><span style={{fontSize:'0.8rem'}}>환경</span>
+              </Button>
+              
+              <Button
+                variant={icon === "💪🏻" ? "success" : "outline-success"}
+                onClick={() => {
+                  handleIconSelect("💪🏻");
+                  setTopic("건강");
+                }}
+              >
+                💪🏻 <br/><span style={{fontSize:'0.8rem'}}>건강</span>
+              </Button>
+              <Button
+                variant={icon === "💧" ? "success" : "outline-success"}
+                onClick={() => {
+                  handleIconSelect("💧");
+                  setTopic("물");
+                }}
+              >
+                💧 <br/><span style={{fontSize:'0.8rem'}}>물</span>
+              </Button>
+              <Button
+                variant={icon === "🍀" ? "success" : "outline-success"}
+                onClick={() => {
+                  handleIconSelect("🍀");
+                  setTopic("기후");
+                }}
+                style={{ borderRadius: "0px" }}
+              >
+                🍀 <br/><span style={{fontSize:'0.8rem'}}>기후</span>
+              </Button>
+              <Button
+                variant={icon === "👩‍👦‍👦" ? "success" : "outline-success"}
+                onClick={() => {
+                  handleIconSelect("👩‍👦‍👦");
+                  setTopic("가족");
+                }}
+              >
+                👩‍👦‍👦 <br/><span style={{fontSize:'0.8rem'}}>가족</span>
+              </Button>
+              <Button
+                variant={icon === "💚" ? "success" : "outline-success"}
+                onClick={() => {
+                  handleIconSelect("💚");
+                  setTopic("연애");
+                }}
+              >
+                💚 <br/><span style={{fontSize:'0.8rem'}}>연애</span>
+              </Button>
+            </ButtonGroup>
+        <Form.Label style={{ alignSelf: 'flex-start', fontSize: '1.2em', fontWeight: 'bold' }}>내용</Form.Label>
+        <Container
+          className="text-muted mb-2"
+          style={{ fontSize: "0.85rem", textAlign: 'left', padding: 0 }}
+        >팁에 대한 구체적인 설명을 적어주세요.</Container>
+        <Form.Control
+        as='textarea'
+          className="form-control-large"
+          name="description"
+          value={content}
+          onChange={(event) => {
+            setContent(event.target.value);
+          }}
+          placeholder={selectedBlog.content}
+        />
+
+        <div style={{ width: "100%", maxWidth: "720px", padding: "10px" }}>
           <button
-            style={{
-              padding: "8px 16px",
-              fontSize: "16px",
-              borderWidth: "1px",
-              borderRadius: "8px",
-              cursor: "pointer",
-            }}
+            className="btn-default"
             onClick={handleSubmit}
           >
             글 수정하기

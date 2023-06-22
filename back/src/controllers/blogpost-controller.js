@@ -10,9 +10,9 @@ const blogpostController = {
     
             const userId = req.currentUserId;
             const newPost = await blogPostService.addPost({
-                userId,title,topic, content
+                userId, title, topic, content
             });
-            return res.status(CREATED).json(newPost);
+            return res.status(CREATED).send(newPost);
         } catch (error) {
             next(error);
         }
@@ -20,11 +20,11 @@ const blogpostController = {
     
     blogpostPutWrite: async function(req, res, next) {
         try{
-            const post_id = req.params._id
+            const postId = req.params._id
             const { title, topic, content } = req.body;
             const toUpdate = { title, topic, content };
             const updatedPost = await blogPostService.setPost({
-                post_id,
+                postId,
                 toUpdate,
             });
     
@@ -32,17 +32,17 @@ const blogpostController = {
                 throw new Error(updatedPost.errorMessage);
             }
     
-            return res.status(OK).json(updatedPost);
+            return res.status(OK).send(updatedPost);
     
         } catch (error) {
             next(error);
         }
     },
-       
+
     blogpostDeleteWrite: async function(req, res, next) {
         try{
-            const post_id = req.params._id
-            const result = await blogPostService.deletePost({ post_id });
+            const postId = req.params._id
+            const result = await blogPostService.deletePost({ postId });
     
             if (result.errorMessage) {
                 throw new Error(result.errorMessage);
@@ -55,14 +55,14 @@ const blogpostController = {
             next(error);
         }
     },
-       
+
     blogpostPutLikes: async function(req, res, next) {
         try{
-            const post_id = req.params._id
+            const postId = req.params._id
             const { pressLikeUserId } = req.body;
             
             const AddLike = await blogPostService.addLike({
-                post_id,
+                postId,
                 pressLikeUserId,
             });
     
@@ -70,7 +70,7 @@ const blogpostController = {
                 throw new Error(AddLike.errorMessage);
             }
     
-            return res.status(OK).json(AddLike)
+            return res.status(OK).send(AddLike)
         } catch(error) {
             next(error);
         }
@@ -78,10 +78,10 @@ const blogpostController = {
     
     blogpostPutDislikes: async function(req, res, next) {
         try{
-            const post_id = req.params._id;
+            const postId = req.params._id;
             const { cancelLikeUserId } = req.body;
             const DeleteLike = await blogPostService.deleteLike({
-                post_id,
+                postId,
                 cancelLikeUserId,
             });
     
@@ -89,9 +89,9 @@ const blogpostController = {
                 throw new Error(DeleteLike.errorMessage);
             }
     
-            return res.status(OK).json(DeleteLike);
+            return res.status(OK).send(DeleteLike);
         } catch(error) {
-    
+            next(error)
         }
     },
     
@@ -100,12 +100,18 @@ const blogpostController = {
         try{
             if(req.query.topic) {
                 const topic = req.query.topic
-                posts = await blogPostService.getFilteredPosts({topic});
+                posts = await blogPostService.getFilteredPosts({ topic });
                 res.status(OK).send(posts);
             }
             else {
-                posts = await blogPostService.getPosts();   
-                res.status(OK).send(posts);
+                const page = parseInt(req.query.page || 1);
+                const { posts, totalPage } = await blogPostService.getPosts(page);
+                
+                res.status(OK).send({
+                    currentPage: page,
+                    totalPage: totalPage,
+                    posts,
+                });
             }
         } catch(error) {
             error.status = NOT_FOUND;
@@ -115,13 +121,13 @@ const blogpostController = {
 
     blogpostGetDetail: async function(req, res, next) {
         try{
-            const post_id = req.params._id;
-            const postInfo = await blogPostService.getPostsDetail({post_id})
+            const postId = req.params._id;
+            const postInfo = await blogPostService.getPostsDetail({ postId })
     
             if (postInfo.errorMessage) {
                 throw new Error(postInfo.errorMessage);
             }
-            return res.status(NO_CONTENT).send(postInfo);
+            return res.status(OK).send(postInfo);
         } catch(error) {
             error.status = NOT_FOUND;
             next(error)

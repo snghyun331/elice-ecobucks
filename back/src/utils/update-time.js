@@ -1,22 +1,26 @@
 import moment from 'moment-timezone';
-/*  한국시간으로 ISO 8601 형식의 문자열로 반환
-- timestamp에 한국시간으로 변경 사용 예시
-  const Challenge = {
-    ...createdChallenge._doc,
-    createdAt: updateTime.toKST(createdChallenge.createdAt),
-    updatedAt: updateTime.toKST(createdChallenge.updatedAt),
-  }
-- 7일 더하기
-  challenge.updatedAt = updateTime.addDays(challenge.updatedAt, 7); 
-*/
+
 const updateTime = {
-  toKST : function (date) {
+  toKST: function (date) {
     // ISO 8601 형식의 한국시간대로 변경 
     const kstDate = moment(date).tz('Asia/Seoul'); 
     return kstDate.format();
   },
+  
+  toTimestamps: function (preQuery) {
+    let updateQuery = {
+      ...preQuery._doc,
+      createdAt: updateTime.toKST(preQuery.createdAt),
+      updatedAt: updateTime.toKST(preQuery.updatedAt), 
+    }
+    // challenge의 경우 dueDate가 있어서 추가적으로 변경
+    if (preQuery.dueDate) {
+      updateQuery.dueDate = updateTime.toKST(preQuery.dueDate);
+    }
+    return updateQuery
+  },
 
-  addDays : function (date, days) {
+  addDays: function (date, days) {
     const kstDate = moment(date).tz('Asia/Seoul');
     kstDate.add(days, 'days');
     return kstDate.format();
@@ -42,3 +46,15 @@ const updateTime = {
 }
 
 export { updateTime }
+
+
+/*  
+- timestamp에 한국시간으로 변경 사용 예시
+  const Challenge = {
+    ...createdChallenge._doc,
+    createdAt: updateTime.toKST(createdChallenge.createdAt),
+    updatedAt: updateTime.toKST(createdChallenge.updatedAt),
+  }
+- 7일 더하기
+  challenge.updatedAt = updateTime.addDays(challenge.updatedAt, 7); 
+*/

@@ -1,9 +1,13 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Row, Form, Button, Dropdown, Alert } from "react-bootstrap";
+import { Row, Form, Button, Dropdown, Alert, Image } from "react-bootstrap";
 import districtInfo from "../../assets/districtInfo";
 
-import { validatePassword, validateEmail, validateName } from "../../util/common";
+import {
+  validatePassword,
+  validateEmail,
+  validateName,
+} from "../../util/common";
 import { UPDATE_USER } from "../../reducer/action";
 
 import {
@@ -11,13 +15,25 @@ import {
   DispatchContext,
 } from "../../context/user/UserProvider";
 import * as Api from "../../api";
+import { showAlert, showSuccess } from "../../assets/alert";
 
 const UserEditForm = ({ onClose, user }) => {
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
   const userState = useContext(UserStateContext);
 
-  const [name, setName] = useState(user?.username || ""); // user가 null인 경우를 고려하여 기본값 설정
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewURL, setPreviewURL] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+    setErrorMessage("");
+    setPreviewURL(URL.createObjectURL(file));
+  };
+
+  const [name, setName] = useState(user?.userName || ""); // user가 null인 경우를 고려하여 기본값 설정
   const [districtName, setDistrict] = useState(user?.districtName || ""); // user가 null인 경우를 고려하여 기본값 설정
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -36,8 +52,20 @@ const UserEditForm = ({ onClose, user }) => {
     e.preventDefault();
 
     try {
+      //이미지 전송 통신
+      if (selectedFile) {
+        const formData = new FormData();
+        formData.append("image", selectedFile);
+
+        const imageRes = await Api.postFile(
+          "images/profiles/upload",
+          formData
+        );
+      }
+
+      //그 외 정보 전송 통신
       const requestData = {
-        username: name,
+        userName: name,
         districtName,
       };
 
@@ -46,13 +74,12 @@ const UserEditForm = ({ onClose, user }) => {
       }
 
       const res = await Api.put(
-        `mypage/useredit/${userState.user._id}`,
+        `mypage/useredit`,
         requestData
       );
 
-      console.log(res);
       if (res.status === 200) {
-        alert("변경된 정보가 저장되었습니다.");
+        showSuccess("변경된 정보가 저장되었습니다.");
 
         const userData = await Api.get("current");
         const user = userData.data;
@@ -64,10 +91,10 @@ const UserEditForm = ({ onClose, user }) => {
 
         onClose();
       } else {
-        alert("정보 변경에 실패했습니다.");
+        showAlert("정보 변경에 실패했습니다.");
       }
     } catch (error) {
-      alert("정보 변경에 실패했습니다.");
+      alshowAlertert("정보 변경에 실패했습니다.");
       console.error(error);
     }
   };
@@ -79,21 +106,20 @@ const UserEditForm = ({ onClose, user }) => {
   const confirmWithdraw = async () => {
     try {
       const res = await Api.delete("mypage/withdraw");
-      console.log("탈퇴요청완료", res);
 
       // 탈퇴 후 리디렉션 등의 작업 수행
       if (res.status === 200) {
         setShowConfirm(false);
         // Display success alert and navigate to login page
-        alert("에코벅스를 이용해주셔서 감사합니다. 로그인 창으로 이동합니다.");
+        showSuccess("에코벅스를 이용해주셔서 감사합니다. 로그인 창으로 이동합니다.");
         navigate("/login");
       } else {
         // Display error alert
-        alert("탈퇴 과정에 오류가 발생했습니다.");
+        showAlert("탈퇴 과정에 오류가 발생했습니다.");
       }
     } catch (error) {
       // Display error alert
-      alert("탈퇴 과정에 오류가 발생했습니다.");
+      showAlert("탈퇴 과정에 오류가 발생했습니다.");
       console.error(error);
     }
   };
@@ -107,8 +133,19 @@ const UserEditForm = ({ onClose, user }) => {
         >
           프로필 사진
         </Form.Label>
-        <Form.Control type="file" style={{ borderRadius: "0px" }} />
+        <Form.Control
+          type="file"
+          onChange={handleFileChange}
+          style={{ borderRadius: "0px" }}
+        />
+        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
       </Form.Group>
+      {selectedFile && (
+        <div className="mt-3">
+          <h6>미리보기</h6>
+          <Image src={previewURL} alt="Selected Image" thumbnail />
+        </div>
+      )}
       <Form.Group controlId="registerName" className="mt-4">
         <Form.Label
           className="text-right d-block"

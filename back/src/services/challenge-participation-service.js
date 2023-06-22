@@ -1,107 +1,163 @@
-import { User, Challenge, ChallengeParticipation } from "../db/index.js";
-import { updateTimestamps } from "../utils/update-time-stamps.js";
+import { User, Challenge, ChallengeParticipation, Image } from "../db/index.js";
+import { updateTime } from "../utils/update-time.js";
+import { setError, handleError } from "../utils/customError.js"
+import { validatePermission } from "../utils/validators.js";
+import { imageService } from "./image-service.js";
 
 class ParticipationService {
-  static async createParticipation({ userId, challengeId, image }) {
-    let createdNewParticipation;
-    if (!image) {
-      throw new Error("이미지가 없습니다."); 
-    }
-    const participation = await ChallengeParticipation.findOne({ challengeId });
-    const challenge = await Challenge.findById({ _id: challengeId })
-    
-    // participation가 처음 생성일 때 create
-    if (participation == null){
-      const createInput = { userId, challengeId, image, hasParticipatedToday: true }
-      const createdParticipation = await ChallengeParticipation.create(createInput);
-      // 시간을 한국표준시간으로 변경
-      createdNewParticipation=updateTimestamps(createdParticipation);
-    }
-    // participation 오늘 참여했을때
-    else if (participation.hasParticipatedToday == true ){
-      // Participation hasParticipatedToday Check
-      throw new Error("같은 챌린지에는 하루에 한번 참여 할 수 있습니다 ");
-    }
-    // participation 오늘 참여 가능할때 false -> true, create
-    else {
-      participation.hasParticipatedToday = true
-      await participation.save();
-      const createInput = { userId, challengeId, image, hasParticipatedToday: true }
-      const createdParticipation = await ChallengeParticipation.create(createInput);
-      createdNewParticipation=updateTimestamps(createdParticipation);
-    }
-    //--- Challenge Update ---
-    // 신청자수 count 증가, dueDate를 넘을경우 신청x
-    const currentDateTime = new Date();
-    if (challenge.dueDate.getTime() < currentDateTime.getTime()){
-      challenge.isCompleted = true;
-      throw new Error("참여기간이 종료되었습니다")
-    }else {
-      // challenge에 참여자수 카운트
+  static async createParticipation({ userId, challengeId, imageId }) {
+    try{
+      let createNewParticipation;
+      const image = await Image.findById({ _id: imageId });
+        if (!image){
+          throw setError("imageId가 존재하지 않습니다.", 400, "BAD_REQUEST")
+      }
+  
+      const participation = await ChallengeParticipation.find({ userId, challengeId });
+      const challenge = await Challenge.findById({ _id: challengeId })
+
+      //---1. Check ---
+      // 1) challenge 참여기간 종료 Check, dueDate를 넘을경우 신청x
+      const currentDateTime = new Date();
+      if (challenge.dueDate.getTime() < currentDateTime.getTime()){
+        challenge.isCompleted = true;
+        throw setError("참여기간이 종료되었습니다", 409, "CONFLICT")
+      }
+
+      // participation가 처음 생성일 때 
+      if (participation == 0){
+        // 생성된 이미지들의 아이디가 아닐경우
+        const data = { userId, challengeId, imageId, hasParticipatedToday: true } 
+        const createParticipation = await ChallengeParticipation.create(data);
+        // 한국표준시로 변경
+        createNewParticipation=updateTime.toTimestamps(createParticipation);
+      }
+      else {
+        // 2) participation 존재할때, 하루에 한번 참여 hasParticipatedToday: false -> true
+        if (participation[0].hasParticipatedToday == true){
+          throw setError("같은 챌린지에는 하루에 한번 참여 할 수 있습니다.", 409, "CONFLICT")
+        }
+        participation[0].hasParticipatedToday = true
+        const createInput = { userId, challengeId, imageId, hasParticipatedToday: true } 
+        const createParticipation = await ChallengeParticipation.create(createInput);
+        createNewParticipation=updateTime.toTimestamps(createParticipation);
+        await participation[0].save();
+      }
+      if (!createNewParticipation)  
+        throw setError("참여 신청 실패", 500, "CREATE_FAILED")
+        
+      //---2. Update ---  
+      //1) Challenge Update      
+      // challenge 신청자 count 증가
       challenge.participantsCount += 1; 
+
+      //2) User Update
+      // 유저정보 갱신 - 참여자 마일리지 1000추가
+      const user = await User.findById({ userId });
+      user.mileage += 1000;
+      await user.save();
+      await challenge.save();
+      
+      return createNewParticipation;
+    } catch (error) {
+      throw handleError(error)
     }
-    await challenge.save();
-
-    //--- User Update ---
-    // 유저정보 갱신 - 참여자 마일리지 1000추가
-    const user = await User.findById({ userId });
-    user.mileage += 1000;
-    await user.save();
-
-    return createdNewParticipation;
-  }
-
-  static async findChallenges({ challengeId }) {
-    const participations = await ChallengeParticipation.NoAsyncfindAll({ challengeId }).populate('userId', 'username districtCode districtName').exec();
-    return participations;
-  }
-
-  static async findChallenge({ challengeId, _id }) {
-    const participation = await ChallengeParticipation.NoAsyncfindById({ _id }).populate('userId', 'username districtCode districtName').exec();
-    if (!participation || participation.challengeId.toString() !== challengeId) {
-      throw new Error("찾을 수 없습니다.");
-    }
-
-    return updateTimestamps(participation);
-  }
-
-  static async updateChallenge({ _id, currentUserId, image }) {
-    const participation = await ChallengeParticipation.findById({ _id })
-    if ( !participation ){ 
-      throw new Error("해당 id를 가진 데이터는 없습니다.")
-    }
-    if( participation.userId.toString() !== currentUserId ){
-      throw new Error("수정 권한이 없습니다.");
-    }
-    const updateParticipation = await ChallengeParticipation.update({ _id, image })
     
-    return updateTimestamps(updateParticipation);;
   }
 
-  static async deleteChallenge(challengeId, _id, currentUserId) {
-    const participation = await ChallengeParticipation.findById({ _id })
-    if(!participation){
-      throw new Error("해당 id를 가진 데이터는 없습니다.");
+  static async findParticipations({ challengeId }) {
+    const participations = await ChallengeParticipation.NoAsyncfindAll({ challengeId }).populate('userId', 'userName districtCode districtName').exec();
+    if (participations.length === 0){
+      throw setError("참여기록을 찾을 수 없습니다", 404, "NOT_FOUND")
     }
-    if(participation.userId.toString() !== currentUserId){
-      throw new Error("삭제 권한이 없습니다.");
-    }
+    // 포스트마다 이미지 가져오기 
+    const newParticipations = await Promise.all(participations.map(async (participation) => {
+      const image = await Image.findById({ _id: participation.imageId });
+      if (image) {
+        return {
+          ...participation._doc, 
+          imageId: image._id,
+          path: image.path,
+          createdAt: updateTime.toKST(participation.createdAt),
+          updatedAt: updateTime.toKST(participation.updatedAt),  
+        };
+      } else {
 
-    // 삭제시 Challenge의 participantsCount 1감소
-    const challenge = await Challenge.findById({ _id:challengeId })
-    challenge.participantsCount += -1;
-    await challenge.save();
+      }
+      }));
 
-    //--- User Update ---
-    // 유저정보 갱신 - 참여자 마일리지 1000감소
-    const user = await User.findById({ userId: currentUserId });
-    user.mileage -= 1000;
-    await user.save();
-
-    await ChallengeParticipation.deleteById(_id);
-    return { status: "ok" };
+    return newParticipations;
   }
 
+  static async findParticipation({ challengeId, _id }) {
+    let participation = await ChallengeParticipation.NoAsyncfindById({ _id }).populate('userId', 'userName districtCode districtName').exec();
+    if (!participation || participation.challengeId.toString() !== challengeId){ 
+      throw setError("참여기록을 찾을 수 없습니다", 404, "NOT_FOUND")
+    }
+
+    const image = await Image.findById({ _id: participation.imageId });
+    if (image) {
+      participation = {
+        ...participation._doc,   
+        imageId: image._id,
+        path: image.path,
+        createdAt: updateTime.toKST(participation.createdAt),
+        updatedAt: updateTime.toKST(participation.updatedAt)
+      };
+    }
+
+    return participation;
+  }
+
+  static async updateParticipation({ _id, currentUserId, imageId }) {
+    try{
+      const participation = await ChallengeParticipation.findById({ _id });
+      await validatePermission(participation, currentUserId);
+
+      let updateParticipation = await ChallengeParticipation.update({ _id, imageId })
+      const image = await Image.findById({ _id: participation.imageId });
+      if (image) {
+      updateParticipation = {
+        ...updateParticipation._doc,   
+        imageId: image._id,
+        path: image.path,
+        createdAt: updateTime.toKST(updateParticipation.createdAt),
+        updatedAt: updateTime.toKST(updateParticipation.updatedAt)
+      };
+    }
+      
+      return updateParticipation;
+
+    } catch (error) {
+      throw handleError(error)
+    }
+    
+  }
+
+  static async deleteParticipation(challengeId, _id, currentUserId) {
+    try{
+      const participation = await ChallengeParticipation.findById({ _id });
+      await validatePermission(participation, currentUserId);
+    
+      // 삭제시 Challenge의 participantsCount 1감소
+      const challenge = await Challenge.findById({ _id:challengeId })
+
+      challenge.participantsCount += -1;
+      await challenge.save();
+
+      //--- User Update ---
+      // 유저정보 갱신 - 참여자 마일리지 1000감소
+      const user = await User.findById({ userId: currentUserId });
+      user.mileage -= 1000;
+      await user.save();
+
+      // 업로드 이미지와 참여신청 삭제
+      await ChallengeParticipation.deleteById(_id);
+      await imageService.deleteImage(participation.imageId);
+    } catch (error) {
+      throw handleError(error)
+    }
+  }
 }
- 
+
 export { ParticipationService };

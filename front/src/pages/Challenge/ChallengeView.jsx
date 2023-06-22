@@ -2,11 +2,13 @@ import React, { useState, useContext, useEffect } from "react";
 import { Card, Container, Row, Badge } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import { formatDate } from "../../util/common";
 
 import ChallengeRead from "./ChallengeRead";
 import { DispatchContext, UserStateContext } from "../../context/user/UserProvider";
 import * as Api from "../../api";
 import MegaChallengeCarousel from "./MegaChallengeCarousel";
+import { showAlert } from "../../assets/alert";
 
 const ChallengeView = () => {
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
@@ -17,11 +19,10 @@ const ChallengeView = () => {
   const fetchData = async () => {
     try {
       const res = await Api.get("challenges");
-      console.log("통신결과", res.data);
       setChallenges(res.data);
       setIsFetchCompleted(true);
     } catch (err) {
-      console.log("챌린지 정보 불러오기를 실패하였습니다.", err);
+      showAlert("챌린지 정보 불러오기를 실패하였습니다.")
     }
   };
 
@@ -30,7 +31,7 @@ const ChallengeView = () => {
   // Fetch data and update the challenges state
   useEffect(() => {
     // 만약 전역 상태의 user가 null이거나 탈퇴한 회원이라면, 로그인 페이지로 이동함.
-    if (!userState.user || !userState.user.is_withdrawed == false) {
+    if (!userState.user || !userState.user.isWithdrew == false) {
       navigate("/login", { replace: true });
       return;
     }
@@ -51,9 +52,6 @@ const ChallengeView = () => {
     return "loading...";
   }
 
-  const formatDate = (dateString) => {
-    return moment(dateString).format("YYYY-MM-DD");
-  };
 
   const sortedChallenges = challenges.sort((a, b) => {
     if (a.isCompleted !== b.isCompleted) {
@@ -86,7 +84,7 @@ const ChallengeView = () => {
               overflow: "hidden",
             }}
           >
-            <MegaChallengeCarousel />
+            <MegaChallengeCarousel challenges={challenges} />
           </Row>
 
           {sortedChallenges.map((challenge, index) => (

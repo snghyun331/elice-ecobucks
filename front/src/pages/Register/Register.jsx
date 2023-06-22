@@ -12,17 +12,24 @@ import {
 
 import Logo from "../../assets/logo.png";
 import districtInfo from "../../assets/districtInfo";
-import { validatePassword, validateEmail, validateName } from "../../util/common";
+import {
+  validatePassword,
+  validateEmail,
+  validateName,
+} from "../../util/common";
 import { LOGIN_SUCCESS } from "../../reducer/action";
 
 import * as Api from "../../api";
-import { DispatchContext, UserStateContext } from '../../context/user/UserProvider'
-
+import {
+  DispatchContext,
+  UserStateContext,
+} from "../../context/user/UserProvider";
+import { showAlert } from "../../assets/alert";
 
 function RegisterForm() {
   const navigate = useNavigate();
-  const dispatch = useContext(DispatchContext)
-  const userState = useContext(UserStateContext)
+  const dispatch = useContext(DispatchContext);
+  const userState = useContext(UserStateContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,7 +56,7 @@ function RegisterForm() {
     try {
       // "user/register" 엔드포인트로 post요청함.
       await Api.post("register", {
-        username: name,
+        userName: name,
         email,
         password,
         districtName,
@@ -74,23 +81,20 @@ function RegisterForm() {
 
       // 기본 페이지로 이동함.
       navigate("/", { replace: true });
-      
     } catch (err) {
-      if (err.response.status === 400) {
-        alert(err.response.data);
-    }
-      console.log("회원가입에 실패하였습니다.", err);
+      showAlert(err.response.data.message);
     }
   };
 
   return (
     <Container
-      className="position-absolute top-50 start-50 translate-middle pt-3 pb-3"
+      className="position-relative pt-3 pb-3"
       style={{
         width: "40%",
         backgroundColor: "#F3F3F3",
-        transform: "translate(-50%, -50%)",
         borderRadius: "5px",
+        marginBottom: "20px",
+        marginTop: '90px'
       }}
     >
       <Container className="text-center">

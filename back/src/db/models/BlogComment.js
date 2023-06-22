@@ -6,18 +6,18 @@ class BlogComment {
         return createdNewComment;
     }
 
-    static async findOneById({ comment_id }) {
-        const comment = await BlogCommentModel.findOne({ _id: comment_id });
+    static async findOneById({ commentId }) {
+        const comment = await BlogCommentModel.findOne({ _id: commentId });
         return comment
     }
 
-    static async findAllByPostId({ post_id }){
-        const PostComments = await BlogCommentModel.find({ post_id : post_id });;
+    static async findAllByPostId({ postId }){
+        const PostComments = await BlogCommentModel.find({ postId : postId });;
         return PostComments
     }
     
-    static async update({ comment_id, fieldToUpdate, newValue }) {
-        const filter = { _id: comment_id };
+    static async update({ commentId, fieldToUpdate, newValue }) {
+        const filter = { _id: commentId };
         const update = { [fieldToUpdate]: newValue };
         const option = { returnOriginal: false };
     
@@ -27,10 +27,15 @@ class BlogComment {
         return updatedcomment;
     }
 
-    static async deleteOneById({ comment_id }) {
-        const deletedComment = await BlogCommentModel.deleteOne({ _id: comment_id });
+    static async deleteOneById({ commentId }) {
+        const deletedComment = await BlogCommentModel.deleteOne({ _id: commentId });
         const isCompleteDeleted = deletedComment.deletedCount === 1;
         return isCompleteDeleted;
+    }
+
+    static async findAll() {
+        const comments = await BlogCommentModel.find();
+        return comments;
     }
 }
 
