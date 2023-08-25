@@ -322,3 +322,15 @@
  ┣ 📜.prettierrc
  ┗ 📜README.md
 ```
+
+**env파일**
+```
+SERVER_PORT=5001
+MONGODB_URL="mongodb+srv://ecobucks:*****.mongodb.net/"
+JWT_SECRET_KEY="ad5kafl91ak@192vk0****"
+
+AWS_ACCESS_KEY_ID="AKIAT***"
+AWS_SECRET_ACCESS_KEY="HBDU83***"
+AWS_REGION="ap-northeast-2"
+AWS_S3_BUCKET_NAME="ecobucks"
+```
